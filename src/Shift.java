@@ -1,15 +1,9 @@
 public class Shift {
-    private User employee;
     private LocalDateTime time;
     private User[] coworkers;
-    public Shift(User employee, LocalDateTime time, User[] coworkers){
-        this.employee = employee;
+    public Shift(LocalDateTime time, User[] coworkers){
         this.time = time;
         this.coworkers = coworkers;
-    }
-
-    public User getEmployee() {
-        return employee;
     }
 
     public LocalDateTime getTime() {
@@ -25,13 +19,6 @@ public class Shift {
             return;
         }
         this.coworkers = coworkers;
-    }
-
-    public void setEmployee(User employee, User editor) {
-        if (editor instanceof Employee){
-            return;
-        }
-        this.employee = employee;
     }
 
     public void setTime(LocalDateTime time, User editor) {

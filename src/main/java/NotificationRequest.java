@@ -15,7 +15,4 @@ public class NotificationRequest extends Notification {
         return this.isResolved;
     }
 
-
-
-
 }

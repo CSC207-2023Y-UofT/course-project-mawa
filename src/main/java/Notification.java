@@ -15,7 +15,24 @@ abstract class Notification {
         this.date = date;
     }
 
+    public String getMessage(){
+        return this.message;
+    }
 
+    public String getSenderId(){
+        return this.senderId;
+    }
 
+    public String getShiftId(){
+        return this.senderId;
+    }
+
+    public String getRecipientId(){
+        return this.recipientId;
+    }
+
+    public LocalDateTime getDate(){
+        return this.date;
+    }
 
 }

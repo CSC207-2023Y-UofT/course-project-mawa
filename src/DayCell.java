@@ -13,7 +13,7 @@ public class DayCell extends JButton{
     private Object[][] shifts;
     private boolean isSelected = false;
 
-    public DayCell(int day, String weekday, boolean isPayday, Object[][] shifts){
+    public DayCell(int day, String weekday, boolean isPayday, Shift[] shifts){
         this.day = day;
         this.weekday = weekday;
         this.isPayday = isPayday;
@@ -31,21 +31,22 @@ public class DayCell extends JButton{
         repaint();
     }
     public void paintComponent(Graphics g1) {
+        if (weekday == ""){
+            return;
+        }
         Graphics2D g = (Graphics2D) g1.create();
         super.paintComponent(g);
         java.util.Arrays.sort(shifts,
-                (a, b) -> ((LocalDateTime)a[utilities.SHIFT_TIME]).compareTo((LocalDateTime)b[utilities.SHIFT_TIME]));
-        System.out.println(shifts[0][0]);
+                (a, b) -> ((LocalDateTime)a.getTime()).compareTo((LocalDateTime)b.getTime()));
         int[] ycoords = new int[shifts.length + 1];
         ycoords[0] = 0;
         for (int i = 1; i < (shifts.length + 1); i++) {
-            LocalDateTime time = (LocalDateTime) (shifts[i - 1][utilities.SHIFT_TIME]);
+            LocalDateTime time = (LocalDateTime) (shifts[i - 1].getTime());
             int y = (int) ((time.getHour() * 60.0 + time.getMinute()) / (60.0 * 24.0) * getHeight() * 0.7);
             //y += getHeight() / 9.0;
             int x = (int)(2.6 * getWidth() / 3.0);
             y = java.lang.Math.max((int)(getWidth() / 15 + ycoords[i-1]), y);
             ycoords[i] = y;
-            System.out.println(x+", "+y);
             g.setColor(Color.RED);
             g.fillOval(x , y, getWidth() / 15, getWidth() / 15);
             g.drawOval(x, y, getWidth() / 15, getWidth() / 15);
@@ -82,10 +83,10 @@ public class DayCell extends JButton{
     public void setPayday(boolean pd){
         this.isPayday = pd;
     }
-    public Object[][] getShifts(){
+    public Shift[] getShifts(){
         return shifts;
     }
-    public void setShifts(Object[][] shifts){
+    public void setShifts(Shift[] shifts){
         this.shifts = shifts;
     }
 }

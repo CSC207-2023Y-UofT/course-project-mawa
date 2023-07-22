@@ -2,7 +2,7 @@ public interface Interactor{
 
   public ArrayList<T> readData(){}
 
-  public void writeData(){}
+  public void writeData(obj T){}
 
   
 }

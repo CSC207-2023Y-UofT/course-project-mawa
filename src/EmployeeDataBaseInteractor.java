@@ -114,12 +114,14 @@ public class EmployeeDataBaseInteractor implements Interactor{
     public void updateActivation(Integer EmployeeID, Boolean status){
         employees = this.readData();
         for (Employee employee: employees){
-          if (employee instanceof Volunteer){
-            this.updateActivationVolunteer(Integer EmployeeID, Boolean status);
-          } else if (employee instanceof WageWorker){
-            this.updateActivationWageWorker(Integer EmployeeID, Boolean status);
-          } else{
-            this.updateActivationSalariedEmployee(Integer EmployeeID, Boolean status);
+            if (employee.employeeNum == EmployeeID){
+                if (employee instanceof Volunteer){
+                    this.updateActivationVolunteer(Integer EmployeeID, Boolean status);
+              } else if (employee instanceof WageWorker){
+                    this.updateActivationWageWorker(Integer EmployeeID, Boolean status);
+              } else{
+                    this.updateActivationSalariedEmployee(Integer EmployeeID, Boolean status);
+            }
         }
       
     }

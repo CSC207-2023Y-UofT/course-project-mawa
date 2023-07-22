@@ -1,7 +1,12 @@
+import java.until.EmployeeDataBaseInteractor;
+
+
 public class UserFactory{
 
     public Boolean verifyCredentials(int employeeNum, String password){
-        //code to get employee info from database and return whether or not it matches
+        EmployeeDataBaseInterActor edb = new EmployeeDataBaseInteractor();
+        employees = edb.listEmployees();
+
     }
 
     public Volunteer makeUser(int employeeNum, String name, LocalDateTime dateOfBirth, String gender, int phoneNumber,

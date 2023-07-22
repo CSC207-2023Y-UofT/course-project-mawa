@@ -127,7 +127,7 @@ public class EmployeeDataBaseInteractor implements Interactor{
     }
 
 
-    public Integer writeData(Employee employee){
+    public void writeData(Employee employee){
         Session session = factory.openSession();
         Transaction tx = null;
 

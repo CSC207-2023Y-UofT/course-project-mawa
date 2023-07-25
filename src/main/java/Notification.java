@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
 
 abstract class Notification {
+    private int notifId;
     private String message;
     private String senderId;
     private String recipientId;
@@ -15,6 +16,10 @@ abstract class Notification {
         this.date = date;
     }
 
+    public int getNotifId(){
+        return this.notifId   
+    }
+    
     public String getMessage(){
         return this.message;
     }

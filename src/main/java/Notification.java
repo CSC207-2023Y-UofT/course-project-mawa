@@ -7,6 +7,7 @@ abstract class Notification {
     private String recipientId;
     private String shiftId;
     private LocalDateTime date;
+    private Boolean resolved;
 
     public Notification(String senderId, String recipientId, String shiftId, String message, LocalDateTime date){
         this.message = message;
@@ -14,8 +15,13 @@ abstract class Notification {
         this.recipientId = recipientId;
         this.shiftId = shiftId;
         this.date = date;
+        this.resolved = False;
     }
 
+    public void resolve(){
+        this.resolved = True;
+    }
+    
     public int getNotifId(){
         return this.notifId   
     }

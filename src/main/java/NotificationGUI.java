@@ -49,6 +49,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
         unresolvedNotificationListScroller = new JScrollPane(unresolvedNotificationList);
         resolvedNotificationListScroller = new JScrollPane(resolvedNotificationList);
 
+
     }
 
     private void createNotificationList(NotificationGUI item, JPanel panel, JPanel listPanel, JLabel label,

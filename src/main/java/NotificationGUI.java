@@ -28,25 +28,31 @@ public class NotificationGUI extends JFrame implements ActionListener {
         frame.setLayout(new GridLayout(1, 2));
         String[] mom = {"12"};
         populateLists(mom);
-        createNotificationList(this,unresolvedNotificationPanel,unresolvedNotificationListPanel, unresolvedNotificationLabel, unresolvedNotifications, unresolvedNotificationList, unresolvedNotificationListScroller);
+        createNotificationList(this, unresolvedNotificationPanel, unresolvedNotificationListPanel,
+                unresolvedNotificationLabel, unresolvedNotifications, unresolvedNotificationList,
+                unresolvedNotificationListScroller);
         addButtons(this, unresolvedNotificationPanel);
-        createNotificationList(this,resolvedNotificationPanel,resolvedNotificationListPanel,resolvedNotificationLabel, resolvedNotifications, unresolvedNotificationList, resolvedNotificationListScroller);
+        createNotificationList(this, resolvedNotificationPanel, resolvedNotificationListPanel,
+                resolvedNotificationLabel, resolvedNotifications, unresolvedNotificationList,
+                resolvedNotificationListScroller);
         frame.setSize(600, 600);
         frame.setVisible(true);
         frame.setTitle("Notifications");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void populateLists(String[] notifications){
-        unresolvedNotifications = new String[]{"hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello",};
-        resolvedNotifications = new String[]{"hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello","hello",};
+    private void populateLists(String[] notifications) {
+        unresolvedNotifications = new String[]{"hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",};
+        resolvedNotifications = new String[]{"hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",};
         unresolvedNotificationList = new JList<String>(unresolvedNotifications);
         resolvedNotificationList = new JList<String>(resolvedNotifications);
         unresolvedNotificationListScroller = new JScrollPane(unresolvedNotificationList);
         resolvedNotificationListScroller = new JScrollPane(resolvedNotificationList);
 
     }
-    private void createNotificationList(NotificationGUI item,JPanel panel,JPanel listPanel, JLabel label, String[] listOfNotifications, JList<String> list, JScrollPane scroller) {
+
+    private void createNotificationList(NotificationGUI item, JPanel panel, JPanel listPanel, JLabel label,
+                                        String[] listOfNotifications, JList<String> list, JScrollPane scroller) {
         panel.setLayout(new BorderLayout());
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
@@ -71,8 +77,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
         listPanel.add(scroller, BorderLayout.CENTER);
         if (Objects.equals(label.getText(), "Unresolved Notifications")) {
             listPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
-        }
-        else{
+        } else {
             listPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 45, 10));
         }
         panel.add(listPanel, BorderLayout.CENTER);
@@ -80,7 +85,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
         item.frame.add(panel);
     }
 
-    public void addButtons(NotificationGUI item,JPanel panel){
+    public void addButtons(NotificationGUI item, JPanel panel) {
         denyRequestButton.setActionCommand("Deny");
         denyRequestButton.addActionListener(item);
         rescheduleShiftButton.setActionCommand("Reschedule");

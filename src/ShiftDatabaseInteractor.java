@@ -2,6 +2,8 @@ import java.util.Interactor;
 
 public class ShiftDatabaseInteractor implements Interactor{
 
+  private static SessionFactory factory;
+  
   public ArrayList<Shift> readData(){
         List shiftList = new ArrayList<Shift>
         Session session = factory.openSession();

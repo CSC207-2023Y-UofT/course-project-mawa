@@ -133,7 +133,7 @@ public class EmployeeDataBaseInteractor implements Interactor{
 
         try {
             tx = session.beginTransaction();
-            session.save(employee, employee.employeeNum);
+            session.save(employee, employee.getEmployeeNum());
             tx.commit();
         } catch (HibernateException e) {
             if (tx!=null) tx.rollback();

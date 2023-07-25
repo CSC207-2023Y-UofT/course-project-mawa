@@ -15,15 +15,15 @@ abstract class Notification {
         this.recipientId = recipientId;
         this.shiftId = shiftId;
         this.date = date;
-        this.resolved = False;
+        this.resolved = false;
     }
 
     public void resolve(){
-        this.resolved = True;
+        this.resolved = true;
     }
     
     public int getNotifId(){
-        return this.notifId   
+        return this.notifId;
     }
     
     public String getMessage(){

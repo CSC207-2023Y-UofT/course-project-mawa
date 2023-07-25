@@ -107,8 +107,6 @@ public class NotificationGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if ("Reschedule".equals(e.getActionCommand())) {
             System.out.println(unresolvedNotificationList.getSelectedValue());
-
-
         }
 
     }

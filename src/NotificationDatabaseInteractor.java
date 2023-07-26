@@ -44,6 +44,46 @@ public class NotificationDatabaseInteractor implements Interactor{
 
   }
 
+  public void resolveRequest(Integer notifId){
+
+    Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            NotificationRequest notif = (NotificationRequest)session.get(NotificationRequest.class, notifId);
+            notif.resolve();
+            session.update(notif);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    
+  }
+
+  public void resolveResponse(Integer notifId){
+
+    Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            NotificationResponse notif = (NotificationResponse)session.get(NotificationReseponse.class, notifId);
+            notif.resolve();
+            session.update(notif);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    
+  }
+
 
   public void writeData(Notification notification){
         Session session = factory.openSession();

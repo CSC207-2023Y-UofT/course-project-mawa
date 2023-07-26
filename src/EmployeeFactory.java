@@ -6,7 +6,14 @@ public class UserFactory{
     public Boolean verifyCredentials(int employeeNum, String password){
         EmployeeDataBaseInterActor edb = new EmployeeDataBaseInteractor();
         employees = edb.listEmployees();
-
+        for (Employee employee: employees){
+            if (employee.getEmployeeNum() == employeeNum){
+                if (employee.getPassword().equals(password)){
+                    return True;
+                }
+            }
+        }
+        return False;
     }
 
     public Volunteer makeUser(int employeeNum, String name, LocalDateTime dateOfBirth, String gender, int phoneNumber,

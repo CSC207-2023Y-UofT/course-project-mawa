@@ -1,26 +1,28 @@
+package src;
+
 public class Employee extends User{
-    private int vacationDaysRemaining;
+    private int vacationDaysTaken;
     private int totalVacationDaysAllowed;
     public Employee(String surname, String firstname, String gender,
                     String pronouns, String email, String roleName, int empNum,
-                    int phoneNum, String dob, int vacationDaysRemaining,
-                    int totalVacationDaysAllowed) {
-        super(surname, firstname, gender, pronouns, email, roleName, empNum, phoneNum, dob);
-        this.vacationDaysRemaining = vacationDaysRemaining;
+                    int phoneNum, String dob, int vacationDaysTaken,
+                    int totalVacationDaysAllowed, char[] password) {
+        super(surname, firstname, gender, pronouns, email, roleName, empNum, phoneNum, dob, password);
+        this.vacationDaysTaken = vacationDaysTaken;
         this.totalVacationDaysAllowed = totalVacationDaysAllowed;
     }
 
-    public boolean removeVacationDaysRemaining(int daysUsed){
-        vacationDaysRemaining -= daysUsed;
-        return (vacationDaysRemaining > 0);
+    public boolean addVacationDaysUsed(int daysUsed){
+        vacationDaysTaken += daysUsed;
+        return (totalVacationDaysAllowed - vacationDaysTaken) > 0;
     }
 
-    public void resetVacationDaysRemaining(){
-        vacationDaysRemaining = totalVacationDaysAllowed;
+    public void resetVacationDaysTaken(){
+        vacationDaysTaken = 0;
     }
 
-    public int getVacationDaysRemaining(){
-        return vacationDaysRemaining;
+    public int getVacationDaysUsed(){
+        return vacationDaysTaken;
     }
 
     public void setTotalVacationDaysAllowed(int totalDays){

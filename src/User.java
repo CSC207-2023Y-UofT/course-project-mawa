@@ -1,12 +1,15 @@
+package src;
+
 import java.time.LocalDate;
 public abstract class User {
     private int employeeNum, phoneNum;
     private String surname, firstname, gender, pronouns, email, roleName;
     private boolean active;
     LocalDate dob;//format should be "YYYY-MM-dd" as a String
+    private char[] password;
 
     public User(String surname, String firstname, String gender, String pronouns, String email,
-                String roleName, int empNum, int phoneNum, String dob){
+                String roleName, int empNum, int phoneNum, String dob, char[] password){
         this.employeeNum = empNum;
         this.phoneNum = phoneNum;
         this.surname = surname;
@@ -17,6 +20,7 @@ public abstract class User {
         this.roleName = roleName;
         this.dob = LocalDate.parse(dob);
         this.active = true;
+        this.password = password;
     }
     public int getEmployeeNum(){
         return employeeNum;
@@ -75,5 +79,12 @@ public abstract class User {
 
     public void setActive(boolean active){
         this.active = active;
+    }
+    public char[] getPassword(){
+        return password;
+    }
+
+    public void setPassword(char[] pwd){
+        password = pwd;
     }
 }

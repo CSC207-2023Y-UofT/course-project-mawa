@@ -1,11 +1,13 @@
+package src;
+
 public class WageWorker extends Employee{
     private float hourlyWage;
 
     public WageWorker(String surname, String firstname, String gender, String pronouns,
                       String email, String roleName, int empNum, int phoneNum, String dob,
-                      int vacationDaysRemaining, int totalVacationDaysAllowed, float wage) {
+                      int vacationDaysTaken, int totalVacationDaysAllowed, float wage, char[] password) {
         super(surname, firstname, gender, pronouns, email, roleName, empNum, phoneNum,
-                dob, vacationDaysRemaining, totalVacationDaysAllowed);
+                dob, vacationDaysTaken, totalVacationDaysAllowed, password);
         this.hourlyWage = wage;
     }
 }

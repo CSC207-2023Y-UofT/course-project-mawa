@@ -1,3 +1,5 @@
+package src;
+
 public final class CalendarConstants {
 
     private CalendarConstants() {

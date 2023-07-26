@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -10,7 +12,7 @@ public class DayCell extends JButton{
     private int day;
     private String weekday;
     private boolean isPayday;
-    private Object[][] shifts;
+    private Shift[] shifts;
     private boolean isSelected = false;
 
     public DayCell(int day, String weekday, boolean isPayday, Shift[] shifts){
@@ -27,9 +29,6 @@ public class DayCell extends JButton{
 
     }
 
-    public void addShifts(Graphics g, Object[][] shifts){
-        repaint();
-    }
     public void paintComponent(Graphics g1) {
         if (weekday == ""){
             return;
@@ -41,7 +40,7 @@ public class DayCell extends JButton{
         int[] ycoords = new int[shifts.length + 1];
         ycoords[0] = 0;
         for (int i = 1; i < (shifts.length + 1); i++) {
-            LocalDateTime time = (LocalDateTime) (shifts[i - 1].getTime());
+            LocalDateTime time = ((LocalDateTime) shifts[i - 1].getTime());
             int y = (int) ((time.getHour() * 60.0 + time.getMinute()) / (60.0 * 24.0) * getHeight() * 0.7);
             //y += getHeight() / 9.0;
             int x = (int)(2.6 * getWidth() / 3.0);

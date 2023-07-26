@@ -1,9 +1,15 @@
+package src;
+
+import java.time.LocalDateTime;
+
 public class Shift {
     private LocalDateTime time;
+    private float duration;
     private List<User> coworkers;
-    public Shift(LocalDateTime time, List<User> coworkers){
+    public Shift(LocalDateTime time, List<User> coworkers, float duration){
         this.time = time;
         this.coworkers = coworkers;
+        this.duration = duration;
     }
 
     public LocalDateTime getTime() {
@@ -39,5 +45,16 @@ public class Shift {
             return;
         }
         this.time = time;
+    }
+
+    public float getDuration(){
+        return duration;
+    }
+
+    public void setDuration(float dur, User editor){
+        if (editor instanceof Employee){
+            return;
+        }
+        duration = dur;
     }
 }

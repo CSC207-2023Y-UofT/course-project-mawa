@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
-import java.util.AddEmployee;
 
 public class ManageEmployeesGUI extends Jframe implements ActionListener{
   private JButton addEmployee = new JButton("Add Employee")  
@@ -16,7 +15,7 @@ public class ManageEmployeesGUI extends Jframe implements ActionListener{
 
 public static void main(String args[]){
 
-  this.setVisible(True);
+  new ManageEmployeesGUI();
   
 }
 
@@ -39,7 +38,25 @@ public ManageEmployeesGUI(){
 private void addEmployeeActionPeformed(ActionEvent e){
   if (e instanceOf MouseEvent){
     if (e.getButton() = MouseEvent.BUTTON1){
-      AddEmployee.main(null)
+      System.out.println("Add Employee")
+      this.dispose;
+    }
+  }
+}
+
+private void completeEmployeeListActionPeformed(ActionEvent e){
+  if (e instanceOf MouseEvent){
+    if (e.getButton() = MouseEvent.BUTTON1){
+      System.out.println("CEL")
+      this.dispose;
+    }
+  }
+}
+
+private void employeeSummaryListActionPeformed(ActionEvent e){
+  if (e instanceOf MouseEvent){
+    if (e.getButton() = MouseEvent.BUTTON1){
+      System.out.println("ES")
       this.dispose;
     }
   }

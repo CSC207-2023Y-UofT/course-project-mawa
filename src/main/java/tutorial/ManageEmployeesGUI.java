@@ -30,6 +30,7 @@ public ManageEmployeesGUI(){
   this.buttonsPanel.add(addEmployee);
   this.buttonsPanel.add(completeEmployeeList);
   this.buttonsPanel.add(employeeSummary);
+  this.buttonsPanel.setSize(100,300);
   frame.add(buttonsPanel);
   
 }
@@ -38,18 +39,19 @@ public ManageEmployeesGUI(){
 @Override
 public void actionPerformed(ActionEvent e){
   Object source = e.getSource();
-  if (source instanceof JButton){
     if (source.equals(addEmployee)) {
       new AddEmployeeGUI();
+      frame.dispose();
     } else if (source.equals(completeEmployeeList)){
       new completeEmployeeListGUI();
-    } else {
-      new employeeSummaryGUI();
+      frame.dispose();
+    } else if (source.equals(employeeSummary)) {
+      //new employeeSummaryGUI();
+      frame.dispose();
     }
 
-    frame.dispose();
 
-  }
+
 }
 
 

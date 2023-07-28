@@ -8,14 +8,13 @@ public abstract class User {
     LocalDate dob;//format should be "YYYY-MM-dd" as a String
     private char[] password;
 
-    public User(String surname, String firstname, String gender, String pronouns, String email,
+    public User(String surname, String firstname, String gender, String email,
                 String roleName, int empNum, int phoneNum, String dob, char[] password){
         this.employeeNum = empNum;
         this.phoneNum = phoneNum;
         this.surname = surname;
         this.firstname = firstname;
         this.gender = gender;
-        this.pronouns = pronouns;
         this.email = email;
         this.roleName = roleName;
         this.dob = LocalDate.parse(dob);

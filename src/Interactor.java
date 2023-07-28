@@ -1,8 +1,10 @@
+import java.util.ArrayList;
+
 public interface Interactor{
 
-  public ArrayList<T> readData(){}
+  public ArrayList<Object> readData();
 
-  public void writeData(T obj){}
+  public void writeData(Object obj);
 
   
 }

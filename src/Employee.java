@@ -4,10 +4,10 @@ public class Employee extends User{
     private int vacationDaysTaken;
     private int totalVacationDaysAllowed;
     public Employee(String surname, String firstname, String gender,
-                    String pronouns, String email, String roleName, int empNum,
+                    String email, String roleName, int empNum,
                     int phoneNum, String dob, int vacationDaysTaken,
                     int totalVacationDaysAllowed, char[] password) {
-        super(surname, firstname, gender, pronouns, email, roleName, empNum, phoneNum, dob, password);
+        super(surname, firstname, gender, email, roleName, empNum, phoneNum, dob, password);
         this.vacationDaysTaken = vacationDaysTaken;
         this.totalVacationDaysAllowed = totalVacationDaysAllowed;
     }

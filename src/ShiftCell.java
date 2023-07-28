@@ -21,4 +21,8 @@ public class ShiftCell extends JButton {
                 getWidth()/5, getWidth()/5);
         g.dispose();
     }
+
+    public Shift getShift(){
+        return shift;
+    }
 }

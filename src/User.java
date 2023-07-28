@@ -87,4 +87,8 @@ public abstract class User {
     public void setPassword(char[] pwd){
         password = pwd;
     }
+    @Override
+    public String toString(){
+        return firstname + " " + surname;
+    }
 }

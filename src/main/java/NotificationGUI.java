@@ -91,6 +91,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
         rescheduleShiftButton.setActionCommand("Reschedule");
         rescheduleShiftButton.addActionListener(item);
 
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(rescheduleShiftButton);
         buttonPanel.add(denyRequestButton);

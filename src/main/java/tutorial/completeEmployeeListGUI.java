@@ -21,7 +21,8 @@ public class completeEmployeeListGUI implements ActionListener{
         frame.setVisible(true);
         frame.setTitle("Complete Employee List");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        employees = new JList();
+        JPanel all_panels = new JPanel();
+        all_panels.setLayout(new BoxLayout(all_panels, BoxLayout.Y_AXIS));
         titlePanel.setLayout(new GridLayout(1, 11));
         titlePanel.add(new JLabel("First Name:"));
         titlePanel.add(new JLabel("Surname:"));
@@ -33,9 +34,11 @@ public class completeEmployeeListGUI implements ActionListener{
         titlePanel.add(new JLabel("Type:"));
         titlePanel.add(new JLabel("Pay:"));
         titlePanel.add(new JLabel("Active:"));
-        JScrollPane sp = new JScrollPane(employees);
-        titlePanel.add(sp);
-        contentPane.add(titlePanel);
+        titlePanel.add(new JLabel("Change Status:"));
+        all_panels.add(titlePanel);
+        JScrollPane sp = new JScrollPane(all_panels, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        frame.add(sp, BorderLayout.CENTER);
+
         //edp = new EmployeeDataBaseInteractor();
         //employees = edb.readData();
         //ArrayList<JPanel> employeePanels = new ArrayList<>();

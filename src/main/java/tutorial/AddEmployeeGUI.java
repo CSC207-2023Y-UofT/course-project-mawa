@@ -1,5 +1,7 @@
 package tutorial;
 
+import org.hibernate.type.TrueFalseType;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -68,6 +70,10 @@ public class AddEmployeeGUI implements ActionListener{
 
     private Container contentPane = frame.getContentPane();
 
+    private JButton back = new JButton("Back");
+
+    private  JPanel backPanel = new JPanel();
+
 
 
     public AddEmployeeGUI(){
@@ -83,6 +89,8 @@ public class AddEmployeeGUI implements ActionListener{
         dobPanel.add(dobmthEnter);
         dobPanel.add(dobdayLab);
         dobPanel.add(dobdayEnter);
+        backPanel.setLayout(new GridLayout(1, 1));
+        backPanel.add(back);
         submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.LINE_AXIS));
         submitPanel.add(Box.createHorizontalGlue());
 
@@ -106,8 +114,10 @@ public class AddEmployeeGUI implements ActionListener{
         this.questionPanel.add(payEnter);
         typeSelect.addActionListener(this);
         submitButton.addActionListener(this);
+        back.addActionListener(this);
         this.submitPanel.add(submitButton);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(backPanel);
         contentPane.add(questionPanel);
         contentPane.add(dobPanel);
         contentPane.add(submitPanel);
@@ -145,6 +155,10 @@ public class AddEmployeeGUI implements ActionListener{
                 payLab.setVisible(false);
                 payEnter.setVisible(false);
             }
+        }
+        if (s.equals(back)){
+            new ManageEmployeesGUI();
+            frame.dispose();
         }
     }
 

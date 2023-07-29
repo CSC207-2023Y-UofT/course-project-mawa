@@ -1,8 +1,9 @@
 package src;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Shift {
+public class Shift implements Serializable {
     private LocalDateTime time;
     private float duration;
     private List<User> coworkers;

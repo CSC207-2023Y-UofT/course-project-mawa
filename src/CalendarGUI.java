@@ -15,14 +15,16 @@ public class CalendarGUI extends JFrame implements ActionListener, Page {
     private JComboBox<String> yearList;
     private int month;
     private int year;
+    private Employee employee;
 
-    public CalendarGUI(int month, int year){
+    public CalendarGUI(int month, int year, Employee employee){
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         this.firstDay = LocalDate.of(year, month, 1);
         this.lastDay = LocalDate.of(year, month, firstDay.lengthOfMonth());
         this.calMan = new CalendarManager();
         this.month = month;
         this.year = year;
+        this.employee = employee;
 
     }
 
@@ -37,10 +39,12 @@ public class CalendarGUI extends JFrame implements ActionListener, Page {
             } else{
                 int dayNum = i - firstDay.getDayOfWeek().getValue() + 1;
                 Object[] day = calMan.getDayInfo(dayNum, month, year);
-                panelGrid.add(new DayCell(dayNum,
+                DayCell dayCell = new DayCell(dayNum,
                         CalendarConstants.days[(dayNum + firstDay.getDayOfWeek().getValue()) % 7],
                         (boolean)day[CalendarConstants.dayInfoPayDay],
-                        (Shift[])day[CalendarConstants.dayInfoShifts]));
+                        (Shift[])day[CalendarConstants.dayInfoShifts]);
+                dayCell.addActionListener(this);
+                panelGrid.add(dayCell);
             }
         }
         return panelGrid;
@@ -54,6 +58,7 @@ public class CalendarGUI extends JFrame implements ActionListener, Page {
                 String.valueOf(year + 1), String.valueOf(year + 2)};
         yearList = new JComboBox<String>(years);
         pageLayout.add(yearList, BorderLayout.PAGE_START);
+        return pageLayout;
     }
 
     private update(){
@@ -63,7 +68,10 @@ public class CalendarGUI extends JFrame implements ActionListener, Page {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() instanceof DayCell){
+            new DayView(((DayCell) e.getSource()).getDay(), ((DayCell) e.getSource()).getWeekday(),
+                    ((DayCell) e.getSource()).getPayday(), ((DayCell) e.getSource()).getShifts(), employee);
+        }
     }
 
     @Override

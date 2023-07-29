@@ -15,12 +15,14 @@ public class DayView extends JFrame implements ActionListener, Page {
     private Shift[] shifts;
     private JPanel panel;
     private ArrayList<ShiftCell> cells;
-    public DayView(int day, String weekday, boolean isPayday, Shift[] shifts){
+    private Employee employee;
+    public DayView(int day, String weekday, boolean isPayday, Shift[] shifts, Employee employee){
         this.day = day;
         this.weekday = weekday;
         this.isPayday = isPayday;
         this.shifts = shifts;
         this.cells = new ArrayList<ShiftCell>();
+        this.employee = employee;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setUndecorated(true);
         panel = new JPanel();
@@ -67,7 +69,7 @@ public class DayView extends JFrame implements ActionListener, Page {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof ShiftCell){
-            new ShiftView(((ShiftCell) e.getSource()).getShift());
+            new ShiftView(((ShiftCell) e.getSource()).getShift(), employee);
             this.dispose();
         }
     }

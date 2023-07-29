@@ -16,8 +16,8 @@ public class NotificationGUI extends JFrame implements ActionListener {
     public JScrollPane resolvedNotificationListScroller;
     private final JLabel unresolvedNotificationLabel = new JLabel("Unresolved Notifications");
     private final JLabel resolvedNotificationLabel = new JLabel("Resolved Notifications");
-    private JButton denyRequestButton = new JButton("Deny Request");
-    private JButton rescheduleShiftButton = new JButton("Reschedule Shift");
+    private final JButton denyRequestButton = new JButton("Deny Request");
+    private final JButton rescheduleShiftButton = new JButton("Reschedule Shift");
     private String[] unresolvedNotifications = {};
     private String[] resolvedNotifications = {};
     public JList<String> unresolvedNotificationList;
@@ -25,7 +25,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
 
 
     public NotificationGUI() {
-        frame.setLayout(new GridLayout(1, 2));
+        this.frame.setLayout(new GridLayout(1, 2));
         String[] mom = {"12"};
         populateLists(mom);
         createNotificationList(this, unresolvedNotificationPanel, unresolvedNotificationListPanel,
@@ -35,10 +35,10 @@ public class NotificationGUI extends JFrame implements ActionListener {
         createNotificationList(this, resolvedNotificationPanel, resolvedNotificationListPanel,
                 resolvedNotificationLabel, resolvedNotifications, unresolvedNotificationList,
                 resolvedNotificationListScroller);
-        frame.setSize(600, 600);
-        frame.setVisible(true);
-        frame.setTitle("Notifications");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setSize(600, 600);
+        this.frame.setVisible(true);
+        this.frame.setTitle("Notifications");
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void populateLists(String[] notifications) {
@@ -107,6 +107,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if ("Reschedule".equals(e.getActionCommand())) {
             System.out.println(unresolvedNotificationList.getSelectedValue());
+            this.revalidate();
         }
 
     }

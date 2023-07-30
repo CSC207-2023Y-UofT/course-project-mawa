@@ -3,16 +3,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ShiftView extends JFrame implements ActionListener, Page {
     private JPanel panel;
     private Shift shift;
     private JButton timeOffButton;
-    private Employee employee;
-    public ShiftView(Shift shift, Employee employee){
+    private int employee;
+
+    private EmployeeDataBaseInteractor empDB;
+    public ShiftView(Shift shift, int employee){
         this.shift = shift;
         this.employee = employee;
+        this.empDB = new EmployeeDataBaseInteractor();
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         addTitle();
@@ -38,11 +42,15 @@ public class ShiftView extends JFrame implements ActionListener, Page {
     @Override
     public void addContent() {
         JLabel time = new JLabel(shift.getTime().getHour() +":"+shift.getTime().getMinute());
-        JLabel coworkers = new JLabel(shift.getCoworkers());
+        ArrayList<Employee> coworkers = new ArrayList<Employee>();
+        for (int id : shift.getCoworkers()){
+            coworkers.add((Employee)empDB.getEmployee(id));
+        }
+        JLabel coworkersLabel = new JLabel(coworkers.toString());
         timeOffButton = new JButton("Request Shift Off");
         timeOffButton.addActionListener(this);
         panel.add(time);
-        panel.add(coworkers);
+        panel.add(coworkersLabel);
         panel.add(timeOffButton);
         panel.setVisible(true);
     }

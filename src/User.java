@@ -1,7 +1,7 @@
-package src;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-public abstract class User {
+public abstract class User implements Serializable {
     private int employeeNum, phoneNum;
     private String surname, firstname, gender, pronouns, email, roleName;
     private boolean active;

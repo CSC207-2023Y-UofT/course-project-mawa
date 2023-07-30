@@ -1,4 +1,3 @@
-package src;
 
 public interface Page {
     public void addTitle();

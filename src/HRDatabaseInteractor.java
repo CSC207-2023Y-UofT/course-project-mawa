@@ -1,4 +1,4 @@
-import java.util.Interactor;
+import java.util.ArrayList;
 
 public class HRDataBaseInteractor implements Interactor{
 

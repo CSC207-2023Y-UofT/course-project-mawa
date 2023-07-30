@@ -1,5 +1,4 @@
-package src;
-import src.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +8,7 @@ import java.time.LocalDate;
 public class CalendarGUI extends JFrame implements ActionListener, Page {
     private LocalDate firstDay, lastDay;
     private int numSections;
-    private ShiftInteractor shiftInteractor;
+    private ShiftDatabaseInteractor shiftInteractor;
     private CalendarManager calMan;
     private JComboBox<String> monthList;
     private JComboBox<String> yearList;

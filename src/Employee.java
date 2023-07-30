@@ -1,4 +1,3 @@
-package src;
 
 public class Employee extends User{
     private int vacationDaysTaken;

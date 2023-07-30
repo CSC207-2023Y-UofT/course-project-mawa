@@ -1,4 +1,4 @@
-package src;
+
 
 public class WageWorker extends Employee{
     private float hourlyWage;
@@ -9,5 +9,13 @@ public class WageWorker extends Employee{
         super(surname, firstname, gender, email, roleName, empNum, phoneNum,
                 dob, vacationDaysTaken, totalVacationDaysAllowed, password);
         this.hourlyWage = wage;
+    }
+
+    public void setHourlyWage(float hourlyWage){
+        this.hourlyWage = hourlyWage;
+    }
+
+    public float getHourlyWage(){
+        return hourlyWage;
     }
 }

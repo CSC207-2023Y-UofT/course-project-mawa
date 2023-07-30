@@ -1,4 +1,3 @@
-package src;
 
 public class Volunteer extends Employee{
     private float weeklyHours;

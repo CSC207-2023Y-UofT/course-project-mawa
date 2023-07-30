@@ -1,4 +1,4 @@
-package src;
+
 
 public class SalaryWorker extends Employee{
     private float yearlySalary;
@@ -9,5 +9,13 @@ public class SalaryWorker extends Employee{
         super(surname, firstname, gender, email, roleName, empNum, phoneNum,
                 dob, vacationDaysTaken, totalVacationDaysAllowed, password);
         this.yearlySalary = salary;
+    }
+
+    public void setYearlySalary(float yearlySalary){
+        this.yearlySalary = yearlySalary;
+    }
+
+    public float getYearlySalary(){
+        return yearlySalary;
     }
 }

@@ -1,10 +1,11 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
-public interface Interactor{
+public interface Interactor<T> {
 
-  public ArrayList<Object> readData();
+  ArrayList<T> readData() throws IOException, ClassNotFoundException;
 
-  public void writeData(Object obj);
+  void writeData(T obj) throws IOException;
 
   
 }

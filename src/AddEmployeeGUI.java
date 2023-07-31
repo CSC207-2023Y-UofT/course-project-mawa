@@ -1,11 +1,9 @@
-package tutorial;
-
-import org.hibernate.type.TrueFalseType;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 
 public class AddEmployeeGUI implements ActionListener{
@@ -17,11 +15,12 @@ public class AddEmployeeGUI implements ActionListener{
 
     private JLabel phoneLab = new JLabel("Phone Number (Only Integers Accepted):");
 
+
     private JLabel genderLab = new JLabel("Gender:");
 
     private JLabel emailLab = new JLabel("Email:");
 
-    private JLabel roleLab = new JLabel("Role:");
+    private JLabel roleLab = new JLabel("Role Description:");
 
     private JLabel pwdLab = new JLabel("Password:");
 
@@ -41,11 +40,12 @@ public class AddEmployeeGUI implements ActionListener{
 
     private JTextField phoneEnter = new JTextField(12);
 
+    private JTextField roleEnter = new JTextField(12);
+
     private JTextField genderEnter = new JTextField(12);
 
     private JTextField emailEnter = new JTextField(12);
 
-    private JTextField roleEnter = new JTextField(12);
 
     private JTextField pwdEnter = new JTextField(12);
 
@@ -127,16 +127,31 @@ public class AddEmployeeGUI implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        UserFactory uf = new UserFactory();
         Object s = e.getSource();
+        boolean pay_numeric = true;
+        if (payLab.isVisible()){
+            try {
+                Double num = Double.parseDouble(payEnter.getText());
+            } catch (NumberFormatException g) {
+                pay_numeric = false;
+            }
+        }
         if (s.equals(submitButton)){
             String phnum = phoneEnter.getText();
-            boolean phnum_numeric = phnum.matches("\\d+");
-            if (payLab.isVisible()){
-                boolean pay_numeric = true;
-                try {
-                    Double num = Double.parseDouble(payEnter.getText());
-                } catch (NumberFormatException g) {
-                    pay_numeric = false;
+            String byr = dobyrEnter.getText();
+            String bmth = dobmthEnter.getText();
+            String bd = dobdayEnter.getText();
+            if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
+                    && bd.matches("\\d+") && pay_numeric){
+                if (typeSelect.getSelectedItem().equals("Volunteer")){
+                    try {
+                        uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
+                                bd, Integer.parseInt(phnum), emailEnter.getText(), roleEnter.getText(),
+                                "Volunteer", pwdEnter.getText());
+                    } catch (IOException | ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
 

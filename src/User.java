@@ -2,15 +2,15 @@
 import java.io.Serializable;
 import java.time.LocalDate;
 public abstract class User implements Serializable {
-    private int employeeNum, phoneNum;
+    private int userNum, phoneNum;
     private String surname, firstname, gender, pronouns, email, roleName;
     private boolean active;
     LocalDate dob;//format should be "YYYY-MM-dd" as a String
     private char[] password;
 
     public User(String surname, String firstname, String gender, String email,
-                String roleName, int empNum, int phoneNum, String dob, char[] password){
-        this.employeeNum = empNum;
+                String roleName, int uNum, int phoneNum, String dob, char[] password){
+        this.userNum = uNum;
         this.phoneNum = phoneNum;
         this.surname = surname;
         this.firstname = firstname;
@@ -21,8 +21,8 @@ public abstract class User implements Serializable {
         this.active = true;
         this.password = password;
     }
-    public int getEmployeeNum(){
-        return employeeNum;
+    public int getUserNum(){
+        return userNum;
     }
 
     public int getPhoneNum(){

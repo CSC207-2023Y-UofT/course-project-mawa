@@ -5,9 +5,9 @@ public class WageWorker extends Employee{
 
     public WageWorker(String surname, String firstname, String gender,
                       String email, String roleName, int empNum, int phoneNum, String dob,
-                      int vacationDaysTaken, int totalVacationDaysAllowed, float wage, char[] password) {
+                      float wage, char[] password) {
         super(surname, firstname, gender, email, roleName, empNum, phoneNum,
-                dob, vacationDaysTaken, totalVacationDaysAllowed, password);
+                dob, password);
         this.hourlyWage = wage;
     }
 

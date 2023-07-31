@@ -1,44 +1,32 @@
-import java.util.Interactor;
+import java.io.*;
+import java.util.ArrayList;
+public class PaymentInteractor implements Interactor{
 
-public class PaymentDatabaseInteractor implements Interactor{
-  
-  private static SessionFactory factory
+  public ArrayList<Payment> readData() throws IOException, ClassNotFoundException {
+      ArrayList<Payment> payList = new ArrayList<Payment>;
+      FileInputStream file = new FileInputStream("payments.ser");
+      ObjectInputStream input = new ObjectInputStream(file);
+      try {
+          while (true){
+              payList.add((Payment) input.readObject());
+          }
+      } catch (OptionalDataException e){
+          if (!e.eof){
+              throw e;
+          }
+      } finally {
+          input.close();
+      }
+      return payList;
 
-  public ArrayList<Payment> readData(){
-        List payList = new ArrayList<Payment>
-        Session session = factory.openSession();
-        Transaction tx = null;
 
-        try {
-            tx = session.beginTransaction();
-            List payments = session.createQuery("FROM Payment").list();
-            for (Iterator iterator = payments.iterator(); iterator.hasNext();){
-                Payment payment = (Payment) iterator.next();
-                payList.add(payment)
-            }
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return payList;
+  }
 
   public void writeData(Payment payment){
-        Session session = factory.openSession();
-        Transaction tx = null;
-
-        try {
-            tx = session.beginTransaction();
-            session.save(payment, payment.paymentNum);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+      FileOutputStream file = new FileOutputStream("payments.ser");
+      ObjectOutputStream output = new ObjectOutputStream(file);
+      output.writeObject(payment);
+      output.close();
 
     }
 

@@ -1,104 +1,38 @@
-import java.util.Interactor;
+import javax.management.Notification;
+import java.io.*;
+import java.util.ArrayList;
 
-public class NotificationDatabaseInteractor implements Interactor{
+public class NotificationInteractor implements Interactor<Notification>{
 
-  private static SessionFactory factory;
+   public ArrayList<Notification> readData() throws IOException, ClassNotFoundException{
 
-   public ArrayList<Notification> readData(){
-        List notifList = new ArrayList<Notification>
-        Session session = factory.openSession();
-        Transaction tx = null;
+       ArrayList<Notification> notifList = new ArrayList<Notification>();
+       FileInputStream file = new FileInputStream("notifications.ser");
+       ObjectInputStream input = new ObjectInputStream(file);
+       try {
+           while (true){
+               notifList.add((Notification) input.readObject());
+           }
+       } catch (OptionalDataException e){
+           if (!e.eof){
+               throw e;
+           }
+       } finally {
+           input.close();
+       }
+       return notifList;
 
-        try {
-            tx = session.beginTransaction();
-            List notifs = session.createQuery("FROM NotificationRequest").list();
-            for (Iterator iterator = notifs.iterator(); iterator.hasNext();){
-                NotificationRequest notif = (NotificationRequest) iterator.next();
-                notifList.add(notif)
-            }
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
-
-        try {
-            tx = session.beginTransaction();
-            List notifs = session.createQuery("FROM NotificationResponse").list();
-            for (Iterator iterator = notifs.iterator(); iterator.hasNext();){
-                NotificationResponse notif = (NotificationResponse) iterator.next();
-                notifList.add(notif)
-            }
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-     
-        return notifList;
 
   }
 
-  public void resolveRequest(Integer notifId){
-
-    Session session = factory.openSession();
-        Transaction tx = null;
-
-        try {
-            tx = session.beginTransaction();
-            NotificationRequest notif = (NotificationRequest)session.get(NotificationRequest.class, notifId);
-            notif.resolve();
-            session.update(notif);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    
-  }
-
-  public void resolveResponse(Integer notifId){
-
-    Session session = factory.openSession();
-        Transaction tx = null;
-
-        try {
-            tx = session.beginTransaction();
-            NotificationResponse notif = (NotificationResponse)session.get(NotificationReseponse.class, notifId);
-            notif.resolve();
-            session.update(notif);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    
-  }
 
 
-  public void writeData(Notification notification){
-        Session session = factory.openSession();
-        Transaction tx = null;
+  public void writeData(Notification notification) throws IOException{
 
-        try {
-            tx = session.beginTransaction();
-            session.save(notification, notification.getnotifId());
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+      FileOutputStream file = new FileOutputStream("notifications.ser");
+      ObjectOutputStream output = new ObjectOutputStream(file);
+      output.writeObject(notification);
+      output.close();
 
     }
   

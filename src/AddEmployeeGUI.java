@@ -55,7 +55,7 @@ public class AddEmployeeGUI implements ActionListener{
 
     private JTextField dobdayEnter = new JTextField(12);
 
-    private JComboBox typeSelect = new JComboBox(new String[]{"Wage Worker", "Salaried Employee", "Volunteer"});
+    private JComboBox typeSelect = new JComboBox(new String[]{"Wage Worker", "Salary Worker", "Volunteer"});
 
     private JTextField payEnter = new JTextField(12);
 
@@ -143,16 +143,22 @@ public class AddEmployeeGUI implements ActionListener{
             String bmth = dobmthEnter.getText();
             String bd = dobdayEnter.getText();
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
-                    && bd.matches("\\d+") && pay_numeric){
-                if (typeSelect.getSelectedItem().equals("Volunteer")){
-                    try {
+                    && bd.matches("\\d+") && pay_numeric && typeSelect.getSelectedItem() != null){
+                try {
+                    if (!payLab.isVisible()){
                         uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
                                 bd, Integer.parseInt(phnum), emailEnter.getText(), roleEnter.getText(),
                                 "Volunteer", pwdEnter.getText());
-                    } catch (IOException | ClassNotFoundException ex) {
-                        throw new RuntimeException(ex);
+                    } else{
+                        uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
+                                bd, Integer.parseInt(phnum), emailEnter.getText(), roleEnter.getText(),
+                                (String) typeSelect.getSelectedItem(), pwdEnter.getText(),
+                                Float.parseFloat(payEnter.getText()));
                     }
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
+
             }
 
         }
@@ -162,7 +168,7 @@ public class AddEmployeeGUI implements ActionListener{
                 payLab.setVisible(true);
                 payEnter.setVisible(true);
                 payLab.setText("Hourly Wage ($), Numbers Only:");
-            } else if (typeSelect.getSelectedItem() == "Salaried Employee"){
+            } else if (typeSelect.getSelectedItem() == "Salary Worker"){
                 payLab.setVisible(true);
                 payEnter.setVisible(true);
                 payLab.setText("Yearly Salary ($), Numbers Only:");

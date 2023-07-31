@@ -1,46 +1,34 @@
-import java.util.Interactor;
+import java.io.*;
+import java.util.ArrayList;
 
-public class ShiftDatabaseInteractor implements Interactor{
 
-  private static SessionFactory factory;
+public class ShiftInteractor implements Interactor<Shift>{
   
-  public ArrayList<Shift> readData(){
-        List shiftList = new ArrayList<Shift>
-        Session session = factory.openSession();
-        Transaction tx = null;
-
+  public ArrayList<Shift> readData() throws IOException, ClassNotFoundException{
+        ArrayList<Shift> shiftList = new ArrayList<Shift>();
+        FileInputStream file = new FileInputStream("shifts.ser");
+        ObjectInputStream input = new ObjectInputStream(file);
         try {
-            tx = session.beginTransaction();
-            List shifts = session.createQuery("FROM Shift").list();
-            for (Iterator iterator = shifts.iterator(); iterator.hasNext();){
-                Shift shift = (Shift) iterator.next();
-                shiftList.add(shift)
+            while (true){
+                shiftList.add((Shift) input.readObject());
             }
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
+        } catch (OptionalDataException e){
+            if (!e.eof){
+                throw e;
+            }
         } finally {
-            session.close();
+            input.close();
         }
         return shiftList;
 
   }
 
-   public void writeData(Shift shift){
-        Session session = factory.openSession();
-        Transaction tx = null;
+   public void writeData(Shift shift) throws IOException{
 
-        try {
-            tx = session.beginTransaction();
-            session.save(shift, shift.shiftNum);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+       FileOutputStream file = new FileOutputStream("shifts.ser");
+       ObjectOutputStream output = new ObjectOutputStream(file);
+       output.writeObject(shift);
+       output.close();
 
     }
   

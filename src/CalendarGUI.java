@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class CalendarGUI extends JFrame implements ActionListener, Page {
     private LocalDate firstDay, lastDay;
     private int numSections;
-    private ShiftDatabaseInteractor shiftInteractor;
+    private ShiftInteractor shiftInteractor;
     private CalendarManager calMan;
     private JComboBox<String> monthList;
     private JComboBox<String> yearList;

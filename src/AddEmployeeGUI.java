@@ -1,9 +1,7 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 
 public class AddEmployeeGUI implements ActionListener{
@@ -125,6 +123,10 @@ public class AddEmployeeGUI implements ActionListener{
 
     }
 
+    public static void main(String[] args){
+        new AddEmployeeGUI();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         UserFactory uf = new UserFactory();
@@ -144,21 +146,20 @@ public class AddEmployeeGUI implements ActionListener{
             String bd = dobdayEnter.getText();
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+") && pay_numeric && typeSelect.getSelectedItem() != null){
-                try {
-                    if (!payLab.isVisible()){
-                        uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
-                                bd, Integer.parseInt(phnum), emailEnter.getText(), roleEnter.getText(),
-                                "Volunteer", pwdEnter.getText());
-                    } else{
-                        uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
-                                bd, Integer.parseInt(phnum), emailEnter.getText(), roleEnter.getText(),
-                                (String) typeSelect.getSelectedItem(), pwdEnter.getText(),
-                                Float.parseFloat(payEnter.getText()));
-                    }
-                } catch (IOException | ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
+                if (!payLab.isVisible()){
+                    uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
+                            bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
+                            "Volunteer", pwdEnter.getText());
+                } else{
+                    uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
+                            bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
+                            (String) typeSelect.getSelectedItem(), pwdEnter.getText(),
+                            Float.parseFloat(payEnter.getText()));
                 }
 
+                new ManageEmployeesGUI();
+                frame.dispose();
+                JOptionPane.showMessageDialog(null, "Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }

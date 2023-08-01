@@ -1,9 +1,9 @@
 import javax.swing.*;
 
-public class ShiftViewGUI {
+public class ShiftViewHRGUI {
     private JFrame frame = new JFrame();
 
-    public ShiftViewGUI(){
+    public void ShiftViewGUI(){
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
         this.frame.setTitle("Notifications");
@@ -11,6 +11,7 @@ public class ShiftViewGUI {
     }
 
     public static void main(String[] args) {
-        new ShiftViewGUI();
+        new ShiftViewHRGUI();
     }
+
 }

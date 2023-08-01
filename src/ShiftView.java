@@ -11,7 +11,7 @@ public class ShiftView extends JFrame implements ActionListener, Page {
     private JButton timeOffButton;
     private int employee;
 
-    private EmployeeDataBaseInteractor empDB;
+    private UserInteractor empDB;
     public ShiftView(Shift shift, int employee){
         this.shift = shift;
         this.employee = employee;

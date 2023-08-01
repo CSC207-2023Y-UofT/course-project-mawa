@@ -17,7 +17,7 @@ abstract class Notification {
         this.shiftId = shiftId;
         this.date = date;
         this.resolved = false;
-        ndb = new NotificationInteractor();
+        NotificationInteractor ndb = new NotificationInteractor();
         l = ndb.readData();
         if (len(l) == 0){
             this.notifId = 1;

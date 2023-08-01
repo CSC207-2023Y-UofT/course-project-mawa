@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class completeEmployeeListGUI implements ActionListener{
+public class CompleteEmployeeListGUI implements ActionListener{
 
     private JFrame frame = new JFrame();
 
@@ -14,9 +14,8 @@ public class completeEmployeeListGUI implements ActionListener{
 
     private JPanel titlePanel = new JPanel();
 
-    private Container contentPane = frame.getContentPane();
 
-    public completeEmployeeListGUI(){
+    public CompleteEmployeeListGUI(){
 
         frame.setSize(600, 600);
         frame.setVisible(true);
@@ -34,7 +33,7 @@ public class completeEmployeeListGUI implements ActionListener{
         titlePanel.add(new JLabel("ID Number:"));
         titlePanel.add(new JLabel("Birthday:"));
         titlePanel.add(new JLabel("Type:"));
-        titlePanel.add(new JLabel("Pay:"));
+        titlePanel.add(new JLabel("Salary/Wage:"));
         titlePanel.add(new JLabel("Active:"));
         titlePanel.add(new JLabel("Change Status:"));
         all_panels.add(titlePanel);
@@ -89,7 +88,7 @@ public class completeEmployeeListGUI implements ActionListener{
         Object source = e.getSource();
         if (buttons_to_ids.containsKey(source)){
             UserFactory uf = new UserFactory();
-            uf.changeActivation(buttons_to_ids.get(source));
+            //uf.changeActivation(buttons_to_ids.get(source));
         }
     }
 }

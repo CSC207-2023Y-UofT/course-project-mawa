@@ -1,21 +1,28 @@
 import java.io.*;
 import java.util.ArrayList;
-public class PaymentInteractor implements Interactor{
+public class PaymentInteractor implements Interactor<Payment>{
 
-  public ArrayList<Payment> readData() throws IOException, ClassNotFoundException {
-      ArrayList<Payment> payList = new ArrayList<Payment>;
-      FileInputStream file = new FileInputStream("payments.ser");
-      ObjectInputStream input = new ObjectInputStream(file);
-      try {
-          while (true){
-              payList.add((Payment) input.readObject());
+  public ArrayList<Payment> readData() {
+      ArrayList<Payment> payList = new ArrayList<>();
+      Object obj = null;
+
+      boolean isExist = true;
+
+      try{
+          FileInputStream file = new FileInputStream("payments.ser");
+          ObjectInputStream input = new ObjectInputStream(file);
+          while(isExist){
+              if(file.available() != 0){
+                  obj = input.readObject();
+                  payList.add((Payment) obj);
+              }
+              else{
+                  isExist =false;
+              }
+              input.close();
           }
-      } catch (OptionalDataException e){
-          if (!e.eof){
-              throw e;
-          }
-      } finally {
-          input.close();
+      } catch (IOException | ClassNotFoundException e){
+          System.out.println(e);
       }
       return payList;
 
@@ -23,10 +30,17 @@ public class PaymentInteractor implements Interactor{
   }
 
   public void writeData(Payment payment){
-      FileOutputStream file = new FileOutputStream("payments.ser");
-      ObjectOutputStream output = new ObjectOutputStream(file);
-      output.writeObject(payment);
-      output.close();
+
+      ArrayList<Payment> paymentList = this.readData();
+      paymentList.add(payment);
+      try{
+          FileOutputStream file = new FileOutputStream("payments.ser");
+          ObjectOutputStream output = new ObjectOutputStream(file);
+          output.writeObject(userList);
+          output.close();
+      } catch (IOException e){
+          System.out.println(e);
+      }
 
     }
 

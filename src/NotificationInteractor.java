@@ -31,7 +31,7 @@ public class NotificationInteractor implements Interactor<Notification>{
 
       FileOutputStream file = new FileOutputStream("notifications.ser");
       ObjectOutputStream output = new ObjectOutputStream(file);
-      output.writeObject(notification);
+      output.writeObject(notifications);
       output.close();
 
     }

@@ -1,26 +1,17 @@
+import javax.management.Notification;
 import java.io.*;
 import java.util.ArrayList;
 public class PaymentInteractor implements Interactor<Payment>{
 
   public ArrayList<Payment> readData() {
-      ArrayList<Payment> payList = new ArrayList<>();
-      Object obj = null;
 
-      boolean isExist = true;
+      ArrayList<Payment> payList = new ArrayList<>();
 
       try{
-          FileInputStream file = new FileInputStream("payments.ser");
+          FileInputStream file = new FileInputStream("notifications.ser");
           ObjectInputStream input = new ObjectInputStream(file);
-          while(isExist){
-              if(file.available() != 0){
-                  obj = input.readObject();
-                  payList.add((Payment) obj);
-              }
-              else{
-                  isExist =false;
-              }
-              input.close();
-          }
+          payList.addAll ((ArrayList<Payment>) input.readObject()) ;
+
       } catch (IOException | ClassNotFoundException e){
           System.out.println(e);
       }
@@ -36,7 +27,7 @@ public class PaymentInteractor implements Interactor<Payment>{
       try{
           FileOutputStream file = new FileOutputStream("payments.ser");
           ObjectOutputStream output = new ObjectOutputStream(file);
-          output.writeObject(userList);
+          output.writeObject(payment);
           output.close();
       } catch (IOException e){
           System.out.println(e);

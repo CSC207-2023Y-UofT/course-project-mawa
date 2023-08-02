@@ -4,21 +4,17 @@ import java.util.ArrayList;
 
 public class NotificationInteractor implements Interactor<Notification>{
 
-   public ArrayList<Notification> readData() throws IOException, ClassNotFoundException{
+   public ArrayList<Notification> readData(){
 
-       ArrayList<Notification> notifList = new ArrayList<Notification>();
-       FileInputStream file = new FileInputStream("notifications.ser");
-       ObjectInputStream input = new ObjectInputStream(file);
-       try {
-           while (true){
-               notifList.add((Notification) input.readObject());
-           }
-       } catch (OptionalDataException e){
-           if (!e.eof){
-               throw e;
-           }
-       } finally {
-           input.close();
+       ArrayList<Notification> notifList = new ArrayList<>();
+
+       try{
+           FileInputStream file = new FileInputStream("notifications.ser");
+           ObjectInputStream input = new ObjectInputStream(file);
+           notifList.addAll ((ArrayList<Notification>) input.readObject()) ;
+
+       } catch (IOException | ClassNotFoundException e){
+           System.out.println(e);
        }
        return notifList;
 
@@ -27,12 +23,18 @@ public class NotificationInteractor implements Interactor<Notification>{
 
 
 
-  public void writeData(Notification notification) throws IOException{
+  public void writeData(Notification notification){
 
-      FileOutputStream file = new FileOutputStream("notifications.ser");
-      ObjectOutputStream output = new ObjectOutputStream(file);
-      output.writeObject(notifications);
-      output.close();
+      ArrayList<Notification> notifList = this.readData();
+      notifList.add(notification);
+      try {
+          FileOutputStream file = new FileOutputStream("notifications.ser");
+          ObjectOutputStream output = new ObjectOutputStream(file);
+          output.writeObject(notifList);
+          output.close();
+      } catch (IOException e) {
+          System.out.println(e);
+      }
 
     }
   

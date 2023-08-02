@@ -146,10 +146,10 @@ public class AddEmployeeGUI implements ActionListener{
             String bd = dobdayEnter.getText();
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+") && pay_numeric && typeSelect.getSelectedItem() != null){
-                if (!payLab.isVisible()){
+                if (((String) typeSelect.getSelectedItem()).equals("Volunteer")){
                     uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
                             bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
-                            "Volunteer", pwdEnter.getText());
+                            "Volunteer", pwdEnter.getText(), 0);
                 } else{
                     uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
                             bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),

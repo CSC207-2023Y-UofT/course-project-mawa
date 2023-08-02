@@ -102,7 +102,7 @@ public class AddHRGUI implements ActionListener, Page{
 
     @Override
     public void addTitle() {
-        frame.setTitle("Add Employee");
+        frame.setTitle("Add HR Account");
     }
 
     @Override

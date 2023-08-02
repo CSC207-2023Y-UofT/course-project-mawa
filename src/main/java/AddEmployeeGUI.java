@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class AddEmployeeGUI implements ActionListener{
+public class AddEmployeeGUI implements ActionListener, Page{
 
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
@@ -53,7 +53,7 @@ public class AddEmployeeGUI implements ActionListener{
 
     private JTextField dobdayEnter = new JTextField(12);
 
-    private JComboBox typeSelect = new JComboBox(new String[]{"Wage Worker", "Salary Worker", "Volunteer"});
+    private JComboBox<String> typeSelect = new JComboBox<>(new String[]{"Wage Worker", "Salary Worker", "Volunteer"});
 
     private JTextField payEnter = new JTextField(12);
 
@@ -68,57 +68,15 @@ public class AddEmployeeGUI implements ActionListener{
 
     private Container contentPane = frame.getContentPane();
 
-    private JButton back = new JButton("Back");
-
-    private  JPanel backPanel = new JPanel();
 
 
 
     public AddEmployeeGUI(){
         frame.setSize(600, 600);
         frame.setVisible(true);
-        frame.setTitle("AddEmployee");
+        this.addTitle();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.questionPanel.setLayout(new GridLayout(0, 2));
-        this.dobPanel.setLayout(new GridLayout(1, 6));
-        dobPanel.add(dobyrLab);
-        dobPanel.add(dobyrEnter);
-        dobPanel.add(dobmthLab);
-        dobPanel.add(dobmthEnter);
-        dobPanel.add(dobdayLab);
-        dobPanel.add(dobdayEnter);
-        backPanel.setLayout(new GridLayout(1, 1));
-        backPanel.add(back);
-        submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.LINE_AXIS));
-        submitPanel.add(Box.createHorizontalGlue());
-
-        this.questionPanel.add(firstNameLab);
-        this.questionPanel.add(firstNameEnter);
-        this.questionPanel.add(surnameLab);
-        this.questionPanel.add(surnameEnter);
-        this.questionPanel.add(phoneLab);
-        this.questionPanel.add(phoneEnter);
-        this.questionPanel.add(genderLab);
-        this.questionPanel.add(genderEnter);
-        this.questionPanel.add(emailLab);
-        this.questionPanel.add(emailEnter);
-        this.questionPanel.add(roleLab);
-        this.questionPanel.add(roleEnter);
-        this.questionPanel.add(pwdLab);
-        this.questionPanel.add(pwdEnter);
-        this.questionPanel.add(typeLab);
-        this.questionPanel.add(typeSelect);
-        this.questionPanel.add(payLab);
-        this.questionPanel.add(payEnter);
-        typeSelect.addActionListener(this);
-        submitButton.addActionListener(this);
-        back.addActionListener(this);
-        this.submitPanel.add(submitButton);
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(backPanel);
-        contentPane.add(questionPanel);
-        contentPane.add(dobPanel);
-        contentPane.add(submitPanel);
+        this.addContent();
 
 
     }
@@ -185,5 +143,52 @@ public class AddEmployeeGUI implements ActionListener{
     }
 
 
+    @Override
+    public void addTitle() {
+        frame.setTitle("Add Employee");
+    }
 
+    @Override
+    public void addContent() {
+        this.questionPanel.setLayout(new GridLayout(0, 2));
+        this.dobPanel.setLayout(new GridLayout(1, 6));
+        dobPanel.add(dobyrLab);
+        dobPanel.add(dobyrEnter);
+        dobPanel.add(dobmthLab);
+        dobPanel.add(dobmthEnter);
+        dobPanel.add(dobdayLab);
+        dobPanel.add(dobdayEnter);
+        backPanel.setLayout(new GridLayout(1, 1));
+        backPanel.add(back);
+        submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.LINE_AXIS));
+        submitPanel.add(Box.createHorizontalGlue());
+
+        this.questionPanel.add(firstNameLab);
+        this.questionPanel.add(firstNameEnter);
+        this.questionPanel.add(surnameLab);
+        this.questionPanel.add(surnameEnter);
+        this.questionPanel.add(phoneLab);
+        this.questionPanel.add(phoneEnter);
+        this.questionPanel.add(genderLab);
+        this.questionPanel.add(genderEnter);
+        this.questionPanel.add(emailLab);
+        this.questionPanel.add(emailEnter);
+        this.questionPanel.add(roleLab);
+        this.questionPanel.add(roleEnter);
+        this.questionPanel.add(pwdLab);
+        this.questionPanel.add(pwdEnter);
+        this.questionPanel.add(typeLab);
+        this.questionPanel.add(typeSelect);
+        this.questionPanel.add(payLab);
+        this.questionPanel.add(payEnter);
+        typeSelect.addActionListener(this);
+        submitButton.addActionListener(this);
+        back.addActionListener(this);
+        this.submitPanel.add(submitButton);
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(backPanel);
+        contentPane.add(questionPanel);
+        contentPane.add(dobPanel);
+        contentPane.add(submitPanel);
+    }
 }

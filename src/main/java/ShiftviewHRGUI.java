@@ -35,8 +35,8 @@ public class ShiftviewHRGUI extends JFrame implements ActionListener {
         JPanel employeeListPanel = new JPanel();
         employeeListPanel.setLayout(new GridLayout(1, 2));
         populateLists(new String[]{"yes"});
-        createUserList(employeeListPanel,"Employees On Shift", employeesOnShiftList, employeesOnShiftScroller);
-        createUserList(employeeListPanel,"Employees Not On Shift", employeesNotOnShiftList, employeesNotOnShiftScroller);
+        createUserList(employeeListPanel,"Employees On Shift", employeesOnShiftList, employeesOnShiftScroller, removeButton, "Remove");
+        createUserList(employeeListPanel,"Employees Not On Shift", employeesNotOnShiftList, employeesNotOnShiftScroller, addButton, "Add");
         this.frame.add(employeeListPanel, BorderLayout.CENTER);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
@@ -94,24 +94,20 @@ public class ShiftviewHRGUI extends JFrame implements ActionListener {
         listPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
         panel.add(listPanel, BorderLayout.CENTER);
         button.setActionCommand(command);
-        button.addActionListener((ActionListener) this);
-
-        //this.frame.add(panel);
+        button.addActionListener(this);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(button);
+        button.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(buttonPanel, BorderLayout.PAGE_END);
         mainPanel.add(panel);
-    }
-
-
-    public static void main(String[] args) {
-        new ShiftviewHRGUI();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if ("Reschedule".equals(e.getActionCommand())) {
-            System.out.println(unresolvedNotificationList.getSelectedValue());
+        if ("Add".equals(e.getActionCommand())) {
             this.revalidate();
             new ShiftviewHRGUI();
-            this.dispose();
+            this.frame.dispose();
         }
 
     }

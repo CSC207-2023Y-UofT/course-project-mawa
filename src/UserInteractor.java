@@ -32,6 +32,20 @@ public class UserInteractor implements Interactor<User>{
         return employees;
     }
 
+    public void update(User u){
+        ArrayList<User> users = this.readData();
+        users.removeIf(user -> u.getUserNum() == user.getUserNum());
+        users.add(u);
+        try {
+            FileOutputStream file = new FileOutputStream("users.ser");
+            ObjectOutputStream output = new ObjectOutputStream(file);
+            output.writeObject(users);
+            output.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
     public void writeData(User user){
 
         ArrayList<User> userList = this.readData();

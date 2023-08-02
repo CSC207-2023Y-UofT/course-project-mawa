@@ -29,7 +29,7 @@ public class CompleteUserListGUI implements ActionListener, Page{
         Object source = e.getSource();
         if (buttonsToIDs.containsKey(source)){
             UserFactory uf = new UserFactory();
-            //uf.changeActivation(buttons_to_ids.get(source));
+            uf.changeActivation(buttonsToIDs.get(source));
         }
     }
 

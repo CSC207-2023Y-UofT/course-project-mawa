@@ -21,6 +21,13 @@ public class ShiftInteractor implements Interactor<Shift>{
 
   }
 
+    public void update(Shift s){
+        ArrayList<Shift> shifts = this.readData();
+        shifts.removeIf(shift -> s.get == user.getUserNum());
+        this.writeData(u);
+
+    }
+
    public void writeData(Shift shift){
 
        ArrayList<Shift> shiftList = this.readData();

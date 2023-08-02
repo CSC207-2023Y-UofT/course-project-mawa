@@ -33,7 +33,7 @@ public void actionPerformed(ActionEvent e){
       new AddEmployeeGUI();
       frame.dispose();
     } else if (source.equals(completeEmployeeList)){
-      new CompleteEmployeeListGUI();
+      new CompleteUserListGUI();
       frame.dispose();
     } else if (source.equals(employeeSummary)) {
       new EmployeeSummaryGUI();

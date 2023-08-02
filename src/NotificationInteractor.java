@@ -24,6 +24,7 @@ public class NotificationInteractor implements Interactor<Notification>{
   public void update(Notification n){
        ArrayList<Notification> notifs = this.readData();
        notifs.removeIf(notif -> n.getNotifId() == notifs.getNotifId());
+       notifs.add(n);
       try {
           FileOutputStream file = new FileOutputStream("notifications.ser");
           ObjectOutputStream output = new ObjectOutputStream(file);

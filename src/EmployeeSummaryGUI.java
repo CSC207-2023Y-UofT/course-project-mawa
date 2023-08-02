@@ -78,9 +78,11 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
             JButton b = new JButton("Pay");
             payButtonsToIDs.put(b, employee.getUserNum());
             panel.add(b);
+            b.addActionListener(this);
             JButton c = new JButton("View Schedule");
             schedButtonsToIDs.put(c, employee.getUserNum());
             panel.add(c);
+            c.addActionListener(this);
             return panel;
         }
 

@@ -41,7 +41,7 @@ public class UserFactory{
         ArrayList<User> users = ui.readData();
         Boolean[] toReturn = {false, false};
         for (User user: users){
-            if (user.getUserNum() == userNum){
+            if (user.getUserNum() == userNum && user.isActive()){
                 StringBuilder p = new StringBuilder();
                 for (char c: user.getPassword()){
                     p.append(c);

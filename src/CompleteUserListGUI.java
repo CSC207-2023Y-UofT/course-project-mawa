@@ -83,11 +83,13 @@ public class CompleteUserListGUI implements ActionListener, Page{
         if (user.isActive()){
             panel.add(new JLabel("Yes"));
             JButton b = new JButton("Deactivate");
+            b.addActionListener(this);
             buttonsToIDs.put(b, user.getUserNum());
             panel.add(b);
         } else{
             panel.add(new JLabel("No"));
             JButton b = new JButton("Re-Activate");
+            b.addActionListener(this);
             buttonsToIDs.put(b, user.getUserNum());
             panel.add(b);
         }

@@ -63,7 +63,6 @@ public class AddEmployeeGUI implements ActionListener, Page{
 
     private JPanel dobPanel = new JPanel();
 
-    private JPanel firstNamePanel = new JPanel();
     private JButton submitButton = new JButton("Enter");
 
     private Container contentPane = frame.getContentPane();

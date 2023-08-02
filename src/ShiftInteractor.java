@@ -23,8 +23,16 @@ public class ShiftInteractor implements Interactor<Shift>{
 
     public void update(Shift s){
         ArrayList<Shift> shifts = this.readData();
-        shifts.removeIf(shift -> s.get == user.getUserNum());
-        this.writeData(u);
+        shifts.removeIf(shift -> s.getShiftId() == shift.getShiftId());
+        shifts.add(s);
+        try{
+            FileOutputStream file = new FileOutputStream("shifts.ser");
+            ObjectOutputStream output = new ObjectOutputStream(file);
+            output.writeObject(shifts);
+            output.close();
+        } catch (IOException e){
+            System.out.println(e);
+        }
 
     }
 

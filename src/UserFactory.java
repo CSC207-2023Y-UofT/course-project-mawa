@@ -20,7 +20,8 @@ public class UserFactory{
             if (e.getUserNum() == IDNum){
                 if (e.isActive()){
                     for (Shift shift: shifts){
-                        shift.removeCoworker(IDNum);
+                        shift.removeCoworker(IDNum); //May need to use a shift factory here.
+                        si.update(shift);
                     }
                     e.setActive(false);
                 } else{

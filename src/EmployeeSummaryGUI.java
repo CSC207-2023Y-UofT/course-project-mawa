@@ -11,6 +11,8 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
 
     private HashMap<JButton, Integer> payButtonsToIDs = new HashMap<JButton, Integer>();
 
+    private HashMap<JButton, Integer> schedButtonsToIDs = new HashMap<JButton, Integer>();
+
     private JPanel titlePanel = new JPanel();
 
     public EmployeeSummaryGUI(){
@@ -24,7 +26,12 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        Object source = e.getSource();
+        if (payButtonsToIDs.containsKey(source)){
+            //Open payment page with that employee ID as a parameter
+        } else if (schedButtonsToIDs.containsKey(source)){
+            //Open rescheduling page
+        }
     }
 
     @Override
@@ -72,7 +79,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
             payButtonsToIDs.put(b, employee.getUserNum());
             panel.add(b);
             JButton c = new JButton("View Schedule");
-            payButtonsToIDs.put(c, employee.getUserNum());
+            schedButtonsToIDs.put(c, employee.getUserNum());
             panel.add(c);
             return panel;
         }

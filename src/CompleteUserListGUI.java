@@ -26,10 +26,14 @@ public class CompleteUserListGUI implements ActionListener, Page{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        //If a activate/deactivate button is clicked, the user factory updates the user, and the page is reloaded to show the change.
         Object source = e.getSource();
         if (buttonsToIDs.containsKey(source)){
             UserFactory uf = new UserFactory();
             uf.changeActivation(buttonsToIDs.get(source));
+            new CompleteUserListGUI();
+            frame.dispose();
+            JOptionPane.showMessageDialog(null, "Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -39,6 +43,7 @@ public class CompleteUserListGUI implements ActionListener, Page{
     }
 
     public void makeHeader(){
+        //Make a panel which includes labels for all the attributes of the users the page shows.
         titlePanel.setLayout(new GridLayout(1, 12));
         titlePanel.add(new JLabel("First Name:"));
         titlePanel.add(new JLabel("Surname:"));
@@ -55,6 +60,7 @@ public class CompleteUserListGUI implements ActionListener, Page{
     }
 
     public JPanel makeUserPanel(User user){
+        //Make a panel which contains a particular users information, and has a link to activate/deactivate.
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 12));
         panel.add(new JLabel(user.getFirstname()));
@@ -90,6 +96,7 @@ public class CompleteUserListGUI implements ActionListener, Page{
 
     @Override
     public void addContent() {
+        //Add the title panel and all user panels, by iterating through the list of all users.
         JPanel all_panels = new JPanel();
         all_panels.setLayout(new BoxLayout(all_panels, BoxLayout.Y_AXIS));
         this.makeHeader();

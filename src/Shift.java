@@ -9,15 +9,20 @@ public class Shift implements Serializable {
     private float duration;
     private List<Integer> coworkers;
 
-    public Shift(LocalDateTime time, List<Integer> coworkers, float duration){
+    private int shiftId;
+
+    public Shift(LocalDateTime time, List<Integer> coworkers, float duration, int shiftId){
         this.time = time;
         this.coworkers = coworkers;
         this.duration = duration;
+        this.shiftId = shiftId;
     }
 
     public LocalDateTime getTime() {
         return time;
     }
+
+    public int getShiftId(){return shiftId;}
 
     public List<Integer> getCoworkers() {
         return coworkers;

@@ -13,6 +13,8 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
 
     private HashMap<JButton, Integer> schedButtonsToIDs = new HashMap<JButton, Integer>();
 
+    private HashMap<JButton, Integer> payHistButtonsToIDs = new HashMap<JButton, Integer>();
+
     private JPanel titlePanel = new JPanel();
 
     public EmployeeSummaryGUI(){
@@ -40,7 +42,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
     }
 
     public void makeHeader(){
-        titlePanel.setLayout(new GridLayout(1, 12));
+        titlePanel.setLayout(new GridLayout(1, 13));
         titlePanel.add(new JLabel("First Name:"));
         titlePanel.add(new JLabel("Surname:"));
         titlePanel.add(new JLabel("Gender:"));
@@ -53,11 +55,12 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
         titlePanel.add(new JLabel("Salary/Wage:"));
         titlePanel.add(new JLabel("Pay Employee:"));
         titlePanel.add(new JLabel("View/Edit Schedule:"));
+        titlePanel.add(new JLabel("View Payment History:"));
     }
 
     public JPanel makeEmployeePanel(Employee employee) {
             JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(1, 12));
+            panel.setLayout(new GridLayout(1, 13));
             panel.add(new JLabel(employee.getFirstname()));
             panel.add(new JLabel(employee.getSurname()));
             panel.add(new JLabel(employee.getGender()));
@@ -83,7 +86,11 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
             schedButtonsToIDs.put(c, employee.getUserNum());
             panel.add(c);
             c.addActionListener(this);
+            JButton d = new JButton("View Payment History");
+            payHistButtonsToIDs.put(d, employee.getUserNum());
+            panel.add(d);
             return panel;
+
         }
 
 

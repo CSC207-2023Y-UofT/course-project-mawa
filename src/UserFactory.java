@@ -13,33 +13,30 @@ public class UserFactory{
 
     public void changeActivation(int IDNum){
         UserInteractor ui = new UserInteractor();
-        ArrayList<User> users = ui.readData();
         ShiftInteractor si = new ShiftInteractor();
         ArrayList<Shift> shifts = si.readData();
-        for (User e: users){
-            if (e.getUserNum() == IDNum){
-                if (e.isActive()){
-                    for (Shift shift: shifts){
-                        shift.removeCoworker(IDNum); //May need to use a shift factory here.
-                        si.update(shift);
-                    }
-                    e.setActive(false);
-                } else{
-                    e.setActive(true);
-                }
-                ui.update(e);
+        User user = this.idToUser(IDNum);
+        if (user.isActive()){
+            for (Shift shift: shifts){
+                shift.removeCoworker(IDNum); //May need to use a shift factory here.
+                si.update(shift);
             }
+            user.setActive(false);
+        } else{
+            user.setActive(true);
         }
+        ui.update(user);
+
+
     }
 
 
-    public Boolean[] verifyCredentials(int userNum, String password) throws IOException, ClassNotFoundException {
-        //Return an array of two booleans, the first one is if the login info is correct, the second is whether
-        //the account is an HR account.
+    public Boolean verifyCredentials(int userNum, String password) throws IOException, ClassNotFoundException {
+        //Return true iff the provided userNum and passowrd are stored in the file, and the user it represents is active.
 
         UserInteractor ui = new UserInteractor();
         ArrayList<User> users = ui.readData();
-        Boolean[] toReturn = {false, false};
+        Boolean toReturn = false;
         for (User user: users){
             if (user.getUserNum() == userNum && user.isActive()){
                 StringBuilder p = new StringBuilder();
@@ -47,13 +44,22 @@ public class UserFactory{
                     p.append(c);
                 }
                 if (p.toString().equals(password)){
-                    toReturn[0] = true;
-                } if (user instanceof HR){
-                    toReturn[1] = true;
+                    toReturn = true;
                 }
             }
         }
         return toReturn;
+    }
+
+    public User idToUser(int id){
+        UserInteractor ui = new UserInteractor();
+        ArrayList<User> users = ui.readData();
+        for (User user: users){
+            if (user.getUserNum() == id){
+                return user;
+            }
+        }
+        return null;
     }
 
     public void makeUser(String surname, String firstname, String gender, String birthYear, String birthMonth,

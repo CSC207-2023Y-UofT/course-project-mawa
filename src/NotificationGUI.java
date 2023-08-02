@@ -29,11 +29,11 @@ public class NotificationGUI extends JFrame implements ActionListener {
         String[] mom = {"12"};
         populateLists(mom);
         createNotificationList(this, unresolvedNotificationPanel, unresolvedNotificationListPanel,
-                unresolvedNotificationLabel, unresolvedNotifications, unresolvedNotificationList,
+                unresolvedNotificationLabel, unresolvedNotificationList,
                 unresolvedNotificationListScroller);
         addButtons(this, unresolvedNotificationPanel);
         createNotificationList(this, resolvedNotificationPanel, resolvedNotificationListPanel,
-                resolvedNotificationLabel, resolvedNotifications, unresolvedNotificationList,
+                resolvedNotificationLabel, unresolvedNotificationList,
                 resolvedNotificationListScroller);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
@@ -51,16 +51,8 @@ public class NotificationGUI extends JFrame implements ActionListener {
 
     }
 
-    private void createNotificationList(NotificationGUI item, JPanel panel, JPanel listPanel, JLabel label,
-                                        String[] listOfNotifications, JList<String> list, JScrollPane scroller) {
-        panel.setLayout(new BorderLayout());
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-        panel.add(label, BorderLayout.PAGE_START);
-
-        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        list.setLayoutOrientation(JList.VERTICAL);
-        list.setVisibleRowCount(-1);
+    private void createNotificationList(NotificationGUI item, JPanel panel, JPanel listPanel, JLabel label, JList<String> list, JScrollPane scroller) {
+        ShiftviewHRGUI.ListSetter(list, panel, label);
         if (Objects.equals(label.getText(), "Unresolved Notifications")) {
             list.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {

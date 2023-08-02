@@ -60,14 +60,7 @@ public class ShiftviewHRGUI extends JFrame implements ActionListener {
         JPanel panel = new JPanel();
         JLabel label = new JLabel(listLabel);
         JPanel listPanel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-        panel.add(label, BorderLayout.PAGE_START);
-
-        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        list.setLayoutOrientation(JList.VERTICAL);
-        list.setVisibleRowCount(-1);
+        ListSetter(list, panel, label);
         if (Objects.equals(label.getText(), "Employees On Shift")) {
             list.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
@@ -100,6 +93,17 @@ public class ShiftviewHRGUI extends JFrame implements ActionListener {
         button.setHorizontalAlignment(JLabel.CENTER);
         panel.add(buttonPanel, BorderLayout.PAGE_END);
         mainPanel.add(panel);
+    }
+
+    static void ListSetter(JList<String> list, JPanel panel, JLabel label) {
+        panel.setLayout(new BorderLayout());
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        panel.add(label, BorderLayout.PAGE_START);
+
+        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        list.setLayoutOrientation(JList.VERTICAL);
+        list.setVisibleRowCount(-1);
     }
 
     @Override

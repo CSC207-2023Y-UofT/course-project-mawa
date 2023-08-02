@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class CompleteEmployeeListGUI implements ActionListener, Page{
+public class CompleteUserListGUI implements ActionListener, Page{
 
     private JFrame frame = new JFrame();
 
@@ -15,7 +15,7 @@ public class CompleteEmployeeListGUI implements ActionListener, Page{
     private JPanel titlePanel = new JPanel();
 
 
-    public CompleteEmployeeListGUI(){
+    public CompleteUserListGUI(){
 
         frame.setSize(600, 600);
         frame.setVisible(true);

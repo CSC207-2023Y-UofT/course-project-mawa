@@ -7,6 +7,8 @@ import javax.swing.event.*;
 import java.text.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class DayCell extends JButton{
     private int day;
@@ -35,8 +37,7 @@ public class DayCell extends JButton{
         }
         Graphics2D g = (Graphics2D) g1.create();
         super.paintComponent(g);
-        java.util.Arrays.sort(shifts,
-                (a, b) -> ((LocalDateTime)a.getTime()).compareTo((LocalDateTime)b.getTime()));
+        Arrays.sort(shifts, new SortShiftByDate());
         int[] ycoords = new int[shifts.length + 1];
         ycoords[0] = 0;
         for (int i = 1; i < (shifts.length + 1); i++) {

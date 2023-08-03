@@ -63,13 +63,15 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
 
         return noti;
     }
-    pubic String[] notificationArrayToStringArray(Notification[] notifications){
+    private String[] notificationArrayToStringArray(Notification[] notifications){
         String[] stringNotifications = new String[notifications.length];
         int i = 0;
-        //for (Notification n: notifications){
-
-        //}
-        //return stringNotifications;
+        for (Notification n: notifications){
+            String item = "User Id: " + notifications[i].getNotifId() + " has requested time off on shift: " + notifications[i].getShiftId();
+            stringNotifications[i] = item;
+            i+=1;
+        }
+        return stringNotifications;
     }
 
     private void populateLists(String[] resolvedNotifications,String[] unresolvedNotifications) {

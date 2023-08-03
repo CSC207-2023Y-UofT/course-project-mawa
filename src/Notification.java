@@ -1,3 +1,5 @@
+import net.bytebuddy.build.HashCodeAndEqualsPlugin;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Interactor;
@@ -56,12 +58,22 @@ abstract class Notification {
     public LocalDateTime getDate(){
         return this.date;
     }
+    public boolean getResolvedStatus() {return this.resolved;}
 
-    public ArrayList<Notification> sortByCreatedDate(ArrayList<Notification> notifications){
-        ArrayList<Notification> sorted = new ArrayList<Notification>();
-        sorted.add(notifications.remove(0));
-
-
+    static Notification[] sortByCreatedDate(ArrayList<Notification> notifications){
+        Notification[] sorted = new Notification[notifications.size()];
+        sorted = notifications.toArray(sorted);
+        int n = sorted.length;
+        for (int i = 1; i < n; i++){
+            Notification item = sorted[i];
+            int j = i-1;
+            while(j >= 0 && sorted[j].getDate().isBefore(item.getDate())){
+                sorted[j+1] = sorted[j];
+                j -= 1;
+            }
+            sorted[j+1] = item;
+        }
+        return sorted;
     }
 
 }

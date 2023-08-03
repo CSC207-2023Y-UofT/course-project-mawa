@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class NotificationGUI extends JFrame implements ActionListener {
@@ -24,7 +25,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
     public JList<String> resolvedNotificationList;
 
 
-    public NotificationGUI() {
+    public NotificationGUI(User user) {
         this.frame.setLayout(new GridLayout(1, 2));
         String[] mom = {"12"};
         populateLists(mom);
@@ -41,9 +42,28 @@ public class NotificationGUI extends JFrame implements ActionListener {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void populateLists(String[] notifications) {
-        unresolvedNotifications = new String[]{"hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",};
-        resolvedNotifications = new String[]{"hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",};
+    public Notification[][] userNotifications(User user){
+        NotificationDatabaseInteractor notificationDBInteractor = new NotificationDatabaseInteractor();
+        ArrayList<Notification> notifications = notificationDBInteractor.readData();
+        ArrayList<Notification> unresolvedNotifications = new ArrayList<Notification>();
+        ArrayList<Notification> resolvedNotifications = new ArrayList<Notification>();
+        for (Notification n: notifications){
+            if (n.getResolvedStatus()){
+                if (n.getSenderId() == user.getEmployeeNum() || n.getRecipientId() == user.getEmployeeNum()){
+                    resolvedNotifications.add(n);
+                }
+            }
+            else{
+                if (n.getSenderId() == user.getEmployeeNum() || n.getRecipientId() == user.getEmployeeNum()){
+                    unresolvedNotifications.add(n);
+                }
+            }
+        }
+        Notification[][] noti = new Notification[][] {Notification.sortByCreatedDate(unresolvedNotifications), Notification.sortByCreatedDate(resolvedNotifications)};
+        return noti;
+    }
+
+    private void populateLists(String[] resolvedNotifications,String[] unresolvedNotifications) {
         unresolvedNotificationList = new JList<String>(unresolvedNotifications);
         resolvedNotificationList = new JList<String>(resolvedNotifications);
         unresolvedNotificationListScroller = new JScrollPane(unresolvedNotificationList);
@@ -52,7 +72,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
     }
 
     private void createNotificationList(NotificationGUI item, JPanel panel, JPanel listPanel, JLabel label, JList<String> list, JScrollPane scroller) {
-        ShiftviewHRGUI.ListSetter(list, panel, label);
+        ShiftViewHRGUI.ListSetter(list, panel, label);
         if (Objects.equals(label.getText(), "Unresolved Notifications")) {
             list.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
@@ -91,11 +111,6 @@ public class NotificationGUI extends JFrame implements ActionListener {
         rescheduleShiftButton.setHorizontalAlignment(JLabel.CENTER);
         panel.add(buttonPanel, BorderLayout.PAGE_END);
     }
-
-    public static void main(String[] args) {
-        new NotificationGUI();
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("Reschedule".equals(e.getActionCommand())) {

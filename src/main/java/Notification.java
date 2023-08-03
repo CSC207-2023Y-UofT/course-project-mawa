@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Interactor;
 import java.util.NotificationDatabaseInteractor;
 
@@ -10,6 +11,7 @@ abstract class Notification {
     private String shiftId;
     private LocalDateTime date;
     private Boolean resolved;
+    private LocalDateTime resolvedAt;
 
     public Notification(String senderId, String recipientId, String shiftId, String message, LocalDateTime date){
         this.message = message;
@@ -28,7 +30,7 @@ abstract class Notification {
     }
 
     public void resolve(){
-        this.resolved = true;
+        this.resolved = true; this.resolvedAt = LocalDateTime.now();
     }
     
     public int getNotifId(){
@@ -44,7 +46,7 @@ abstract class Notification {
     }
 
     public String getShiftId(){
-        return this.senderId;
+        return this.shiftId;
     }
 
     public String getRecipientId(){
@@ -53,6 +55,13 @@ abstract class Notification {
 
     public LocalDateTime getDate(){
         return this.date;
+    }
+
+    public ArrayList<Notification> sortByCreatedDate(ArrayList<Notification> notifications){
+        ArrayList<Notification> sorted = new ArrayList<Notification>();
+        sorted.add(notifications.remove(0));
+
+
     }
 
 }

@@ -6,7 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class ShiftviewHRGUI extends JFrame implements ActionListener {
+public class ShiftViewHRGUI extends JFrame implements ActionListener {
     private JFrame frame = new JFrame();
     private final JButton removeButton = new JButton("Remove");
     private final JButton addButton = new JButton("add");
@@ -20,7 +20,7 @@ public class ShiftviewHRGUI extends JFrame implements ActionListener {
     private String[] employeesNotOnShift;
 
 
-    public ShiftviewHRGUI(){
+    public ShiftViewHRGUI(){
         this.frame.setLayout(new BorderLayout());
         JPanel shiftTitlePanel = new JPanel();
         shiftTitlePanel.setLayout(new GridLayout(2,1));
@@ -109,8 +109,9 @@ public class ShiftviewHRGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("Add".equals(e.getActionCommand())) {
+
             this.revalidate();
-            new ShiftviewHRGUI();
+            new ShiftViewHRGUI();
             this.frame.dispose();
         }
 

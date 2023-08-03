@@ -1,36 +1,43 @@
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
 public class DayView extends JFrame implements ActionListener, Page {
-    private int day;
+    private LocalDate day;
     private String weekday;
     private boolean isPayday;
     private Shift[] shifts;
     private JPanel panel;
     private ArrayList<ShiftCell> cells;
-    private Employee employee;
-    public DayView(int day, String weekday, boolean isPayday, Shift[] shifts, Employee employee){
+    private int user;
+    private DayViewLogic dvl;
+    public DayView(LocalDate day, String weekday, boolean isPayday, Shift[] shifts, int user){
+        this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         this.day = day;
         this.weekday = weekday;
         this.isPayday = isPayday;
         this.shifts = shifts;
         this.cells = new ArrayList<ShiftCell>();
-        this.employee = employee;
+        this.dvl = new DayViewLogic(shifts, getWidth(), getHeight());
+        setUser(user);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setUndecorated(true);
-        panel = new JPanel();
-        panel.setLayout(null);
-        getContentPane().add(panel);
         if (isPayday){
             setBackground(Color.GREEN);
         }
+        panel = new JPanel();
+        panel.setLayout(null);
+        addTitle();
+        addHomeButton();
+        addContent();
+        getContentPane().add(panel);
         repaint();
         setVisible(true);
     }
@@ -38,12 +45,8 @@ public class DayView extends JFrame implements ActionListener, Page {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
-        java.util.Arrays.sort(shifts,
-                (a, b) -> ((LocalDateTime)a.getTime()).compareTo((LocalDateTime)b.getTime()));
-        int[] timeRange = new int[] {Math.max(0, shifts[0].getTime().getHour() - 2),
-                Math.min(24, shifts[shifts.length - 1].getTime().getHour() + 2)};
-        ArrayList<Object> times = new ArrayList<Object>();
-        for (int i = timeRange[0]; i <= timeRange[1]; i++){
+        int[] timeRange = dvl.getTimeRange();
+        for (int i : timeRange){
             g2.drawString(String.valueOf(i), (float) getWidth() /14,
                     (float) ((14 * getHeight() / 15) * i) /(timeRange[1] - timeRange[0]) + (float) getHeight() /30);
             g2.draw(new Line2D.Float((float) (getWidth()) /7,
@@ -51,15 +54,7 @@ public class DayView extends JFrame implements ActionListener, Page {
                     (float) (6 * getWidth()) /7,
                     yCoord(i, timeRange[1] - timeRange[0])));
         }
-        for (Shift s: shifts){
-            ShiftCell cell = new ShiftCell(s);
-            cell.setBounds((int) ((float) getWidth() /10),
-                    (int) yCoord(s.getTime().getHour() - timeRange[0] + (float)s.getTime().getMinute()/60, timeRange[1] - timeRange[0]),
-                    (int) ((float) 8 * getWidth() /10),
-                    (int) yCoord(s.getDuration(), timeRange[1] - timeRange[0]));
-            cell.addActionListener(this);
-            panel.add(cell);
-        }
+        g2.dispose();
 
     }
     private float yCoord(float i, float scale){
@@ -69,18 +64,48 @@ public class DayView extends JFrame implements ActionListener, Page {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof ShiftCell){
-            new ShiftView(((ShiftCell) e.getSource()).getShift(), employee);
+            new ShiftView(((ShiftCell) e.getSource()).getShift(), user);
             this.dispose();
         }
     }
 
     @Override
     public void addTitle() {
-
+        JLabel title = new JLabel(day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
+        title.setFont(new Font("Serif", Font.PLAIN, getHeight()/8));
+        Dimension size = title.getPreferredSize();
+        title.setBounds(getWidth() - size.width / 2, getHeight() - size.height / 2,
+                size.width, size.height);
+        panel.add(title);
     }
 
     @Override
     public void addContent() {
+        ArrayList<Rectangle> areas = dvl.getShiftCellPosition();
+        for (int i = 0; i < shifts.length; i ++){
+            ShiftCell cell = new ShiftCell(shifts[i]);
+            cell.setBounds(areas.get(i));
+            cell.addActionListener(this);
+            panel.add(cell);
+        }
+    }
+
+    @Override
+    public void setUser(int user) {
+        this.user = user;
+    }
+
+    @Override
+    public void addHomeButton() {
+        HomeButton hb = new HomeButton(this, user);
+        Dimension size = hb.getPreferredSize();
+        hb.setBounds(14 * getWidth() / 15 - size.width, getHeight() / 15 + size.height,
+                size.width, size.height);
+        panel.add(hb);
+    }
+
+    @Override
+    public void update() {
 
     }
 }

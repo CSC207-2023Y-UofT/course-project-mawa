@@ -1,14 +1,10 @@
-package tutorial;
-
-import org.hibernate.type.TrueFalseType;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class AddEmployeeGUI implements ActionListener{
+public class AddHRGUI implements ActionListener, Page{
 
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
@@ -17,17 +13,12 @@ public class AddEmployeeGUI implements ActionListener{
 
     private JLabel phoneLab = new JLabel("Phone Number (Only Integers Accepted):");
 
+
     private JLabel genderLab = new JLabel("Gender:");
 
     private JLabel emailLab = new JLabel("Email:");
 
-    private JLabel roleLab = new JLabel("Role:");
-
     private JLabel pwdLab = new JLabel("Password:");
-
-    private JLabel typeLab = new JLabel("Employee Type:");
-
-    private JLabel payLab = new JLabel("Hourly wage");
 
     private JLabel dobyrLab = new JLabel("Birth Year (YYYY)");
 
@@ -41,11 +32,11 @@ public class AddEmployeeGUI implements ActionListener{
 
     private JTextField phoneEnter = new JTextField(12);
 
+
     private JTextField genderEnter = new JTextField(12);
 
     private JTextField emailEnter = new JTextField(12);
 
-    private JTextField roleEnter = new JTextField(12);
 
     private JTextField pwdEnter = new JTextField(12);
 
@@ -55,9 +46,6 @@ public class AddEmployeeGUI implements ActionListener{
 
     private JTextField dobdayEnter = new JTextField(12);
 
-    private JComboBox typeSelect = new JComboBox(new String[]{"Wage Worker", "Salaried Employee", "Volunteer"});
-
-    private JTextField payEnter = new JTextField(12);
 
     private JPanel questionPanel = new JPanel();
 
@@ -65,22 +53,60 @@ public class AddEmployeeGUI implements ActionListener{
 
     private JPanel dobPanel = new JPanel();
 
-    private JPanel firstNamePanel = new JPanel();
     private JButton submitButton = new JButton("Enter");
 
     private Container contentPane = frame.getContentPane();
 
-    private JButton back = new JButton("Back");
-
-    private  JPanel backPanel = new JPanel();
 
 
 
-    public AddEmployeeGUI(){
+    public AddHRGUI(){
         frame.setSize(600, 600);
         frame.setVisible(true);
-        frame.setTitle("AddEmployee");
+        this.addTitle();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addContent();
+
+
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        UserFactory uf = new UserFactory();
+        Object s = e.getSource();
+        if (s.equals(submitButton)){
+            String phnum = phoneEnter.getText();
+            String byr = dobyrEnter.getText();
+            String bmth = dobmthEnter.getText();
+            String bd = dobdayEnter.getText();
+            if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
+                    && bd.matches("\\d+")){
+                uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth, bd,
+                        Long.parseLong(phnum.trim()), emailEnter.getText(), "HR Account", "HR",
+                        pwdEnter.getText(), 0);
+
+                //Go back to HR home page.
+                frame.dispose();
+                JOptionPane.showMessageDialog(null, "Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+
+        if (s.equals(back)){
+            //Go back to HR home page.
+            frame.dispose();
+        }
+    }
+
+
+    @Override
+    public void addTitle() {
+        frame.setTitle("Add HR Account");
+    }
+
+    @Override
+    public void addContent() {
         this.questionPanel.setLayout(new GridLayout(0, 2));
         this.dobPanel.setLayout(new GridLayout(1, 6));
         dobPanel.add(dobyrLab);
@@ -104,15 +130,8 @@ public class AddEmployeeGUI implements ActionListener{
         this.questionPanel.add(genderEnter);
         this.questionPanel.add(emailLab);
         this.questionPanel.add(emailEnter);
-        this.questionPanel.add(roleLab);
-        this.questionPanel.add(roleEnter);
         this.questionPanel.add(pwdLab);
         this.questionPanel.add(pwdEnter);
-        this.questionPanel.add(typeLab);
-        this.questionPanel.add(typeSelect);
-        this.questionPanel.add(payLab);
-        this.questionPanel.add(payEnter);
-        typeSelect.addActionListener(this);
         submitButton.addActionListener(this);
         back.addActionListener(this);
         this.submitPanel.add(submitButton);
@@ -121,47 +140,6 @@ public class AddEmployeeGUI implements ActionListener{
         contentPane.add(questionPanel);
         contentPane.add(dobPanel);
         contentPane.add(submitPanel);
-
-
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object s = e.getSource();
-        if (s.equals(submitButton)){
-            String phnum = phoneEnter.getText();
-            boolean phnum_numeric = phnum.matches("\\d+");
-            if (payLab.isVisible()){
-                boolean pay_numeric = true;
-                try {
-                    Double num = Double.parseDouble(payEnter.getText());
-                } catch (NumberFormatException g) {
-                    pay_numeric = false;
-                }
-            }
-
-        }
-
-        if (s.equals(typeSelect)){
-            if (typeSelect.getSelectedItem() == "Wage Worker"){
-                payLab.setVisible(true);
-                payEnter.setVisible(true);
-                payLab.setText("Hourly Wage ($), Numbers Only:");
-            } else if (typeSelect.getSelectedItem() == "Salaried Employee"){
-                payLab.setVisible(true);
-                payEnter.setVisible(true);
-                payLab.setText("Yearly Salary ($), Numbers Only:");
-            } else if (typeSelect.getSelectedItem() == "Volunteer"){
-                payLab.setVisible(false);
-                payEnter.setVisible(false);
-            }
-        }
-        if (s.equals(back)){
-            new ManageEmployeesGUI();
-            frame.dispose();
-        }
-    }
-
-
-
 }
+

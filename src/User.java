@@ -1,16 +1,16 @@
-
 import java.io.Serializable;
 import java.time.LocalDate;
 public abstract class User implements Serializable {
-    private int employeeNum, phoneNum;
-    private String surname, firstname, gender, pronouns, email, roleName;
+    private int userNum;
+    private long phoneNum;
+    private String surname, firstname, gender, email, roleName;
     private boolean active;
     LocalDate dob;//format should be "YYYY-MM-dd" as a String
     private char[] password;
 
     public User(String surname, String firstname, String gender, String email,
-                String roleName, int empNum, int phoneNum, String dob, char[] password){
-        this.employeeNum = empNum;
+                String roleName, int uNum, long phoneNum, String dob, char[] password){
+        this.userNum = uNum;
         this.phoneNum = phoneNum;
         this.surname = surname;
         this.firstname = firstname;
@@ -21,15 +21,21 @@ public abstract class User implements Serializable {
         this.active = true;
         this.password = password;
     }
-    public int getEmployeeNum(){
-        return employeeNum;
+
+
+    public String getEmail(){return email;}
+    public String getSurname(){return surname;}
+
+    public String getFirstname(){return firstname;}
+    public int getUserNum(){
+        return userNum;
     }
 
-    public int getPhoneNum(){
+    public long getPhoneNum(){
         return phoneNum;
     }
 
-    public void setPhoneNum(int pn){
+    public void setPhoneNum(long pn){
         this.phoneNum = pn;
     }
     public String[] getEmployeeName(){
@@ -44,19 +50,7 @@ public abstract class User implements Serializable {
         this.gender = g;
     }
 
-    public String getPronouns(){
-        return pronouns;
-    }
-
-    public String setPronouns(){
-        return pronouns;
-    }
-
-    public String getEmployeeEmail(){
-        return email;
-    }
-
-    public void setEmployeeEmail(String email){
+    public void setEmail(String email){
         this.email = email;
     }
 

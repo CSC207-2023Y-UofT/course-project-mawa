@@ -20,7 +20,7 @@ public class Payment {
 
     public String getPayment_message(){
 
-        if (employee.status==true){
+        if (employee.isActive()){
 
             return payment_message;
         }

@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ShiftView extends JFrame implements ActionListener, Page {
     private JPanel panel;
@@ -12,7 +11,7 @@ public class ShiftView extends JFrame implements ActionListener, Page {
     private JButton timeOffButton;
     private int employee;
 
-    private EmployeeDataBaseInteractor empDB;
+    private UserInteractor empDB;
     public ShiftView(Shift shift, int employee){
         this.shift = shift;
         this.employee = employee;

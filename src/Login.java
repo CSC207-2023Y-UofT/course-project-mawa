@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public class Login{
-    JLabel labelEmpNum = new JLabel("Enter Employee Number: ");
+    JLabel labelEmpNum = new JLabel("Enter tutorial.Employee Number: ");
     JLabel labelPwd = new JLabel("Enter Password: ");
     JTextField empNumIn = new JTextField(7);
     JPasswordField pwdIn = new JPasswordField(7);

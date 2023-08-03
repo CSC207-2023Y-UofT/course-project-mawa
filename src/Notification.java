@@ -1,6 +1,6 @@
 import java.time.LocalDateTime;
-import java.util.Interactor;
-import java.util.NotificationDatabaseInteractor;
+import java.util.ArrayList;
+
 
 abstract class Notification {
     private int notifId;
@@ -18,12 +18,12 @@ abstract class Notification {
         this.shiftId = shiftId;
         this.date = date;
         this.resolved = false;
-        ndb = new NotificationDatabseInteractor();
-        l = ndb.readData();
-        if (len(l) == 0){
+        NotificationInteractor ni = new NotificationInteractor();
+        ArrayList<Notification> l = ni.readData();
+        if (l.size() == 0){
             this.notifId = 1;
         } else{
-            this.notifId = len(l) + 1;
+            this.notifId = l.size() + 1;
         }
     }
 

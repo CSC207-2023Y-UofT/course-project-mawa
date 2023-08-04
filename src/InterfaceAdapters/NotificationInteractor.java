@@ -1,8 +1,10 @@
+package InterfaceAdapters;
+
 import javax.management.Notification;
 import java.io.*;
 import java.util.ArrayList;
 
-public class NotificationInteractor implements Interactor<Notification>{
+public class NotificationInteractor implements Interactor<Notification> {
 
    public ArrayList<Notification> readData(){
 

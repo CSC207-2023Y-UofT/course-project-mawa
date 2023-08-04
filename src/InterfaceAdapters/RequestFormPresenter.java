@@ -1,3 +1,5 @@
+package InterfaceAdapters;
+
 import Entities.NotificationRequest;
 
 import javax.swing.*;

@@ -1,6 +1,8 @@
-public class RequestBuilder{
+import java.time.LocalDate;
 
-    public Notification createRequest(Shift[] shifts, LocalDate[] days, String message, User sender, User reciever){
+public class NotificationBuilder{
+
+    public NotificationRequest createRequest(Shift[] shifts, LocalDate[] days, String message, User sender, User reciever){
         text = sender.name;
         if (len(shifts) == 0){
             text += ' is requesting the following days off: ';

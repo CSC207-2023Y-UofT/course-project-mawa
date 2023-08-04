@@ -6,16 +6,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class UserFactory{
-
+    //As the creation of several children of user is delegated to this class, this is a
+    //use of the factory design pattern.
 
     static int numUsers;
 
     public UserFactory(){
+        //Initialize the numUsers property, which will be needed to generate correct ID numbers.
         UserInteractor ui = new UserInteractor();
         numUsers = ui.readData().size();
     }
 
     public void changeActivation(int IDNum){
+        //Obtain the user object corresponding to the given ID, make the desired modification,
+        //And then update the object in the file, as well as the shift objects which pay change
+        //as a result of the user no longer working them due to their inactivity.
         UserInteractor ui = new UserInteractor();
         ShiftInteractor si = new ShiftInteractor();
         ArrayList<Shift> shifts = si.readData();
@@ -35,27 +40,9 @@ public class UserFactory{
     }
 
 
-    public Boolean verifyCredentials(int userNum, String password) throws IOException, ClassNotFoundException {
-        //Return true iff the provided userNum and passowrd are stored in the file, and the user it represents is active.
-
-        UserInteractor ui = new UserInteractor();
-        ArrayList<User> users = ui.readData();
-        Boolean toReturn = false;
-        for (User user: users){
-            if (user.getUserNum() == userNum && user.isActive()){
-                StringBuilder p = new StringBuilder();
-                for (char c: user.getPassword()){
-                    p.append(c);
-                }
-                if (p.toString().equals(password)){
-                    toReturn = true;
-                }
-            }
-        }
-        return toReturn;
-    }
-
     public User idToUser(int id){
+        //A useful helper function, as we often pass a users ID as an argument to a function, but
+        //then require other information about the user.
         UserInteractor ui = new UserInteractor();
         ArrayList<User> users = ui.readData();
         for (User user: users){
@@ -66,9 +53,11 @@ public class UserFactory{
         return null;
     }
 
+
     public void makeUser(String surname, String firstname, String gender, String birthYear, String birthMonth,
                              String birthDate, long phoneNumber,
                               String email, String role, String type, String password, float pay){
+        //Create a new user, and then write it to the database.
 
         String bday = birthYear + "-" + birthMonth + "-" + birthDate;
         UserInteractor uInt = new UserInteractor();
@@ -92,6 +81,9 @@ public class UserFactory{
                 break;
         }
 
+        /*Although the same UserFactory doesn't create more than a single user in this program,
+        it's good for extensibility to increase the number of users, so that a UserFactory can create
+        several users, and give them each the appropriate ID number.*/
         numUsers += 1;
     }
 

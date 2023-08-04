@@ -1,4 +1,5 @@
 import Entities.User;
+import FrameworksAndDrivers.Page;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

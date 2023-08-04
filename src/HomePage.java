@@ -6,7 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import Entities.*;
+import InterfaceAdapters.*;
 public class HomePage implements ActionListener, Page{
 
     private JFrame frame = new JFrame();

@@ -1,35 +1,32 @@
 package Entities;
 
-import net.bytebuddy.build.HashCodeAndEqualsPlugin;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Interactor;
-import java.util.NotificationDatabaseInteractor;
+import InterfaceAdapters.*;
 
-abstract class Notification {
+public abstract class UserNotification {
     private int notifId;
     private String message;
-    private String senderId;
-    private String recipientId;
+    private int senderId;
+    private int recipientId;
     private String shiftId;
     private LocalDateTime date;
     private Boolean resolved;
     private LocalDateTime resolvedAt;
 
-    public Notification(String senderId, String recipientId, String shiftId, String message, LocalDateTime date){
+    public UserNotification(int senderId, int recipientId, String shiftId, String message, LocalDateTime date){
         this.message = message;
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.shiftId = shiftId;
         this.date = date;
         this.resolved = false;
-        ndb = new NotificationDatabseInteractor();
-        l = ndb.readData();
-        if (len(l) == 0){
+        UserNotificationInteractor ndb = new UserNotificationInteractor();
+        ArrayList<UserNotification> l = ndb.readData();
+        if (l.size() == 0){
             this.notifId = 1;
         } else{
-            this.notifId = len(l) + 1;
+            this.notifId = l.size() + 1;
         }
     }
 
@@ -45,7 +42,7 @@ abstract class Notification {
         return this.message;
     }
 
-    public String getSenderId(){
+    public int getSenderId(){
         return this.senderId;
     }
 
@@ -53,7 +50,7 @@ abstract class Notification {
         return this.shiftId;
     }
 
-    public String getRecipientId(){
+    public int getRecipientId(){
         return this.recipientId;
     }
 
@@ -62,12 +59,12 @@ abstract class Notification {
     }
     public boolean getResolvedStatus() {return this.resolved;}
 
-    static Notification[] sortByCreatedDate(ArrayList<Notification> notifications){
-        Notification[] sorted = new Notification[notifications.size()];
+    public static UserNotification[] sortByCreatedDate(ArrayList<UserNotification> notifications){
+        UserNotification[] sorted = new UserNotification[notifications.size()];
         sorted = notifications.toArray(sorted);
         int n = sorted.length;
         for (int i = 1; i < n; i++){
-            Notification item = sorted[i];
+            UserNotification item = sorted[i];
             int j = i-1;
             while(j >= 0 && sorted[j].getDate().isBefore(item.getDate())){
                 sorted[j+1] = sorted[j];

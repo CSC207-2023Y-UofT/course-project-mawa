@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
+import Entities.*;
+import InterfaceAdapters.*;
+import FrameworksAndDrivers.*;
 
 public class ShiftViewHRGUI extends JFrame implements ActionListener {
     private JFrame frame = new JFrame();

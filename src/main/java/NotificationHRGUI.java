@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class NotificationGUI extends JFrame implements ActionListener {
+public class NotificationHRGUI extends JFrame implements ActionListener {
     private JFrame frame = new JFrame();
     private JPanel unresolvedNotificationPanel = new JPanel();
     private JPanel resolvedNotificationPanel = new JPanel();
@@ -25,7 +25,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
     public JList<String> resolvedNotificationList;
 
 
-    public NotificationGUI(User user) {
+    public NotificationHRGUI(User user) {
         this.frame.setLayout(new GridLayout(1, 2));
         String[] mom = {"12"};
         populateLists(mom);
@@ -60,7 +60,16 @@ public class NotificationGUI extends JFrame implements ActionListener {
             }
         }
         Notification[][] noti = new Notification[][] {Notification.sortByCreatedDate(unresolvedNotifications), Notification.sortByCreatedDate(resolvedNotifications)};
+
         return noti;
+    }
+    pubic String[] notificationArrayToStringArray(Notification[] notifications){
+        String[] stringNotifications = new String[notifications.length];
+        int i = 0;
+        //for (Notification n: notifications){
+
+        //}
+        //return stringNotifications;
     }
 
     private void populateLists(String[] resolvedNotifications,String[] unresolvedNotifications) {
@@ -71,7 +80,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
 
     }
 
-    private void createNotificationList(NotificationGUI item, JPanel panel, JPanel listPanel, JLabel label, JList<String> list, JScrollPane scroller) {
+    private void createNotificationList(NotificationHRGUI item, JPanel panel, JPanel listPanel, JLabel label, JList<String> list, JScrollPane scroller) {
         ShiftViewHRGUI.ListSetter(list, panel, label);
         if (Objects.equals(label.getText(), "Unresolved Notifications")) {
             list.addMouseListener(new MouseAdapter() {
@@ -97,7 +106,7 @@ public class NotificationGUI extends JFrame implements ActionListener {
         item.frame.add(panel);
     }
 
-    public void addButtons(NotificationGUI item, JPanel panel) {
+    public void addButtons(NotificationHRGUI item, JPanel panel) {
         denyRequestButton.setActionCommand("Deny");
         denyRequestButton.addActionListener(item);
         rescheduleShiftButton.setActionCommand("Reschedule");

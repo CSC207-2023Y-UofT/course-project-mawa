@@ -1,3 +1,5 @@
+package FrameworksAndDrivers;
+
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -6,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class CompleteUserListGUI implements ActionListener, Page{
+public class CompleteUserListGUI implements ActionListener, Page {
 
     private JFrame frame = new JFrame();
 
@@ -33,13 +35,13 @@ public class CompleteUserListGUI implements ActionListener, Page{
             uf.changeActivation(buttonsToIDs.get(source));
             new CompleteUserListGUI();
             frame.dispose();
-            JOptionPane.showMessageDialog(null, "Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Entities.Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     @Override
     public void addTitle() {
-        frame.setTitle("Complete User List");
+        frame.setTitle("Complete Entities.User List");
     }
 
     public void makeHeader(){
@@ -73,9 +75,9 @@ public class CompleteUserListGUI implements ActionListener, Page{
         panel.add(new JLabel(user.getDob().toString()));
         String type = user.getClass().getName();
         panel.add(new JLabel(type));
-        if (type.equals("Volunteer")){
+        if (type.equals("Entities.Volunteer")){
             panel.add(new JLabel("0"));
-        } else if (type.equals("WageWorker")){
+        } else if (type.equals("Entities.WageWorker")){
             panel.add(new JLabel(Float.toString(((WageWorker)user).getHourlyWage())));
         } else{
             panel.add(new JLabel(Float.toString(((SalaryWorker)user).getYearlySalary())));

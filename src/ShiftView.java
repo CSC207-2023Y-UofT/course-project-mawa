@@ -1,8 +1,9 @@
 
+import Entities.Employee;
+import Entities.Shift;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ShiftView extends JFrame implements Page {
@@ -46,7 +47,7 @@ public class ShiftView extends JFrame implements Page {
             }
         }
         JLabel coworkersLabel = new JLabel(coworkers.toString());
-        timeOffButton = new JButton("Request Shift Off");
+        timeOffButton = new JButton("Request Entities.Shift Off");
         timeOffButton.addActionListener(this);
         panel.add(time);
         panel.add(coworkersLabel);

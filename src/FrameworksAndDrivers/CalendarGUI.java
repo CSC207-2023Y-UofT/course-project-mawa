@@ -1,3 +1,4 @@
+package FrameworksAndDrivers;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +38,7 @@ public class CalendarGUI extends JFrame implements Page {
         numSections = 7 +
                 (int)Math.ceil((firstDay.lengthOfMonth() + firstDay.getDayOfWeek().getValue() - 1) / 7) * 7;
         panelGrid = new JPanel (new GridLayout(0, 7));
-        for (String d:CalendarConstants.days){
+        for (String d: CalendarConstants.days){
             panelGrid.add(new JLabel(d));
         }
         for(int i = 1; i < numSections + 1; i++){

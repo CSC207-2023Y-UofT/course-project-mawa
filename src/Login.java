@@ -1,8 +1,12 @@
+import Entities.Employee;
+import Entities.HR;
+import Entities.User;
+
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class Login{
-    private JLabel labelEmpNum = new JLabel("Enter Employee Number: ");
+    private JLabel labelEmpNum = new JLabel("Enter Entities.Employee Number: ");
     private JLabel labelPwd = new JLabel("Enter Password: ");
     private JTextField empNumIn = new JTextField(7);
     private JPasswordField pwdIn = new JPasswordField(7);

@@ -1,3 +1,5 @@
+package Entities;
+
 import net.bytebuddy.build.HashCodeAndEqualsPlugin;
 
 import java.time.LocalDateTime;

@@ -1,3 +1,6 @@
+import Entities.Employee;
+import Entities.User;
+
 import java.io.*;
 import java.util.ArrayList;
 

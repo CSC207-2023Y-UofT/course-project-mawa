@@ -1,10 +1,12 @@
+package FrameworksAndDrivers;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class AddEmployeeGUI implements ActionListener, Page{
+public class AddEmployeeGUI implements ActionListener, Page {
 
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
@@ -22,7 +24,7 @@ public class AddEmployeeGUI implements ActionListener, Page{
 
     private JLabel pwdLab = new JLabel("Password:");
 
-    private JLabel typeLab = new JLabel("Employee Type:");
+    private JLabel typeLab = new JLabel("Entities.Employee Type:");
 
     private JLabel payLab = new JLabel("Hourly wage");
 
@@ -53,7 +55,7 @@ public class AddEmployeeGUI implements ActionListener, Page{
 
     private JTextField dobdayEnter = new JTextField(12);
 
-    private JComboBox<String> typeSelect = new JComboBox<>(new String[]{"Wage Worker", "Salary Worker", "Volunteer"});
+    private JComboBox<String> typeSelect = new JComboBox<>(new String[]{"Wage Worker", "Salary Worker", "Entities.Volunteer"});
 
     private JTextField payEnter = new JTextField(12);
 
@@ -103,10 +105,10 @@ public class AddEmployeeGUI implements ActionListener, Page{
             String bd = dobdayEnter.getText();
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+") && pay_numeric && typeSelect.getSelectedItem() != null){
-                if (((String) typeSelect.getSelectedItem()).equals("Volunteer")){
+                if (((String) typeSelect.getSelectedItem()).equals("Entities.Volunteer")){
                     uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
                             bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
-                            "Volunteer", pwdEnter.getText(), 0);
+                            "Entities.Volunteer", pwdEnter.getText(), 0);
                 } else{
                     uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
                             bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
@@ -116,7 +118,7 @@ public class AddEmployeeGUI implements ActionListener, Page{
 
                 new ManageEmployeesGUI();
                 frame.dispose();
-                JOptionPane.showMessageDialog(null, "Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Entities.Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
@@ -130,12 +132,12 @@ public class AddEmployeeGUI implements ActionListener, Page{
                 payLab.setVisible(true);
                 payEnter.setVisible(true);
                 payLab.setText("Yearly Salary ($), Numbers Only:");
-            } else if (typeSelect.getSelectedItem() == "Volunteer"){
+            } else if (typeSelect.getSelectedItem() == "Entities.Volunteer"){
                 payLab.setVisible(false);
                 payEnter.setVisible(false);
             }
         }
-        if (s.equals(back)){
+        if (s.equals(Page.back)){
             new ManageEmployeesGUI();
             frame.dispose();
         }
@@ -144,7 +146,7 @@ public class AddEmployeeGUI implements ActionListener, Page{
 
     @Override
     public void addTitle() {
-        frame.setTitle("Add Employee");
+        frame.setTitle("Add Entities.Employee");
     }
 
     @Override
@@ -157,8 +159,8 @@ public class AddEmployeeGUI implements ActionListener, Page{
         dobPanel.add(dobmthEnter);
         dobPanel.add(dobdayLab);
         dobPanel.add(dobdayEnter);
-        backPanel.setLayout(new GridLayout(1, 1));
-        backPanel.add(back);
+        Page.backPanel.setLayout(new GridLayout(1, 1));
+        Page.backPanel.add(Page.back);
         submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.LINE_AXIS));
         submitPanel.add(Box.createHorizontalGlue());
 
@@ -182,10 +184,10 @@ public class AddEmployeeGUI implements ActionListener, Page{
         this.questionPanel.add(payEnter);
         typeSelect.addActionListener(this);
         submitButton.addActionListener(this);
-        back.addActionListener(this);
+        Page.back.addActionListener(this);
         this.submitPanel.add(submitButton);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(backPanel);
+        contentPane.add(Page.backPanel);
         contentPane.add(questionPanel);
         contentPane.add(dobPanel);
         contentPane.add(submitPanel);

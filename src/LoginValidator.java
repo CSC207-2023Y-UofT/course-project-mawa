@@ -1,3 +1,6 @@
+import Entities.Employee;
+import Entities.User;
+
 import java.util.ArrayList;
 
 public class LoginValidator {

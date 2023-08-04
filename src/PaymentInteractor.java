@@ -1,4 +1,5 @@
-import javax.management.Notification;
+import Entities.Payment;
+
 import java.io.*;
 import java.util.ArrayList;
 public class PaymentInteractor implements Interactor<Payment>{

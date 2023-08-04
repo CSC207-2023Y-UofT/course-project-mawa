@@ -1,9 +1,8 @@
+import Entities.NotificationRequest;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 public class RequestFormPresenter implements ActionListener {
 

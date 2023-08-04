@@ -1,5 +1,7 @@
 
 
+import Entities.Shift;
+
 import javax.swing.*;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;

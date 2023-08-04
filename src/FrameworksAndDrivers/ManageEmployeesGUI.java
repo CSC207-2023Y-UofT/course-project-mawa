@@ -1,17 +1,19 @@
+package FrameworksAndDrivers;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class ManageEmployeesGUI implements ActionListener, Page{
+public class ManageEmployeesGUI implements ActionListener, Page {
 
 
   private JFrame frame = new JFrame();
-  private JButton addEmployee = new JButton("Add Employee");
+  private JButton addEmployee = new JButton("Add Entities.Employee");
 
-  private JButton completeEmployeeList = new JButton("Complete Employee List");
-  private JButton employeeSummary = new JButton("Employee Summary");
+  private JButton completeEmployeeList = new JButton("Complete Entities.Employee List");
+  private JButton employeeSummary = new JButton("Entities.Employee Summary");
   private JPanel buttonsPanel = new JPanel();
 
 

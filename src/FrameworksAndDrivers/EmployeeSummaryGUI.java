@@ -1,3 +1,5 @@
+package FrameworksAndDrivers;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class EmployeeSummaryGUI implements ActionListener, Page{
+public class EmployeeSummaryGUI implements ActionListener, Page {
 
     private JFrame frame = new JFrame();
 
@@ -38,7 +40,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
 
     @Override
     public void addTitle() {
-        frame.setTitle("Active Employee Summary");
+        frame.setTitle("Active Entities.Employee Summary");
     }
 
     public void makeHeader(){
@@ -53,9 +55,9 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
         titlePanel.add(new JLabel("Birthday:"));
         titlePanel.add(new JLabel("Type:"));
         titlePanel.add(new JLabel("Salary/Wage:"));
-        titlePanel.add(new JLabel("Pay Employee:"));
+        titlePanel.add(new JLabel("Pay Entities.Employee:"));
         titlePanel.add(new JLabel("View/Edit Schedule:"));
-        titlePanel.add(new JLabel("View Payment History:"));
+        titlePanel.add(new JLabel("View Entities.Payment History:"));
     }
 
     public JPanel makeEmployeePanel(Employee employee) {
@@ -71,9 +73,9 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
             panel.add(new JLabel(employee.getDob().toString()));
             String type = employee.getClass().getName();
             panel.add(new JLabel(type));
-            if (type.equals("Volunteer")) {
+            if (type.equals("Entities.Volunteer")) {
                 panel.add(new JLabel("0"));
-            } else if (type.equals("WageWorker")) {
+            } else if (type.equals("Entities.WageWorker")) {
                 panel.add(new JLabel(Float.toString(((WageWorker) employee).getHourlyWage())));
             } else {
                 panel.add(new JLabel(Float.toString(((SalaryWorker) employee).getYearlySalary())));
@@ -86,7 +88,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page{
             schedButtonsToIDs.put(c, employee.getUserNum());
             panel.add(c);
             c.addActionListener(this);
-            JButton d = new JButton("View Payment History");
+            JButton d = new JButton("View Entities.Payment History");
             payHistButtonsToIDs.put(d, employee.getUserNum());
             panel.add(d);
             return panel;

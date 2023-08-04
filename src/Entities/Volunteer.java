@@ -1,3 +1,5 @@
+package Entities;
+
 public class Volunteer extends Employee{
 
     public Volunteer(String surname, String firstname, String gender,

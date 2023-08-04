@@ -1,3 +1,7 @@
+import Entities.NotificationRequest;
+import Entities.Shift;
+import Entities.User;
+
 import java.time.LocalDate;
 
 public class NotificationBuilder{

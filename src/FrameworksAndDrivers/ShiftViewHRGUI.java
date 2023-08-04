@@ -1,3 +1,5 @@
+package FrameworksAndDrivers;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +13,7 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
     private final JButton removeButton = new JButton("Remove");
     private final JButton addButton = new JButton("add");
     private final JLabel shiftDateLabel = new JLabel("Date: Monday, July, 31st");
-    private final JLabel shiftTimeLabel = new JLabel("Shift Time: 6:00pm - 8:00pm");
+    private final JLabel shiftTimeLabel = new JLabel("Entities.Shift Time: 6:00pm - 8:00pm");
     private JList<String> employeesOnShiftList;
     private JList<String> employeesNotOnShiftList;
     private JScrollPane employeesOnShiftScroller;
@@ -35,8 +37,8 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
         JPanel employeeListPanel = new JPanel();
         employeeListPanel.setLayout(new GridLayout(1, 2));
         populateLists(new String[]{"yes"});
-        createUserList(employeeListPanel,"Employees On Shift", employeesOnShiftList, employeesOnShiftScroller, removeButton, "Remove");
-        createUserList(employeeListPanel,"Employees Not On Shift", employeesNotOnShiftList, employeesNotOnShiftScroller, addButton, "Add");
+        createUserList(employeeListPanel,"Employees On Entities.Shift", employeesOnShiftList, employeesOnShiftScroller, removeButton, "Remove");
+        createUserList(employeeListPanel,"Employees Not On Entities.Shift", employeesNotOnShiftList, employeesNotOnShiftScroller, addButton, "Add");
         this.frame.add(employeeListPanel, BorderLayout.CENTER);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
@@ -61,7 +63,7 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
         JLabel label = new JLabel(listLabel);
         JPanel listPanel = new JPanel();
         ListSetter(list, panel, label);
-        if (Objects.equals(label.getText(), "Employees On Shift")) {
+        if (Objects.equals(label.getText(), "Employees On Entities.Shift")) {
             list.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     if (e.getClickCount() == 2) {

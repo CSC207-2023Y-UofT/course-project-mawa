@@ -1,3 +1,7 @@
+import Entities.HR;
+import FrameworksAndDrivers.AddHRGUI;
+import FrameworksAndDrivers.ManageEmployeesGUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,12 +17,12 @@ public class HomePage implements ActionListener, Page{
 
     private JButton schedule = new JButton("Schedule");
 
-    private JButton addHR = new JButton("Add HR Account");
+    private JButton addHR = new JButton("Add Entities.HR Account");
 
-    private JButton notifCenter = new JButton("Notification Center");
+    private JButton notifCenter = new JButton("Entities.Notification Center");
 
 
-    private JButton payHist = new JButton("View Payment History");
+    private JButton payHist = new JButton("View Entities.Payment History");
 
     private JPanel buttonsPanel = new JPanel();
 
@@ -65,7 +69,7 @@ public class HomePage implements ActionListener, Page{
             //Open Calendar with user as parameter.
             frame.dispose();
         } else if (source.equals(notifCenter)){
-            //Open Notification center.
+            //Open Entities.Notification center.
             frame.dispose();
         } else if (source.equals(manageEmployees)){
             new ManageEmployeesGUI();

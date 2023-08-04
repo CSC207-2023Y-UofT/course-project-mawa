@@ -1,3 +1,5 @@
+import Entities.Shift;
+
 import java.util.Comparator;
 
 public class SortShiftByDate implements Comparator<Shift> {

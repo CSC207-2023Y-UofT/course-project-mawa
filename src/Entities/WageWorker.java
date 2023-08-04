@@ -1,3 +1,5 @@
+package Entities;
+
 public class WageWorker extends Employee{
     private float hourlyWage;
 

@@ -1,3 +1,5 @@
+import Entities.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -78,11 +80,11 @@ public class UserFactory{
                 uInt.writeData(new SalaryWorker(surname, firstname, gender, email, role, numUsers + 1,
                         phoneNumber, bday, pay, password.toCharArray()));
                 break;
-            case "Volunteer":
+            case "Entities.Volunteer":
                 uInt.writeData(new Volunteer(surname, firstname, gender, email, role, numUsers + 1,
                         phoneNumber, bday, password.toCharArray()));
                 break;
-            case "HR":
+            case "Entities.HR":
                 uInt.writeData(new HR(surname, firstname, gender, email, role, numUsers + 1,
                         phoneNumber, bday, password.toCharArray()));
                 break;

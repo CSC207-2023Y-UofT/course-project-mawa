@@ -1,3 +1,5 @@
+package FrameworksAndDrivers;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +20,7 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
     private final JLabel unresolvedNotificationLabel = new JLabel("Unresolved Notifications");
     private final JLabel resolvedNotificationLabel = new JLabel("Resolved Notifications");
     private final JButton denyRequestButton = new JButton("Deny Request");
-    private final JButton rescheduleShiftButton = new JButton("Reschedule Shift");
+    private final JButton rescheduleShiftButton = new JButton("Reschedule Entities.Shift");
     private String[] unresolvedNotifications = {};
     private String[] resolvedNotifications = {};
     public JList<String> unresolvedNotificationList;
@@ -67,7 +69,7 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         String[] stringNotifications = new String[notifications.length];
         int i = 0;
         for (Notification n: notifications){
-            String item = "User Id: " + notifications[i].getNotifId() + " has requested time off on shift: " + notifications[i].getShiftId();
+            String item = "Entities.User Id: " + notifications[i].getNotifId() + " has requested time off on shift: " + notifications[i].getShiftId();
             stringNotifications[i] = item;
             i+=1;
         }

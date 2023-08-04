@@ -1,3 +1,5 @@
+package Entities;
+
 public class Employee extends User{
 
     public Employee(String surname, String firstname, String gender,

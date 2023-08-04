@@ -1,10 +1,12 @@
+package FrameworksAndDrivers;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class AddHRGUI implements ActionListener, Page{
+public class AddHRGUI implements ActionListener, Page {
 
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
@@ -83,18 +85,18 @@ public class AddHRGUI implements ActionListener, Page{
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+")){
                 uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth, bd,
-                        Long.parseLong(phnum.trim()), emailEnter.getText(), "HR Account", "HR",
+                        Long.parseLong(phnum.trim()), emailEnter.getText(), "Entities.HR Account", "Entities.HR",
                         pwdEnter.getText(), 0);
 
-                //Go back to HR home page.
+                //Go back to Entities.HR home page.
                 frame.dispose();
-                JOptionPane.showMessageDialog(null, "Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Entities.Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
 
-        if (s.equals(back)){
-            //Go back to HR home page.
+        if (s.equals(Page.back)){
+            //Go back to Entities.HR home page.
             frame.dispose();
         }
     }
@@ -102,7 +104,7 @@ public class AddHRGUI implements ActionListener, Page{
 
     @Override
     public void addTitle() {
-        frame.setTitle("Add HR Account");
+        frame.setTitle("Add Entities.HR Account");
     }
 
     @Override
@@ -115,8 +117,8 @@ public class AddHRGUI implements ActionListener, Page{
         dobPanel.add(dobmthEnter);
         dobPanel.add(dobdayLab);
         dobPanel.add(dobdayEnter);
-        backPanel.setLayout(new GridLayout(1, 1));
-        backPanel.add(back);
+        Page.backPanel.setLayout(new GridLayout(1, 1));
+        Page.backPanel.add(Page.back);
         submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.LINE_AXIS));
         submitPanel.add(Box.createHorizontalGlue());
 
@@ -133,10 +135,10 @@ public class AddHRGUI implements ActionListener, Page{
         this.questionPanel.add(pwdLab);
         this.questionPanel.add(pwdEnter);
         submitButton.addActionListener(this);
-        back.addActionListener(this);
+        Page.back.addActionListener(this);
         this.submitPanel.add(submitButton);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(backPanel);
+        contentPane.add(Page.backPanel);
         contentPane.add(questionPanel);
         contentPane.add(dobPanel);
         contentPane.add(submitPanel);

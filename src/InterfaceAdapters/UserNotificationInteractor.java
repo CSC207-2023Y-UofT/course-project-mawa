@@ -1,19 +1,19 @@
 package InterfaceAdapters;
 
-import javax.management.Notification;
 import java.io.*;
 import java.util.ArrayList;
+import Entities.*;
 
-public class NotificationInteractor implements Interactor<Notification> {
+public class UserNotificationInteractor implements Interactor<UserNotification> {
 
-   public ArrayList<Notification> readData(){
+   public ArrayList<UserNotification> readData(){
 
-       ArrayList<Notification> notifList = new ArrayList<>();
+       ArrayList<UserNotification> notifList = new ArrayList<>();
 
        try{
            FileInputStream file = new FileInputStream("notifications.ser");
            ObjectInputStream input = new ObjectInputStream(file);
-           notifList.addAll ((ArrayList<Notification>) input.readObject()) ;
+           notifList.addAll ((ArrayList<UserNotification>) input.readObject()) ;
 
        } catch (IOException | ClassNotFoundException e){
            System.out.println(e);
@@ -23,8 +23,8 @@ public class NotificationInteractor implements Interactor<Notification> {
 
   }
 
-  public void update(Notification n){
-       ArrayList<Notification> notifs = this.readData();
+    public void update(UserNotification n){
+       ArrayList<UserNotification> notifs = this.readData();
        notifs.removeIf(notif -> n.getNotifId() == notifs.getNotifId());
        notifs.add(n);
       try {
@@ -37,11 +37,9 @@ public class NotificationInteractor implements Interactor<Notification> {
       }
   }
 
+  public void writeData(UserNotification notification){
 
-
-  public void writeData(Notification notification){
-
-      ArrayList<Notification> notifList = this.readData();
+      ArrayList<UserNotification> notifList = this.readData();
       notifList.add(notification);
       try {
           FileOutputStream file = new FileOutputStream("notifications.ser");

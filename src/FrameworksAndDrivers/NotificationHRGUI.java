@@ -8,6 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
+import Entities.*;
+import InterfaceAdapters.*;
 
 public class NotificationHRGUI extends JFrame implements ActionListener {
     private JFrame frame = new JFrame();
@@ -29,8 +31,6 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
 
     public NotificationHRGUI(User user) {
         this.frame.setLayout(new GridLayout(1, 2));
-        String[] mom = {"12"};
-        populateLists(mom);
         createNotificationList(this, unresolvedNotificationPanel, unresolvedNotificationListPanel,
                 unresolvedNotificationLabel, unresolvedNotificationList,
                 unresolvedNotificationListScroller);
@@ -44,31 +44,31 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public Notification[][] userNotifications(User user){
-        NotificationDatabaseInteractor notificationDBInteractor = new NotificationDatabaseInteractor();
-        ArrayList<Notification> notifications = notificationDBInteractor.readData();
-        ArrayList<Notification> unresolvedNotifications = new ArrayList<Notification>();
-        ArrayList<Notification> resolvedNotifications = new ArrayList<Notification>();
-        for (Notification n: notifications){
-            if (n.getResolvedStatus()){
-                if (n.getSenderId() == user.getEmployeeNum() || n.getRecipientId() == user.getEmployeeNum()){
+    public UserNotification[][] userNotifications(User user){
+        UserNotificationInteractor notificationDBInteractor = new UserNotificationInteractor();
+        ArrayList<UserNotification> userNotifications = notificationDBInteractor.readData();
+        ArrayList<UserNotification> unresolvedNotifications = new ArrayList<UserNotification>();
+        ArrayList<UserNotification> resolvedNotifications = new ArrayList<UserNotification>();
+        for (UserNotification n: userNotifications){
+            if ( n.getResolvedStatus()){
+                if (n.getRecipientId() == user.getUserNum() || n.getRecipientId() == user.getUserNum()){
                     resolvedNotifications.add(n);
                 }
             }
             else{
-                if (n.getSenderId() == user.getEmployeeNum() || n.getRecipientId() == user.getEmployeeNum()){
+                if (n.getSenderId() == user.getUserNum() || n.getRecipientId() == user.getUserNum()){
                     unresolvedNotifications.add(n);
                 }
             }
         }
-        Notification[][] noti = new Notification[][] {Notification.sortByCreatedDate(unresolvedNotifications), Notification.sortByCreatedDate(resolvedNotifications)};
+        UserNotification[][] noti = new UserNotification[][] {UserNotification.sortByCreatedDate(unresolvedNotifications), UserNotification.sortByCreatedDate(resolvedNotifications)};
 
         return noti;
     }
-    private String[] notificationArrayToStringArray(Notification[] notifications){
+    private String[] notificationArrayToStringArray(UserNotification[] notifications){
         String[] stringNotifications = new String[notifications.length];
         int i = 0;
-        for (Notification n: notifications){
+        for (UserNotification n: notifications){
             String item = "Entities.User Id: " + notifications[i].getNotifId() + " has requested time off on shift: " + notifications[i].getShiftId();
             stringNotifications[i] = item;
             i+=1;

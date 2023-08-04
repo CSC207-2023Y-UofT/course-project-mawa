@@ -1,10 +1,12 @@
 package InterfaceAdapters;
 
-import Entities.NotificationRequest;
+import Entities.UserNotificationRequest;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import Entities.*;
+import InterfaceAdapters.*;
 
 public class RequestFormPresenter implements ActionListener {
 
@@ -30,7 +32,7 @@ public class RequestFormPresenter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton){
             try {
-                NotificationRequest notif = NotificationBuilder.newNotificationRequest(startField.getText(),
+                UserNotificationRequest notif = NotificationBuilder.newNotificationRequest(startField.getText(),
                         endField.getText(), reasonField.getText(), employee);
                 gui.dispose();
             } catch (InvalidTimeException ex){

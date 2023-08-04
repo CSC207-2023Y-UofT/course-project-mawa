@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import Entities.*;
+import InterfaceAdapters.*;
+import FrameworksAndDrivers.*;
 
 public class CompleteUserListGUI implements ActionListener, Page {
 

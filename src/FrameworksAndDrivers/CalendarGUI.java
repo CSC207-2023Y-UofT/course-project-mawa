@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import Entities.*;
+import InterfaceAdapters.*;
+import FrameworksAndDrivers.*;
 
 public class CalendarGUI extends JFrame implements Page {
     private LocalDate firstDay, lastDay;

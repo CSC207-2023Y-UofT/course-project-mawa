@@ -1,6 +1,7 @@
 package InterfaceAdapters;
 
 import Entities.Payment;
+import UseCases.Interactor;
 
 import java.io.*;
 import java.util.ArrayList;

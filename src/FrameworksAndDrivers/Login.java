@@ -1,6 +1,6 @@
 package FrameworksAndDrivers;
 
-import InterfaceAdapters.*;
+import UseCases.LoginValidator;
 
 import javax.swing.*;
 import java.util.ArrayList;

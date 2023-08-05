@@ -1,4 +1,10 @@
+<<<<<<< HEAD:src/FrameworksAndDrivers/DayView.java
 package FrameworksAndDrivers;
+=======
+
+import Entities.Shift;
+import InterfaceAdapters.Page;
+>>>>>>> dfc6f85c1b5d7b2c815142d6a56f64b32074dc0d:src/DayView.java
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +15,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import InterfaceAdapters.*;
+
+import UseCases.DayViewLogic;
 
 public class DayView extends JFrame implements ActionListener, Page {
     private LocalDate day;

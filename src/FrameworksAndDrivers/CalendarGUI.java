@@ -5,6 +5,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import InterfaceAdapters.*;
+import UseCases.CalendarModel;
 
 public class CalendarGUI extends JFrame implements Page {
     private LocalDate firstDay, lastDay;

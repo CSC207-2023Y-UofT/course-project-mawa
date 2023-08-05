@@ -3,6 +3,7 @@ package InterfaceAdapters;
 import java.io.*;
 import java.util.ArrayList;
 import Entities.*;
+import UseCases.Interactor;
 
 public class UserNotificationInteractor implements Interactor<UserNotification> {
 

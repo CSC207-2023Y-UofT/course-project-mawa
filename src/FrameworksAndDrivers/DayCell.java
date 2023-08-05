@@ -1,6 +1,6 @@
 package FrameworksAndDrivers;
 
-import InterfaceAdapters.*;
+import UseCases.SortShiftByDate;
 
 import java.awt.*;
 import javax.swing.*;

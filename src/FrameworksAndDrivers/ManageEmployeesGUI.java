@@ -17,8 +17,9 @@ public class ManageEmployeesGUI implements ActionListener, Page {
   private JPanel buttonsPanel = new JPanel();
 
 
-public ManageEmployeesGUI(){
+public ManageEmployeesGUI(int id){
   //Create the UI by combining the title and button components
+  this.viewerID = id;
   frame.setSize(600, 600);
   frame.setVisible(true);
   this.addTitle();
@@ -33,10 +34,10 @@ public void actionPerformed(ActionEvent e){
   //Based on which button is clicked, we wish to redirect to a particular page.
   Object source = e.getSource();
     if (source.equals(addEmployee)) {
-      new AddEmployeeGUI();
+      new AddEmployeeGUI(viewerID);
       frame.dispose();
     } else if (source.equals(completeEmployeeList)){
-      new CompleteUserListGUI();
+      new CompleteUserListGUI(viewerID);
       frame.dispose();
     } else if (source.equals(employeeSummary)) {
       new EmployeeSummaryGUI(viewerID);

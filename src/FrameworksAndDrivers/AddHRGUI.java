@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 
 public class AddHRGUI implements ActionListener, Page {
 
+
+    private int viewerID;
+
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
 
@@ -62,7 +65,8 @@ public class AddHRGUI implements ActionListener, Page {
 
 
 
-    public AddHRGUI(){
+    public AddHRGUI(int id){
+        this.viewerID = id;
         frame.setSize(600, 600);
         frame.setVisible(true);
         this.addTitle();
@@ -142,6 +146,26 @@ public class AddHRGUI implements ActionListener, Page {
         contentPane.add(questionPanel);
         contentPane.add(dobPanel);
         contentPane.add(submitPanel);
+    }
+
+    @Override
+    public void setUser(int user) {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void addHomeButton() {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }
 

@@ -38,4 +38,19 @@ public class PaymentInteractor implements Interactor<Payment> {
 
     }
 
+    @Override
+    public void update(Payment p) {
+        ArrayList<Payment> paymentList = this.readData();
+        paymentList.removeIf(payment -> p.get)//Remove if payment id's are the same - need the feature.
+        paymentList.add(payment);
+        try{
+            FileOutputStream file = new FileOutputStream("payments.ser");
+            ObjectOutputStream output = new ObjectOutputStream(file);
+            output.writeObject(payment);
+            output.close();
+        } catch (IOException e){
+            System.out.println(e);
+        }
+    }
+
 }

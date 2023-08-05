@@ -1,3 +1,5 @@
+package UseCases;
+
 import Entities.UserNotificationRequest;
 import Entities.Shift;
 import Entities.User;

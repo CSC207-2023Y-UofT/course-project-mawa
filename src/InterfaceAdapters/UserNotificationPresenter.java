@@ -5,13 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import UseCases.*;
 
-public class NotificationPresenter {
-    public NotificationGUI gui;
+public class UserNotificationPresenter {
+    public Page gui;
     public NotificationHRListModel unresolvedList;
     public NotificationHRListModel resolvedList;
     public int user;
 
-    public NotificationPresenter(int userID, NotificationGUI gui, NotificationHRListModel unresolvedList,
+    public UserNotificationPresenter(int userID, Page gui, NotificationHRListModel unresolvedList,
                                  NotificationHRListModel resolvedList){
         this.user = userID;
         this.unresolvedList = unresolvedList;

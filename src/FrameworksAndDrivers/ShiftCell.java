@@ -1,7 +1,6 @@
 package FrameworksAndDrivers;
 
-import Entities.Shift;
-
+import InterfaceAdapters.*;
 import javax.swing.*;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;

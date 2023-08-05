@@ -1,8 +1,6 @@
 package UseCases;
 
 import Entities.*;
-import InterfaceAdapters.ShiftInteractor;
-import InterfaceAdapters.UserInteractor;
 
 import java.io.IOException;
 import java.util.ArrayList;

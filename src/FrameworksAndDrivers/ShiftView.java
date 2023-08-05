@@ -1,7 +1,5 @@
 package FrameworksAndDrivers;
 
-import Entities.Employee;
-import Entities.Shift;
 import FrameworksAndDrivers.HomeButton;
 import InterfaceAdapters.Page;
 import InterfaceAdapters.ShiftPresenter;

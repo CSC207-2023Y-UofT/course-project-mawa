@@ -1,11 +1,10 @@
 package InterfaceAdapters;
 
-import Entities.UserNotificationRequest;
+import UseCases.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Entities.*;
 import InterfaceAdapters.*;
 
 public class RequestFormPresenter implements ActionListener {

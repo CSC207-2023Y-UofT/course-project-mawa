@@ -1,13 +1,11 @@
 package UseCases;
 
-import Entities.CalendarConstants;
 import Entities.Shift;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import Entities.*;
-import InterfaceAdapters.*;
+
 
 public class CalendarModel {
     private int year, month, user;

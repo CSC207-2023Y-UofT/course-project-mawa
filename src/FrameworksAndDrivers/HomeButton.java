@@ -1,6 +1,5 @@
 package FrameworksAndDrivers;
 
-import Entities.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

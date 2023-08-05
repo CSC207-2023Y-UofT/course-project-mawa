@@ -1,9 +1,6 @@
 package FrameworksAndDrivers;
 
-import Entities.Employee;
-import Entities.HR;
-import Entities.User;
-
+import InterfaceAdapters.*;
 import javax.swing.*;
 import java.util.ArrayList;
 

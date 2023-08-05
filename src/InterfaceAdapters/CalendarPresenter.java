@@ -8,9 +8,8 @@ import java.awt.event.ItemListener;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Objects;
-import Entities.*;
-import InterfaceAdapters.*;
-import FrameworksAndDrivers.*;
+
+import UseCases.*;
 
 
 public class CalendarPresenter implements ItemListener, ActionListener {

@@ -3,7 +3,7 @@ package Entities;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import InterfaceAdapters.*;
+
 
 public abstract class UserNotification implements Serializable {
     private int notifId;

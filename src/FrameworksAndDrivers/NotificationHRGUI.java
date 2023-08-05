@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import InterfaceAdapters.Page;
 import UseCases.UserNotificationInteractor;
 
 public class NotificationHRGUI extends JFrame implements ActionListener {
@@ -29,8 +30,10 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
     public JList<String> resolvedNotificationList;
 
 
-    public NotificationHRGUI(User user) {
+    public NotificationHRGUI(int userID) {
         this.frame.setLayout(new GridLayout(1, 2));
+
+
         createNotificationList(this, unresolvedNotificationPanel, unresolvedNotificationListPanel,
                 unresolvedNotificationLabel, unresolvedNotificationList,
                 unresolvedNotificationListScroller);
@@ -38,6 +41,8 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         createNotificationList(this, resolvedNotificationPanel, resolvedNotificationListPanel,
                 resolvedNotificationLabel, unresolvedNotificationList,
                 resolvedNotificationListScroller);
+
+
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
         this.frame.setTitle("Notifications");

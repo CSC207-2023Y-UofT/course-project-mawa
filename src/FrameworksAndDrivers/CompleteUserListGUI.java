@@ -41,13 +41,13 @@ public class CompleteUserListGUI implements ActionListener, Page {
             uc.changeActivation(presenter.getMap().get(source));
             new CompleteUserListGUI(viewerID);
             frame.dispose();
-            JOptionPane.showMessageDialog(null, "Entities.Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     @Override
     public void addTitle() {
-        frame.setTitle("Complete Entities.User List");
+        frame.setTitle("Complete User List");
     }
 
     public void makeHeader(){

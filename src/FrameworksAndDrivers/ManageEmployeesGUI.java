@@ -10,10 +10,10 @@ public class ManageEmployeesGUI implements ActionListener, Page {
 
   private int viewerID;
   private JFrame frame = new JFrame();
-  private JButton addEmployee = new JButton("Add Entities.Employee");
+  private JButton addEmployee = new JButton("Add Employee");
 
-  private JButton completeEmployeeList = new JButton("Complete Entities.Employee List");
-  private JButton employeeSummary = new JButton("Entities.Employee Summary");
+  private JButton completeEmployeeList = new JButton("Complete Employee List");
+  private JButton employeeSummary = new JButton("Employee Summary");
   private JPanel buttonsPanel = new JPanel();
 
 

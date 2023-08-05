@@ -69,7 +69,7 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         String[] stringNotifications = new String[notifications.length];
         int i = 0;
         for (Notification n: notifications){
-            String item = "Entities.User Id: " + notifications[i].getNotifId() + " has requested time off on shift: " + notifications[i].getShiftId();
+            String item = "User Id: " + notifications[i].getNotifId() + " has requested time off on shift: " + notifications[i].getShiftId();
             stringNotifications[i] = item;
             i+=1;
         }

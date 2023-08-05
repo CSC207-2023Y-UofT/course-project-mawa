@@ -39,7 +39,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
 
     @Override
     public void addTitle() {
-        frame.setTitle("Active Entities.Employee Summary");
+        frame.setTitle("Active Employee Summary");
     }
 
     public void makeHeader(){

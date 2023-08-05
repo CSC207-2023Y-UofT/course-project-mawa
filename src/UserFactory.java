@@ -2,9 +2,6 @@ import Entities.*;
 import InterfaceAdapters.ShiftInteractor;
 import InterfaceAdapters.UserInteractor;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 public class UserFactory{
     //As the creation of several children of user is delegated to this class, this is a
     //use of the factory design pattern.
@@ -41,7 +38,7 @@ public class UserFactory{
                         phoneNumber, bday, password.toCharArray()));
                 break;
             case "Entities.HR":
-                uInt.writeData(new HR(surname, firstname, gender, email, role, numUsers + 1,
+                uInt.writeData(new HR(surname, firstname, gender, email, numUsers + 1,
                         phoneNumber, bday, password.toCharArray()));
                 break;
         }

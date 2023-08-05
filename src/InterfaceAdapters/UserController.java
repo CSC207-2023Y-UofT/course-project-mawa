@@ -2,8 +2,6 @@ package InterfaceAdapters;
 
 import Entities.Shift;
 import Entities.User;
-import InterfaceAdapters.ShiftInteractor;
-import InterfaceAdapters.UserInteractor;
 
 import java.util.ArrayList;
 

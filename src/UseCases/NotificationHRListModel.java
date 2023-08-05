@@ -9,7 +9,6 @@ public class NotificationHRListModel extends DefaultListModel<String> {
 
     public NotificationHRListModel(int userID){
         user = userID;
-        listModel.add(0,"i");
     }
 
 

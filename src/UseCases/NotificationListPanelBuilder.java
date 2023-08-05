@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class NotificationListPanelBuilder extends JPanel {
-    JPanel panel = new JPanel();
+    public JPanel panel = new JPanel();
     public NotificationListPanelBuilder(JFrame frame, JLabel label, JList<String> list, JScrollPane scroller, Boolean hr){
         panel.setLayout(new BorderLayout());
         label.setHorizontalAlignment(JLabel.CENTER);

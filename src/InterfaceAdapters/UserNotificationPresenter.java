@@ -1,8 +1,22 @@
 package InterfaceAdapters;
 
-import Entities.UserNotification;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import UseCases.*;
 
-public class UserNotificationPresenter {
+public class NotificationPresenter {
+    public NotificationGUI gui;
+    public NotificationHRListModel unresolvedList;
+    public NotificationHRListModel resolvedList;
+    public int user;
 
-    public UserNotificationPresenter();
+    public NotificationPresenter(int userID, NotificationGUI gui, NotificationHRListModel unresolvedList,
+                                 NotificationHRListModel resolvedList){
+        this.user = userID;
+        this.unresolvedList = unresolvedList;
+        this.resolvedList = resolvedList;
+        this.gui = gui;
+    }
+
 }

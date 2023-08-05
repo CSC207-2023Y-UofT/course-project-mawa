@@ -10,6 +10,8 @@ import FrameworksAndDrivers.*;
 
 public class AddEmployeeGUI implements ActionListener, Page {
 
+    private int viewerID;
+
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
 
@@ -74,7 +76,8 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
 
 
-    public AddEmployeeGUI(){
+    public AddEmployeeGUI(int id){
+        this.setUser(id);
         frame.setSize(600, 600);
         frame.setVisible(true);
         this.addTitle();
@@ -84,9 +87,6 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
     }
 
-    public static void main(String[] args){
-        new AddEmployeeGUI();
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -118,7 +118,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
                             Float.parseFloat(payEnter.getText()));
                 }
 
-                new ManageEmployeesGUI();
+                new ManageEmployeesGUI(viewerID);
                 frame.dispose();
                 JOptionPane.showMessageDialog(null, "Entities.Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -140,7 +140,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
             }
         }
         if (s.equals(Page.back)){
-            new ManageEmployeesGUI();
+            new ManageEmployeesGUI(viewerID);
             frame.dispose();
         }
     }
@@ -193,5 +193,25 @@ public class AddEmployeeGUI implements ActionListener, Page {
         contentPane.add(questionPanel);
         contentPane.add(dobPanel);
         contentPane.add(submitPanel);
+    }
+
+    @Override
+    public void setUser(int user) {
+        this.viewerID = user;
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void addHomeButton() {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }

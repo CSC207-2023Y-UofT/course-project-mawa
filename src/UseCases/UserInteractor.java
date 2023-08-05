@@ -27,6 +27,8 @@ public class UserInteractor implements Interactor<User> {
     }
 
 
+    //In the particular case of users, there are times when we may only want employees in the returned
+    //list.
     public ArrayList<Employee> getEmployeeList(){
         ArrayList<User> users = this.readData();
         ArrayList<Employee> employees = new ArrayList<>();

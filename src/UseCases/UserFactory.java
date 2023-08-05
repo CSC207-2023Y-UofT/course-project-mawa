@@ -1,3 +1,5 @@
+package UseCases;
+
 import Entities.*;
 import InterfaceAdapters.ShiftInteractor;
 import InterfaceAdapters.UserInteractor;

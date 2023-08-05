@@ -1,3 +1,5 @@
+package InterfaceAdapters;
+
 import Entities.Shift;
 
 import java.awt.*;

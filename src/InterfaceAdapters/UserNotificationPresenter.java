@@ -19,4 +19,15 @@ public class UserNotificationPresenter {
         this.gui = gui;
     }
 
+    public void rescheduleUpdateListModel(String selected){
+        unresolvedList.listModel.removeElement(selected);
+        resolvedList.listModel.add(0, selected);
+
+    }
+    public void denyUpdateListModel(String selected){
+        unresolvedList.listModel.removeElement(selected);
+        resolvedList.listModel.add(0, selected);
+
+    }
+
 }

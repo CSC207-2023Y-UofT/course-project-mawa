@@ -57,13 +57,13 @@ public class UserNotificationInteractor implements Interactor<UserNotification> 
 
     public ArrayList<UserNotification> getNotificationByUserID(int userID){
         ArrayList<UserNotification> notifications = this.readData();
-        ArrayList<UserNotification> userNoti = new ArrayList<UserNotification>();
+        ArrayList<UserNotification> userNotifications = new ArrayList<UserNotification>();
         for (UserNotification n: notifications){
             if (n.getSenderId() == userID || n.getRecipientId() == userID){
-                userNoti.add(n);
+                userNotifications.add(n);
             }
         }
-        return userNoti;
+        return userNotifications;
     }
   
 }

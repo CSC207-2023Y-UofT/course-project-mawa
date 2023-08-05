@@ -15,7 +15,7 @@ public class Payment {
     Payment(User employee,int payment_amount, LocalDateTime date ) {
         this.employee = employee;
         this.date=date;
-        this.payment_message=employee.name+"Has been paid the amount of"+payment_amount+"At"+date;
+        this.payment_message=employee.getFirstname() + employee.getSurname() +"Has been paid the amount of"+payment_amount+"At"+date;
 
     }
 

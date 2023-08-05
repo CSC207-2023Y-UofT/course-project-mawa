@@ -15,7 +15,7 @@ public class CalendarModel {
         this.month = month;
         this.user = user;
     }
-    private ShiftDatabaseInteractor shiftDB = new ShiftDatabaseInteractor();
+    private ShiftInteractor shiftDB = new ShiftInteractor();
     public Object[] getDayInfo(int dayNum){
         LocalDate day = LocalDate.of(year, month, dayNum);
         LocalDate lastFri =  day.with(TemporalAdjusters.lastInMonth(DayOfWeek.FRIDAY));

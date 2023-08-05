@@ -1,6 +1,7 @@
 package Testing;
 
-import InterfaceAdapters.CalendarConstants;
+import Entities.CalendarConstants;
+import FrameworksAndDrivers.Page;
 
 import javax.swing.*;
 import java.awt.*;

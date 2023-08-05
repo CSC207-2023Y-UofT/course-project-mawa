@@ -28,7 +28,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
     private JLabel pwdLab = new JLabel("Password:");
 
-    private JLabel typeLab = new JLabel("Entities.Employee Type:");
+    private JLabel typeLab = new JLabel("Employee Type:");
 
     private JLabel payLab = new JLabel("Hourly wage");
 
@@ -59,7 +59,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
     private JTextField dobdayEnter = new JTextField(12);
 
-    private JComboBox<String> typeSelect = new JComboBox<>(new String[]{"Wage Worker", "Salary Worker", "Entities.Volunteer"});
+    private JComboBox<String> typeSelect = new JComboBox<>(new String[]{"Wage Worker", "Salary Worker", "Volunteer"});
 
     private JTextField payEnter = new JTextField(12);
 
@@ -107,10 +107,10 @@ public class AddEmployeeGUI implements ActionListener, Page {
             String bd = dobdayEnter.getText();
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+") && pay_numeric && typeSelect.getSelectedItem() != null){
-                if (((String) typeSelect.getSelectedItem()).equals("Entities.Volunteer")){
+                if (((String) typeSelect.getSelectedItem()).equals("Volunteer")){
                     uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
                             bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
-                            "Entities.Volunteer", pwdEnter.getText(), 0);
+                            "Volunteer", pwdEnter.getText(), 0);
                 } else{
                     uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
                             bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
@@ -120,7 +120,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
                 new ManageEmployeesGUI(viewerID);
                 frame.dispose();
-                JOptionPane.showMessageDialog(null, "Entities.Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
@@ -134,7 +134,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
                 payLab.setVisible(true);
                 payEnter.setVisible(true);
                 payLab.setText("Yearly Salary ($), Numbers Only:");
-            } else if (typeSelect.getSelectedItem() == "Entities.Volunteer"){
+            } else if (typeSelect.getSelectedItem() == "Volunteer"){
                 payLab.setVisible(false);
                 payEnter.setVisible(false);
             }
@@ -148,7 +148,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
     @Override
     public void addTitle() {
-        frame.setTitle("Add Entities.Employee");
+        frame.setTitle("Add Employee");
     }
 
     @Override

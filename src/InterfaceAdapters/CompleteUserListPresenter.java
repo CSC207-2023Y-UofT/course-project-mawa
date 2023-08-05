@@ -29,10 +29,10 @@ public class CompleteUserListPresenter{
         panel.add(new JLabel(user.getDob().toString()));
         String type = user.getClass().getName();
         panel.add(new JLabel(type));
-        if (type.equals("Entities.Volunteer") || type.equals("Entities.HR")){
+        if (type.equals("Volunteer") || type.equals("HR")){
             //In order to make the information to all users line up nicely, we just display
             panel.add(new JLabel("0"));
-        } else if (type.equals("Entities.WageWorker")){
+        } else if (type.equals("WageWorker")){
             panel.add(new JLabel(Float.toString(((WageWorker)user).getHourlyWage())));
         } else{
             panel.add(new JLabel(Float.toString(((SalaryWorker)user).getYearlySalary())));

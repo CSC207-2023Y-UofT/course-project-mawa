@@ -29,9 +29,9 @@ public class EmployeeSummaryPresenter{
         panel.add(new JLabel(employee.getDob().toString()));
         String type = employee.getClass().getName();
         panel.add(new JLabel(type));
-        if (type.equals("Entities.Volunteer")) {
+        if (type.equals("Volunteer")) {
             panel.add(new JLabel("0"));
-        } else if (type.equals("Entities.WageWorker")) {
+        } else if (type.equals("WageWorker")) {
             panel.add(new JLabel(Float.toString(((WageWorker) employee).getHourlyWage())));
         } else {
             panel.add(new JLabel(Float.toString(((SalaryWorker) employee).getYearlySalary())));

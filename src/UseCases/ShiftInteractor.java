@@ -1,11 +1,10 @@
-package InterfaceAdapters;
+package UseCases;
 
-import Entities.Shift;
+import UseCases.*;
+import Entities.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import Entities.*;
-import InterfaceAdapters.*;
 
 public class ShiftInteractor implements Interactor<Shift> {
   

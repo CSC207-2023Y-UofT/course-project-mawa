@@ -1,11 +1,10 @@
 package InterfaceAdapters;
 
-import Entities.Shift;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Entities.*;
+import UseCases.*;
 import InterfaceAdapters.*;
 
 public class ShiftPresenter implements ActionListener {

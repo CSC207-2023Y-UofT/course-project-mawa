@@ -1,4 +1,5 @@
-import Entities.HR;
+package FrameworksAndDrivers;
+
 import FrameworksAndDrivers.AddHRGUI;
 import FrameworksAndDrivers.ManageEmployeesGUI;
 

@@ -6,9 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import Entities.*;
 import InterfaceAdapters.*;
-import FrameworksAndDrivers.*;
+import UseCases.UserInteractor;
 
 public class EmployeeSummaryGUI implements ActionListener, Page {
 

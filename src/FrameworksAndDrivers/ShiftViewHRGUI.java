@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
-import Entities.*;
 import InterfaceAdapters.*;
 import FrameworksAndDrivers.*;
 
@@ -45,7 +44,7 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
         this.frame.add(employeeListPanel, BorderLayout.CENTER);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
-        this.frame.setTitle("ShiftView");
+        this.frame.setTitle("FrameworksAndDrivers.ShiftView");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 

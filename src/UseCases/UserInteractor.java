@@ -1,7 +1,8 @@
-package InterfaceAdapters;
+package UseCases;
 
 import Entities.Employee;
 import Entities.User;
+import UseCases.Interactor;
 
 import java.io.*;
 import java.util.ArrayList;

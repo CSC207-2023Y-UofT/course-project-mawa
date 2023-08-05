@@ -1,8 +1,9 @@
 package Entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Payment {
+public class Payment implements Serializable {
 
     private User employee;
 

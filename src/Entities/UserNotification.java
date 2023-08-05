@@ -13,6 +13,7 @@ public abstract class UserNotification implements Serializable {
     private String shiftId;
     private LocalDateTime date;
     private Boolean resolved;
+    private Boolean denied = false;
     private LocalDateTime resolvedAt;
 
     public UserNotification(int senderId, int recipientId, String shiftId, String message, LocalDateTime date){
@@ -55,6 +56,8 @@ public abstract class UserNotification implements Serializable {
         return this.date;
     }
     public boolean getResolvedStatus() {return this.resolved;}
+
+    public void deny(){this.denied = true;}
 
     @Override
     public String toString() {

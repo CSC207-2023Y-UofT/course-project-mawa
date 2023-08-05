@@ -8,7 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
-import InterfaceAdapters.*;
+
+import UseCases.UserNotificationInteractor;
 
 public class NotificationHRGUI extends JFrame implements ActionListener {
     private JFrame frame = new JFrame();

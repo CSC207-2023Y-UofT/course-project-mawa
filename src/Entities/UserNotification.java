@@ -24,11 +24,7 @@ public abstract class UserNotification implements Serializable {
         this.resolved = false;
         UserNotificationInteractor ndb = new UserNotificationInteractor();
         ArrayList<UserNotification> l = ndb.readData();
-        if (l.size() == 0){
-            this.notifId = 1;
-        } else{
-            this.notifId = l.size() + 1;
-        }
+        this.notifId = l.size() + 1;
     }
 
     public void resolve(){

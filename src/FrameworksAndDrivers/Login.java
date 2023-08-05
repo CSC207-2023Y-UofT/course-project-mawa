@@ -1,6 +1,6 @@
-import Entities.Employee;
-import Entities.HR;
-import Entities.User;
+package FrameworksAndDrivers;
+
+import InterfaceAdapters.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class Login{
     }
     private void setUp(){
         JOptionPane pane = new JOptionPane(options.toArray(new Object[0]), JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = pane.createDialog(null, "Login");
+        JDialog dialog = pane.createDialog(null, "FrameworksAndDrivers.Login");
 
         dialog.setResizable(true);
         dialog.setVisible(true);

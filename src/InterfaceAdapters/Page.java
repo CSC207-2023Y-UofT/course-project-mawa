@@ -1,3 +1,5 @@
+package InterfaceAdapters;
+
 import javax.swing.*;
 
 public interface Page {

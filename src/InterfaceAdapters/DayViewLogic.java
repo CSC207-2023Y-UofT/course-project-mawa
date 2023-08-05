@@ -1,4 +1,7 @@
+package InterfaceAdapters;
+
 import Entities.Shift;
+import InterfaceAdapters.SortShiftByDate;
 
 import java.awt.*;
 import java.time.Duration;

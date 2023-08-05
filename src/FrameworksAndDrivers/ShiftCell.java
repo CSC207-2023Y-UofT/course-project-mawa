@@ -1,10 +1,9 @@
-
-
-import Entities.Shift;
+package FrameworksAndDrivers;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
+import InterfaceAdapters.*;
 
 public class ShiftCell extends JButton {
     private Shift shift;

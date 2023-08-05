@@ -1,3 +1,5 @@
+package FrameworksAndDrivers;
+
 import Entities.HR;
 import FrameworksAndDrivers.AddHRGUI;
 import FrameworksAndDrivers.ManageEmployeesGUI;
@@ -8,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Entities.*;
 import InterfaceAdapters.*;
-public class HomePage implements ActionListener, Page{
+public class HomePage implements ActionListener, Page {
 
     private JFrame frame = new JFrame();
 

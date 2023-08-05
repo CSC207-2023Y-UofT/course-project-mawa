@@ -59,11 +59,6 @@ public abstract class UserNotification implements Serializable {
 
     public void deny(){this.denied = true;}
 
-    @Override
-    public String toString() {
-        return "has requested time off on " + this.getDate().toString() + ", ";
-    }
-
     public static UserNotification[] sortByCreatedDate(ArrayList<UserNotification> notifications){
         UserNotification[] sorted = new UserNotification[notifications.size()];
         sorted = notifications.toArray(sorted);

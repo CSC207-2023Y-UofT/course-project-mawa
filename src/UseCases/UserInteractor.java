@@ -26,6 +26,16 @@ public class UserInteractor implements Interactor<User> {
         return userList;
     }
 
+    public User getUserById(int userID){
+        ArrayList<User> users = this.readData();
+        for (User user: users){
+            if(user.getUserNum() == userID){
+                return user;
+            }
+        }
+        return null;
+    }
+
 
     //In the particular case of users, there are times when we may only want employees in the returned
     //list.

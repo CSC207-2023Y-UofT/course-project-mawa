@@ -56,8 +56,10 @@ public abstract class UserNotification implements Serializable {
         return this.date;
     }
     public boolean getResolvedStatus() {return this.resolved;}
+    public boolean getDenyStatus(){return this.denied}
 
     public void deny(){this.denied = true;}
+
 
     public static UserNotification[] sortByCreatedDate(ArrayList<UserNotification> notifications){
         UserNotification[] sorted = new UserNotification[notifications.size()];

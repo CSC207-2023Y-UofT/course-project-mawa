@@ -10,13 +10,13 @@ public abstract class UserNotification implements Serializable {
     private String message;
     private int senderId;
     private int recipientId;
-    private String shiftId;
+    private int shiftId;
     private LocalDateTime date;
     private Boolean resolved;
     private Boolean denied = false;
     private LocalDateTime resolvedAt;
 
-    public UserNotification(int senderId, int recipientId, String shiftId, String message, LocalDateTime date){
+    public UserNotification(int senderId, int recipientId, int shiftId, String message, LocalDateTime date){
         this.message = message;
         this.senderId = senderId;
         this.recipientId = recipientId;
@@ -44,7 +44,7 @@ public abstract class UserNotification implements Serializable {
         return this.senderId;
     }
 
-    public String getShiftId(){
+    public int getShiftId(){
         return this.shiftId;
     }
 
@@ -56,9 +56,9 @@ public abstract class UserNotification implements Serializable {
         return this.date;
     }
     public boolean getResolvedStatus() {return this.resolved;}
-    public boolean getDenyStatus(){return this.denied}
+    public boolean getDenyStatus(){return this.denied;}
 
-    public void deny(){this.denied = true;}
+    public void deny(){this.denied = true; this.resolvedAt = LocalDateTime.now();}
 
 
     public static UserNotification[] sortByCreatedDate(ArrayList<UserNotification> notifications){

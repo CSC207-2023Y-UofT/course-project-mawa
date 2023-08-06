@@ -11,12 +11,11 @@ public class UserNotificationPresenter {
     public NotificationHRListModel resolvedList;
     public int user;
 
-    public UserNotificationPresenter(int userID, Page gui, NotificationHRListModel unresolvedList,
+    public UserNotificationPresenter(int userID, NotificationHRListModel unresolvedList,
                                  NotificationHRListModel resolvedList){
         this.user = userID;
         this.unresolvedList = unresolvedList;
         this.resolvedList = resolvedList;
-        this.gui = gui;
     }
 
     public void rescheduleUpdateListModel(String selected){

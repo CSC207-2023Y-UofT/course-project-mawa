@@ -24,6 +24,16 @@ public class ShiftInteractor implements Interactor<Shift> {
 
   }
 
+  public Shift getShiftByID(int shiftID){
+      ArrayList<Shift> shifts = this.readData();
+      for (Shift shift: shifts){
+          if(shift.getShiftId() == shiftID){
+              return shift;
+          }
+      }
+      return null;
+  }
+
     public void update(Shift s){
         ArrayList<Shift> shifts = this.readData();
         shifts.removeIf(shift -> s.getShiftId() == shift.getShiftId());

@@ -14,5 +14,17 @@ public class NotificationHRListModel extends DefaultListModel<String> {
         status = new NotificationStatusTrackerUpdater(userID);
     }
 
+    public void populateList(){
+        if (this.resolvedList){
+            for(String s: status.resolved){
+                this.listModel.addElement(s);
+            }
+        }else{
+            for(String s: status.unresolved){
+                this.listModel.addElement(s);
+            }
+        }
+    }
+
 
 }

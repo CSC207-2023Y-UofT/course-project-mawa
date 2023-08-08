@@ -13,7 +13,7 @@ public class ShiftInteractor implements Interactor<Shift> {
       ArrayList<Shift> shiftList = new ArrayList<>();
 
       try{
-          FileInputStream file = new FileInputStream("notifications.ser");
+          FileInputStream file = new FileInputStream("shifts.ser");
           ObjectInputStream input = new ObjectInputStream(file);
           shiftList.addAll ((ArrayList<Shift>) input.readObject()) ;
 

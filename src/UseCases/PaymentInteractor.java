@@ -12,7 +12,7 @@ public class PaymentInteractor implements Interactor<Payment> {
       ArrayList<Payment> payList = new ArrayList<>();
 
       try{
-          FileInputStream file = new FileInputStream("notifications.ser");
+          FileInputStream file = new FileInputStream("payments.ser");
           ObjectInputStream input = new ObjectInputStream(file);
           payList.addAll ((ArrayList<Payment>) input.readObject()) ;
 

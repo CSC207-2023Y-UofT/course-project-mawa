@@ -1,4 +1,4 @@
-package UseCases;
+package Entities;
 
 import Entities.Shift;
 

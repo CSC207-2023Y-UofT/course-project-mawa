@@ -1,6 +1,6 @@
 package InterfaceAdapters;
 
-import UseCases.*;
+import Entities.SortShiftByDate;
 
 import java.awt.*;
 import java.time.Duration;

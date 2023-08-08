@@ -1,6 +1,5 @@
 package UseCases;
 
-import Entities.Payment;
 import Entities.UserNotification;
 
 import java.time.LocalDateTime;
@@ -16,15 +15,12 @@ public class NotificationFileProcessor implements FileProcessor<UserNotification
     private HashMap<LocalDateTime, ArrayList<Integer>> dateCreatedToId = new HashMap<LocalDateTime, ArrayList<Integer>>();
     private HashMap<Boolean, ArrayList<Integer>> resolvedToId = new HashMap<Boolean, ArrayList<Integer>>();
     private HashMap<String, ArrayList<Integer>> typeToId = new HashMap<String, ArrayList<Integer>>();
-    private HashMap<Integer, UserNotification> idToNotification = new HashMap<>();
     private ArrayList<HashMap> hmList = new ArrayList<>();
 
 
     private NotificationFileProcessor(){
         makeHM();
     }
-
-
 
     public static NotificationFileProcessor getInstance(){
         if (instance == null) {
@@ -35,11 +31,6 @@ public class NotificationFileProcessor implements FileProcessor<UserNotification
             }
         }
         return instance;
-    }
-
-    @Override
-    public ArrayList<HashMap> getHMList() {
-        return hmList;
     }
     @Override
     public void makeHM() {
@@ -59,17 +50,13 @@ public class NotificationFileProcessor implements FileProcessor<UserNotification
         hmList.add(typeToId);
     }
 
-    public HashMap<Integer, UserNotification> getIdToNotification(){
-        return idToNotification;
-    }
-
     public void makeTypetoId(HashMap<String, ArrayList<Integer>> typeToid,
                             ArrayList<UserNotification> notifList){
         for (UserNotification n : notifList){
-            if (typeToid.containsKey(n.getClass().getSimpleName())){
-                typeToid.get(n.getClass().getSimpleName()).add(n.getNotifId());
+            if (typeToid.containsKey(n.getClass().getName())){
+                typeToid.get(n.getClass().getName()).add(n.getNotifId());
             } else {
-                typeToid.put(n.getClass().getSimpleName(), (ArrayList<Integer>) List.of(n.getNotifId()));
+                typeToid.put(n.getClass().getName(), (ArrayList<Integer>) List.of(n.getNotifId()));
             }
         }
     }
@@ -80,10 +67,10 @@ public class NotificationFileProcessor implements FileProcessor<UserNotification
             typeToid.clear();
         }
         for (UserNotification n : notifList){
-            if (typeToid.containsKey(n.getClass().getSimpleName())){
-                typeToid.get(n.getClass().getSimpleName()).add(n.getNotifId());
+            if (typeToid.containsKey(n.getClass().getName())){
+                typeToid.get(n.getClass().getName()).add(n.getNotifId());
             } else {
-                typeToid.put(n.getClass().getSimpleName(), (ArrayList<Integer>) List.of(n.getNotifId()));
+                typeToid.put(n.getClass().getName(), (ArrayList<Integer>) List.of(n.getNotifId()));
             }
         }
     }
@@ -169,7 +156,6 @@ public class NotificationFileProcessor implements FileProcessor<UserNotification
                              ArrayList<UserNotification> notifList){
         for (UserNotification n : notifList){
             idToList.put(n.getNotifId(), toList(n));
-            idToNotification.put(n.getNotifId(), n);
         }
     }
     public void makeSenderIdtoId(HashMap<Integer, ArrayList<Integer>> idToid,
@@ -203,11 +189,9 @@ public class NotificationFileProcessor implements FileProcessor<UserNotification
                              ArrayList<UserNotification> notifList, boolean append){
         if (!append){
             idToList.clear();
-            idToNotification.clear();
         }
         for (UserNotification n : notifList){
             idToList.put(n.getNotifId(), toList(n));
-            idToNotification.put(n.getNotifId(), n);
         }
     }
 
@@ -220,11 +204,6 @@ public class NotificationFileProcessor implements FileProcessor<UserNotification
         list.add(notification.getResolvedStatus());
 
         return list;
-    }
-
-    @Override
-    public Interactor getInteractor() {
-        return interactor;
     }
 
 

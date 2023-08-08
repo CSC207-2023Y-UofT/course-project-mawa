@@ -4,29 +4,24 @@ import UseCases.*;
 
 public class FileHandler {
     private String fileName;
-    private FileProcessor processor;
+    private Interactor interactor;
 
-    public FileHandler(String fileName) throws InvalidFileNameException {
+    FileHandler(String fileName){
         this.fileName = fileName;
-        setStrategy();
 
     }
 
     public void setStrategy() throws InvalidFileNameException {
         if (fileName.equals(FileNameConstants.SHIFT_FILE_NAME)){
-            processor = ShiftFileProcessor.getInstance(); //maybe make filename parameter for interactors?
+            interactor = new ShiftInteractor();
         } else if (fileName.equals(FileNameConstants.USER_FILE_NAME)){
-            processor = UserFileProcessor.getInstance();
+            interactor = new UserInteractor();
         } else if (fileName.equals(FileNameConstants.NOTIFICATION_FILE_NAME)){
-            processor = NotificationFileProcessor.getInstance();
+            interactor = new UserNotificationInteractor();
         } else if (fileName.equals(FileNameConstants.PAYMENT_FILE_NAME)){
-            processor = PaymentFileProcessor.getInstance();
+            interactor = new PaymentInteractor();
         } else {
             throw new InvalidFileNameException();
         }
-    }
-
-    public FileProcessor getStrategy(){
-        return processor;
     }
 }

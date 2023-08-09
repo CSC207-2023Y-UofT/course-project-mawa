@@ -5,14 +5,12 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import InterfaceAdapters.*;
-import FrameworksAndDrivers.*;
 
 public class CalendarGUI extends JFrame implements Page {
     private LocalDate firstDay, lastDay;
     private int numSections;
     private CalendarModel model;
-    private JComboBox<String> monthList;
-    private JComboBox<String> yearList;
+    private CustomComboBox monthList, yearList;
     private int month;
     private int year;
     private int user;
@@ -29,7 +27,8 @@ public class CalendarGUI extends JFrame implements Page {
         this.lastDay = LocalDate.of(year, month, firstDay.lengthOfMonth());
         setUser(user);
         this.model = new CalendarModel(this.year, this.month, this.user);
-        this.presenter = new CalendarPresenter(this.year, this.month, this.user, this, model);
+        this.presenter = new CalendarPresenter(this.year, this.month, this.user,
+                this, model, yearList, monthList);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         addTitle();
         addContent();
@@ -46,15 +45,14 @@ public class CalendarGUI extends JFrame implements Page {
         for(int i = 1; i < numSections + 1; i++){
             if (i < (firstDay.getDayOfWeek().getValue()) + 1 ||
                     i > (firstDay.lengthOfMonth() + firstDay.getDayOfWeek().getValue() - 1)){
-                panelGrid.add(new DayCell(0, "", false, new Shift[]{}));
+                panelGrid.add(new DayCell(this, null, "", false, new ArrayList<Integer>(), user));
             } else{
                 int dayNum = i - firstDay.getDayOfWeek().getValue() - 1;
                 Object[] day = model.getDayInfo(dayNum);
-                DayCell dayCell = new DayCell(dayNum,
+                DayCell dayCell = new DayCell(this, LocalDate.of(year, month, dayNum),
                         CalendarConstants.days[(dayNum + firstDay.getDayOfWeek().getValue()) % 7],
                         (boolean)day[CalendarConstants.dayInfoPayDay],
-                        (Shift[])day[CalendarConstants.dayInfoShifts]);
-                dayCell.addActionListener(presenter);
+                        (ArrayList<Integer>)day[CalendarConstants.dayInfoShifts], user);
                 panelGrid.add(dayCell);
             }
         }
@@ -62,11 +60,11 @@ public class CalendarGUI extends JFrame implements Page {
     }
     private JPanel layoutHeader() {
         JPanel pageLayout = new JPanel(new BorderLayout());
-        monthList = new JComboBox<String>(CalendarConstants.months);
+        monthList = new CustomComboBox(CalendarConstants.months);
         monthList.setSelectedItem(CalendarConstants.months[month - 1]);
         monthList.addItemListener(presenter);
         headerButtons.add(monthList);
-        yearList = new JComboBox<String>(presenter.getYearRange());
+        yearList = new CustomComboBox(presenter.getYearRange());
         yearList.setSelectedItem(String.valueOf(year));
         yearList.addItemListener(presenter);
         headerButtons.add(yearList);

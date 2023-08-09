@@ -1,27 +1,31 @@
 package InterfaceAdapters;
 
-import UseCases.*;
+import UseCases.ShiftSorter;
 
 import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class DayViewLogic {
 
-    private Shift[] shifts;
+    private ArrayList<Integer> shifts;
     private float width, height;
-    public DayViewLogic(Shift[] shifts, float width, float height){
-        Arrays.sort(shifts, new SortShiftByDate());
-        this.shifts = shifts;
+    private ShiftFileReader reader;
+    public DayViewLogic(ArrayList<Integer> shifts, float width, float height){
+        this.shifts = ShiftSorter.sortShiftsByDate(shifts);
         this.width = width;
         this.height = height;
+        try{
+            reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
+        }catch(InvalidFileNameException e){
+            System.out.println("Invalid File Name.");
+        }
     }
 
     public int[] getTimeRange(){
-        return (new int[] {Math.max(0, shifts[0].getTime().getHour() - 2),
-                Math.min(24, shifts[shifts.length - 1].getTime().getHour() + 2)});
+        return (new int[] {Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2),
+                Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour() + 2)});
     }
 
     public ArrayList<Integer> getHours(){
@@ -36,27 +40,27 @@ public class DayViewLogic {
     public ArrayList<Rectangle> getShiftCellPosition(){
         ArrayList<Rectangle> areas = new ArrayList<Rectangle>();
         int[] timeRange = getTimeRange();
-        ArrayList<ArrayList<Shift>> shifts2D = make2DList();
-        for (ArrayList<Shift> s0 : shifts2D){
+        ArrayList<ArrayList<Integer>> shifts2D = make2DList();
+        for (ArrayList<Integer> s0 : shifts2D){
             for(int i = 0; i < s0.size(); i++){
-                Shift s = s0.get(i);
+                Integer s = s0.get(i);
                 Rectangle area = new Rectangle((int) ((float) width /10 + i * 8 * width / 10 / s0.size()),
-                        (int) yCoord(s.getTime().getHour() - timeRange[0] + (float)s.getTime().getMinute()/60,
+                        (int) yCoord(reader.getDate(s).getHour() - timeRange[0] + (float)reader.getDate(s).getMinute()/60,
                                 timeRange[1] - timeRange[0]),
                         (int) ((float) 8 * width / 10 / s0.size()),
-                        (int) yCoord(s.getDuration(), timeRange[1] - timeRange[0]));
+                        (int) yCoord(reader.getDuration(s), timeRange[1] - timeRange[0]));
                 areas.add(area);
             }
         }
         return areas;
     }
 
-    private ArrayList<ArrayList<Shift>> make2DList(){
-        ArrayList<ArrayList<Shift>> shifts2D = new ArrayList<ArrayList<Shift>>();
-        ArrayList<Shift> shifts1 = (ArrayList<Shift>) Arrays.asList(shifts.clone());
+    private ArrayList<ArrayList<Integer>> make2DList(){
+        ArrayList<ArrayList<Integer>> shifts2D = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> shifts1 = (ArrayList<Integer>)shifts.clone();
         //know that shifts is already sorted by time
         while(shifts1.size() > 0){
-            ArrayList<Shift> overlappingShifts = new ArrayList<Shift>();
+            ArrayList<Integer> overlappingShifts = new ArrayList<Integer>();
             overlappingShifts.add(shifts1.get(0));
             shifts1.remove(0);
             for (int j = 0; j < shifts1.size(); j ++){
@@ -76,11 +80,11 @@ public class DayViewLogic {
         return (((float) (14 * height) /15) * i / scale + (float) height /30);
     }
 
-    private boolean isOverlapping(Shift shift1, Shift shift2) {
-        LocalDateTime start1 = shift1.getTime();
-        LocalDateTime end1 = shift1.getTime().plus(Duration.ofMinutes((long) (shift1.getDuration() * 60)));
-        LocalDateTime start2 = shift2.getTime();
-        LocalDateTime end2 = shift2.getTime().plus(Duration.ofMinutes((long) (shift2.getDuration() * 60)));
+    private boolean isOverlapping(Integer shift1, Integer shift2) {
+        LocalDateTime start1 = reader.getDate(shift1);
+        LocalDateTime end1 = reader.getDate(shift1).plus(Duration.ofMinutes((long) (reader.getDuration(shift1)* 60)));
+        LocalDateTime start2 = reader.getDate(shift2);
+        LocalDateTime end2 = reader.getDate(shift2).plus(Duration.ofMinutes((long) (reader.getDuration(shift2) * 60)));
         return (start1.isBefore(end2) && start2.isBefore(end1) && !shift1.equals(shift2));
     }
 

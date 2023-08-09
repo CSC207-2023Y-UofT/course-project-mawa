@@ -13,6 +13,8 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
     private HashMap<Integer, ArrayList<Object>> idToList = new HashMap<Integer, ArrayList<Object>>();
     private HashMap<Integer, ArrayList<Integer>> amountToId = new HashMap<Integer, ArrayList<Integer>>();
     private HashMap<LocalDateTime, ArrayList<Integer>> dateToId = new HashMap<LocalDateTime, ArrayList<Integer>>();
+    private HashMap<Integer, ArrayList<Integer>> empIdToId = new HashMap<Integer, ArrayList<Integer>>();
+    private HashMap<Integer, Payment> idToPayment = new HashMap<>();
     private ArrayList<HashMap> hmList = new ArrayList<>();
 
     private PaymentFileProcessor(){
@@ -30,6 +32,14 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
         return instance;
     }
     @Override
+    public Interactor getInteractor() {
+        return interactor;
+    }
+    @Override
+    public ArrayList<HashMap> getHMList() {
+        return hmList;
+    }
+    @Override
     public void makeHM() {
         ArrayList<Payment> payList = interactor.readData();
 
@@ -37,9 +47,41 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
         hmList.add(idToList);
         makeDatetoId(dateToId, payList);
         hmList.add(dateToId);
+        makeEmpIdtoId(empIdToId, payList);
+        hmList.add(empIdToId);
         makeAmounttoId(amountToId, payList);
         hmList.add(amountToId);
 
+    }
+
+    public HashMap<Integer, Payment> getIdToPayment(){
+        return idToPayment;
+    }
+
+    public void makeEmpIdtoId(HashMap<Integer, ArrayList<Integer>> empIdToid,
+                               ArrayList<Payment> payList){
+        for (Payment n : payList){
+            if (empIdToid.containsKey(n.getEmployee())){
+                empIdToid.get(n.getEmployee()).add(n.getId());
+            } else {
+                empIdToid.put(n.getEmployee(), (ArrayList<Integer>) List.of(n.getId()));
+            }
+
+        }
+    }
+
+    public void makeEmpIdtoId(HashMap<Integer, ArrayList<Integer>> empIdToid,
+                               ArrayList<Payment> payList, boolean append){
+        if (!append){
+            empIdToid.clear();
+        }
+        for (Payment n : payList){
+            if (empIdToid.containsKey(n.getEmployee())){
+                empIdToid.get(n.getEmployee()).add(n.getId());
+            } else {
+                empIdToid.put(n.getEmployee(), (ArrayList<Integer>) List.of(n.getId()));
+            }
+        }
     }
     public void makeAmounttoId(HashMap<Integer, ArrayList<Integer>> amountToid,
                              ArrayList<Payment> payList){
@@ -60,7 +102,7 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
             amountToid.clear();
         }
         for (Payment n : payList){
-            int i = round(n.getPayment_amount())
+            int i = round(n.getPayment_amount());
             if (amountToid.containsKey(i)){
                 amountToid.get(i).add(n.getId());
             } else {
@@ -105,6 +147,7 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
                              ArrayList<Payment> payList){
         for (Payment n : payList){
             idToList.put(n.getId(), toList(n));
+            idToPayment.put(n.getId(), n);
         }
     }
 
@@ -112,9 +155,11 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
                              ArrayList<Payment> payList, boolean append){
         if (!append){
             idToList.clear();
+            idToPayment.clear();
         }
         for (Payment n : payList){
             idToList.put(n.getId(), toList(n));
+            idToPayment.put(n.getId(), n);
         }
     }
     @Override

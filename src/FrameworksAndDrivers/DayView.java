@@ -1,27 +1,26 @@
 package FrameworksAndDrivers;
 
-import InterfaceAdapters.Page;
+import InterfaceAdapters.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
-public class DayView extends JFrame implements ActionListener, Page {
+public class DayView extends JFrame implements Page {
     private LocalDate day;
     private String weekday;
     private boolean isPayday;
-    private Shift[] shifts;
+    private ArrayList<Integer> shifts;
     private JPanel panel;
     private ArrayList<ShiftCell> cells;
     private int user;
     private DayViewLogic dvl;
-    public DayView(LocalDate day, String weekday, boolean isPayday, Shift[] shifts, int user){
+    public DayView(LocalDate day, String weekday, boolean isPayday, ArrayList<Integer> shifts, int user){
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         this.day = day;
         this.weekday = weekday;
@@ -64,14 +63,6 @@ public class DayView extends JFrame implements ActionListener, Page {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof ShiftCell){
-            new ShiftView(((ShiftCell) e.getSource()).getShift(), user);
-            this.dispose();
-        }
-    }
-
-    @Override
     public void addTitle() {
         JLabel title = new JLabel(day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
         title.setFont(new Font("Serif", Font.PLAIN, getHeight()/8));
@@ -84,10 +75,9 @@ public class DayView extends JFrame implements ActionListener, Page {
     @Override
     public void addContent() {
         ArrayList<Rectangle> areas = dvl.getShiftCellPosition();
-        for (int i = 0; i < shifts.length; i ++){
-            ShiftCell cell = new ShiftCell(shifts[i]);
+        for (int i:shifts){
+            ShiftCell cell = new ShiftCell(i, this, user);
             cell.setBounds(areas.get(i));
-            cell.addActionListener(this);
             panel.add(cell);
         }
     }

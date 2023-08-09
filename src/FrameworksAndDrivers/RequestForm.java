@@ -9,18 +9,20 @@ import java.awt.*;
 import java.time.LocalDateTime;
 
 public class RequestForm extends JFrame implements Page {
-    private int employee;
+    private int employee, shift;
     private LocalDateTime time1, time2;
-    private JTextField startField, endField, reasonField;
-    private JButton submitButton, cancelButton;
+    private JLabel startField, endField;
+    private CustomTextField reasonField;
+    private CloseButton submitButton, cancelButton;
     private JPanel panel, titlePanel;
     private RequestFormPresenter presenter;
 
-    public RequestForm(LocalDateTime t1, LocalDateTime t2, int employee){
+    public RequestForm(LocalDateTime t1, LocalDateTime t2, int employee, int shift){
         this.time1 = t1;
         this.time2 = t2;
-        this.submitButton = new JButton("Submit Time Off Request");
-        this.cancelButton = new JButton("Cancel");
+        this.submitButton = new CloseButton(this, "Submit Time Off Request");
+        this.cancelButton = new CloseButton(this, "Cancel");
+        this.shift = shift;
         setUser(employee);
         panel = new JPanel(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -30,8 +32,8 @@ public class RequestForm extends JFrame implements Page {
         addTitle();
         addHomeButton();
         addContent();
-        presenter = new RequestFormPresenter(this, submitButton, cancelButton,
-                startField, endField, reasonField, employee);
+        presenter = new RequestFormPresenter( submitButton, cancelButton,
+                shift, reasonField, employee);
         this.submitButton.addActionListener(presenter);
         this.cancelButton.addActionListener(presenter);
         setVisible(true);
@@ -50,9 +52,9 @@ public class RequestForm extends JFrame implements Page {
         JPanel startTimeOff = new JPanel(new FlowLayout());
         JPanel endTimeOff = new JPanel(new FlowLayout());
         JPanel reason = new JPanel(new FlowLayout());
-        startField = new JTextField(time1.format(CalendarConstants.dateTimeFormatter));
-        endField = new JTextField(time2.format(CalendarConstants.dateTimeFormatter));
-        reasonField = new JTextField();
+        startField = new JLabel(time1.format(CalendarConstants.dateTimeFormatter));
+        endField = new JLabel(time2.format(CalendarConstants.dateTimeFormatter));
+        reasonField = new CustomTextField();
         reasonField.setPreferredSize( new Dimension( getWidth()/2, getHeight()/5));
         startTimeOff.add(new JLabel("Start Time Off (yyyy-MM-dd_HH:mm:ss) "));
         endTimeOff.add(new JLabel("End Time Off (yyyy-MM-dd_HH:mm:ss) "));

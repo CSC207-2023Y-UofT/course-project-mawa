@@ -4,53 +4,47 @@ import InterfaceAdapters.*;
 
 import java.awt.*;
 import javax.swing.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class DayCell extends JButton{
-    private int day;
+public class DayCell extends JButton implements GUIElement{
+    private LocalDate day;
     private String weekday;
     private boolean isPayday;
-    private Shift[] shifts;
+    private ArrayList<Integer> shifts;
     private boolean isSelected = false;
+    private DayCellPresenter presenter;
+    private int user;
 
-    public DayCell(int day, String weekday, boolean isPayday, Shift[] shifts){
+    public DayCell(Page gui, LocalDate day, String weekday, boolean isPayday, ArrayList<Integer> shifts, int user){
+        super();
         this.day = day;
         this.weekday = weekday;
         this.isPayday = isPayday;
         this.shifts = shifts;
+        this.user = user;
         this.setText(String.valueOf(day));
         if (isPayday){
             setBackground(Color.GREEN);
             setOpaque(true);
         }
+        this.presenter = new DayCellPresenter(gui, this, getWidth(), getHeight(), shifts);
         repaint();
 
     }
 
     public void paintComponent(Graphics g1) {
-        if (weekday == ""){
+        if (day == null){
             return;
         }
         Graphics2D g = (Graphics2D) g1.create();
         super.paintComponent(g);
-        Arrays.sort(shifts, new SortShiftByDate());
-        int[] ycoords = new int[shifts.length + 1];
-        ycoords[0] = 0;
-        for (int i = 1; i < (shifts.length + 1); i++) {
-            LocalDateTime time = ((LocalDateTime) shifts[i - 1].getTime());
-            int y = (int) ((time.getHour() * 60.0 + time.getMinute()) / (60.0 * 24.0) * getHeight() * 0.7);
-            //y += getHeight() / 9.0;
-            int x = (int)(2.6 * getWidth() / 3.0);
-            y = java.lang.Math.max((int)(getWidth() / 15 + ycoords[i-1]), y);
-            ycoords[i] = y;
+        int x = (int)(2.6 * getWidth() / 3.0);
+        ArrayList<Integer> ycoords = presenter.getYcoords();
+        for (int y:ycoords) {
             g.setColor(Color.RED);
             g.fillOval(x , y, getWidth() / 15, getWidth() / 15);
             g.drawOval(x, y, getWidth() / 15, getWidth() / 15);
-            g.setPaint(Color.BLACK);
-            g.drawString(time.format(DateTimeFormatter.ofPattern("HH:mm")), x + getWidth() / 60,
-                    y + getWidth() / 25);
         }
         g.dispose();
 
@@ -63,10 +57,10 @@ public class DayCell extends JButton{
     public boolean getSelected(){
         return isSelected;
     }
-    public int getDay(){
+    public LocalDate getDay(){
         return day;
     }
-    public void setDay(int day){
+    public void setDay(LocalDate day){
         this.day = day;
     }
     public String getWeekday(){
@@ -81,10 +75,20 @@ public class DayCell extends JButton{
     public void setPayday(boolean pd){
         this.isPayday = pd;
     }
-    public Shift[] getShifts(){
+    public ArrayList<Integer> getShifts(){
         return shifts;
     }
-    public void setShifts(Shift[] shifts){
+    public void setShifts(ArrayList<Integer> shifts){
         this.shifts = shifts;
+    }
+
+    @Override
+    public void nextPage() {
+        new DayView(day, weekday, isPayday, shifts, user);
+    }
+
+    @Override
+    public String getContent() {
+        return this.getText();
     }
 }

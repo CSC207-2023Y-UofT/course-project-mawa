@@ -1,38 +1,44 @@
 package FrameworksAndDrivers;
 
 import FrameworksAndDrivers.HomeButton;
-import InterfaceAdapters.Page;
-import InterfaceAdapters.ShiftPresenter;
+import InterfaceAdapters.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ShiftView extends JFrame implements Page {
     private JPanel panel;
-    private Shift shift;
+    private int shift;
     private JButton timeOffButton;
     private int employee;
-
-    private EmployeeDataBaseInteractor empDB;
-    private ShiftPresenter presenter;
-    public ShiftView(Shift shift, int employee){
+    private UserFileReader empDB;
+    private ShiftFileReader shiftDB;
+    private LocalDateTime date;
+    public ShiftView(int shift, int employee){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.shift = shift;
         setUser(employee);
-        this.empDB = new EmployeeDataBaseInteractor();
+        try {
+            this.empDB = new UserFileReader(FileNameConstants.USER_FILE_NAME);
+            this.shiftDB = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
+            this.date = shiftDB.getDate(shift);
+        }catch (InvalidFileNameException e) {
+            System.out.println("Invalid File Name.");
+        }
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         addTitle();
         addContent();
-        this.presenter = new ShiftPresenter(shift, this, timeOffButton, employee);
     }
 
     @Override
     public void addTitle() {
-        JLabel title = new JLabel(shift.getTime().getDayOfWeek()+", "
-                +shift.getTime().getMonth()+" "+shift.getTime().getDayOfMonth());
+
+        JLabel title = new JLabel(date.getDayOfWeek()+", "
+                +date.getMonth()+" "+date.getDayOfMonth());
         title.setFont(new Font("Serif", Font.PLAIN, getHeight()/8));
         JPanel titlePanel = new JPanel(new FlowLayout());
 
@@ -41,16 +47,16 @@ public class ShiftView extends JFrame implements Page {
 
     @Override
     public void addContent() {
-        JLabel time = new JLabel(shift.getTime().getHour() +":"+shift.getTime().getMinute());
-        ArrayList<Employee> coworkers = new ArrayList<Employee>();
-        for (int id : shift.getCoworkers()){
-            if (!(id == employee)){
-                coworkers.add((Employee)empDB.getEmployee(id));
+        JLabel time = new JLabel(date.getHour() +":"+date.getMinute());
+        String coworkers = "";
+        for (int id : shiftDB.getEmployeeId(shift)){
+            if (id != employee){
+                coworkers += String.format(", %s %s", empDB.getFirstName(id),
+                        empDB.getSurname(id));
             }
         }
-        JLabel coworkersLabel = new JLabel(coworkers.toString());
-        timeOffButton = new JButton("Request Entities.Shift Off");
-        timeOffButton.addActionListener(this);
+        JLabel coworkersLabel = new JLabel(coworkers.substring(2));
+        TimeOffButton timeOffButton = new TimeOffButton(shift, employee);
         panel.add(time);
         panel.add(coworkersLabel);
         panel.add(timeOffButton);
@@ -69,7 +75,6 @@ public class ShiftView extends JFrame implements Page {
 
     @Override
     public void update() {
-
     }
 
 

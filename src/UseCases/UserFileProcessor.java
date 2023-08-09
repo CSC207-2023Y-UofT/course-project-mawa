@@ -1,13 +1,9 @@
 package UseCases;
 
-import Entities.SalaryWorker;
-import Entities.User;
-import Entities.UserNotification;
-import Entities.WageWorker;
+import Entities.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +22,32 @@ public class UserFileProcessor implements FileProcessor<User>{
     private HashMap<String, ArrayList<Integer>> genderToId = new HashMap<String, ArrayList<Integer>>();
     private HashMap<String, ArrayList<Integer>> emailToId = new HashMap<String, ArrayList<Integer>>();
     private HashMap<String, ArrayList<Integer>> roleNameToId = new HashMap<String, ArrayList<Integer>>();
+    private HashMap<Integer, User> idToUser = new HashMap<>();
     private ArrayList<HashMap> hmList = new ArrayList<>();
 
+    private UserFileProcessor(){
+        makeHM();
+    }
 
+    public static UserFileProcessor getInstance(){
+        if (instance == null) {
+            synchronized (UserFileProcessor.class) {
+                if (instance == null) {
+                    instance = new UserFileProcessor();
+                }
+            }
+        }
+        return instance;
+    }
+
+    @Override
+    public Interactor getInteractor() {
+        return interactor;
+    }
+    @Override
+    public ArrayList<HashMap> getHMList() {
+        return hmList;
+    }
     @Override
     public void makeHM() {
         ArrayList<User> userList = interactor.readData();
@@ -55,6 +74,10 @@ public class UserFileProcessor implements FileProcessor<User>{
         makePwdtoId(pwdToId, userList);
         hmList.add(pwdToId);
 
+    }
+
+    public HashMap<Integer, User> getIdToUser(){
+        return idToUser;
     }
 
     public void makePwdtoId(HashMap<char[], ArrayList<Integer>> pwdToid,
@@ -233,13 +256,12 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makeTypetoId(HashMap<String, ArrayList<Integer>> typeToid,
-                             ArrayList<User> userList){
+    public void makeTypetoId(HashMap<String, ArrayList<Integer>> typeToid, ArrayList<User> userList){
         for (User n : userList){
-            if (typeToid.containsKey(n.getClass().getName())){
-                typeToid.get(n.getClass().getName()).add(n.getUserNum());
+            if (typeToid.containsKey(n.getType())){
+                typeToid.get(n.getType()).add(n.getUserNum());
             } else {
-                typeToid.put(n.getClass().getName(), (ArrayList<Integer>) List.of(n.getUserNum()));
+                typeToid.put(n.getType(), (ArrayList<Integer>) List.of(n.getUserNum()));
             }
         }
     }
@@ -250,10 +272,10 @@ public class UserFileProcessor implements FileProcessor<User>{
             typeToid.clear();
         }
         for (User n : userList){
-            if (typeToid.containsKey(n.getClass().getName())){
-                typeToid.get(n.getClass().getName()).add(n.getUserNum());
+            if (typeToid.containsKey(n.getClass().getSimpleName())){
+                typeToid.get(n.getClass().getSimpleName()).add(n.getUserNum());
             } else {
-                typeToid.put(n.getClass().getName(), (ArrayList<Integer>) List.of(n.getUserNum()));
+                typeToid.put(n.getClass().getSimpleName(), (ArrayList<Integer>) List.of(n.getUserNum()));
             }
         }
     }
@@ -314,15 +336,18 @@ public class UserFileProcessor implements FileProcessor<User>{
                              ArrayList<User> userList){
         for (User n : userList){
             idToList.put(n.getUserNum(), toList(n));
+            idToUser.put(n.getUserNum(), n);
         }
     }
     public void makeIdtoList(HashMap<Integer, ArrayList<Object>> idToList,
                              ArrayList<User> userList, boolean append){
         if (!append){
             idToList.clear();
+            idToUser.clear();
         }
         for (User n : userList){
             idToList.put(n.getUserNum(), toList(n));
+            idToUser.put(n.getUserNum(), n);
         }
     }
 
@@ -330,7 +355,7 @@ public class UserFileProcessor implements FileProcessor<User>{
     public ArrayList<Object> toList(User user) {
         ArrayList<Object> list = new ArrayList<>();
         list.add(user.getUserNum());
-        list.add(user.getClass().getName());
+        list.add(user.getType());
         list.add(user.isActive());
         list.add(user.getRoleName());
         list.add(user.getSurname());

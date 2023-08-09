@@ -3,6 +3,7 @@ package UseCases;
 import Entities.Payment;
 import Entities.Shift;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
@@ -13,8 +14,10 @@ public class ShiftFileProcessor implements FileProcessor<Shift> {
     private static ShiftFileProcessor instance;
     private ShiftInteractor interactor = new ShiftInteractor();
     private HashMap<Integer, ArrayList<Object>> idToList = new HashMap<Integer, ArrayList<Object>>();
-    private HashMap<Integer, ArrayList<Integer>> empIdToId = new HashMap<Integer, ArrayList<Integer>>();
-    private HashMap<LocalDateTime, ArrayList<Integer>> dateToId = new HashMap<LocalDateTime, ArrayList<Integer>>();
+    private HashMap<Integer, ArrayList<Integer>> empIdToId =
+            new HashMap<Integer, ArrayList<Integer>>();
+    private HashMap<LocalDate, ArrayList<Integer>> dateToId = new HashMap<LocalDate, ArrayList<Integer>>();
+    private HashMap<Integer, Shift> idToShift = new HashMap<>();
     private ArrayList<HashMap> hmList = new ArrayList<>();
 
     private ShiftFileProcessor(){
@@ -40,11 +43,24 @@ public class ShiftFileProcessor implements FileProcessor<Shift> {
         hmList.add(idToList);
         makeDatetoId(dateToId, shiftList);
         hmList.add(dateToId);
-        makeAmounttoId(empIdToId, shiftList);
+        makeEmpIdtoId(empIdToId, shiftList);
         hmList.add(empIdToId);
     }
 
-    public void makeAmounttoId(HashMap<Integer, ArrayList<Integer>> empIdToid,
+    public HashMap<Integer, Shift> getIdToShift(){
+        return idToShift;
+    }
+
+    @Override
+    public Interactor getInteractor() {
+        return interactor;
+    }
+    @Override
+    public ArrayList<HashMap> getHMList() {
+        return hmList;
+    }
+
+    public void makeEmpIdtoId(HashMap<Integer, ArrayList<Integer>> empIdToid,
                                ArrayList<Shift> shiftList){
         for (Shift n : shiftList){
             for (int i : n.getCoworkers()){
@@ -73,32 +89,28 @@ public class ShiftFileProcessor implements FileProcessor<Shift> {
         }
     }
 
-    static int round(double input) {
-        return (int) ((input / 100) * 100);
-    }
-
-    public void makeDatetoId(HashMap<LocalDateTime, ArrayList<Integer>> dateToid,
+    public void makeDatetoId(HashMap<LocalDate, ArrayList<Integer>> dateToid,
                              ArrayList<Shift> shiftList){
         for (Shift n : shiftList){
-            if (dateToid.containsKey(n.getTime())){
-                dateToid.get(n.getTime()).add(n.getShiftId());
+            if (dateToid.containsKey(n.getTime().toLocalDate())){
+                dateToid.get(n.getTime().toLocalDate()).add(n.getShiftId());
             } else {
-                dateToid.put(n.getTime(), (ArrayList<Integer>) List.of(n.getShiftId()));
+                dateToid.put(n.getTime().toLocalDate(), (ArrayList<Integer>) List.of(n.getShiftId()));
             }
 
         }
     }
 
-    public void makeDatetoId(HashMap<LocalDateTime, ArrayList<Integer>> dateToid,
+    public void makeDatetoId(HashMap<LocalDate, ArrayList<Integer>> dateToid,
                              ArrayList<Shift> shiftList, boolean append){
         if (!append){
             dateToid.clear();
         }
         for (Shift n : shiftList){
-            if (dateToid.containsKey(n.getTime())){
-                dateToid.get(n.getTime()).add(n.getShiftId());
+            if (dateToid.containsKey(n.getTime().toLocalDate())){
+                dateToid.get(n.getTime().toLocalDate()).add(n.getShiftId());
             } else {
-                dateToid.put(n.getTime(), (ArrayList<Integer>) List.of(n.getShiftId()));
+                dateToid.put(n.getTime().toLocalDate(), (ArrayList<Integer>) List.of(n.getShiftId()));
             }
 
         }
@@ -108,6 +120,7 @@ public class ShiftFileProcessor implements FileProcessor<Shift> {
                              ArrayList<Shift> shiftList){
         for (Shift n : shiftList){
             idToList.put(n.getShiftId(), toList(n));
+            idToShift.put(n.getShiftId(), n);
         }
     }
 
@@ -115,9 +128,11 @@ public class ShiftFileProcessor implements FileProcessor<Shift> {
                              ArrayList<Shift> shiftList, boolean append){
         if (!append){
             idToList.clear();
+            idToShift.clear();
         }
         for (Shift n : shiftList){
             idToList.put(n.getShiftId(), toList(n));
+            idToShift.put(n.getShiftId(), n);
         }
     }
 

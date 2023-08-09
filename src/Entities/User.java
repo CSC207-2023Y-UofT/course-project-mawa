@@ -2,16 +2,19 @@ package Entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-public abstract class User implements Serializable {
+public class User implements Serializable {
     private int userNum;
     private long phoneNum;
     private String surname, firstname, gender, email, roleName;
     private boolean active;
     LocalDate dob;//format should be "YYYY-MM-dd" as a String
     private char[] password;
+    private UserEnum type;
+    private float pay;
 
     public User(String surname, String firstname, String gender, String email,
-                String roleName, int uNum, long phoneNum, String dob, char[] password){
+                String roleName, int uNum, long phoneNum, String dob, char[] password,
+                UserEnum type, float pay){
         this.userNum = uNum;
         this.phoneNum = phoneNum;
         this.surname = surname;
@@ -22,6 +25,8 @@ public abstract class User implements Serializable {
         this.dob = LocalDate.parse(dob);
         this.active = true;
         this.password = password;
+        this.type = type;
+        this.pay = pay;
     }
 
 
@@ -67,7 +72,13 @@ public abstract class User implements Serializable {
         return dob;
     }
 
+    public void setPay(float pay){
+        this.pay = pay;
+    }
 
+    public float getPay(){
+        return this.pay;
+    }
     public boolean isActive(){
         return active;
     }
@@ -81,6 +92,9 @@ public abstract class User implements Serializable {
 
     public void setPassword(char[] pwd){
         password = pwd;
+    }
+    public UserEnum getType(){
+        return this.type;
     }
     @Override
     public String toString(){

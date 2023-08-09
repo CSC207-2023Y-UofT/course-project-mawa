@@ -6,10 +6,10 @@ public class UserNotificationRequest extends UserNotification {
     private Boolean isResolved = false;
     private String senderId;
     private String recipientId;
-    private String shiftId;
+    private int shiftId;
     private LocalDateTime date;
 
-    public UserNotificationRequest(int senderId, int recipientId, String shiftId, String message, LocalDateTime date){
+    public UserNotificationRequest(int senderId, int recipientId, int shiftId, String message, LocalDateTime date){
         super(senderId, recipientId, shiftId, message, date);
     }
 

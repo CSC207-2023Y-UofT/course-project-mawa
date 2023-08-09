@@ -1,7 +1,7 @@
 package FrameworksAndDrivers;
 
 
-import InterfaceAdapters.HomePagePresenter;
+import InterfaceAdapters.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +10,6 @@ import java.awt.event.ActionListener;
 
 
 public class HomePage implements ActionListener, Page {
-
-import InterfaceAdapters.*;
-public class HomePage implements ActionListener, Page{
 
 
     private JFrame frame = new JFrame();

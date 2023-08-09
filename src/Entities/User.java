@@ -5,20 +5,19 @@ import java.time.LocalDate;
 public abstract class User implements Serializable {
     private int userNum;
     private long phoneNum;
-    private String surname, firstname, gender, email, roleName;
+    private String surname, firstname, gender, email,;
     private boolean active;
     LocalDate dob;//format should be "YYYY-MM-dd" as a String
     private char[] password;
 
     public User(String surname, String firstname, String gender, String email,
-                String roleName, int uNum, long phoneNum, String dob, char[] password){
+                int uNum, long phoneNum, String dob, char[] password){
         this.userNum = uNum;
         this.phoneNum = phoneNum;
         this.surname = surname;
         this.firstname = firstname;
         this.gender = gender;
         this.email = email;
-        this.roleName = roleName;
         this.dob = LocalDate.parse(dob);
         this.active = true;
         this.password = password;
@@ -56,13 +55,6 @@ public abstract class User implements Serializable {
         this.email = email;
     }
 
-    public String getRoleName(){
-        return roleName;
-    }
-
-    public void setRoleName(String rn){
-        this.roleName = rn;
-    }
     public LocalDate getDob(){
         return dob;
     }

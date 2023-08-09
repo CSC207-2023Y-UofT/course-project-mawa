@@ -51,6 +51,88 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         this.frame.setTitle("Notifications");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+    public Notification[][] userNotifications(User user){
+        NotificationDatabaseInteractor notificationDBInteractor = new NotificationDatabaseInteractor();
+        ArrayList<Notification> notifications = notificationDBInteractor.readData();
+        ArrayList<Notification> unresolvedNotifications = new ArrayList<Notification>();
+        ArrayList<Notification> resolvedNotifications = new ArrayList<Notification>();
+        for (Notification n: notifications){
+            if (n.getResolvedStatus()){
+                if (n.getSenderId() == user.getEmployeeNum() || n.getRecipientId() == user.getEmployeeNum()){
+                    resolvedNotifications.add(n);
+                }
+            }
+            else{
+                if (n.getSenderId() == user.getEmployeeNum() || n.getRecipientId() == user.getEmployeeNum()){
+                    unresolvedNotifications.add(n);
+                }
+            }
+        }
+        Notification[][] noti = new Notification[][] {Notification.sortByCreatedDate(unresolvedNotifications), Notification.sortByCreatedDate(resolvedNotifications)};
+
+        return noti;
+    }
+    private String[] notificationArrayToStringArray(Notification[] notifications){
+        String[] stringNotifications = new String[notifications.length];
+        int i = 0;
+        for (Notification n: notifications){
+            String item = "User Id: " + notifications[i].getNotifId() + " has requested time off on shift: " + notifications[i].getShiftId();
+            stringNotifications[i] = item;
+            i+=1;
+        }
+        return stringNotifications;
+    }
+
+    private void populateLists(String[] resolvedNotifications,String[] unresolvedNotifications) {
+        unresolvedNotificationList = new JList<String>(unresolvedNotifications);
+        resolvedNotificationList = new JList<String>(resolvedNotifications);
+        unresolvedNotificationListScroller = new JScrollPane(unresolvedNotificationList);
+        resolvedNotificationListScroller = new JScrollPane(resolvedNotificationList);
+
+    }
+
+    private void createNotificationList(NotificationHRGUI item, JPanel panel, JPanel listPanel, JLabel label, JList<String> list, JScrollPane scroller) {
+        ShiftViewHRGUI.ListSetter(list, panel, label);
+        if (Objects.equals(label.getText(), "Unresolved Notifications")) {
+            list.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 2) {
+                        rescheduleShiftButton.doClick(); //emulate button click
+                    }
+                }
+            });
+        }
+        scroller.setPreferredSize(new Dimension(225, 100));
+        scroller.setAlignmentX(LEFT_ALIGNMENT);
+        listPanel.setLayout(new BorderLayout());
+        listPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        listPanel.add(scroller, BorderLayout.CENTER);
+        if (Objects.equals(label.getText(), "Unresolved Notifications")) {
+            listPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
+        } else {
+            listPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 45, 10));
+        }
+        panel.add(listPanel, BorderLayout.CENTER);
+
+        item.frame.add(panel);
+    }
+
+    public void addButtons(NotificationHRGUI item, JPanel panel) {
+        denyRequestButton.setActionCommand("Deny");
+        denyRequestButton.addActionListener(item);
+        rescheduleShiftButton.setActionCommand("Reschedule");
+        rescheduleShiftButton.addActionListener(item);
+
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(rescheduleShiftButton);
+        buttonPanel.add(denyRequestButton);
+        denyRequestButton.setHorizontalAlignment(JLabel.CENTER);
+        rescheduleShiftButton.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(buttonPanel, BorderLayout.PAGE_END);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("Reschedule".equals(e.getActionCommand())) {

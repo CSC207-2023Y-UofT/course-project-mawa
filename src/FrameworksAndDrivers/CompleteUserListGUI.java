@@ -1,5 +1,8 @@
 package FrameworksAndDrivers;
 
+import InterfaceAdapters.CompleteUserListPresenter;
+import InterfaceAdapters.UserController;
+
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -15,36 +18,39 @@ public class CompleteUserListGUI implements ActionListener, Page {
 
     private JFrame frame = new JFrame();
 
-    private HashMap<JButton, Integer> buttonsToIDs = new HashMap<JButton, Integer>();
+    private int viewerID;
+
+    private CompleteUserListPresenter presenter = new CompleteUserListPresenter();
 
     private JPanel titlePanel = new JPanel();
 
 
-    public CompleteUserListGUI(){
-
+    public CompleteUserListGUI(int id){
+        //Create the UI by first adding the title pane, and then adding the list of user panels.
         frame.setSize(600, 600);
         frame.setVisible(true);
         this.addTitle();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addContent();
+        this.setUser(id);
 
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         //If a activate/deactivate button is clicked, the user factory updates the user, and the page is reloaded to show the change.
         Object source = e.getSource();
-        if (buttonsToIDs.containsKey(source)){
-            UserFactory uf = new UserFactory();
-            uf.changeActivation(buttonsToIDs.get(source));
-            new CompleteUserListGUI();
+        if (presenter.getMap().containsKey(source)){
+            UserController uc = new UserController();
+            uc.changeActivation(presenter.getMap().get(source));
+            new CompleteUserListGUI(viewerID);
             frame.dispose();
-            JOptionPane.showMessageDialog(null, "Entities.Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     @Override
     public void addTitle() {
-        frame.setTitle("Complete Entities.User List");
+        frame.setTitle("Complete User List");
     }
 
     public void makeHeader(){
@@ -64,42 +70,6 @@ public class CompleteUserListGUI implements ActionListener, Page {
         titlePanel.add(new JLabel("Change Status:"));
     }
 
-    public JPanel makeUserPanel(User user){
-        //Make a panel which contains a particular users information, and has a link to activate/deactivate.
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 12));
-        panel.add(new JLabel(user.getFirstname()));
-        panel.add(new JLabel(user.getSurname()));
-        panel.add(new JLabel(user.getGender()));
-        panel.add(new JLabel(user.getEmail()));
-        panel.add(new JLabel(Long.toString(user.getPhoneNum())));
-        panel.add(new JLabel(user.getRoleName()));
-        panel.add(new JLabel(Integer.toString(user.getUserNum())));
-        panel.add(new JLabel(user.getDob().toString()));
-        String type = user.getClass().getName();
-        panel.add(new JLabel(type));
-        if (type.equals("Entities.Volunteer")){
-            panel.add(new JLabel("0"));
-        } else if (type.equals("Entities.WageWorker")){
-            panel.add(new JLabel(Float.toString(((WageWorker)user).getHourlyWage())));
-        } else{
-            panel.add(new JLabel(Float.toString(((SalaryWorker)user).getYearlySalary())));
-        }
-        if (user.isActive()){
-            panel.add(new JLabel("Yes"));
-            JButton b = new JButton("Deactivate");
-            b.addActionListener(this);
-            buttonsToIDs.put(b, user.getUserNum());
-            panel.add(b);
-        } else{
-            panel.add(new JLabel("No"));
-            JButton b = new JButton("Re-Activate");
-            b.addActionListener(this);
-            buttonsToIDs.put(b, user.getUserNum());
-            panel.add(b);
-        }
-        return panel;
-    }
 
     @Override
     public void addContent() {
@@ -108,16 +78,36 @@ public class CompleteUserListGUI implements ActionListener, Page {
         all_panels.setLayout(new BoxLayout(all_panels, BoxLayout.Y_AXIS));
         this.makeHeader();
         all_panels.add(titlePanel);
-
-        UserInteractor ui = new UserInteractor();
-
-        ArrayList<User> users = ui.readData();
-
-        for (User user: users){
-            all_panels.add(this.makeUserPanel(user));
+        for (JPanel panel: presenter.makeUserPanels()){
+            all_panels.add(panel);
         }
+        for (JButton button: presenter.getMap().keySet()){
+            button.addActionListener(this);
+        }
+
+
 
         JScrollPane sp = new JScrollPane(all_panels, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         frame.add(sp, BorderLayout.CENTER);
+    }
+
+    @Override
+    public void setUser(int user) {
+        this.viewerID = user;
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void addHomeButton() {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }

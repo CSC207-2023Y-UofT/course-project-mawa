@@ -9,67 +9,75 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import InterfaceAdapters.Page;
 import UseCases.UserNotificationInteractor;
+import UseCases.NotificationHRListModel;
+import InterfaceAdapters.UserNotificationPresenter;
+import UseCases.NotificationStatusTrackerUpdater;
+import UseCases.NotificationListPanelBuilder;
 
 public class NotificationHRGUI extends JFrame implements ActionListener {
     private JFrame frame = new JFrame();
-    private JPanel unresolvedNotificationPanel = new JPanel();
-    private JPanel resolvedNotificationPanel = new JPanel();
-    private JPanel unresolvedNotificationListPanel = new JPanel();
-    private JPanel resolvedNotificationListPanel = new JPanel();
     public JScrollPane unresolvedNotificationListScroller;
     public JScrollPane resolvedNotificationListScroller;
     private final JLabel unresolvedNotificationLabel = new JLabel("Unresolved Notifications");
     private final JLabel resolvedNotificationLabel = new JLabel("Resolved Notifications");
     private final JButton denyRequestButton = new JButton("Deny Request");
-    private final JButton rescheduleShiftButton = new JButton("Reschedule Entities.Shift");
-    private String[] unresolvedNotifications = {};
-    private String[] resolvedNotifications = {};
+    private final JButton rescheduleShiftButton = new JButton("Reschedule Shift");
     public JList<String> unresolvedNotificationList;
     public JList<String> resolvedNotificationList;
-
-
-    public NotificationHRGUI(User user) {
+    public NotificationHRListModel unresolvedNotificationListModel;
+    public NotificationHRListModel resolvedNotificationListModel;
+    public UserNotificationPresenter presenter;
+    public NotificationHRGUI(int userID) {
+        this.unresolvedNotificationListModel = new NotificationHRListModel(userID, false);
+        this.resolvedNotificationListModel = new NotificationHRListModel(userID, true);
         this.frame.setLayout(new GridLayout(1, 2));
-        createNotificationList(this, unresolvedNotificationPanel, unresolvedNotificationListPanel,
-                unresolvedNotificationLabel, unresolvedNotificationList,
-                unresolvedNotificationListScroller);
-        addButtons(this, unresolvedNotificationPanel);
-        createNotificationList(this, resolvedNotificationPanel, resolvedNotificationListPanel,
-                resolvedNotificationLabel, unresolvedNotificationList,
-                resolvedNotificationListScroller);
+        denyRequestButton.setActionCommand("Deny");
+        denyRequestButton.addActionListener(this);
+        rescheduleShiftButton.setActionCommand("Reschedule");
+        rescheduleShiftButton.addActionListener(this);
+        this.unresolvedNotificationList = new JList<String>(unresolvedNotificationListModel.listModel);
+        this.resolvedNotificationList = new JList<String>(resolvedNotificationListModel.listModel);
+        this.unresolvedNotificationListScroller = new JScrollPane(this.unresolvedNotificationList);
+        this.resolvedNotificationListScroller = new JScrollPane(this.resolvedNotificationList);
+        this.presenter = new UserNotificationPresenter(userID, unresolvedNotificationListModel, resolvedNotificationListModel);
+        this.frame.add(new NotificationListPanelBuilder(frame, unresolvedNotificationLabel, unresolvedNotificationList,
+                unresolvedNotificationListScroller, rescheduleShiftButton, denyRequestButton).panel);
+        this.frame.add(new NotificationListPanelBuilder(frame, resolvedNotificationLabel, resolvedNotificationList,
+                resolvedNotificationListScroller, true).panel);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
         this.frame.setTitle("Notifications");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public UserNotification[][] userNotifications(User user){
-        UserNotificationInteractor notificationDBInteractor = new UserNotificationInteractor();
-        ArrayList<UserNotification> userNotifications = notificationDBInteractor.readData();
-        ArrayList<UserNotification> unresolvedNotifications = new ArrayList<UserNotification>();
-        ArrayList<UserNotification> resolvedNotifications = new ArrayList<UserNotification>();
-        for (UserNotification n: userNotifications){
-            if ( n.getResolvedStatus()){
-                if (n.getRecipientId() == user.getUserNum() || n.getRecipientId() == user.getUserNum()){
+    public Notification[][] userNotifications(User user){
+        NotificationDatabaseInteractor notificationDBInteractor = new NotificationDatabaseInteractor();
+        ArrayList<Notification> notifications = notificationDBInteractor.readData();
+        ArrayList<Notification> unresolvedNotifications = new ArrayList<Notification>();
+        ArrayList<Notification> resolvedNotifications = new ArrayList<Notification>();
+        for (Notification n: notifications){
+            if (n.getResolvedStatus()){
+                if (n.getSenderId() == user.getEmployeeNum() || n.getRecipientId() == user.getEmployeeNum()){
                     resolvedNotifications.add(n);
                 }
             }
             else{
-                if (n.getSenderId() == user.getUserNum() || n.getRecipientId() == user.getUserNum()){
+                if (n.getSenderId() == user.getEmployeeNum() || n.getRecipientId() == user.getEmployeeNum()){
                     unresolvedNotifications.add(n);
                 }
             }
         }
-        UserNotification[][] noti = new UserNotification[][] {UserNotification.sortByCreatedDate(unresolvedNotifications), UserNotification.sortByCreatedDate(resolvedNotifications)};
+        Notification[][] noti = new Notification[][] {Notification.sortByCreatedDate(unresolvedNotifications), Notification.sortByCreatedDate(resolvedNotifications)};
 
         return noti;
     }
-    private String[] notificationArrayToStringArray(UserNotification[] notifications){
+    private String[] notificationArrayToStringArray(Notification[] notifications){
         String[] stringNotifications = new String[notifications.length];
         int i = 0;
-        for (UserNotification n: notifications){
-            String item = "Entities.User Id: " + notifications[i].getNotifId() + " has requested time off on shift: " + notifications[i].getShiftId();
+        for (Notification n: notifications){
+            String item = "User Id: " + notifications[i].getNotifId() + " has requested time off on shift: " + notifications[i].getShiftId();
             stringNotifications[i] = item;
             i+=1;
         }
@@ -124,11 +132,14 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         rescheduleShiftButton.setHorizontalAlignment(JLabel.CENTER);
         panel.add(buttonPanel, BorderLayout.PAGE_END);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("Reschedule".equals(e.getActionCommand())) {
-            System.out.println(unresolvedNotificationList.getSelectedValue());
-            this.revalidate();
+            presenter.rescheduleUpdateListModel(unresolvedNotificationList.getSelectedValue());
+        }
+        if ("Deny".equals(e.getActionCommand())) {
+            presenter.denyUpdateListModel(unresolvedNotificationList.getSelectedValue());
         }
 
     }

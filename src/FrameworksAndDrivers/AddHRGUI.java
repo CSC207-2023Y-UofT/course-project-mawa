@@ -10,6 +10,9 @@ import FrameworksAndDrivers.*;
 
 public class AddHRGUI implements ActionListener, Page {
 
+
+    private int viewerID;
+
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
 
@@ -64,7 +67,8 @@ public class AddHRGUI implements ActionListener, Page {
 
 
 
-    public AddHRGUI(){
+    public AddHRGUI(int id){
+        this.viewerID = id;
         frame.setSize(600, 600);
         frame.setVisible(true);
         this.addTitle();
@@ -87,18 +91,18 @@ public class AddHRGUI implements ActionListener, Page {
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+")){
                 uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth, bd,
-                        Long.parseLong(phnum.trim()), emailEnter.getText(), "Entities.HR Account", "Entities.HR",
+                        Long.parseLong(phnum.trim()), emailEnter.getText(), "", "HR",
                         pwdEnter.getText(), 0);
 
-                //Go back to Entities.HR home page.
+                //Go back to HR home page.
                 frame.dispose();
-                JOptionPane.showMessageDialog(null, "Entities.Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
 
         if (s.equals(Page.back)){
-            //Go back to Entities.HR home page.
+            //Go back to HR home page.
             frame.dispose();
         }
     }
@@ -106,7 +110,7 @@ public class AddHRGUI implements ActionListener, Page {
 
     @Override
     public void addTitle() {
-        frame.setTitle("Add Entities.HR Account");
+        frame.setTitle("Add HR Account");
     }
 
     @Override
@@ -144,6 +148,26 @@ public class AddHRGUI implements ActionListener, Page {
         contentPane.add(questionPanel);
         contentPane.add(dobPanel);
         contentPane.add(submitPanel);
+    }
+
+    @Override
+    public void setUser(int user) {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void addHomeButton() {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }
 

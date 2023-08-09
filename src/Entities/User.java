@@ -9,12 +9,12 @@ public class User implements Serializable {
     private boolean active;
     LocalDate dob;//format should be "YYYY-MM-dd" as a String
     private char[] password;
-    private UserEnum type;
+    private String type;
     private float pay;
 
     public User(String surname, String firstname, String gender, String email,
                 String roleName, int uNum, long phoneNum, String dob, char[] password,
-                UserEnum type, float pay){
+                String type, float pay){
         this.userNum = uNum;
         this.phoneNum = phoneNum;
         this.surname = surname;
@@ -93,7 +93,7 @@ public class User implements Serializable {
     public void setPassword(char[] pwd){
         password = pwd;
     }
-    public UserEnum getType(){
+    public String getType(){
         return this.type;
     }
     @Override

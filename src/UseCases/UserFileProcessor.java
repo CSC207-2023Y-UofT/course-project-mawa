@@ -272,10 +272,10 @@ public class UserFileProcessor implements FileProcessor<User>{
             typeToid.clear();
         }
         for (User n : userList){
-            if (typeToid.containsKey(n.getClass().getSimpleName())){
-                typeToid.get(n.getClass().getSimpleName()).add(n.getUserNum());
+            if (typeToid.containsKey(n.getType())){
+                typeToid.get(n.getType()).add(n.getUserNum());
             } else {
-                typeToid.put(n.getClass().getSimpleName(), (ArrayList<Integer>) List.of(n.getUserNum()));
+                typeToid.put(n.getType(), (ArrayList<Integer>) List.of(n.getUserNum()));
             }
         }
     }

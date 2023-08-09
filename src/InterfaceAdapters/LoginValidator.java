@@ -1,6 +1,5 @@
 package InterfaceAdapters;
 
-
 import java.util.ArrayList;
 
 public class LoginValidator {
@@ -8,7 +7,7 @@ public class LoginValidator {
     private char[] password;
     private UserFileReader empDB;
 
-    public int validateCredentials(int empID, char[] pwd){
+    public String validateCredentials(int empID, char[] pwd){
         try{
             empDB = new UserFileReader(FileNameConstants.USER_FILE_NAME);
         } catch (InvalidFileNameException e){
@@ -18,11 +17,13 @@ public class LoginValidator {
         for (int u : allActiveUsers){
             if (u == empID){
                 if(empDB.getPassword(u) == pwd){
-                    return u;
+                    return empDB.getType(u);
                 }
-                return -1;
+                return "";
             }
         }
-        return -1;
+        return "";
     }
+
+
 }

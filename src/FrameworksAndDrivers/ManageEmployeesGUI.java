@@ -9,7 +9,7 @@ import FrameworksAndDrivers.*;
 
 public class ManageEmployeesGUI implements ActionListener, Page {
 
-
+  private int viewerID;
   private JFrame frame = new JFrame();
   private JButton addEmployee = new JButton("Add Entities.Employee");
 
@@ -19,7 +19,7 @@ public class ManageEmployeesGUI implements ActionListener, Page {
 
 
 public ManageEmployeesGUI(){
-
+  //Create the UI by combining the title and button components
   frame.setSize(600, 600);
   frame.setVisible(true);
   this.addTitle();
@@ -31,6 +31,7 @@ public ManageEmployeesGUI(){
 
 @Override
 public void actionPerformed(ActionEvent e){
+  //Based on which button is clicked, we wish to redirect to a particular page.
   Object source = e.getSource();
     if (source.equals(addEmployee)) {
       new AddEmployeeGUI();
@@ -39,7 +40,7 @@ public void actionPerformed(ActionEvent e){
       new CompleteUserListGUI();
       frame.dispose();
     } else if (source.equals(employeeSummary)) {
-      new EmployeeSummaryGUI();
+      new EmployeeSummaryGUI(viewerID);
       frame.dispose();
     }
 
@@ -52,6 +53,7 @@ public void actionPerformed(ActionEvent e){
 
   @Override
   public void addContent() {
+    //Make the buttons respond to a click, and add them to the button panel.
     this.buttonsPanel.setLayout(new GridLayout(3, 1));
     addEmployee.addActionListener(this);
     completeEmployeeList.addActionListener(this);
@@ -61,6 +63,27 @@ public void actionPerformed(ActionEvent e){
     this.buttonsPanel.add(employeeSummary);
     this.buttonsPanel.setSize(100,300);
     frame.add(buttonsPanel);
+  }
+
+  @Override
+  public void setUser(int user) {
+  /*We need this to keep track of who is viewing the page.*/
+    this.viewerID = user;
+  }
+
+  @Override
+  public void dispose() {
+
+  }
+
+  @Override
+  public void addHomeButton() {
+
+  }
+
+  @Override
+  public void update() {
+
   }
 }
 

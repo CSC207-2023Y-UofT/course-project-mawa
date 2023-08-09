@@ -5,7 +5,7 @@ In this course project, you are expected to use Github to manage your code. This
 ## Create a New Github Project
 [Github Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) (*Yes, the name of this product is called "Github Projects", do not confuse it with the course project*) is a lightweight project management tool that is integrated to Github. You can use it to track issues, pull requests, visualize tasks status, and track responsibilities. **TAs will mark you project implementation plan and track your progression using the Github project.**
 
-1. Navigate to **Projects** InterfaceAdapters.Page on [CSC207 organization page](https://github.com/orgs/CSC207-2023Y-UofT/projects)
+1. Navigate to **Projects** FrameworksAndDrivers.InterfaceAdapters.Page on [CSC207 organization page](https://github.com/orgs/CSC207-2023Y-UofT/projects)
 
 2. Click **New project**, and click **Create** on the new page.
 ![](images/create_project.png)

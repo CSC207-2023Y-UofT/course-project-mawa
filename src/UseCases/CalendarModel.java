@@ -1,9 +1,11 @@
-import Entities.CalendarConstants;
+package UseCases;
+
 import Entities.Shift;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+
 
 public class CalendarModel {
     private int year, month, user;
@@ -13,7 +15,7 @@ public class CalendarModel {
         this.month = month;
         this.user = user;
     }
-    private ShiftDatabaseInteractor shiftDB = new ShiftDatabaseInteractor();
+    private ShiftInteractor shiftDB = new ShiftInteractor();
     public Object[] getDayInfo(int dayNum){
         LocalDate day = LocalDate.of(year, month, dayNum);
         LocalDate lastFri =  day.with(TemporalAdjusters.lastInMonth(DayOfWeek.FRIDAY));

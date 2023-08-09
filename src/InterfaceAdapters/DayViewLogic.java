@@ -1,4 +1,6 @@
-import Entities.Shift;
+package InterfaceAdapters;
+
+import UseCases.*;
 
 import java.awt.*;
 import java.time.Duration;

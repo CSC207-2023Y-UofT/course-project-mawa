@@ -1,5 +1,5 @@
 
-package FrameworksAndDrivers;
+package InterfaceAdapters;
 
 
 import javax.swing.*;

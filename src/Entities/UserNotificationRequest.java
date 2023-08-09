@@ -1,7 +1,7 @@
 package Entities;
 
 import java.time.LocalDateTime;
-public class NotificationRequest extends Notification {
+public class UserNotificationRequest extends UserNotification {
     private String message;
     private Boolean isResolved = false;
     private String senderId;
@@ -9,7 +9,7 @@ public class NotificationRequest extends Notification {
     private String shiftId;
     private LocalDateTime date;
 
-    public NotificationRequest(String senderId, String recipientId, String shiftId, String message, LocalDateTime date){
+    public UserNotificationRequest(int senderId, int recipientId, String shiftId, String message, LocalDateTime date){
         super(senderId, recipientId, shiftId, message, date);
     }
 

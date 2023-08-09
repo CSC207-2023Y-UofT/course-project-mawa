@@ -1,6 +1,6 @@
+package UseCases;
+
 import Entities.*;
-import InterfaceAdapters.ShiftInteractor;
-import InterfaceAdapters.UserInteractor;
 
 public class UserFactory{
     //As the creation of several children of user is delegated to this class, this is a

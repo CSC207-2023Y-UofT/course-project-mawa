@@ -1,6 +1,6 @@
+package FrameworksAndDrivers;
+import InterfaceAdapters.Page;
 
-import Entities.Shift;
-import FrameworksAndDrivers.Page;
 
 import javax.swing.*;
 import java.awt.*;

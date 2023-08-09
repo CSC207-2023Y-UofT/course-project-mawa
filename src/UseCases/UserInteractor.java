@@ -1,7 +1,8 @@
-package InterfaceAdapters;
+package UseCases;
 
 import Entities.Employee;
 import Entities.User;
+import UseCases.Interactor;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,6 +24,16 @@ public class UserInteractor implements Interactor<User> {
             System.out.println(e);
         }
         return userList;
+    }
+
+    public User getUserById(int userID){
+        ArrayList<User> users = this.readData();
+        for (User user: users){
+            if(user.getUserNum() == userID){
+                return user;
+            }
+        }
+        return null;
     }
 
 

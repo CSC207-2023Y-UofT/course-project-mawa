@@ -1,6 +1,7 @@
-package InterfaceAdapters;
+package UseCases;
 
-import Entities.Payment;
+import UseCases.*;
+import Entities.*;
 
 import java.io.*;
 import java.util.ArrayList;

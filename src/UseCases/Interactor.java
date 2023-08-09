@@ -1,4 +1,4 @@
-package InterfaceAdapters;
+package UseCases;
 
 import java.io.IOException;
 import java.util.ArrayList;

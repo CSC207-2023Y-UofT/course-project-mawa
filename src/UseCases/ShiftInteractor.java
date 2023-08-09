@@ -1,10 +1,10 @@
-package InterfaceAdapters;
+package UseCases;
 
-import Entities.Shift;
+import UseCases.*;
+import Entities.*;
 
 import java.io.*;
 import java.util.ArrayList;
-
 
 public class ShiftInteractor implements Interactor<Shift> {
   
@@ -22,6 +22,16 @@ public class ShiftInteractor implements Interactor<Shift> {
       }
       return shiftList;
 
+  }
+
+  public Shift getShiftByID(int shiftID){
+      ArrayList<Shift> shifts = this.readData();
+      for (Shift shift: shifts){
+          if(shift.getShiftId() == shiftID){
+              return shift;
+          }
+      }
+      return null;
   }
 
     public void update(Shift s){

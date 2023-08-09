@@ -1,3 +1,5 @@
+package UseCases;
+
 import Entities.Shift;
 
 import java.util.Comparator;

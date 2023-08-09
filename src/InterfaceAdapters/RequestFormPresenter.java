@@ -1,28 +1,28 @@
 package InterfaceAdapters;
 
-import Entities.NotificationRequest;
-import FrameworksAndDrivers.Page;
+import UseCases.*;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RequestFormPresenter implements ActionListener {
 
-    private Page gui;
-    private JButton submitButton, cancelButton;
-    private JTextField startField, endField, reasonField;
-    private int employee;
-    public RequestFormPresenter(Page gui, JButton submitButton, JButton cancelButton,
-                                JTextField startField, JTextField endField, JTextField reasonField,
+    private GUIElement submitButton, cancelButton, reasonField;
+    private int employee, shift;
+    private ShiftFileReader reader;
+    public RequestFormPresenter(GUIElement submitButton, GUIElement cancelButton,
+                                int shift, GUIElement reasonField,
                                 int employee){
-        this.gui = gui;
         this.submitButton = submitButton;
         this.cancelButton = cancelButton;
-        this.startField = startField;
-        this.endField = endField;
+        this.shift= shift;
         this.reasonField = reasonField;
         this.employee = employee;
+        try{
+            reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
+        }catch(InvalidFileNameException e){
+            System.out.println("Invalid File Name");
+        }
 
 
     }
@@ -30,16 +30,11 @@ public class RequestFormPresenter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton){
-            try {
-                NotificationRequest notif = NotificationBuilder.newNotificationRequest(startField.getText(),
-                        endField.getText(), reasonField.getText(), employee);
-                gui.dispose();
-            } catch (InvalidTimeException ex){
-                JOptionPane.showMessageDialog (submitButton, "Invalid Time Range Entered",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            UserNotificationRequest notif =
+                    NotificationBuilder.newNotificationRequest(shift, reasonField.getContent(), employee);
+            submitButton.nextPage();
         }else if (e.getSource() == cancelButton) {
-            gui.dispose();
+            cancelButton.nextPage();
         }
     }
 }

@@ -1,7 +1,7 @@
 package InterfaceAdapters;
 
 public final class FileNameConstants {
-    private void FileNameConstants(){
+    private FileNameConstants(){
         //restrict instantiation
     }
 

@@ -11,10 +11,14 @@ public class Login{
     private JTextField empNumIn = new JTextField(7);
     private JPasswordField pwdIn = new JPasswordField(7);
     private ArrayList<Object> options = new ArrayList<Object>();
-    private String empNum;
-    private char[] pwd;
+    private UserFileReader reader;
 
     public Login(){
+        try{
+            reader = new UserFileReader(FileNameConstants.USER_FILE_NAME);
+        }catch(InvalidFileNameException e){
+            System.out.println("Invalid File Name.");
+        }
         setUpOptions();
         setUp();
     }
@@ -38,18 +42,18 @@ public class Login{
 
         dialog.setResizable(true);
         dialog.setVisible(true);
-        User user = new LoginValidator().validateCredentials(Integer.parseInt(empNumIn.getText()),
+        int user = new LoginValidator().validateCredentials(Integer.parseInt(empNumIn.getText()),
                 pwdIn.getPassword());
         handleUser(user);
     }
 
-    private void handleUser(User user){
-        if(user.getEmployeeNum() <= 0){
+    private void handleUser(int user){
+        if(user <= 0){
             new Login("Incorrect/non-existent credentials");
-        } else if (user instanceof HR){
-            new HRHomePage((HR)user);
+        } else if (reader.getType(user).equals("HR")){
+            new HRHomePage(user);
         } else{
-            new EmployeeHomePage((Employee)user);
+            new EmployeeHomePage(user);
         }
     }
     public static void main(String[] args){

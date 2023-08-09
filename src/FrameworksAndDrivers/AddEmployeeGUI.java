@@ -1,16 +1,18 @@
 package FrameworksAndDrivers;
 
+import InterfaceAdapters.UserFactoryInteractor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import InterfaceAdapters.*;
-import FrameworksAndDrivers.*;
 
 
 public class AddEmployeeGUI implements ActionListener, Page {
 
     private int viewerID;
+
+    private UserFactoryInteractor ufi = new UserFactoryInteractor();
 
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
@@ -90,7 +92,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        UserFactory uf = new UserFactory();
+
         Object s = e.getSource();
         boolean pay_numeric = true;
         if (payLab.isVisible()){
@@ -107,16 +109,12 @@ public class AddEmployeeGUI implements ActionListener, Page {
             String bd = dobdayEnter.getText();
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+") && pay_numeric && typeSelect.getSelectedItem() != null){
-                if (((String) typeSelect.getSelectedItem()).equals("Volunteer")){
-                    uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
-                            bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
-                            "Volunteer", pwdEnter.getText(), 0);
-                } else{
-                    uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
+
+                    ufi.userFromInput(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
                             bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
                             (String) typeSelect.getSelectedItem(), pwdEnter.getText(),
                             Float.parseFloat(payEnter.getText()));
-                }
+
 
                 new ManageEmployeesGUI(viewerID);
                 frame.dispose();

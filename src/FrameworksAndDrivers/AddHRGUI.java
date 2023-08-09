@@ -5,13 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import InterfaceAdapters.*;
-import FrameworksAndDrivers.*;
+
 
 
 public class AddHRGUI implements ActionListener, Page {
 
 
     private int viewerID;
+
+    private UserFactoryInteractor ufi = new UserFactoryInteractor();
 
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
@@ -81,7 +83,6 @@ public class AddHRGUI implements ActionListener, Page {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        UserFactory uf = new UserFactory();
         Object s = e.getSource();
         if (s.equals(submitButton)){
             String phnum = phoneEnter.getText();
@@ -90,9 +91,9 @@ public class AddHRGUI implements ActionListener, Page {
             String bd = dobdayEnter.getText();
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+")){
-                uf.makeUser(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth, bd,
-                        Long.parseLong(phnum.trim()), emailEnter.getText(), "", "HR",
-                        pwdEnter.getText(), 0);
+                ufi.userFromInput(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth, bd,
+                        Long.parseLong(phnum.trim()), emailEnter.getText(), "HR Worker", "HR",
+                        pwdEnter.getText(), (float) 0);
 
                 //Go back to HR home page.
                 frame.dispose();

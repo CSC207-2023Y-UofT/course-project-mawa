@@ -1,8 +1,6 @@
 package FrameworksAndDrivers;
 
-import FrameworksAndDrivers.AddHRGUI;
-import FrameworksAndDrivers.ManageEmployeesGUI;
-import FrameworksAndDrivers.Page;
+
 import InterfaceAdapters.HomePagePresenter;
 
 import javax.swing.*;
@@ -10,12 +8,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-<<<<<<< HEAD:src/HomePage.java
+
 public class HomePage implements ActionListener, Page {
-=======
+
 import InterfaceAdapters.*;
 public class HomePage implements ActionListener, Page{
->>>>>>> 2610fe0d9e5cc0ccbb49c031a69abe05fdafa6a6:src/FrameworksAndDrivers/HomePage.java
+
 
     private JFrame frame = new JFrame();
 

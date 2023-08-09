@@ -1,6 +1,4 @@
 package InterfaceAdapters;
-import Entities.HR;
-
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -13,7 +11,7 @@ public class HomePagePresenter {
         ArrayList<JButton> buttons = new ArrayList<>();
         buttons.add(new JButton("Schedule"));
         buttons.add(new JButton("Notification Center"));
-        if (uc.idToUser(id) instanceof HR){
+        if (uc.idToUser(id).getType().equals("HR")){
             buttons.add(new JButton("Manage Employees"));
             buttons.add(new JButton("Add HR Account"));
         } else {

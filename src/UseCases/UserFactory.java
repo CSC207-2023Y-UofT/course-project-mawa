@@ -23,25 +23,12 @@ public class UserFactory{
 
         String bday = birthYear + "-" + birthMonth + "-" + birthDate;
         UserInteractor uInt = new UserInteractor();
-        switch (type) {
-
-            case "Wage Worker":
-                uInt.writeData(new WageWorker(surname, firstname, gender, email, role, numUsers + 1,
-                        phoneNumber, bday, pay, password.toCharArray()));
-                break;
-            case "Salary Worker":
-                uInt.writeData(new SalaryWorker(surname, firstname, gender, email, role, numUsers + 1,
-                        phoneNumber, bday, pay, password.toCharArray()));
-                break;
-            case "Entities.Volunteer":
-                uInt.writeData(new Volunteer(surname, firstname, gender, email, role, numUsers + 1,
-                        phoneNumber, bday, password.toCharArray()));
-                break;
-            case "Entities.HR":
-                uInt.writeData(new HR(surname, firstname, gender, email, numUsers + 1,
-                        phoneNumber, bday, password.toCharArray()));
-                break;
+        char[] p = new char[password.length()];
+        for (int i = 0; i < password.length(); i++){
+            p[i] = password.charAt(i);
         }
+        uInt.writeData(new User(surname, firstname, gender, email, role, numUsers + 1, phoneNumber, bday, p, type,
+                pay));
 
         /*Although the same UserFactory doesn't create more than a single user in this program,
         it's good for extensibility to increase the number of users, so that a UserFactory can create

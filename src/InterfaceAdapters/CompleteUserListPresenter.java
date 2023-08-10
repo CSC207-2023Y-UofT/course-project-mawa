@@ -33,7 +33,7 @@ public class CompleteUserListPresenter{
         panel.add(new JLabel(fr.getDob(id).toString()));
         String type = fr.getType(id);
         panel.add(new JLabel(type));
-        panel.add(new JLabel(Float.toString(fr.getPay(id)));
+        panel.add(new JLabel(Float.toString(fr.getPay(id))));
         //Depending on whether the user is currently active, the end of the panel will differ.
         if (fr.getActive(id)){
             panel.add(new JLabel("Yes"));

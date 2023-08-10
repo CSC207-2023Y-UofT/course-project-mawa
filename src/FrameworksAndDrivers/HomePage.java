@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 
 
 public class HomePage implements ActionListener, Page {
@@ -74,7 +75,7 @@ public class HomePage implements ActionListener, Page {
             switch (((JButton)source).getText()){
 
                 case "Schedule":
-                    //Open calendar code here
+                    new CalendarGUI(LocalDateTime.now().getMonthValue(), LocalDateTime.now().getYear(), userID);
                     frame.dispose();
                     break;
                 case "Notification Center":
@@ -85,9 +86,6 @@ public class HomePage implements ActionListener, Page {
                     new ManageEmployeesGUI(userID);
                     frame.dispose();
                     break;
-                case "Add HR Account":
-                    new AddHRGUI(userID);
-                    frame.dispose();
                 case "View Payment History":
                     //Open the employees' payment history.
                     frame.dispose();

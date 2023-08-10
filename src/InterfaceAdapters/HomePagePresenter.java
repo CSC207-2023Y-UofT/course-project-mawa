@@ -17,7 +17,6 @@ public class HomePagePresenter {
         buttons.add(new JButton("Notification Center"));
         if (ufr.getType(id).equals("HR")){
             buttons.add(new JButton("Manage Employees"));
-            buttons.add(new JButton("Add HR Account"));
         } else {
             buttons.add(new JButton("View Payment History"));
         }

@@ -1,29 +1,32 @@
 package Entities;
-
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Year;
 
-public class Payment implements Serializable {
+public class Payment {
 
     private User employee;
 
     private  String payment_message;
 
-    private  int payment_amount;
+    private  float payment_amount;
 
     private LocalDateTime date;
 
-    Payment(User employee,int payment_amount, LocalDateTime date ) {
+    private int paymentId;
+
+    public Payment(User employee,float payment_amount, LocalDateTime date, int id ) {
         this.employee = employee;
         this.date=date;
-        this.payment_message=employee.getFirstname() + employee.getSurname() +"Has been paid the amount of"+payment_amount+"At"+date;
+        this.payment_message=employee.getEmployeeName()+employee.getSurname()+"Has been paid the amount of"+payment_amount+"At"+date;
+        this.paymentId = id;
 
     }
 
 
     public String getPayment_message(){
 
-        if (employee.isActive()){
+        if (employee.isActive()==true){
 
             return payment_message;
         }
@@ -32,6 +35,8 @@ public class Payment implements Serializable {
         }
     }
 
+
+    public int getPaymentId(){return this.paymentId;}
     public void setPayment_message(String message){
         this.payment_message=message;
     }
@@ -43,12 +48,17 @@ public class Payment implements Serializable {
         this.employee=employee;
     }
 
-    public int getPayment_amount(){
+    public float getPayment_amount(){
         return this.payment_amount;
     }
 
     public void setPayment_amount(){
         this.payment_amount=payment_amount;
+    }
+
+
+    public String getpayment_date(){
+        return this.date.toString();
     }
 
 }

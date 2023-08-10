@@ -1,5 +1,8 @@
 package FrameworksAndDrivers;
 
+import Entities.Payment;
+import UseCases.PaymentInteractor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -100,7 +103,7 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page {
         allpayments= interactor.readData();
         ArrayList<Payment> emp_payments = new ArrayList<>();
        for (Payment allpayment : allpayments) {
-           if (allpayment.getEmployee().getUserNum() == employee_id) {
+           if (allpayment.getEmployee() == employee_id) {
 
                emp_payments.add(allpayment);
            }
@@ -112,7 +115,7 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page {
    public ArrayList<String> paylistTolist( ArrayList<Payment> payments){
 
        for (Payment payment : payments) {
-           String temp = "Employee " + payment.getEmployee().toString() + "Has been paid" +
+           String temp = "Employee " + payment.getEmployee() + "Has been paid" +
                    payment.getPayment_amount() + "On" + payment.getDate().toString();
            string_list.add(temp);
            temp = "";

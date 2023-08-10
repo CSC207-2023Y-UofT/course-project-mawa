@@ -11,8 +11,8 @@ public class LoginPresenter {
     }
 
     public int handleUser(int userId, char[] pwd){
-        int type = new LoginValidator().validateCredentials(userId, pwd);
-        return type;
+        int id = new LoginValidator().validateCredentials(userId, pwd);
+        return id;
     }
 
     public boolean startWithHR(){

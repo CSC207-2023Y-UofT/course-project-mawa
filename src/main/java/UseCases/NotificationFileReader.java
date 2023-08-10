@@ -21,11 +21,7 @@ public class NotificationFileReader{
     }
     public static NotificationFileReader getInstance(){
         if (instance == null) {
-            synchronized (NotificationFileReader.class) {
-                if (instance == null) {
-                    instance = new NotificationFileReader();
-                }
-            }
+            instance = new NotificationFileReader();
         }
         return instance;
     }

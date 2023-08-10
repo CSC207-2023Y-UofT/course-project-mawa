@@ -8,9 +8,10 @@ public class LoginValidator {
     private char[] password;
 
     private UserInteractor interactor = new UserInteractor();
-    private UserFileReader empDB = new UserFileReader();
+    private UserFileReader empDB;
 
     public int validateCredentials(int empID, char[] pwd){
+        empDB = UserFileReader.getInstance();
         ArrayList<Integer> allActiveUsers = empDB.getIds(true);
         for (int u : allActiveUsers){
             if (u == empID){

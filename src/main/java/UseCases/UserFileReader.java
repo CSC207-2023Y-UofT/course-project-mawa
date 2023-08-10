@@ -12,7 +12,7 @@ public class UserFileReader{
     private UserInteractor interactor;
     private ArrayList<User> list;
 
-    public UserFileReader(){
+    private UserFileReader(){
         user = new User("", "", "", "", "", -10,
                 0, "9999-12-31", new char[]{"q".charAt(0)}, UserTypeConstants.SALARY_WORKER, -111);
         interactor = new UserInteractor();
@@ -21,11 +21,7 @@ public class UserFileReader{
 
     public static UserFileReader getInstance(){
         if (instance == null) {
-            synchronized (UserFileReader.class) {
-                if (instance == null) {
-                    instance = new UserFileReader();
-                }
-            }
+            instance = new UserFileReader();
         }
         return instance;
     }

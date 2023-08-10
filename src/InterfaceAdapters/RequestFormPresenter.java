@@ -27,9 +27,9 @@ public class RequestFormPresenter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton){
-            UserNotificationRequest notif =
-                    NotificationBuilder.newNotificationRequest(shift, reasonField.getContent(), employee);
-            submitButton.nextPage();
+            NotificationBuilder nb = new NotificationBuilder();
+            UserFileReader ufr = new UserFileReader();
+            nb.createRequest(shift, reasonField.getContent(), employee, ufr.getHRId());
         }else if (e.getSource() == cancelButton) {
             cancelButton.nextPage();
         }

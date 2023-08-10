@@ -1,8 +1,8 @@
 package InterfaceAdapters;
 
 
-import Entities.User;
 import UseCases.UserController;
+import UseCases.UserFileReader;
 
 import javax.swing.*;
 import java.awt.*;

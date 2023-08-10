@@ -1,7 +1,5 @@
 package Entities;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.Year;
 
 public class Payment {
 
@@ -18,6 +16,7 @@ public class Payment {
     public Payment(User employee,float payment_amount, LocalDateTime date, int id ) {
         this.employee = employee;
         this.date=date;
+        this.payment_amount = payment_amount;
         this.payment_message=employee.getEmployeeName()+employee.getSurname()+"Has been paid the amount of"+payment_amount+"At"+date;
         this.paymentId = id;
 
@@ -57,8 +56,8 @@ public class Payment {
     }
 
 
-    public String getpayment_date(){
-        return this.date.toString();
+    public LocalDateTime getDate(){
+        return this.date;
     }
 
 }

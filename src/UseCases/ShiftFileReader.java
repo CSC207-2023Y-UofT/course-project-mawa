@@ -1,5 +1,6 @@
-package InterfaceAdapters;
+package UseCases;
 
+import InterfaceAdapters.ShiftProcessorConstants;
 import UseCases.PaymentFileProcessor;
 import UseCases.ShiftFileProcessor;
 

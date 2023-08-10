@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class NotificationStatusTrackerUpdater {
     int user;
     UserNotification[][] notifications;
+
+    UserController uc = new UserController();
     String[] resolved;
     String[] unresolved;
 
@@ -42,9 +44,9 @@ public class NotificationStatusTrackerUpdater {
         ShiftInteractor shiftInteractor = new ShiftInteractor();
         ArrayList<String> noti = new ArrayList<>();
         for(UserNotification n: notifications){
-            User recipient = userInteractor.getUserById(n.getRecipientId());
+            User recipient = uc.idToUser(n.getRecipientId());
             String recipientUserName = recipient.getFirstname()+ " " + recipient.getSurname();
-            User sender = userInteractor.getUserById(n.getSenderId());
+            User sender = uc.idToUser(n.getSenderId());
             String senderUserName = sender.getFirstname() + " " + sender.getSurname();
             Shift shift = shiftInteractor.getShiftByID(n.getShiftId());
             if (n.getResolvedStatus() && n.getDenyStatus()) {

@@ -1,4 +1,6 @@
 package InterfaceAdapters;
+import UseCases.UserFileReader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;

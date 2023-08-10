@@ -1,11 +1,10 @@
 package FrameworksAndDrivers;
 
 import InterfaceAdapters.*;
-import UseCases.FileNameConstants;
+import UseCases.ShiftFileReader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.format.DateTimeFormatter;
 
 public class ShiftCell extends JButton implements GUIElement{
     private int shift;

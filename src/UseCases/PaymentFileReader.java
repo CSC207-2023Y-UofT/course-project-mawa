@@ -1,5 +1,6 @@
-package InterfaceAdapters;
+package UseCases;
 
+import InterfaceAdapters.PaymentProcessorConstants;
 import UseCases.PaymentFileProcessor;
 
 import java.time.LocalDate;

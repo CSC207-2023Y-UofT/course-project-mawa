@@ -62,9 +62,9 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
                                ArrayList<Payment> payList){
         for (Payment n : payList){
             if (empIdToid.containsKey(n.getEmployee())){
-                empIdToid.get(n.getEmployee()).add(n.getId());
+                empIdToid.get(n.getEmployee()).add(n.getPaymentId());
             } else {
-                empIdToid.put(n.getEmployee(), (ArrayList<Integer>) List.of(n.getId()));
+                empIdToid.put(n.getEmployee().getUserNum(), (ArrayList<Integer>) List.of(n.getPaymentId()));
             }
 
         }
@@ -77,9 +77,9 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
         }
         for (Payment n : payList){
             if (empIdToid.containsKey(n.getEmployee())){
-                empIdToid.get(n.getEmployee()).add(n.getId());
+                empIdToid.get(n.getEmployee()).add(n.getPaymentId());
             } else {
-                empIdToid.put(n.getEmployee(), (ArrayList<Integer>) List.of(n.getId()));
+                empIdToid.put(n.getEmployee().getUserNum(), (ArrayList<Integer>) List.of(n.getPaymentId()));
             }
         }
     }
@@ -88,9 +88,9 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
         for (Payment n : payList){
             int i = round(n.getPayment_amount());
             if (amountToid.containsKey(i)){
-                amountToid.get(i).add(n.getId());
+                amountToid.get(i).add(n.getPaymentId());
             } else {
-                amountToid.put(i, (ArrayList<Integer>) List.of(n.getId()));
+                amountToid.put(i, (ArrayList<Integer>) List.of(n.getPaymentId()));
             }
 
         }
@@ -104,9 +104,9 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
         for (Payment n : payList){
             int i = round(n.getPayment_amount());
             if (amountToid.containsKey(i)){
-                amountToid.get(i).add(n.getId());
+                amountToid.get(i).add(n.getPaymentId());
             } else {
-                amountToid.put(i, (ArrayList<Integer>) List.of(n.getId()));
+                amountToid.put(i, (ArrayList<Integer>) List.of(n.getPaymentId()));
             }
 
         }
@@ -120,9 +120,9 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
                              ArrayList<Payment> payList){
         for (Payment n : payList){
             if (dateToid.containsKey(n.getDate())){
-                dateToid.get(n.getDate()).add(n.getId());
+                dateToid.get(n.getDate()).add(n.getPaymentId());
             } else {
-                dateToid.put(n.getDate(), (ArrayList<Integer>) List.of(n.getId()));
+                dateToid.put(n.getDate(), (ArrayList<Integer>) List.of(n.getPaymentId()));
             }
 
         }
@@ -135,9 +135,9 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
         }
         for (Payment n : payList){
             if (dateToid.containsKey(n.getDate())){
-                dateToid.get(n.getDate()).add(n.getId());
+                dateToid.get(n.getDate()).add(n.getPaymentId());
             } else {
-                dateToid.put(n.getDate(), (ArrayList<Integer>) List.of(n.getId()));
+                dateToid.put(n.getDate(), (ArrayList<Integer>) List.of(n.getPaymentId()));
             }
 
         }
@@ -146,8 +146,8 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
     public void makeIdtoList(HashMap<Integer, ArrayList<Object>> idToList,
                              ArrayList<Payment> payList){
         for (Payment n : payList){
-            idToList.put(n.getId(), toList(n));
-            idToPayment.put(n.getId(), n);
+            idToList.put(n.getPaymentId(), toList(n));
+            idToPayment.put(n.getPaymentId(), n);
         }
     }
 
@@ -158,18 +158,18 @@ public class PaymentFileProcessor implements FileProcessor<Payment> {
             idToPayment.clear();
         }
         for (Payment n : payList){
-            idToList.put(n.getId(), toList(n));
-            idToPayment.put(n.getId(), n);
+            idToList.put(n.getPaymentId(), toList(n));
+            idToPayment.put(n.getPaymentId(), n);
         }
     }
     @Override
     public ArrayList<Object> toList(Payment pay) {
         ArrayList<Object> list = new ArrayList<>();
-        list.add(pay.getEmployeeId());
+        list.add(pay.getEmployee().getUserNum());
         list.add(pay.getPayment_amount());
         list.add(pay.getDate());
 
-        return list
+        return list;
     }
 
 

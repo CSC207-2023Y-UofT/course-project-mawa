@@ -103,11 +103,11 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page {
 
         allpayments= interactor.readData();
         ArrayList<Payment> emp_payments = new ArrayList<>();
-        for (int i=0; i<allpayments.size(); i++){
-        if (allpayments.get(i).getEmployee().getUserNum()==employee_id){
+       for (Payment allpayment : allpayments) {
+           if (allpayment.getEmployee().getUserNum() == employee_id) {
 
-            emp_payments.add(allpayments.get(i));
-        }
+               emp_payments.add(allpayment);
+           }
 
        }
 
@@ -115,12 +115,12 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page {
    }
    public ArrayList<String> paylistTolist( ArrayList<Payment> payments){
 
-        for(int i=0; i<payments.size(); i++){
-            String temp = "Employee " + payments.get(i).getEmployee().toString() + "Has been paid" +
-                    payments.get(i).getPayment_amount() + "On" + payments.get(i).getpayment_date();
-            string_list.add(temp);
-            temp="";
-        }
+       for (Payment payment : payments) {
+           String temp = "Employee " + payment.getEmployee().toString() + "Has been paid" +
+                   payment.getPayment_amount() + "On" + payment.getDate().toString();
+           string_list.add(temp);
+           temp = "";
+       }
         return string_list;
    }
 }

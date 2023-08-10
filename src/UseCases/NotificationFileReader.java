@@ -1,5 +1,6 @@
-package InterfaceAdapters;
+package UseCases;
 
+import InterfaceAdapters.NotificationProcessorConstants;
 import UseCases.NotificationFileProcessor;
 
 import java.time.LocalDate;

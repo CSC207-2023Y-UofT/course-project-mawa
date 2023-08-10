@@ -1,6 +1,6 @@
 package InterfaceAdapters;
 
-import UseCases.FileNameConstants;
+import UseCases.ShiftFileReader;
 import UseCases.ShiftSorter;
 
 import java.awt.event.ActionEvent;

@@ -1,6 +1,6 @@
 package InterfaceAdapters;
 
-import java.util.Objects;
+import UseCases.LoginValidator;
 
 public class LoginPresenter {
     private Page gui;

@@ -1,58 +1,76 @@
 package FrameworksAndDrivers;
 
-import InterfaceAdapters.LoginValidator;
-import InterfaceAdapters.UserFileReader;
-
+import InterfaceAdapters.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class Login{
+public class Login implements Page{
     private JLabel labelEmpNum = new JLabel("Enter Employee Number: ");
     private JLabel labelPwd = new JLabel("Enter Password: ");
     private JTextField empNumIn = new JTextField(7);
     private JPasswordField pwdIn = new JPasswordField(7);
     private ArrayList<Object> options = new ArrayList<Object>();
+    private LoginPresenter presenter;
+    private int result;
 
     public Login(){
-        System.out.println("Invalid File Name.");
-        setUpOptions();
-        setUp();
+        presenter = new LoginPresenter(this);
+        addTitle();
+        addContent();
     }
 
     public Login(String msg){
-        setUpOptions();
+        addTitle();
         options.add(msg);
-        setUp();
+        addContent();
     }
 
-    private void setUpOptions() {
+    public static void main(String[] args){
+        new Login();
+    }
+
+
+    @Override
+    public void addTitle() {
         options.add("Enter Credentials");
         options.add(labelEmpNum);
         options.add(empNumIn);
         options.add(labelPwd);
         options.add(pwdIn);
     }
-    private void setUp(){
+
+    @Override
+    public void addContent() {
         JOptionPane pane = new JOptionPane(options.toArray(new Object[0]), JOptionPane.INFORMATION_MESSAGE);
         JDialog dialog = pane.createDialog(null, "Login");
 
         dialog.setResizable(true);
         dialog.setVisible(true);
-        int user = new LoginValidator().validateCredentials(Integer.parseInt(empNumIn.getText()),
-                pwdIn.getPassword());
-        handleUser(user);
+        result = presenter.handleUser(Integer.parseInt(empNumIn.getText()), pwdIn.getPassword());
     }
 
-    private void handleUser(int user){
-        if(user <= 0){
+    @Override
+    public void setUser(int user) {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void addHomeButton() {
+
+    }
+
+    @Override
+    public void update() {
+        if (result == -1){
             new Login("Incorrect/non-existent credentials");
-        } else {
-            new HomePage(user);
+        }else{
+            new HomePage(result);
         }
-    }
-    public static void main(String[] args){
-        new Login();
-    }
 
-
+    }
 }

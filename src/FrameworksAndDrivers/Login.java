@@ -12,7 +12,6 @@ public class Login{
     private JTextField empNumIn = new JTextField(7);
     private JPasswordField pwdIn = new JPasswordField(7);
     private ArrayList<Object> options = new ArrayList<Object>();
-    private UserFileReader reader;
 
     public Login(){
         System.out.println("Invalid File Name.");

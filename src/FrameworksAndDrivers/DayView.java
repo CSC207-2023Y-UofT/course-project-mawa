@@ -93,7 +93,7 @@ public class DayView extends JFrame implements Page {
 
     @Override
     public void addHomeButton() {
-        HomeButton hb = new HomeButton(this, user);
+        HomeButton hb = new HomeButton((Page)this, user);
         Dimension size = hb.getPreferredSize();
         hb.setBounds(14 * getWidth() / 15 - size.width, getHeight() / 15 + size.height,
                 size.width, size.height);

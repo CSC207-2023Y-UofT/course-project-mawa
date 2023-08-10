@@ -1,8 +1,6 @@
 package InterfaceAdapters;
 
 
-import Entities.NotificationRequest;
-
 import UseCases.*;
 
 

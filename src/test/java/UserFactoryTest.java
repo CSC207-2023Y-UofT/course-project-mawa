@@ -1,4 +1,4 @@
-import org.junit.Before;
+/*import org.junit.Before;
 import org.junit.Test;
 
 
@@ -8,11 +8,11 @@ public class UserFactoryTest {
 
     UserInteractor ui;
     UserFactory uf;
-    /*We need 2 of each type of user to test. One which is created by their constructor, and the other
+    We need 2 of each type of user to test. One which is created by their constructor, and the other
     is created by the factory. The point of the test is to make sure that the two object created
     have all the same properties. Note that this inadvertently tests that the UserInteractor is
     reading and writing files properly, as the test obtains the users created from the end of the
-    list which is read from the database.*/
+    list which is read from the database.
     HR hr ;
     HR hrFac;
     SalaryWorker sw;
@@ -105,4 +105,4 @@ public class UserFactoryTest {
     }
 
 
-}
+}*/

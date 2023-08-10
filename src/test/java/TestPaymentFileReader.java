@@ -16,7 +16,7 @@ public class TestPaymentFileReader {
     private List<Payment> list;
     private List<Integer> idList;
     @BeforeAll
-    void setUp(){
+    public void setUp(){
         reader = PaymentFileReader.getInstance();
         interactor = new PaymentInteractor();
         list = Instancio.ofList(Payment.class).size(10).create();
@@ -27,32 +27,32 @@ public class TestPaymentFileReader {
         }
     }
     @Test
-    void testUpdate(){
+    public void testUpdate(){
         reader.update();
         assertEquals(reader.getIds().size(), list.size(), "update should provide new data.");
     }
 
     @Test
-    void testCheckPayment(){
+    public void testCheckPayment(){
         reader.checkPayment(idList.get(0));
         assertEquals(list.get(0), reader.getPayment(idList.get(0)),
                 "checkPayment should produce the same Payment as indicated by the id inputted.");
     }
     @Test
-    void testGetAmount(){
+    public void testGetAmount(){
         assertEquals(list.get(0).getPayment_amount(), reader.getAmount(idList.get(0)),
                 "The payment amount fetched from PaymentFileReader should be the same" +
                         "as the object's payment amount attribute.");
     }
     @Test
-    void testGetAllIds(){
+    public void testGetAllIds(){
         assertEquals(idList, reader.getIds(),
                 "The id lst retrieved from PaymentFileReader should be the same as a list " +
                         "of ids from the complete Payment list.");
     }
 
     @Test
-    void testGetIdsByEmpId(){
+    public void testGetIdsByEmpId(){
         int empId = 444;
         list.get(1).setEmployee(empId);
         list.get(3).setEmployee(empId);

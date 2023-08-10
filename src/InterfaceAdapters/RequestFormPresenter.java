@@ -20,7 +20,7 @@ public class RequestFormPresenter implements ActionListener {
         this.shift= shift;
         this.reasonField = reasonField;
         this.employee = employee;
-        reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
+        reader = new ShiftFileReader();
 
     }
 

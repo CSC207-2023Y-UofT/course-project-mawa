@@ -11,6 +11,8 @@ public class ManageEmployeesGUI implements ActionListener, Page {
 
   private int viewerID;
   private JFrame frame = new JFrame();
+
+  private JButton back = new JButton("Back");
   private JButton addEmployee = new JButton("Add Employee");
 
   private JButton completeEmployeeList = new JButton("Complete Employee List");
@@ -43,6 +45,9 @@ public void actionPerformed(ActionEvent e){
     } else if (source.equals(employeeSummary)) {
       new EmployeeSummaryGUI(viewerID);
       frame.dispose();
+    } else if (source.equals(back)){
+      new HomePage(viewerID);
+      frame.dispose();
     }
 
 }
@@ -55,10 +60,12 @@ public void actionPerformed(ActionEvent e){
   @Override
   public void addContent() {
     //Make the buttons respond to a click, and add them to the button panel.
-    this.buttonsPanel.setLayout(new GridLayout(3, 1));
+    this.buttonsPanel.setLayout(new GridLayout(4, 1));
     addEmployee.addActionListener(this);
     completeEmployeeList.addActionListener(this);
     employeeSummary.addActionListener(this);
+    back.addActionListener(this);
+    this.buttonsPanel.add(back);
     this.buttonsPanel.add(addEmployee);
     this.buttonsPanel.add(completeEmployeeList);
     this.buttonsPanel.add(employeeSummary);
@@ -74,7 +81,7 @@ public void actionPerformed(ActionEvent e){
 
   @Override
   public void dispose() {
-
+    frame.dispose();
   }
 
   @Override

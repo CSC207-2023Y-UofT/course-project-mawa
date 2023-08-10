@@ -99,10 +99,6 @@ public class AddHRGUI implements ActionListener, Page {
 
         }
 
-        if (s.equals(Page.back)){
-            //Go back to HR home page.
-            frame.dispose();
-        }
     }
 
 
@@ -121,8 +117,6 @@ public class AddHRGUI implements ActionListener, Page {
         dobPanel.add(dobmthEnter);
         dobPanel.add(dobdayLab);
         dobPanel.add(dobdayEnter);
-        Page.backPanel.setLayout(new GridLayout(1, 1));
-        Page.backPanel.add(Page.back);
         submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.LINE_AXIS));
         submitPanel.add(Box.createHorizontalGlue());
 
@@ -138,11 +132,9 @@ public class AddHRGUI implements ActionListener, Page {
         this.questionPanel.add(emailEnter);
         this.questionPanel.add(pwdLab);
         this.questionPanel.add(pwdEnter);
-        submitButton.addActionListener(this);
-        Page.back.addActionListener(this);
+        submitButton.addActionListener(this);;
         this.submitPanel.add(submitButton);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(Page.backPanel);
         contentPane.add(questionPanel);
         contentPane.add(dobPanel);
         contentPane.add(submitPanel);

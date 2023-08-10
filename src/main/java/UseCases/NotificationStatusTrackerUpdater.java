@@ -8,8 +8,6 @@ import java.util.ArrayList;
 public class NotificationStatusTrackerUpdater {
     int user;
     UserNotification[][] notifications;
-
-    UserController uc = new UserController();
     String[] resolved;
     String[] unresolved;
 
@@ -19,6 +17,12 @@ public class NotificationStatusTrackerUpdater {
         resolved = NotificationsToString(notifications[0], userID);
         unresolved = NotificationsToString(notifications[1], userID);
 
+    }
+    public String[] getResolvedArray(){
+        return this.resolved;
+    }
+    public String[] getUnresolvedArray(){
+        return this.unresolved;
     }
 
     public UserNotification[][] getSortedResolvedAndUnresolvedNotifications(int userID){
@@ -34,19 +38,19 @@ public class NotificationStatusTrackerUpdater {
                 unresolved.add(n);
             }
         }
-        UserNotification[] sortedResolved = UserNotification.sortByCreatedDate(resolved);
+        UserNotification[] sortedResolved = UserNotification.sortByResolvedDate(resolved);
         UserNotification[] sortedUnresolved = UserNotification.sortByCreatedDate(unresolved);
         return new UserNotification[][]{sortedResolved, sortedUnresolved};
     }
 
     public String[] NotificationsToString(UserNotification[] notifications, int userID){
-        UserInteractor userInteractor = new UserInteractor();
+        UserFileReader userFilerReader = new UserFileReader();
         ShiftInteractor shiftInteractor = new ShiftInteractor();
         ArrayList<String> noti = new ArrayList<>();
         for(UserNotification n: notifications){
-            User recipient = uc.idToUser(n.getRecipientId());
+            User recipient = userFilerReader.getUser(n.getRecipientId());
             String recipientUserName = recipient.getFirstname()+ " " + recipient.getSurname();
-            User sender = uc.idToUser(n.getSenderId());
+            User sender = userFilerReader.getUser(n.getSenderId());
             String senderUserName = sender.getFirstname() + " " + sender.getSurname();
             Shift shift = shiftInteractor.getShiftByID(n.getShiftId());
             if (n.getResolvedStatus() && n.getDenyStatus()) {
@@ -66,4 +70,19 @@ public class NotificationStatusTrackerUpdater {
         return stringNotifications;
     }
 
+    public void notificationUpdater(String notification, boolean deny){
+        UserNotificationInteractor db = new UserNotificationInteractor();
+        for(int i = 0; i < this.unresolved.length; i++){
+            if (notification.equalsIgnoreCase(this.unresolved[i])){
+                UserNotification item = this.notifications[1][i];
+                if (deny){
+                    item.deny();
+                    db.update(item);
+                }else{
+                    item.resolve();
+                    db.update(item);
+                }
+            }
+        }
+    }
 }

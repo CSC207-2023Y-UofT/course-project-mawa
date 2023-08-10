@@ -31,8 +31,8 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         denyRequestButton.addActionListener(this);
         rescheduleShiftButton.setActionCommand("Reschedule");
         rescheduleShiftButton.addActionListener(this);
-        this.unresolvedNotificationList = new JList<String>(unresolvedNotificationListModel.listModel);
-        this.resolvedNotificationList = new JList<String>(resolvedNotificationListModel.listModel);
+        this.unresolvedNotificationList = new JList<String>(unresolvedNotificationListModel.getListModel());
+        this.resolvedNotificationList = new JList<String>(resolvedNotificationListModel.getListModel());
         this.unresolvedNotificationListScroller = new JScrollPane(this.unresolvedNotificationList);
         this.resolvedNotificationListScroller = new JScrollPane(this.resolvedNotificationList);
         this.presenter = new UserNotificationPresenter(userID, unresolvedNotificationListModel, resolvedNotificationListModel);
@@ -54,6 +54,5 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         if ("Deny".equals(e.getActionCommand())) {
             presenter.denyUpdateListModel(unresolvedNotificationList.getSelectedValue());
         }
-
     }
 }

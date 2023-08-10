@@ -13,7 +13,7 @@ public class PaymentFileReader{
     private PaymentInteractor interactor;
     private ArrayList<Payment> list;
 
-    public PaymentFileReader() {
+    private PaymentFileReader() {
         payment = new Payment(-21, 15.56F, LocalDateTime.now(), -71);
         interactor = new PaymentInteractor();
         list = interactor.readData();
@@ -21,11 +21,7 @@ public class PaymentFileReader{
 
     public static PaymentFileReader getInstance(){
         if (instance == null) {
-            synchronized (PaymentFileReader.class) {
-                if (instance == null) {
-                    instance = new PaymentFileReader();
-                }
-            }
+            instance = new PaymentFileReader();
         }
         return instance;
     }

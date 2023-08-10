@@ -20,11 +20,7 @@ public class ShiftFileReader{
     }
     public static ShiftFileReader getInstance(){
         if (instance == null) {
-            synchronized (ShiftFileReader.class) {
-                if (instance == null) {
-                    instance = new ShiftFileReader();
-                }
-            }
+            instance = new ShiftFileReader();
         }
         return instance;
     }

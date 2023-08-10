@@ -1,42 +1,77 @@
 package UseCases;
 
-import InterfaceAdapters.PaymentProcessorConstants;
-import UseCases.PaymentFileProcessor;
+import Entities.Payment;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class PaymentFileReader{
-    private ArrayList listHM;
-    private PaymentFileProcessor processor = PaymentFileProcessor.getInstance();
+    private static PaymentFileReader instance;
+    private Payment payment;
+    private PaymentInteractor interactor;
+    private ArrayList<Payment> list;
 
     public PaymentFileReader() {
-        listHM = processor.getHMList();
+        payment = new Payment(-21, 15.56F, LocalDateTime.now(), -71);
+        interactor = new PaymentInteractor();
+        list = interactor.readData();
+    }
+
+    public static PaymentFileReader getInstance(){
+        if (instance == null) {
+            synchronized (PaymentFileReader.class) {
+                if (instance == null) {
+                    instance = new PaymentFileReader();
+                }
+            }
+        }
+        return instance;
+    }
+    private void checkPayment(int id){
+        if (payment.getPaymentId() == id){
+            return;
+        }
+        for (Payment p:list){
+            if(p.getPaymentId() == id){
+                this.payment = p;
+                return;
+            }
+        }
+        System.out.println("Invalid Payment ID");
     }
 
     public ArrayList<Integer> getIds(LocalDateTime date){
-        HashMap hm = (HashMap) listHM.get(PaymentProcessorConstants.DATE);
-        return (ArrayList<Integer>)hm.get(date);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Payment p:list){
+            if (p.getDate() == date){
+                ids.add(p.getPaymentId());
+            }
+        }
+        return ids;
     }
 
     public ArrayList<Integer> getIds(int empId){
-        HashMap hm = (HashMap) listHM.get(PaymentProcessorConstants.EMPLOYEE_ID);
-        return (ArrayList<Integer>)hm.get(empId);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Payment p:list){
+            if (p.getEmployee() == empId){
+                ids.add(p.getPaymentId());
+            }
+        }
+        return ids;
     }
     public LocalDateTime getDate(int id){
-        HashMap hm = (HashMap) listHM.get(PaymentProcessorConstants.ID);
-        return (LocalDateTime) ((ArrayList)hm.get(id)).get(PaymentProcessorConstants.DATE);
+        checkPayment(id);
+        return payment.getDate();
     }
 
     public int getEmployeeId(int id){
-        HashMap hm = (HashMap) listHM.get(PaymentProcessorConstants.ID);
-        return (int)((ArrayList)hm.get(id)).get(PaymentProcessorConstants.EMPLOYEE_ID);
+        checkPayment(id);
+        return payment.getEmployee();
     }
 
     public float getAmount(int id){
-        HashMap hm = (HashMap) listHM.get(PaymentProcessorConstants.ID);
-        return (int)((ArrayList)hm.get(id)).get(PaymentProcessorConstants.AMOUNT);
+        checkPayment(id);
+        return payment.getPayment_amount();
     }
 
 

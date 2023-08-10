@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 
 public class Payment {
 
-    private User employee;
+    private int employee;
 
     private  String payment_message;
 
@@ -13,17 +13,17 @@ public class Payment {
 
     private int paymentId;
 
-    public Payment(User employee,float payment_amount, LocalDateTime date, int id ) {
+    public Payment(int employee,float payment_amount, LocalDateTime date, int id ) {
         this.employee = employee;
         this.date=date;
         this.payment_amount = payment_amount;
-        this.payment_message=employee.getEmployeeName()+employee.getSurname()+"Has been paid the amount of"+payment_amount+"At"+date;
+        //this.payment_message=employee.getEmployeeName()+employee.getSurname()+"Has been paid the amount of"+payment_amount+"At"+date;
         this.paymentId = id;
 
     }
 
 
-    public String getPayment_message(){
+    /*public String getPayment_message(){
 
         if (employee.isActive()==true){
 
@@ -32,17 +32,17 @@ public class Payment {
         else {
             return "The chosen employee is not currently Active";
         }
-    }
+    }*/ //please move this to a presenter, it should not be in the entity class
 
 
     public int getPaymentId(){return this.paymentId;}
     public void setPayment_message(String message){
         this.payment_message=message;
     }
-    public User getEmployee(){
+    public int getEmployee(){
         return this.employee;
     }
-    public  void setEmployee(User employee){
+    public  void setEmployee(int employee){
 
         this.employee=employee;
     }

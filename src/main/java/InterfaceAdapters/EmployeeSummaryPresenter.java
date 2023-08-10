@@ -11,7 +11,7 @@ public class EmployeeSummaryPresenter{
     //Each button must correspond to a different employee, so this maps makes that association.
     private HashMap<JButton, Integer> payHistButtonsToIDs = new HashMap<JButton, Integer>();
 
-    private UserFileReader fr = new UserFileReader();
+    private UserFileReader fr = UserFileReader.getInstance();
 
     public JPanel makeEmployeePanel(int id) {
         //Make a panel containing all of an employee's information, with a button at the end that

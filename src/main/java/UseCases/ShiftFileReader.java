@@ -1,43 +1,82 @@
 package UseCases;
 
-import InterfaceAdapters.ShiftProcessorConstants;
-import UseCases.PaymentFileProcessor;
-import UseCases.ShiftFileProcessor;
+import Entities.Shift;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class ShiftFileReader{
-    private ShiftFileProcessor processor = ShiftFileProcessor.getInstance();
-    ArrayList listHM;
+    private static ShiftFileReader instance;
+    private Shift shift;
+    private ShiftInteractor interactor;
+    private ArrayList<Shift> list;
 
-    public ShiftFileReader() {
-        listHM = processor.getHMList();
+    private ShiftFileReader() {
+        shift = new Shift(LocalDateTime.now(), new ArrayList<Integer>(), (float)0, -11);
+        interactor = new ShiftInteractor();
+        list = interactor.readData();
+    }
+    public static ShiftFileReader getInstance(){
+        if (instance == null) {
+            synchronized (ShiftFileReader.class) {
+                if (instance == null) {
+                    instance = new ShiftFileReader();
+                }
+            }
+        }
+        return instance;
+    }
+    private void checkShift(int id){
+        if (shift.getShiftId() == id){
+            return;
+        }
+        for (Shift s:list){
+            if(s.getShiftId() == id){
+                this.shift = s;
+                return;
+            }
+        }
+        System.out.println("Invalid Shift ID");
     }
 
     public ArrayList<Integer> getIds(LocalDate date){
-        HashMap hm = (HashMap) listHM.get(ShiftProcessorConstants.DATE);
-        return (ArrayList<Integer>)hm.get(date);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Shift s:list){
+            if (s.getTime().toLocalDate() == date){
+                ids.add(s.getShiftId());
+            }
+        }
+        return ids;
     }
 
     public ArrayList<Integer> getIds(int empId){
-        HashMap hm = (HashMap) listHM.get(ShiftProcessorConstants.EMPLOYEE_ID);
-        return (ArrayList<Integer>)hm.get(empId);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Shift s:list){
+            if (s.getCoworkers().contains(empId)){
+                ids.add(s.getShiftId());
+            }
+        }
+        return ids;
     }
     public LocalDateTime getDate(int id){
-        HashMap hm = (HashMap) listHM.get(ShiftProcessorConstants.ID);
-        return (LocalDateTime) ((ArrayList)hm.get(id)).get(ShiftProcessorConstants.DATE);
+        checkShift(id);
+        return shift.getTime();
     }
 
-    public ArrayList<Integer> getEmployeeId(int id){
-        HashMap hm = (HashMap) listHM.get(ShiftProcessorConstants.ID);
-        return (ArrayList<Integer>)((ArrayList)hm.get(id)).get(ShiftProcessorConstants.EMPLOYEE_ID);
+    public ArrayList<Integer> getCoworkers(int id){
+        checkShift(id);
+        return (ArrayList<Integer>) shift.getCoworkers();
     }
 
     public float getDuration(int id){
-        HashMap hm = (HashMap) listHM.get(ShiftProcessorConstants.ID);
-        return (int)((ArrayList)hm.get(id)).get(ShiftProcessorConstants.DURATION);
+        checkShift(id);
+        return shift.getDuration();
+    }
+
+    public Shift getShift(int id){
+        checkShift(id);
+        return shift;
     }
 
 }

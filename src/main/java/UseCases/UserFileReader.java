@@ -1,86 +1,119 @@
 package UseCases;
 
-import InterfaceAdapters.UserProcessorConstants;
-import UseCases.UserFileProcessor;
+import Entities.User;
 
 import java.time.LocalDate;
 import java.util.*;
 
 public class UserFileReader{
-    private ArrayList listHM;
+    private User user;
+    private static UserFileReader instance;
+    private UserInteractor interactor;
+    private ArrayList<User> list;
 
-    private UserFileProcessor processor = UserFileProcessor.getInstance();
-
-    public UserFileReader(){
-        listHM = processor.getHMList();
+    private UserFileReader(){
+        user = new User("", "", "", "", "", -10,
+                0, "9999-12-31", new char[]{"q".charAt(0)}, UserTypeConstants.SALARY_WORKER, -111);
+        interactor = new UserInteractor();
+        list = interactor.readData();
     }
 
-    public ArrayList<Integer> getIds(String name){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.SURNAME);
-        return (ArrayList<Integer>)hm.get(name);
+    public static UserFileReader getInstance(){
+        if (instance == null) {
+            synchronized (UserFileReader.class) {
+                if (instance == null) {
+                    instance = new UserFileReader();
+                }
+            }
+        }
+        return instance;
     }
 
+    private void checkUser(int id){
+        if (user.getUserNum() == id){
+            return;
+        }
+        for (User u:list){
+            if(u.getUserNum() == id){
+                this.user = u;
+                return;
+            }
+        }
+        System.out.println("Invalid User Number");
+    }
     public int getHRId(){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.SURNAME);
-        return ((ArrayList<Integer>)hm.get("HR")).get(0);
+        for (User u:list){
+            if(u.getType().equals(UserTypeConstants.HR)){ //only one HR account
+                return u.getUserNum();
+            }
+        }
+        return -9;
     }
 
     public ArrayList<Integer> getIds(boolean active){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ACTIVE);
-        return (ArrayList<Integer>)hm.get(active);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (User u:list){
+            if (u.isActive() == active){
+                ids.add(u.getUserNum());
+            }
+        }
+        return ids;
     }
 
     public String getType(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (String)((ArrayList)hm.get(id)).get(UserProcessorConstants.TYPE);
+        checkUser(id);
+        return user.getType();
     }
 
     public boolean getActive(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (boolean)((ArrayList)hm.get(id)).get(UserProcessorConstants.ACTIVE);
+        checkUser(id);
+        return user.isActive();
     }
     public float getPay(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (float)((ArrayList)hm.get(id)).get(UserProcessorConstants.PAY);
+        checkUser(id);
+        return user.getPay();
     }
 
     public String getRole(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (String)((ArrayList)hm.get(id)).get(UserProcessorConstants.ROLE);
+        checkUser(id);
+        return user.getRole();
     }
 
     public String getSurname(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (String)((ArrayList)hm.get(id)).get(UserProcessorConstants.SURNAME);
+        checkUser(id);
+        return user.getSurname();
     }
     public String getFirstName(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (String)((ArrayList)hm.get(id)).get(UserProcessorConstants.FIRST_NAME);
+        checkUser(id);
+        return user.getFirstname();
     }
     public LocalDate getDob(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (LocalDate) ((ArrayList)hm.get(id)).get(UserProcessorConstants.DOB);
+        checkUser(id);
+        return user.getDob();
     }
     public String getGender(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (String)((ArrayList)hm.get(id)).get(UserProcessorConstants.GENDER);
+        checkUser(id);
+        return user.getGender();
     }
     public long getPhoneNumber(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (long)((ArrayList)hm.get(id)).get(UserProcessorConstants.PHONE_NUMBER);
+        checkUser(id);
+        return user.getPhoneNum();
     }
     public String getEmail(int id){
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (String)((ArrayList)hm.get(id)).get(UserProcessorConstants.EMAIL);
+        checkUser(id);
+        return user.getEmail();
     }
     public char[] getPassword(int id) {
-        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (char[]) ((ArrayList) hm.get(id)).get(UserProcessorConstants.PASSWORD);
+        checkUser(id);
+        return user.getPassword();
     }
 
     public ArrayList<Integer> getIds(){
-        HashMap hm = (HashMap) listHM.get(0);
-        return (ArrayList<Integer>) hm.keySet();
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (User u:list){
+            ids.add(u.getUserNum());
+        }
+        return ids;
     }
 
 

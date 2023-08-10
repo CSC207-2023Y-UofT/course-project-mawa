@@ -1,67 +1,134 @@
 package UseCases;
 
-import InterfaceAdapters.NotificationProcessorConstants;
-import UseCases.NotificationFileProcessor;
+import Entities.UserNotification;
+import Entities.UserNotificationRequest;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class NotificationFileReader{
-    private ArrayList listHM;
-    private NotificationFileProcessor processor = NotificationFileProcessor.getInstance();
+    private static NotificationFileReader instance;
+    private UserNotification userNotification;
+    private UserNotificationInteractor interactor;
+    private ArrayList<UserNotification> list;
 
-    public NotificationFileReader() {
-        listHM = processor.getHMList();
+    private NotificationFileReader() {
+        userNotification = new UserNotificationRequest(-77,-78,45,"",LocalDateTime.now());
+        interactor = new UserNotificationInteractor();
+        list = interactor.readData();
+    }
+    public static NotificationFileReader getInstance(){
+        if (instance == null) {
+            synchronized (NotificationFileReader.class) {
+                if (instance == null) {
+                    instance = new NotificationFileReader();
+                }
+            }
+        }
+        return instance;
     }
 
+    private void checkNotification(int id){
+        if (userNotification.getNotifId() == id){
+            return;
+        }
+        for (UserNotification u:list){
+            if(u.getNotifId() == id){
+                this.userNotification = u;
+                return;
+            }
+        }
+        System.out.println("Invalid Notification ID");
+    }
+
+
     public ArrayList<Integer> getIds(LocalDateTime date){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.DATE_CREATED);
-        return (ArrayList<Integer>)hm.get(date);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (UserNotification u:list){
+            if(u.getDate() == date){
+                ids.add(u.getNotifId());
+            }
+        }
+        return ids;
     }
 
     public ArrayList<Integer> getIdsBySender(int id){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.SENDER_ID);
-        return (ArrayList<Integer>)hm.get(id);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (UserNotification u:list){
+            if(u.getSenderId() == id){
+                ids.add(u.getNotifId());
+            }
+        }
+        return ids;
     }
 
     public ArrayList<Integer> getIdsByRecipient(int id){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.RECIPIENT_ID);
-        return (ArrayList<Integer>)hm.get(id);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (UserNotification u:list){
+            if(u.getRecipientId() == id){
+                ids.add(u.getNotifId());
+            }
+        }
+        return ids;
     }
 
     public ArrayList<Integer> getIds(boolean resolved){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.RESOLVED);
-        return (ArrayList<Integer>)hm.get(resolved);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (UserNotification u:list){
+            if(u.getResolvedStatus() == resolved){
+                ids.add(u.getNotifId());
+            }
+        }
+        return ids;
+    }
+
+    public ArrayList<Integer> getDenyIds(boolean deny){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (UserNotification u:list){
+            if(u.getDenyStatus() == deny){
+                ids.add(u.getNotifId());
+            }
+        }
+        return ids;
     }
 
     public ArrayList<Integer> getIds(String type){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.TYPE);
-        return (ArrayList<Integer>)hm.get(type);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (UserNotification u:list){
+            if(u.getClass().getSimpleName().equals(type)){
+                ids.add(u.getNotifId());
+            }
+        }
+        return ids;
     }
 
     public String getType(int id){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.ID);
-        return (String)((ArrayList)hm.get(id)).get(NotificationProcessorConstants.TYPE);
+        checkNotification(id);
+        return userNotification.getClass().getSimpleName();
     }
 
     public boolean getResolved(int id){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.ID);
-        return (boolean)((ArrayList)hm.get(id)).get(NotificationProcessorConstants.RESOLVED);
+        checkNotification(id);
+        return userNotification.getResolvedStatus();
     }
     public LocalDateTime getDateCreated(int id){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.ID);
-        return (LocalDateTime) ((ArrayList)hm.get(id)).get(NotificationProcessorConstants.DATE_CREATED);
+        checkNotification(id);
+        return userNotification.getDate();
     }
 
     public int getRecipientId(int id){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.ID);
-        return (int)((ArrayList)hm.get(id)).get(NotificationProcessorConstants.RECIPIENT_ID);
+        checkNotification(id);
+        return userNotification.getRecipientId();
     }
 
     public int getSenderId(int id){
-        HashMap hm = (HashMap) listHM.get(NotificationProcessorConstants.ID);
-        return (int)((ArrayList)hm.get(id)).get(NotificationProcessorConstants.SENDER_ID);
+        checkNotification(id);
+        return userNotification.getSenderId();
+    }
+
+    public boolean getDenyStatus(int id){
+        checkNotification(id);
+        return userNotification.getDenyStatus();
     }
 
 

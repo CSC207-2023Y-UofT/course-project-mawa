@@ -21,8 +21,8 @@ public class CalendarModel {
         this.year = year;
         this.month = month;
         this.user = user;
-        shiftDB= new ShiftFileReader();
-        userDB = new UserFileReader();
+        shiftDB= ShiftFileReader.getInstance();
+        userDB = UserFileReader.getInstance();
     }
     public Object[] getDayInfo(int dayNum){
         LocalDate day = LocalDate.of(year, month, dayNum);

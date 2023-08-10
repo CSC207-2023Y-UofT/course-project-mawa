@@ -13,7 +13,7 @@ public class CompleteUserListPresenter{
 
     private HashMap<JButton, Integer> buttonsToIDs = new HashMap<JButton, Integer>();
 
-    private UserFileReader fr = new UserFileReader();
+    private UserFileReader fr = UserFileReader.getInstance();
 
 
 

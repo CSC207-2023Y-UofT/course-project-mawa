@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class UserController {
 
-    private UserFileReader ufr = new UserFileReader();
+    private UserFileReader ufr = UserFileReader.getInstance();
 
     public void changeActivation(int IDNum){
         //Obtain the user object corresponding to the given ID, make the desired modification,

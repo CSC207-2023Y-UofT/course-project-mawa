@@ -12,8 +12,8 @@ public class ShiftPresenter implements ActionListener {
     private Page gui;
     private int employee;
     private GUIElement timeOffButton;
-    private ShiftFileReader shiftDB = new ShiftFileReader();
-    private UserFileReader userDB = new UserFileReader();
+    private ShiftFileReader shiftDB = ShiftFileReader.getInstance();
+    private UserFileReader userDB = UserFileReader.getInstance();
 
     public ShiftPresenter(int shift, Page gui, GUIElement timeOffButton, int employee){
 
@@ -32,7 +32,7 @@ public class ShiftPresenter implements ActionListener {
     }
     public String getCoworkerString(){
         String coworkers = "";
-        for (int id : shiftDB.getEmployeeId(shift)){
+        for (int id : shiftDB.getCoworkers(shift)){
             if (id != employee){
                 coworkers += String.format(", %s %s", userDB.getFirstName(id),
                         userDB.getSurname(id));

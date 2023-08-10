@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class TimeOffButtonPresenter implements ActionListener {
     private GUIElement button;
     private int shift;
-    private ShiftFileReader reader = new ShiftFileReader();
+    private ShiftFileReader reader = ShiftFileReader.getInstance();
     public TimeOffButtonPresenter(GUIElement button, int shift){
 
         this.button = button;

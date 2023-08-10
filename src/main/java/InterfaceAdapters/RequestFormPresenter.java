@@ -20,7 +20,7 @@ public class RequestFormPresenter implements ActionListener {
         this.shift= shift;
         this.reasonField = reasonField;
         this.employee = employee;
-        reader = new ShiftFileReader();
+        reader = ShiftFileReader.getInstance();
 
     }
 
@@ -28,7 +28,7 @@ public class RequestFormPresenter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton){
             NotificationBuilder nb = new NotificationBuilder();
-            UserFileReader ufr = new UserFileReader();
+            UserFileReader ufr = UserFileReader.getInstance();
             nb.createRequest(shift, reasonField.getContent(), employee, ufr.getHRId());
         }else if (e.getSource() == cancelButton) {
             cancelButton.nextPage();

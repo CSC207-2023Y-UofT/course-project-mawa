@@ -9,7 +9,7 @@ public class NotificationBuilder{
     UserNotificationInteractor uni = new UserNotificationInteractor();
 
     public void createRequest(int shift, String message, int sender, int reciever){
-        UserFileReader ufr = new UserFileReader();
+        UserFileReader ufr = UserFileReader.getInstance();
         if (ufr.getType(sender).equals("HR")){
             uni.writeData(new UserNotificationResponse(sender, reciever, shift, message, LocalDateTime.now()));
         } else {

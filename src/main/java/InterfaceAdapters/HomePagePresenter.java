@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class HomePagePresenter {
 
-    private UserFileReader ufr = new UserFileReader();
+    private UserFileReader ufr = UserFileReader.getInstance();
 
     public ArrayList<JButton> makeHomeButtons(int id){
         //Return a list of buttons which are displayed on the homepage, depending if the providec

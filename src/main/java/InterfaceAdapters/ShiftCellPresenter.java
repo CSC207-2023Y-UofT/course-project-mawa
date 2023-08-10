@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class ShiftCellPresenter implements ActionListener {
     private GUIElement button;
     private int shift, user;
-    private ShiftFileReader reader = new ShiftFileReader();
+    private ShiftFileReader reader = ShiftFileReader.getInstance();
 
     public ShiftCellPresenter(GUIElement button, int shift, int user) {
         this.shift = shift;

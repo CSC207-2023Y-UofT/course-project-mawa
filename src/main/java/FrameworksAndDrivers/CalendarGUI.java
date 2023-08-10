@@ -14,7 +14,7 @@ public class CalendarGUI extends JFrame implements Page {
     private int month;
     private int year;
     private int user;
-    private JPanel panel;
+    private JPanel panel = new JPanel();
     private ArrayList<Component> headerButtons = new ArrayList<Component>();
     private CalendarPresenter presenter;
     private JPanel panelGrid;
@@ -26,14 +26,13 @@ public class CalendarGUI extends JFrame implements Page {
         this.firstDay = LocalDate.of(year, month, 1);
         this.lastDay = LocalDate.of(year, month, firstDay.lengthOfMonth());
         setUser(user);
-        //this.panel = new JPanel(new BorderLayout());
         this.model = new CalendarModel(this.year, this.month, this.user);
         this.presenter = new CalendarPresenter(this.year, this.month, this.user,
                 this, model, yearList, monthList);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         addTitle();
         addContent();
-        setVisible(true);
+        this.setVisible(true);
 
     }
 
@@ -45,16 +44,16 @@ public class CalendarGUI extends JFrame implements Page {
             panelGrid.add(new JLabel(d));
         }
         for(int i = 1; i < numSections + 1; i++){
-            if (i < (firstDay.getDayOfWeek().getValue()) ||
+            if (i < (firstDay.getDayOfWeek().getValue()) + 1 ||
                     i > (firstDay.lengthOfMonth() + firstDay.getDayOfWeek().getValue() - 1)){
-                panelGrid.add(new JButton());
+                panelGrid.add(new DayCell(this, null, "", false, new ArrayList<Integer>(), user));
             } else{
-                int dayNum = i - firstDay.getDayOfWeek().getValue() + 1;
-                boolean payDay = model.isPayDay(dayNum);
-                ArrayList<Integer> shifts = model.getShifts(dayNum);
+                int dayNum = i - firstDay.getDayOfWeek().getValue();
+                Object[] day = model.getDayInfo(dayNum);
                 DayCell dayCell = new DayCell(this, LocalDate.of(year, month, dayNum),
-                        CalendarConstants.days[(dayNum + firstDay.getDayOfWeek().getValue() - 1) % 7],
-                        payDay, shifts, user);
+                        CalendarConstants.days[(dayNum + firstDay.getDayOfWeek().getValue()) % 7],
+                        (boolean)day[CalendarConstants.dayInfoPayDay],
+                        (ArrayList<Integer>)day[CalendarConstants.dayInfoShifts], user);
                 panelGrid.add(dayCell);
             }
         }
@@ -64,28 +63,23 @@ public class CalendarGUI extends JFrame implements Page {
         JPanel pageLayout = new JPanel(new BorderLayout());
         monthList = new CustomComboBox(CalendarConstants.months);
         monthList.setSelectedItem(CalendarConstants.months[month - 1]);
-        //monthList.addItemListener(presenter);
-        monthList.addActionListener(presenter);
+        monthList.addItemListener(presenter);
         headerButtons.add(monthList);
         yearList = new CustomComboBox(presenter.getYearRange());
         yearList.setSelectedItem(String.valueOf(year));
-        //yearList.addItemListener(presenter);
-        yearList.addActionListener(presenter);
+        yearList.addItemListener(presenter);
         headerButtons.add(yearList);
         addHomeButton();
         JPanel headerPanel =  new JPanel(new FlowLayout());
         for (Component c:headerButtons){
             headerPanel.add(c);
         }
-        pageLayout.add(headerPanel, BorderLayout.PAGE_START);
+        panel.add(headerPanel, BorderLayout.PAGE_START);
         return pageLayout;
     }
 
-
-
     @Override
     public void addTitle() {
-        panel = layoutHeader();
         this.setContentPane(panel);
     }
 
@@ -125,9 +119,5 @@ public class CalendarGUI extends JFrame implements Page {
 
     public void setMonth(int month){
         this.month = month;
-    }
-
-    public static void main(String[] args){
-        new CalendarGUI(8, 2023, 1);
     }
 }

@@ -20,6 +20,9 @@ public class CompleteUserListGUI implements ActionListener, Page {
 
     private JPanel titlePanel = new JPanel();
 
+    private JButton back = new JButton("Back");
+
+    private JPanel backPanel = new JPanel();
 
     public CompleteUserListGUI(int id){
         //Create the UI by first adding the title pane, and then adding the list of user panels.
@@ -40,6 +43,9 @@ public class CompleteUserListGUI implements ActionListener, Page {
             new CompleteUserListGUI(viewerID);
             frame.dispose();
             JOptionPane.showMessageDialog(null, "Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
+        } else if (source.equals(back)){
+            new ManageEmployeesGUI(viewerID);
+            frame.dispose();
         }
     }
 
@@ -70,8 +76,12 @@ public class CompleteUserListGUI implements ActionListener, Page {
     public void addContent() {
         //Add the title panel and all user panels, by iterating through the list of all users.
         JPanel all_panels = new JPanel();
+        backPanel.setLayout(new GridLayout(1, 1));
+        backPanel.add(back);
+        back.addActionListener(this);
         all_panels.setLayout(new BoxLayout(all_panels, BoxLayout.Y_AXIS));
         this.makeHeader();
+        all_panels.add(backPanel);
         all_panels.add(titlePanel);
         for (JPanel panel: presenter.makeUserPanels()){
             all_panels.add(panel);
@@ -79,6 +89,7 @@ public class CompleteUserListGUI implements ActionListener, Page {
         for (JButton button: presenter.getMap().keySet()){
             button.addActionListener(this);
         }
+
 
 
 

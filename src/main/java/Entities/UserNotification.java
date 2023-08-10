@@ -59,6 +59,7 @@ public abstract class UserNotification implements Serializable {
     }
     public boolean getResolvedStatus() {return this.resolved;}
     public boolean getDenyStatus(){return this.denied;}
+    public LocalDateTime getResolvedAt(){return this.resolvedAt;}
 
     public void deny(){this.denied = true; this.resolvedAt = LocalDateTime.now();}
 

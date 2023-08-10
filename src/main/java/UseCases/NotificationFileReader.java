@@ -1,5 +1,7 @@
 package UseCases;
 
+import Entities.Shift;
+import Entities.User;
 import Entities.UserNotification;
 import Entities.UserNotificationRequest;
 
@@ -27,8 +29,11 @@ public class NotificationFileReader{
         }
         return instance;
     }
+    public void update(){
+        list = interactor.readData();
+    }
 
-    private void checkNotification(int id){
+    public void checkNotification(int id){
         if (userNotification.getNotifId() == id){
             return;
         }
@@ -116,6 +121,11 @@ public class NotificationFileReader{
         return userNotification.getDate();
     }
 
+    public LocalDateTime getResolvedAt(int id){
+        checkNotification(id);
+        return userNotification.getResolvedAt();
+    }
+
     public int getRecipientId(int id){
         checkNotification(id);
         return userNotification.getRecipientId();
@@ -131,5 +141,17 @@ public class NotificationFileReader{
         return userNotification.getDenyStatus();
     }
 
+    public ArrayList<Integer> getIds(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (UserNotification u:list){
+            ids.add(u.getNotifId());
+        }
+        return ids;
+    }
+
+    public UserNotification getUserNotification(int id){
+        checkNotification(id);
+        return userNotification;
+    }
 
 }

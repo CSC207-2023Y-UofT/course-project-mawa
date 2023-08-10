@@ -3,6 +3,7 @@ package Entities;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Shift implements Serializable {
     private LocalDateTime time;
@@ -13,7 +14,7 @@ public class Shift implements Serializable {
 
     public Shift(LocalDateTime time, List<Integer> coworkers, float duration, int shiftId){
         this.time = time;
-        this.coworkers = coworkers;
+        this.coworkers = coworkers.stream().distinct().collect(Collectors.toList());
         this.duration = duration;
         this.shiftId = shiftId;
     }
@@ -31,11 +32,13 @@ public class Shift implements Serializable {
     public void addCoworker(Integer coworker){
 
         this.coworkers.add(coworker);
+        this.coworkers = this.coworkers.stream().distinct().collect(Collectors.toList());
     }
 
     public void addCoworkers(List<Integer> coworkers){
 
         this.coworkers.addAll(coworkers);
+        this.coworkers = this.coworkers.stream().distinct().collect(Collectors.toList());
     }
 
     public void removeCoworker(Integer coworker){
@@ -47,6 +50,7 @@ public class Shift implements Serializable {
     public void setCoworkers(List<Integer> coworkers) {
 
         this.coworkers = coworkers;
+        this.coworkers = this.coworkers.stream().distinct().collect(Collectors.toList());
     }
 
     public void setTime(LocalDateTime time) {

@@ -35,6 +35,7 @@ public class UserNotificationInteractor implements Interactor<UserNotification> 
           ObjectOutputStream output = new ObjectOutputStream(file);
           output.writeObject(notifs);
           output.close();
+          NotificationFileReader.getInstance().update();
       } catch (IOException e) {
           System.out.println(e);
       }
@@ -49,6 +50,7 @@ public class UserNotificationInteractor implements Interactor<UserNotification> 
           ObjectOutputStream output = new ObjectOutputStream(file);
           output.writeObject(notifList);
           output.close();
+          NotificationFileReader.getInstance().update();
       } catch (IOException e) {
           System.out.println(e);
       }

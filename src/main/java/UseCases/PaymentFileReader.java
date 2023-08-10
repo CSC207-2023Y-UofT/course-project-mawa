@@ -1,6 +1,8 @@
 package UseCases;
 
 import Entities.Payment;
+import Entities.Shift;
+import Entities.User;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -27,7 +29,7 @@ public class PaymentFileReader{
         }
         return instance;
     }
-    private void checkPayment(int id){
+    public void checkPayment(int id){
         if (payment.getPaymentId() == id){
             return;
         }
@@ -38,6 +40,10 @@ public class PaymentFileReader{
             }
         }
         System.out.println("Invalid Payment ID");
+    }
+
+    public void update(){
+        list = interactor.readData();
     }
 
     public ArrayList<Integer> getIds(LocalDateTime date){
@@ -72,6 +78,19 @@ public class PaymentFileReader{
     public float getAmount(int id){
         checkPayment(id);
         return payment.getPayment_amount();
+    }
+
+    public ArrayList<Integer> getIds(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Payment u:list){
+            ids.add(u.getPaymentId());
+        }
+        return ids;
+    }
+
+    public Payment getPayment(int id){
+        checkPayment(id);
+        return payment;
     }
 
 

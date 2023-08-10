@@ -32,6 +32,7 @@ public class PaymentInteractor implements Interactor<Payment> {
           ObjectOutputStream output = new ObjectOutputStream(file);
           output.writeObject(payment);
           output.close();
+          PaymentFileReader.getInstance().update();
       } catch (IOException e){
           System.out.println(e);
       }
@@ -48,6 +49,7 @@ public class PaymentInteractor implements Interactor<Payment> {
             ObjectOutputStream output = new ObjectOutputStream(file);
             output.writeObject(paymentList);
             output.close();
+            PaymentFileReader.getInstance().update();
         } catch (IOException e){
             System.out.println(e);
         }

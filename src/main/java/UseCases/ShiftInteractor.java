@@ -43,6 +43,7 @@ public class ShiftInteractor implements Interactor<Shift> {
             ObjectOutputStream output = new ObjectOutputStream(file);
             output.writeObject(shifts);
             output.close();
+            ShiftFileReader.getInstance().update();
         } catch (IOException e){
             System.out.println(e);
         }
@@ -58,6 +59,7 @@ public class ShiftInteractor implements Interactor<Shift> {
            ObjectOutputStream output = new ObjectOutputStream(file);
            output.writeObject(shiftList);
            output.close();
+           ShiftFileReader.getInstance().update();
        } catch (IOException e){
            System.out.println(e);
        }

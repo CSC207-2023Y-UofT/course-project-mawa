@@ -1,5 +1,6 @@
 package UseCases;
 
+import Entities.Shift;
 import Entities.User;
 
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class UserFileReader{
         return instance;
     }
 
-    private void checkUser(int id){
+    public void checkUser(int id){
         if (user.getUserNum() == id){
             return;
         }
@@ -40,6 +41,10 @@ public class UserFileReader{
             }
         }
         System.out.println("Invalid User Number");
+    }
+
+    public void update(){
+        list = interactor.readData();
     }
     public int getHRId(){
         for (User u:list){
@@ -114,6 +119,11 @@ public class UserFileReader{
             ids.add(u.getUserNum());
         }
         return ids;
+    }
+
+    public User getUser(int id){
+        checkUser(id);
+        return user;
     }
 
 

@@ -1,6 +1,7 @@
 package UseCases;
 
 import Entities.Shift;
+import Entities.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,7 +28,11 @@ public class ShiftFileReader{
         }
         return instance;
     }
-    private void checkShift(int id){
+
+    public void update(){
+        list = interactor.readData();
+    }
+    public void checkShift(int id){
         if (shift.getShiftId() == id){
             return;
         }
@@ -77,6 +82,14 @@ public class ShiftFileReader{
     public Shift getShift(int id){
         checkShift(id);
         return shift;
+    }
+
+    public ArrayList<Integer> getIds(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Shift u:list){
+            ids.add(u.getShiftId());
+        }
+        return ids;
     }
 
 }

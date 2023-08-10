@@ -38,6 +38,7 @@ public class UserInteractor implements Interactor<User> {
             ObjectOutputStream output = new ObjectOutputStream(file);
             output.writeObject(users);
             output.close();
+            UserFileReader.getInstance().update();
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -52,12 +53,10 @@ public class UserInteractor implements Interactor<User> {
                 ObjectOutputStream output = new ObjectOutputStream(file);
                 output.writeObject(userList);
                 output.close();
+                UserFileReader.getInstance().update();
             } catch (IOException e) {
                 System.out.println(e);
             }
-
-
-
 
     }
 

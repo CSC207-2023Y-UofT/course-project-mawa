@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 
 public abstract class UserNotification implements Serializable {
-    private int notifId;
-    private String message;
-    private int senderId;
-    private int recipientId;
-    private int shiftId;
-    private LocalDateTime date;
+    private final int notifId;
+    private final String message;
+    private final int senderId;
+    private final int recipientId;
+    private final int shiftId;
+    private final LocalDateTime date;
     private Boolean resolved;
     private Boolean denied = false;
     private LocalDateTime resolvedAt;
@@ -60,11 +60,14 @@ public abstract class UserNotification implements Serializable {
     public boolean getResolvedStatus() {return this.resolved;}
     public boolean getDenyStatus(){return this.denied;}
     public LocalDateTime getResolvedAt(){return this.resolvedAt;}
-
-    public void deny(){this.denied = true; this.resolvedAt = LocalDateTime.now();}
+    public void deny(){this.denied = true; this.resolve();}
 
 
     public static UserNotification[] sortByCreatedDate(ArrayList<UserNotification> notifications){
+        /*
+        Sorts ArrayList<UserNotification> in decreasing order of created dates. Returns sorted UserNotification[].
+        Latest created UserNotification Will always be on the zeroth index.
+         */
         UserNotification[] sorted = new UserNotification[notifications.size()];
         sorted = notifications.toArray(sorted);
         int n = sorted.length;
@@ -72,6 +75,25 @@ public abstract class UserNotification implements Serializable {
             UserNotification item = sorted[i];
             int j = i-1;
             while(j >= 0 && sorted[j].getDate().isBefore(item.getDate())){
+                sorted[j+1] = sorted[j];
+                j -= 1;
+            }
+            sorted[j+1] = item;
+        }
+        return sorted;
+    }
+    public static UserNotification[] sortByResolvedDate(ArrayList<UserNotification> notifications){
+        /*
+        Sorts ArrayList<UserNotification> in decreasing order of resolved dates. Returns sorted UserNotification[].
+        Latest resolved UserNotification Will always be on the zeroth index.
+         */
+        UserNotification[] sorted = new UserNotification[notifications.size()];
+        sorted = notifications.toArray(sorted);
+        int n = sorted.length;
+        for (int i = 1; i < n; i++){
+            UserNotification item = sorted[i];
+            int j = i-1;
+            while(j >= 0 && sorted[j].getResolvedAt().isBefore(item.getResolvedAt())){
                 sorted[j+1] = sorted[j];
                 j -= 1;
             }

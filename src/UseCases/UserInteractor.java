@@ -1,8 +1,7 @@
 package UseCases;
 
-import Entities.Employee;
+
 import Entities.User;
-import UseCases.Interactor;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,13 +9,14 @@ import java.util.ArrayList;
 
 
 public class UserInteractor implements Interactor<User> {
+
     public ArrayList<User> readData() {
 
 
         ArrayList<User> userList = new ArrayList<>();
 
         try{
-            FileInputStream file = new FileInputStream("users.ser");
+            FileInputStream file = new FileInputStream(FileNameConstants.USER_FILE_NAME);
             ObjectInputStream input = new ObjectInputStream(file);
             userList.addAll ((ArrayList<User>) input.readObject()) ;
 
@@ -26,36 +26,15 @@ public class UserInteractor implements Interactor<User> {
         return userList;
     }
 
-    public User getUserById(int userID){
-        ArrayList<User> users = this.readData();
-        for (User user: users){
-            if(user.getUserNum() == userID){
-                return user;
-            }
-        }
-        return null;
-    }
 
 
-    //In the particular case of users, there are times when we may only want employees in the returned
-    //list.
-    public ArrayList<Employee> getEmployeeList(){
-        ArrayList<User> users = this.readData();
-        ArrayList<Employee> employees = new ArrayList<>();
-        for (User user: users){
-            if (user instanceof Employee){
-                employees.add((Employee)user);
-            }
-        }
-        return employees;
-    }
 
     public void update(User u){
         ArrayList<User> users = this.readData();
         users.removeIf(user -> u.getUserNum() == user.getUserNum());
         users.add(u);
         try {
-            FileOutputStream file = new FileOutputStream("users.ser");
+            FileOutputStream file = new FileOutputStream(FileNameConstants.USER_FILE_NAME);
             ObjectOutputStream output = new ObjectOutputStream(file);
             output.writeObject(users);
             output.close();
@@ -69,7 +48,7 @@ public class UserInteractor implements Interactor<User> {
         ArrayList<User> userList = this.readData();
         userList.add(user);
             try {
-                FileOutputStream file = new FileOutputStream("users.ser");
+                FileOutputStream file = new FileOutputStream(FileNameConstants.USER_FILE_NAME);
                 ObjectOutputStream output = new ObjectOutputStream(file);
                 output.writeObject(userList);
                 output.close();

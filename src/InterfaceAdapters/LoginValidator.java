@@ -1,6 +1,8 @@
 package InterfaceAdapters;
 
 
+import UseCases.FileNameConstants;
+
 import java.util.ArrayList;
 
 public class LoginValidator {

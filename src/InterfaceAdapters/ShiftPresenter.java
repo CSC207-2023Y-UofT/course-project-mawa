@@ -1,23 +1,16 @@
 package InterfaceAdapters;
 
 
-import Entities.Shift;
-import FrameworksAndDrivers.Page;
-
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import UseCases.*;
-import InterfaceAdapters.*;
 
 public class ShiftPresenter implements ActionListener {
-    private Shift shift;
+    private int shift;
     private Page gui;
-    private JButton timeOffButton;
     private int employee;
+    private GUIElement timeOffButton;
 
-    public ShiftPresenter(Shift shift, Page gui, JButton timeOffButton, int employee){
+    public ShiftPresenter(int shift, Page gui, GUIElement timeOffButton, int employee){
         this.shift = shift;
         this.gui = gui;
         this.timeOffButton = timeOffButton;
@@ -29,7 +22,7 @@ public class ShiftPresenter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timeOffButton){
-            new RequestForm(shift.getTime(), shift.getTime().plusHours((long) shift.getDuration()), employee);
+            gui.update();
             gui.dispose();
         }
     }

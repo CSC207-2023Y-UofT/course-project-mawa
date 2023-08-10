@@ -1,6 +1,8 @@
 package InterfaceAdapters;
 
 
+import UseCases.FileNameConstants;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -20,7 +22,7 @@ public class CalendarModel {
         this.user = user;
         try{
             shiftDB= new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
-            userDB = new UserFileReader(FileNameConstants.USER_FILE_NAME);
+            userDB = new UserFileReader();
 
         } catch (InvalidFileNameException e){
             System.out.println("Invalid File Name.");

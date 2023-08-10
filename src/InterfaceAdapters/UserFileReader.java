@@ -1,14 +1,17 @@
 package InterfaceAdapters;
 
+import UseCases.UserFileProcessor;
+
 import java.time.LocalDate;
 import java.util.*;
 
-public class UserFileReader extends FileHandler{
+public class UserFileReader{
     private ArrayList listHM;
 
-    public UserFileReader(String fileName) throws InvalidFileNameException {
-        super(fileName);
-        ArrayList listHM = super.getStrategy().getHMList();
+    private UserFileProcessor processor = UserFileProcessor.getInstance();
+
+    public UserFileReader(){
+        ArrayList listHM = processor.getHMList();
     }
 
     public ArrayList<Integer> getIds(String name){

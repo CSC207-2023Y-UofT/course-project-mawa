@@ -6,15 +6,14 @@ public class FileHandler {
     private String fileName;
     private FileProcessor processor;
 
-    public FileHandler(String fileName) throws InvalidFileNameException {
-        this.fileName = fileName;
+    public FileHandler() throws InvalidFileNameException {
         setStrategy();
 
     }
 
     public void setStrategy() throws InvalidFileNameException {
         if (fileName.equals(FileNameConstants.SHIFT_FILE_NAME)){
-            processor = ShiftFileProcessor.getInstance(); //maybe make filename parameter for interactors?
+            processor = ShiftFileProcessor.getInstance();
         } else if (fileName.equals(FileNameConstants.USER_FILE_NAME)){
             processor = UserFileProcessor.getInstance();
         } else if (fileName.equals(FileNameConstants.NOTIFICATION_FILE_NAME)){

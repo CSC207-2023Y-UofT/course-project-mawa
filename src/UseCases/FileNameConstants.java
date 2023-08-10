@@ -1,4 +1,4 @@
-package InterfaceAdapters;
+package UseCases;
 
 public final class FileNameConstants {
     private FileNameConstants(){

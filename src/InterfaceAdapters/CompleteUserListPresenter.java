@@ -1,8 +1,7 @@
 package InterfaceAdapters;
 
-import Entities.SalaryWorker;
+
 import Entities.User;
-import Entities.WageWorker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +11,9 @@ import java.util.ArrayList;
 public class CompleteUserListPresenter{
 
     private HashMap<JButton, Integer> buttonsToIDs = new HashMap<JButton, Integer>();
+
+    private
+
 
     public JPanel makeUserPanel(User user){
         //Create a single panel which displays a users information, and has a button which
@@ -24,19 +26,12 @@ public class CompleteUserListPresenter{
         panel.add(new JLabel(user.getGender()));
         panel.add(new JLabel(user.getEmail()));
         panel.add(new JLabel(Long.toString(user.getPhoneNum())));
-        panel.add(new JLabel(user.getRoleName()));
+        panel.add(new JLabel(user.getRole()));
         panel.add(new JLabel(Integer.toString(user.getUserNum())));
         panel.add(new JLabel(user.getDob().toString()));
         String type = user.getClass().getName();
         panel.add(new JLabel(type));
-        if (type.equals("Volunteer") || type.equals("HR")){
-            //In order to make the information to all users line up nicely, we just display
-            panel.add(new JLabel("0"));
-        } else if (type.equals("WageWorker")){
-            panel.add(new JLabel(Float.toString(((WageWorker)user).getHourlyWage())));
-        } else{
-            panel.add(new JLabel(Float.toString(((SalaryWorker)user).getYearlySalary())));
-        }
+        panel.add(new JLabel(Float.toString((user).getPay())));
         //Depending on whether the user is currently active, the end of the panel will differ.
         if (user.isActive()){
             panel.add(new JLabel("Yes"));

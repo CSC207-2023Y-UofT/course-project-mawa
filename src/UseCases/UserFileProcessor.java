@@ -10,7 +10,8 @@ import java.util.List;
 
 public class UserFileProcessor implements FileProcessor<User>{
     private static UserFileProcessor instance;
-    private UserInteractor interactor = new UserInteractor();
+
+    private UserInteractor interactor;
     private HashMap<Integer, ArrayList<Object>> idToList = new HashMap<Integer, ArrayList<Object>>();
     private HashMap<Long, ArrayList<Integer>> phoneToId = new HashMap<>();
     private HashMap<char[], ArrayList<Integer>> pwdToId = new HashMap<>();
@@ -27,6 +28,7 @@ public class UserFileProcessor implements FileProcessor<User>{
 
     private UserFileProcessor(){
         makeHM();
+        interactor = new UserInteractor();
     }
 
     public static UserFileProcessor getInstance(){
@@ -158,10 +160,10 @@ public class UserFileProcessor implements FileProcessor<User>{
     public void makeRoleNametoId(HashMap<String, ArrayList<Integer>> roleNameToid,
                                ArrayList<User> userList){
         for (User n : userList){
-            if (roleNameToid.containsKey(n.getRoleName())){
-                roleNameToid.get(n.getRoleName()).add(n.getUserNum());
+            if (roleNameToid.containsKey(n.getRole())){
+                roleNameToid.get(n.getRole()).add(n.getUserNum());
             } else {
-                roleNameToid.put(n.getRoleName(), (ArrayList<Integer>) List.of(n.getUserNum()));
+                roleNameToid.put(n.getRole(), (ArrayList<Integer>) List.of(n.getUserNum()));
             }
         }
     }
@@ -172,10 +174,10 @@ public class UserFileProcessor implements FileProcessor<User>{
             roleNameToid.clear();
         }
         for (User n : userList){
-            if (roleNameToid.containsKey(n.getRoleName())){
-                roleNameToid.get(n.getRoleName()).add(n.getUserNum());
+            if (roleNameToid.containsKey(n.getRole())){
+                roleNameToid.get(n.getRole()).add(n.getUserNum());
             } else {
-                roleNameToid.put(n.getRoleName(), (ArrayList<Integer>) List.of(n.getUserNum()));
+                roleNameToid.put(n.getRole(), (ArrayList<Integer>) List.of(n.getUserNum()));
             }
         }
     }
@@ -357,7 +359,7 @@ public class UserFileProcessor implements FileProcessor<User>{
         list.add(user.getUserNum());
         list.add(user.getType());
         list.add(user.isActive());
-        list.add(user.getRoleName());
+        list.add(user.getRole());
         list.add(user.getSurname());
         list.add(user.getFirstname());
         list.add(user.getDob());
@@ -365,13 +367,7 @@ public class UserFileProcessor implements FileProcessor<User>{
         list.add(user.getPhoneNum());
         list.add(user.getEmail());
         list.add(user.getPassword());
-        if (user instanceof WageWorker){
-            list.add(((WageWorker) user).getHourlyWage());
-        } else if (user instanceof SalaryWorker){
-            list.add(((SalaryWorker) user).getYearlySalary());
-        } else{
-            list.add(-1);
-        }
+        list.add(user.getPay());
         return list;
     }
 

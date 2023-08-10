@@ -1,8 +1,7 @@
 package FrameworksAndDrivers;
 
-import InterfaceAdapters.FileNameConstants;
+import UseCases.FileNameConstants;
 import InterfaceAdapters.GUIElement;
-import InterfaceAdapters.Page;
 import InterfaceAdapters.ShiftFileReader;
 
 import javax.swing.*;

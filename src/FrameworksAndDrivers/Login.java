@@ -1,6 +1,7 @@
-import Entities.Employee;
-import Entities.HR;
-import Entities.User;
+package FrameworksAndDrivers;
+
+import InterfaceAdapters.LoginValidator;
+import InterfaceAdapters.UserFileReader;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -14,11 +15,7 @@ public class Login{
     private UserFileReader reader;
 
     public Login(){
-        try{
-            reader = new UserFileReader(FileNameConstants.USER_FILE_NAME);
-        }catch(InvalidFileNameException e){
-            System.out.println("Invalid File Name.");
-        }
+        System.out.println("Invalid File Name.");
         setUpOptions();
         setUp();
     }
@@ -50,10 +47,8 @@ public class Login{
     private void handleUser(int user){
         if(user <= 0){
             new Login("Incorrect/non-existent credentials");
-        } else if (reader.getType(user).equals("HR")){
-            new HRHomePage(user);
-        } else{
-            new EmployeeHomePage(user);
+        } else {
+            new HomePage(user);
         }
     }
     public static void main(String[] args){

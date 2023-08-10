@@ -21,7 +21,6 @@ public class UserFileProcessor implements FileProcessor<User>{
     private HashMap<String, ArrayList<Integer>> firstNameToId = new HashMap<String, ArrayList<Integer>>();
     private HashMap<String, ArrayList<Integer>> genderToId = new HashMap<String, ArrayList<Integer>>();
     private HashMap<String, ArrayList<Integer>> emailToId = new HashMap<String, ArrayList<Integer>>();
-    private HashMap<String, ArrayList<Integer>> roleNameToId = new HashMap<String, ArrayList<Integer>>();
     private HashMap<Integer, User> idToUser = new HashMap<>();
     private ArrayList<HashMap> hmList = new ArrayList<>();
 
@@ -57,8 +56,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         hmList.add(typeToId);
         makeActivetoId(activeToId, userList);
         hmList.add(activeToId);
-        makeRoleNametoId(roleNameToId, userList);
-        hmList.add(roleNameToId);
         makeLastNametoId(surnameToId, userList);
         hmList.add(surnameToId);
         makeFirstNametoId(firstNameToId, userList);
@@ -151,31 +148,6 @@ public class UserFileProcessor implements FileProcessor<User>{
                 emailToid.get(n.getEmail()).add(n.getUserNum());
             } else {
                 emailToid.put(n.getEmail(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
-
-    public void makeRoleNametoId(HashMap<String, ArrayList<Integer>> roleNameToid,
-                               ArrayList<User> userList){
-        for (User n : userList){
-            if (roleNameToid.containsKey(n.getRoleName())){
-                roleNameToid.get(n.getRoleName()).add(n.getUserNum());
-            } else {
-                roleNameToid.put(n.getRoleName(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
-
-    public void makeRoleNametoId(HashMap<String, ArrayList<Integer>> roleNameToid,
-                               ArrayList<User> userList, boolean append){
-        if(!append){
-            roleNameToid.clear();
-        }
-        for (User n : userList){
-            if (roleNameToid.containsKey(n.getRoleName())){
-                roleNameToid.get(n.getRoleName()).add(n.getUserNum());
-            } else {
-                roleNameToid.put(n.getRoleName(), (ArrayList<Integer>) List.of(n.getUserNum()));
             }
         }
     }
@@ -357,7 +329,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         list.add(user.getUserNum());
         list.add(user.getType());
         list.add(user.isActive());
-        list.add(user.getRoleName());
         list.add(user.getSurname());
         list.add(user.getFirstname());
         list.add(user.getDob());
@@ -365,13 +336,7 @@ public class UserFileProcessor implements FileProcessor<User>{
         list.add(user.getPhoneNum());
         list.add(user.getEmail());
         list.add(user.getPassword());
-        if (user instanceof WageWorker){
-            list.add(((WageWorker) user).getHourlyWage());
-        } else if (user instanceof SalaryWorker){
-            list.add(((SalaryWorker) user).getYearlySalary());
-        } else{
-            list.add(-1);
-        }
+        list.add(user.getPay());
         return list;
     }
 

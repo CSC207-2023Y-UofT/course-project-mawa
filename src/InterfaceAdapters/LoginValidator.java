@@ -9,11 +9,7 @@ public class LoginValidator {
     private UserFileReader empDB;
 
     public int validateCredentials(int empID, char[] pwd){
-        try{
-            empDB = new UserFileReader(FileNameConstants.USER_FILE_NAME);
-        } catch (InvalidFileNameException e){
-            System.out.println("Invalid File Name.");
-        }
+        empDB = new UserFileReader(FileNameConstants.USER_FILE_NAME);
         ArrayList<Integer> allActiveUsers = empDB.getIds(true);
         for (int u : allActiveUsers){
             if (u == empID){

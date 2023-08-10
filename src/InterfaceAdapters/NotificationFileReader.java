@@ -7,7 +7,7 @@ import java.util.*;
 public class NotificationFileReader extends FileHandler{
     private ArrayList listHM;
 
-    public NotificationFileReader(String fileName) throws InvalidFileNameException {
+    public NotificationFileReader(String fileName) {
         super(fileName);
         ArrayList listHM = super.getStrategy().getHMList();
     }

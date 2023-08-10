@@ -6,7 +6,7 @@ import java.util.*;
 public class UserFileReader extends FileHandler{
     private ArrayList listHM;
 
-    public UserFileReader(String fileName) throws InvalidFileNameException {
+    public UserFileReader(String fileName){
         super(fileName);
         ArrayList listHM = super.getStrategy().getHMList();
     }

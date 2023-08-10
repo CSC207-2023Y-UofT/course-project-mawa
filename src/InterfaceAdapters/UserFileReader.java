@@ -19,6 +19,11 @@ public class UserFileReader{
         return (ArrayList<Integer>)hm.get(name);
     }
 
+    public int getHRId(){
+        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.SURNAME);
+        return ((ArrayList<Integer>)hm.get("HR")).get(0);
+    }
+
     public ArrayList<Integer> getIds(boolean active){
         HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ACTIVE);
         return (ArrayList<Integer>)hm.get(active);

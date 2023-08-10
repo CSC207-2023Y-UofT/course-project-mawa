@@ -1,35 +1,31 @@
 package FrameworksAndDrivers;
 
-
-import Entities.Employee;
-
+import FrameworksAndDrivers.HomeButton;
 import InterfaceAdapters.*;
-
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class ShiftView extends JFrame implements Page {
     private JPanel panel;
     private int shift;
-    private JButton timeOffButton;
+    private TimeOffButton timeOffButton;
     private int employee;
-    private UserFileReader empDB;
-    private ShiftFileReader shiftDB;
+    private ShiftPresenter presenter;
     private LocalDateTime date;
     public ShiftView(int shift, int employee){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.shift = shift;
         setUser(employee);
-        this.empDB = new UserFileReader();
-        this.shiftDB = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
-        this.date = shiftDB.getDate(shift);
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         addTitle();
         addContent();
+        this.presenter = new ShiftPresenter(shift, this, timeOffButton, employee);
+        this.date = presenter.getDate();
     }
 
     @Override
@@ -46,15 +42,9 @@ public class ShiftView extends JFrame implements Page {
     @Override
     public void addContent() {
         JLabel time = new JLabel(date.getHour() +":"+date.getMinute());
-        String coworkers = "";
-        for (int id : shiftDB.getEmployeeId(shift)){
-            if (id != employee){
-                coworkers += String.format(", %s %s", empDB.getFirstName(id),
-                        empDB.getSurname(id));
-            }
-        }
-        JLabel coworkersLabel = new JLabel(coworkers.substring(2));
-        TimeOffButton timeOffButton = new TimeOffButton(shift, employee);
+
+        JLabel coworkersLabel = new JLabel(presenter.getCoworkerString());
+        timeOffButton = new TimeOffButton(shift, employee);
         panel.add(time);
         panel.add(coworkersLabel);
         panel.add(timeOffButton);
@@ -73,7 +63,7 @@ public class ShiftView extends JFrame implements Page {
 
     @Override
     public void update() {
+        new RequestForm(date, date.plusHours((long) presenter.getDuration()), employee, shift);
     }
-
 
 }

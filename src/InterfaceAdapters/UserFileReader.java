@@ -33,9 +33,9 @@ public class UserFileReader{
         HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
         return (boolean)((ArrayList)hm.get(id)).get(UserProcessorConstants.ACTIVE);
     }
-    public String getRole(int id){
+    public float getPay(int id){
         HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
-        return (String)((ArrayList)hm.get(id)).get(UserProcessorConstants.ROLE);
+        return (float)((ArrayList)hm.get(id)).get(UserProcessorConstants.PAY);
     }
 
     public String getSurname(int id){

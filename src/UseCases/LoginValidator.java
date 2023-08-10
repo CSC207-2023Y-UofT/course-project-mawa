@@ -1,6 +1,7 @@
-package InterfaceAdapters;
+package UseCases;
 
 
+import InterfaceAdapters.UserFileReader;
 import UseCases.FileNameConstants;
 
 import java.util.ArrayList;

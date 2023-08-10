@@ -1,8 +1,6 @@
 package InterfaceAdapters;
 
 
-import UseCases.FileNameConstants;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -20,7 +18,7 @@ public class CalendarModel {
         this.year = year;
         this.month = month;
         this.user = user;
-        shiftDB= new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
+        shiftDB= new ShiftFileReader();
         userDB = new UserFileReader();
     }
     public Object[] getDayInfo(int dayNum){

@@ -32,11 +32,8 @@ public class UserController {
             user.setActive(true);
             ui.update(user);
         }
-        System.out.println(this.idToUser(IDNum).isActive());
+
         ui.update(this.idToUser(IDNum));
-        for (User user: ui.readData()){
-            System.out.println(user.isActive());
-        }
 
 
     }

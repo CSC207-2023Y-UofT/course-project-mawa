@@ -12,12 +12,10 @@ public class Login implements Page{
     private ArrayList<Object> options = new ArrayList<Object>();
     private LoginPresenter presenter;
 
-    private static boolean startWithHR;
     private int result;
 
     public Login(){
         presenter = new LoginPresenter(this);
-        startWithHR = presenter.startWithHR();
         addTitle();
         addContent();
     }
@@ -29,9 +27,7 @@ public class Login implements Page{
     }
 
     public static void main(String[] args){
-        if (startWithHR){
-            new AddHRGUI();
-        }
+
         new Login();
 
     }

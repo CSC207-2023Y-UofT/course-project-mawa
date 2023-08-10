@@ -1,3 +1,4 @@
+
 package FrameworksAndDrivers;
 
 import InterfaceAdapters.Page;
@@ -5,8 +6,6 @@ import InterfaceAdapters.Page;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 
 public class HomeButton extends JButton implements ActionListener {
     private Page currPage;

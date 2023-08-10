@@ -17,11 +17,7 @@ public class DayCellPresenter implements ActionListener {
     private GUIElement button;
 
     public DayCellPresenter(Page gui, GUIElement button, float width, float height, ArrayList<Integer> shifts){
-        try{
-            reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
-        }catch(InvalidFileNameException e){
-            System.out.println("Invalid File Name.");
-        }
+        reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
         this.width = width;
         this.height = height;
         this.gui = gui;

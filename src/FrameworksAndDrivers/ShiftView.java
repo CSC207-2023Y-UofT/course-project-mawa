@@ -1,6 +1,9 @@
 package FrameworksAndDrivers;
+
+
+import Entities.Employee;
+
 import InterfaceAdapters.*;
-import UseCases.FileNameConstants;
 
 
 import javax.swing.*;
@@ -20,13 +23,9 @@ public class ShiftView extends JFrame implements Page {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.shift = shift;
         setUser(employee);
-        try {
-            this.empDB = new UserFileReader(FileNameConstants.USER_FILE_NAME);
-            this.shiftDB = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
-            this.date = shiftDB.getDate(shift);
-        }catch (InvalidFileNameException e) {
-            System.out.println("Invalid File Name.");
-        }
+        this.empDB = new UserFileReader(FileNameConstants.USER_FILE_NAME);
+        this.shiftDB = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
+        this.date = shiftDB.getDate(shift);
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         addTitle();

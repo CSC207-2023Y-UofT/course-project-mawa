@@ -9,7 +9,7 @@ import java.util.*;
 public class ShiftFileReader extends FileHandler{
     private ArrayList listHM;
 
-    public ShiftFileReader(String fileName) throws InvalidFileNameException {
+    public ShiftFileReader(String fileName) {
         super(fileName);
         ArrayList listHM = super.getStrategy().getHMList();
     }

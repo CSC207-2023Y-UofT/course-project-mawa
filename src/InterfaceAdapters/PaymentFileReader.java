@@ -9,7 +9,7 @@ import java.util.*;
 public class PaymentFileReader extends FileHandler{
     private ArrayList listHM;
 
-    public PaymentFileReader(String fileName) throws InvalidFileNameException {
+    public PaymentFileReader(String fileName) {
         super(fileName);
         ArrayList listHM = super.getStrategy().getHMList();
     }

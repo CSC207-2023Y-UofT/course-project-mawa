@@ -2,7 +2,6 @@ package InterfaceAdapters;
 
 
 import Entities.NotificationRequest;
-import FrameworksAndDrivers.Page;
 
 import UseCases.*;
 
@@ -23,12 +22,7 @@ public class RequestFormPresenter implements ActionListener {
         this.shift= shift;
         this.reasonField = reasonField;
         this.employee = employee;
-        try{
-            reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
-        }catch(InvalidFileNameException e){
-            System.out.println("Invalid File Name");
-        }
-
+        reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
 
     }
 

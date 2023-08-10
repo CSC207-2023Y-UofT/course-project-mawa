@@ -20,11 +20,7 @@ public class ShiftCell extends JButton implements GUIElement{
         this.colour = Color.cyan;
         this.gui = gui;
         this.user = user;
-        try{
-            reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
-        }catch(InvalidFileNameException e){
-            System.out.println("Invalid File Name.");
-        }
+        reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
     }
     public void paintComponent(Graphics g1) {
         setBackground(colour);

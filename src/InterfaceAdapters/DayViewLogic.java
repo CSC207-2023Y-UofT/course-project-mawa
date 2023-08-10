@@ -17,11 +17,7 @@ public class DayViewLogic {
         this.shifts = ShiftSorter.sortShiftsByDate(shifts);
         this.width = width;
         this.height = height;
-        try{
-            reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
-        }catch(InvalidFileNameException e){
-            System.out.println("Invalid File Name.");
-        }
+        reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
     }
 
     public int[] getTimeRange(){

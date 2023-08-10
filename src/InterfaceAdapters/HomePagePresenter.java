@@ -1,4 +1,6 @@
 package InterfaceAdapters;
+import UseCases.UserController;
+
 import javax.swing.*;
 import java.util.ArrayList;
 

@@ -26,7 +26,7 @@ public class EmployeeSummaryPresenter{
         panel.add(new JLabel(fr.getDob(id).toString()));
         String type = fr.getType(id);
         panel.add(new JLabel(type));
-        panel.add(new JLabel(fr.getPay(id))));
+        panel.add(new JLabel(Float.toString(fr.getPay(id)));
         JButton d = new JButton("View Payment History");
         payHistButtonsToIDs.put(d, id);
         panel.add(d);

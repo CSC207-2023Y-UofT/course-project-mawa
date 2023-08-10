@@ -49,6 +49,7 @@ public class Login implements Page{
         dialog.setResizable(true);
         dialog.setVisible(true);
         result = presenter.handleUser(Integer.parseInt(empNumIn.getText()), pwdIn.getPassword());
+        update();
     }
 
     @Override

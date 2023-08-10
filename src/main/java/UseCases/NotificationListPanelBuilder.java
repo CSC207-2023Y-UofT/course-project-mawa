@@ -9,6 +9,9 @@ import java.util.Objects;
 public class NotificationListPanelBuilder extends JPanel {
     public JPanel panel = new JPanel();
     public NotificationListPanelBuilder(JFrame frame, JLabel label, JList<String> list, JScrollPane scroller, Boolean hr){
+        /*
+        Creates a List Panel, with a centered label above the list, which occupies the entirety of the panel.
+         */
         panel.setLayout(new BorderLayout());
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
@@ -22,7 +25,7 @@ public class NotificationListPanelBuilder extends JPanel {
         listPanel.setLayout(new BorderLayout());
         listPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         listPanel.add(scroller, BorderLayout.CENTER);
-        if (Objects.equals(label.getText(), "Unresolved Notifications") || hr.equals(false)) {
+        if (hr.equals(false) || Objects.equals(label.getText(), "Unresolved Notifications")) {
             listPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
         } else if (hr){
             listPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 45, 10));
@@ -30,6 +33,10 @@ public class NotificationListPanelBuilder extends JPanel {
         panel.add(listPanel, BorderLayout.CENTER);
     }
     public NotificationListPanelBuilder(JFrame frame, JLabel label, JList<String> list, JScrollPane scroller, JButton rescheduleShiftButton, JButton denyRequestButton){
+        /*
+        Creates a List Panel, with a centered label above a list, which occupies the majority of the panel,
+        and two buttons centered underneath the list. Double-clicking on list entry clicks Reschedule Button.
+         */
         panel.setLayout(new BorderLayout());
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
@@ -41,7 +48,7 @@ public class NotificationListPanelBuilder extends JPanel {
         list.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    rescheduleShiftButton.doClick(); //emulate button click
+                    rescheduleShiftButton.doClick();
                 }
             }
         });

@@ -16,7 +16,7 @@ public class TestUserFileReader {
     private List<User> list;
     private List<Integer> idList;
     @BeforeAll
-    void setUp(){
+    public void setUp(){
         reader = UserFileReader.getInstance();
         interactor = new UserInteractor();
         list = Instancio.ofList(User.class).size(10).create();
@@ -27,32 +27,32 @@ public class TestUserFileReader {
         }
     }
     @Test
-    void testUpdate(){
+    public void testUpdate(){
         reader.update();
         assertEquals(reader.getIds().size(), list.size(), "update should provide new data.");
     }
 
     @Test
-    void testCheckUser(){
+    public void testCheckUser(){
         reader.checkUser(idList.get(0));
         assertEquals(list.get(0), reader.getUser(idList.get(0)),
                 "checkUser should produce the same User as indicated by the id inputted.");
     }
     @Test
-    void testGetType(){
+    public void testGetType(){
         assertEquals(list.get(0).getType(), reader.getType(idList.get(0)),
                 "The User type fetched from UserFileReader should be the same" +
                         "as the object's type attribute.");
     }
     @Test
-    void testGetAllIds(){
+    public void testGetAllIds(){
         assertEquals(idList, reader.getIds(),
                 "The id lst retrieved from UserFileReader should be the same as a list " +
                         "of ids from the complete User list.");
     }
 
     @Test
-    void testGetIdsByActive(){
+    public void testGetIdsByActive(){
         boolean active = false;
         list.get(1).setActive(false);
         list.get(3).setActive(false);

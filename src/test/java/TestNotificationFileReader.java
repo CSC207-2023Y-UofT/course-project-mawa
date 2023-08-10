@@ -17,7 +17,7 @@ public class TestNotificationFileReader {
     private List<UserNotification> list;
     private List<Integer> idList;
     @BeforeAll
-    void setUp(){
+    public void setUp(){
         reader = NotificationFileReader.getInstance();
         interactor = new UserNotificationInteractor();
         list = Instancio.ofList(UserNotification.class).size(10).create();
@@ -28,33 +28,33 @@ public class TestNotificationFileReader {
         }
     }
     @Test
-    void testUpdate(){
+    public void testUpdate(){
         reader.update();
         assertEquals(reader.getIds().size(), list.size(), "update should provide new data.");
     }
 
     @Test
-    void testCheckUserNotification(){
+    public void testCheckUserNotification(){
         int idx = 7;
         reader.checkNotification(idList.get(idx));
         assertEquals(list.get(idx), reader.getUserNotification(idList.get(idx)),
                 "checkNotification should produce the same UserNotification as indicated by the id inputted.");
     }
     @Test
-    void testGetDateCreated(){
+    public void testGetDateCreated(){
         assertEquals(list.get(2).getDate(), reader.getDateCreated(idList.get(2)),
                 "The date fetched from UserNotificationFileReader should be the same" +
                         "as the object's date attribute.");
     }
     @Test
-    void testGetAllIds(){
+    public void testGetAllIds(){
         assertEquals(idList, reader.getIds(),
                 "The id lst retrieved from UserNotificationFileReader should be the same as a list " +
                         "of ids from the complete UserNotification list.");
     }
 
     @Test
-    void testGetIdsByDeny(){
+    public void testGetIdsByDeny(){
         list.get(1).deny();
         list.get(3).deny();
         list.get(9).deny();

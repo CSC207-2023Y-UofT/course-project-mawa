@@ -66,7 +66,7 @@ public class PaymentMaker{
                    for (int i=0; i< salary_worker.size();i++){
 
                        float pay_amount=salary_worker.get(i).getPay()/12;
-                       pi.writeData(new Payment(salary_worker.get(i), pay_amount ,currentDate, numberOfPayments + 1));
+                       pi.writeData(new Payment(salary_worker.get(i).getUserNum(), pay_amount ,currentDate, numberOfPayments + 1));
                        numberOfPayments += 1;
 
                    }
@@ -79,14 +79,14 @@ public class PaymentMaker{
                    for (int i=0; i< salary_worker.size();i++){
 
                        float pay_amount=salary_worker.get(i).getPay()/12;
-                       pi.writeData(new Payment(salary_worker.get(i),pay_amount,currentDate, numberOfPayments + 1));
+                       pi.writeData(new Payment(salary_worker.get(i).getUserNum(),pay_amount,currentDate, numberOfPayments + 1));
                        numberOfPayments += 1;
 
                    }
                    for (int i=0; i< wage_worker.size();i++){
 
                        float pay_amount=wage_Worker_monthly_hour_calculator(si.readData(), wage_worker.get(i)) * wage_worker.get(i).getPay();
-                       pi.writeData(new Payment(wage_worker.get(i),pay_amount,currentDate, numberOfPayments + 1));
+                       pi.writeData(new Payment(wage_worker.get(i).getUserNum(),pay_amount,currentDate, numberOfPayments + 1));
                        numberOfPayments += 1;
 
                    }
@@ -98,14 +98,14 @@ public class PaymentMaker{
                    for (int i=0; i< salary_worker.size();i++){
 
                        float pay_amount=salary_worker.get(i).getPay()/12;
-                      pi.writeData(new Payment(salary_worker.get(i),pay_amount,currentDate, numberOfPayments + 1));
+                      pi.writeData(new Payment(salary_worker.get(i).getUserNum(),pay_amount,currentDate, numberOfPayments + 1));
                       numberOfPayments += 1;
 
                    }
                    for (int i=0; i< wage_worker.size();i++){
 
                        int pay_amount=wage_Worker_monthly_hour_calculator(si.readData(),wage_worker.get(i));
-                       pi.writeData(new Payment(wage_worker.get(i),pay_amount,currentDate, numberOfPayments + 1));
+                       pi.writeData(new Payment(wage_worker.get(i).getUserNum(),pay_amount,currentDate, numberOfPayments + 1));
                        numberOfPayments += 1;
 
                    }

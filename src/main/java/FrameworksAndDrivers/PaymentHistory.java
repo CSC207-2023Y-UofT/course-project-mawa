@@ -1,8 +1,4 @@
 package FrameworksAndDrivers;
-import Entities.Payment;
-import Entities.User;
-import UseCases.PaymentInteractor;
-
 
 import javax.swing.*;
 import java.awt.*;

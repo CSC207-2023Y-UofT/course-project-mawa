@@ -1,9 +1,4 @@
-/*
-
-package Testing;
-
-
-
+import Entities.CalendarConstants;
 
 import InterfaceAdapters.CalendarConstants;
 
@@ -13,7 +8,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class CalendarGUITest extends JFrame implements  {
+public class CalendarGUITest extends JFrame implements Page {
     private LocalDate firstDay, lastDay;
     private int numSections;
     private JComboBox<String> monthList;
@@ -108,4 +103,3 @@ public class CalendarGUITest extends JFrame implements  {
         new CalendarGUITest(1,2005,1234);
     }
 }
-*/

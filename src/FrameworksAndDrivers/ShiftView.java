@@ -23,7 +23,7 @@ public class ShiftView extends JFrame implements Page {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.shift = shift;
         setUser(employee);
-        this.empDB = new UserFileReader(FileNameConstants.USER_FILE_NAME);
+        this.empDB = new UserFileReader();
         this.shiftDB = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
         this.date = shiftDB.getDate(shift);
         panel = new JPanel();

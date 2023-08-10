@@ -3,6 +3,7 @@ package InterfaceAdapters;
 
 import Entities.NotificationRequest;
 
+import Entities.UserNotificationRequest;
 import UseCases.*;
 
 
@@ -29,8 +30,9 @@ public class RequestFormPresenter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton){
+            NotificationBuilder nb = new NotificationBuilder();
             UserNotificationRequest notif =
-                    NotificationBuilder.newNotificationRequest(shift, reasonField.getContent(), employee);
+                    nb.createRequest(employee, shift, reasonField.getContent());
             submitButton.nextPage();
         }else if (e.getSource() == cancelButton) {
             cancelButton.nextPage();

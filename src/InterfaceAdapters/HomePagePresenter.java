@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class HomePagePresenter {
 
+    private UserFileReader ufr = new UserFileReader();
+
     public ArrayList<JButton> makeHomeButtons(int id){
         //Return a list of buttons which are displayed on the homepage, depending if the providec
         //id represents an HR or employee account.
@@ -11,7 +13,7 @@ public class HomePagePresenter {
         ArrayList<JButton> buttons = new ArrayList<>();
         buttons.add(new JButton("Schedule"));
         buttons.add(new JButton("Notification Center"));
-        if (uc.idToUser(id).getType().equals("HR")){
+        if (ufr.getType(id).equals("HR")){
             buttons.add(new JButton("Manage Employees"));
             buttons.add(new JButton("Add HR Account"));
         } else {

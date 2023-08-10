@@ -12,36 +12,37 @@ public class CompleteUserListPresenter{
 
     private HashMap<JButton, Integer> buttonsToIDs = new HashMap<JButton, Integer>();
 
-    private
+    private UserFileReader fr = new UserFileReader();
 
 
-    public JPanel makeUserPanel(User user){
+
+    public JPanel makeUserPanel(int id){
         //Create a single panel which displays a users information, and has a button which
         //is to serve the function of activating/deactivating the employee depending on their
         //existing status.
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 12));
-        panel.add(new JLabel(user.getFirstname()));
-        panel.add(new JLabel(user.getSurname()));
-        panel.add(new JLabel(user.getGender()));
-        panel.add(new JLabel(user.getEmail()));
-        panel.add(new JLabel(Long.toString(user.getPhoneNum())));
-        panel.add(new JLabel(user.getRole()));
-        panel.add(new JLabel(Integer.toString(user.getUserNum())));
-        panel.add(new JLabel(user.getDob().toString()));
-        String type = user.getClass().getName();
+        panel.add(new JLabel(fr.getFirstName(id)));
+        panel.add(new JLabel(fr.getSurname(id)));
+        panel.add(new JLabel(fr.getGender(id)));
+        panel.add(new JLabel(fr.getEmail(id)));
+        panel.add(new JLabel(Long.toString(fr.getPhoneNumber(id))));
+        panel.add(new JLabel(fr.getRole(id)));
+        panel.add(new JLabel(Integer.toString(id)));
+        panel.add(new JLabel(fr.getDob(id).toString()));
+        String type = fr.getType(id);
         panel.add(new JLabel(type));
-        panel.add(new JLabel(Float.toString((user).getPay())));
+        panel.add(new JLabel(fr.getPay(id))));
         //Depending on whether the user is currently active, the end of the panel will differ.
-        if (user.isActive()){
+        if (fr.getActive(id)){
             panel.add(new JLabel("Yes"));
             JButton b = new JButton("Deactivate");
-            buttonsToIDs.put(b, user.getUserNum());
+            buttonsToIDs.put(b, id);
             panel.add(b);
         } else{
             panel.add(new JLabel("No"));
             JButton b = new JButton("Re-Activate");
-            buttonsToIDs.put(b, user.getUserNum());
+            buttonsToIDs.put(b, id);
             panel.add(b);
         }
         return panel;
@@ -49,10 +50,9 @@ public class CompleteUserListPresenter{
 
     public ArrayList<JPanel> makeUserPanels(){
         //Get the users from the file and create a panel for each of them, and add them to a list.
-        UserInteractor ui = new UserInteractor();
         ArrayList<JPanel> panels = new ArrayList<>();
-        ArrayList<User> users = ui.readData();
-        for (User user: users){
+        ArrayList<Integer> users = fr.getIds();
+        for (Integer user: users){
             panels.add(this.makeUserPanel(user));
         }
         return panels;

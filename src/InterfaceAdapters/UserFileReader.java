@@ -67,5 +67,10 @@ public class UserFileReader{
         return (char[]) ((ArrayList) hm.get(id)).get(UserProcessorConstants.PASSWORD);
     }
 
+    public ArrayList<Integer> getIds(){
+        HashMap hm = (HashMap) listHM.get(0);
+        return (ArrayList<Integer>) hm.keySet();
+    }
+
 
 }

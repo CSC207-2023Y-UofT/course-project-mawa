@@ -11,7 +11,7 @@ public class LoginValidator {
     private UserFileReader empDB;
 
     public int validateCredentials(int empID, char[] pwd){
-        empDB = new UserFileReader(FileNameConstants.USER_FILE_NAME);
+        empDB = new UserFileReader();
         ArrayList<Integer> allActiveUsers = empDB.getIds(true);
         for (int u : allActiveUsers){
             if (u == empID){

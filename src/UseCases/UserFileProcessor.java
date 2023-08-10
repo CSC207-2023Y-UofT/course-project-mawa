@@ -93,19 +93,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makePwdtoId(HashMap<char[], ArrayList<Integer>> pwdToid,
-                             ArrayList<User> userList, boolean append){
-        if(!append){
-            pwdToid.clear();
-        }
-        for (User n : userList){
-            if (pwdToid.containsKey(n.getPassword())){
-                pwdToid.get(n.getPassword()).add(n.getUserNum());
-            } else {
-                pwdToid.put(n.getPassword(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
 
     public void makePhoneNumtoId(HashMap<Long, ArrayList<Integer>> phoneToid,
                               ArrayList<User> userList){
@@ -118,19 +105,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void phoneNumtoId(HashMap<Long, ArrayList<Integer>> phoneToid,
-                              ArrayList<User> userList, boolean append){
-        if(!append){
-            phoneToid.clear();
-        }
-        for (User n : userList){
-            if (phoneToid.containsKey(n.getPhoneNum())){
-                phoneToid.get(n.getPhoneNum()).add(n.getUserNum());
-            } else {
-                phoneToid.put(n.getPhoneNum(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
 
     public void makeEmailtoId(HashMap<String, ArrayList<Integer>> emailToid,
                                  ArrayList<User> userList){
@@ -143,19 +117,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makeEmailtoId(HashMap<String, ArrayList<Integer>> emailToid,
-                                 ArrayList<User> userList, boolean append){
-        if(!append){
-            emailToid.clear();
-        }
-        for (User n : userList){
-            if (emailToid.containsKey(n.getEmail())){
-                emailToid.get(n.getEmail()).add(n.getUserNum());
-            } else {
-                emailToid.put(n.getEmail(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
 
     public void makeRoleNametoId(HashMap<String, ArrayList<Integer>> roleNameToid,
                                ArrayList<User> userList){
@@ -168,19 +129,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makeRoleNametoId(HashMap<String, ArrayList<Integer>> roleNameToid,
-                               ArrayList<User> userList, boolean append){
-        if(!append){
-            roleNameToid.clear();
-        }
-        for (User n : userList){
-            if (roleNameToid.containsKey(n.getRole())){
-                roleNameToid.get(n.getRole()).add(n.getUserNum());
-            } else {
-                roleNameToid.put(n.getRole(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
 
     public void makeGendertoId(HashMap<String, ArrayList<Integer>> genderToid,
                                  ArrayList<User> userList){
@@ -193,19 +141,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makeGendertoId(HashMap<String, ArrayList<Integer>> genderToid,
-                                 ArrayList<User> userList, boolean append){
-        if(!append){
-            genderToid.clear();
-        }
-        for (User n : userList){
-            if (genderToid.containsKey(n.getGender())){
-                genderToid.get(n.getGender()).add(n.getUserNum());
-            } else {
-                genderToid.put(n.getGender(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
 
 
     public void makeLastNametoId(HashMap<String, ArrayList<Integer>> lNameToid,
@@ -219,19 +154,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makeLastNametoId(HashMap<String, ArrayList<Integer>> lNameToid,
-                                  ArrayList<User> userList, boolean append){
-        if(!append){
-            lNameToid.clear();
-        }
-        for (User n : userList){
-            if (lNameToid.containsKey(n.getSurname())){
-                lNameToid.get(n.getSurname()).add(n.getUserNum());
-            } else {
-                lNameToid.put(n.getSurname(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
 
     public void makeFirstNametoId(HashMap<String, ArrayList<Integer>> fNameToid,
                              ArrayList<User> userList){
@@ -244,19 +166,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makeFirstNametoId(HashMap<String, ArrayList<Integer>> fNameToid,
-                             ArrayList<User> userList, boolean append){
-        if(!append){
-            fNameToid.clear();
-        }
-        for (User n : userList){
-            if (fNameToid.containsKey(n.getFirstname())){
-                fNameToid.get(n.getFirstname()).add(n.getUserNum());
-            } else {
-                fNameToid.put(n.getFirstname(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
 
     public void makeTypetoId(HashMap<String, ArrayList<Integer>> typeToid, ArrayList<User> userList){
         for (User n : userList){
@@ -268,19 +177,6 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makeTypetoId(HashMap<String, ArrayList<Integer>> typeToid,
-                             ArrayList<User> userList, boolean append){
-        if(!append){
-            typeToid.clear();
-        }
-        for (User n : userList){
-            if (typeToid.containsKey(n.getClass().getSimpleName())){
-                typeToid.get(n.getClass().getSimpleName()).add(n.getUserNum());
-            } else {
-                typeToid.put(n.getClass().getSimpleName(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
 
     public void makeActivetoId(HashMap<Boolean, ArrayList<Integer>> activeToid,
                             ArrayList<User> userList){
@@ -293,19 +189,7 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makeActivetoId(HashMap<Boolean, ArrayList<Integer>> activeToid,
-                            ArrayList<User> userList, boolean append){
-        if(!append){
-            activeToid.clear();
-        }
-        for (User n : userList){
-            if (activeToid.containsKey(n.isActive())){
-                activeToid.get(n.isActive()).add(n.getUserNum());
-            } else {
-                activeToid.put(n.isActive(), (ArrayList<Integer>) List.of(n.getUserNum()));
-            }
-        }
-    }
+
 
     public void makeDobtoId(HashMap<LocalDate, ArrayList<Integer>> dateToid,
                              ArrayList<User> userList){
@@ -319,20 +203,7 @@ public class UserFileProcessor implements FileProcessor<User>{
         }
     }
 
-    public void makeDobtoId(HashMap<LocalDateTime, ArrayList<Integer>> dateToid,
-                             ArrayList<UserNotification> userList, boolean append){
-        if (!append){
-            dateToid.clear();
-        }
-        for (UserNotification n : userList){
-            if (dateToid.containsKey(n.getDate())){
-                dateToid.get(n.getDate()).add(n.getNotifId());
-            } else {
-                dateToid.put(n.getDate(), (ArrayList<Integer>) List.of(n.getNotifId()));
-            }
 
-        }
-    }
 
     public void makeIdtoList(HashMap<Integer, ArrayList<Object>> idToList,
                              ArrayList<User> userList){
@@ -341,17 +212,7 @@ public class UserFileProcessor implements FileProcessor<User>{
             idToUser.put(n.getUserNum(), n);
         }
     }
-    public void makeIdtoList(HashMap<Integer, ArrayList<Object>> idToList,
-                             ArrayList<User> userList, boolean append){
-        if (!append){
-            idToList.clear();
-            idToUser.clear();
-        }
-        for (User n : userList){
-            idToList.put(n.getUserNum(), toList(n));
-            idToUser.put(n.getUserNum(), n);
-        }
-    }
+
 
     @Override
     public ArrayList<Object> toList(User user) {

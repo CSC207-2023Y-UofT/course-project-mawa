@@ -2,11 +2,23 @@ package InterfaceAdapters;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 
 public class TimeOffButtonPresenter implements ActionListener {
     private GUIElement button;
-    public TimeOffButtonPresenter(GUIElement button){
+    private int shift;
+    private ShiftFileReader reader = new ShiftFileReader();
+    public TimeOffButtonPresenter(GUIElement button, int shift){
+
         this.button = button;
+        this.shift = shift;
+    }
+
+    public LocalDateTime getDate(){
+        return reader.getDate(shift);
+    }
+    public float getDuration(){
+        return reader.getDuration(shift);
     }
     @Override
     public void actionPerformed(ActionEvent e) {

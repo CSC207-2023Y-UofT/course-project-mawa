@@ -1,17 +1,18 @@
 package InterfaceAdapters;
 
 import UseCases.PaymentFileProcessor;
+import UseCases.ShiftFileProcessor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class ShiftFileReader extends FileHandler{
-    private ArrayList listHM;
+public class ShiftFileReader{
+    private ShiftFileProcessor processor = ShiftFileProcessor.getInstance();
+    ArrayList listHM;
 
-    public ShiftFileReader(String fileName) {
-        super(fileName);
-        ArrayList listHM = super.getStrategy().getHMList();
+    public ShiftFileReader() {
+        listHM = processor.getHMList();
     }
 
     public ArrayList<Integer> getIds(LocalDate date){

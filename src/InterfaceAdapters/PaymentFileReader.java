@@ -6,12 +6,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class PaymentFileReader extends FileHandler{
+public class PaymentFileReader{
     private ArrayList listHM;
+    private PaymentFileProcessor processor = PaymentFileProcessor.getInstance();
 
-    public PaymentFileReader(String fileName) {
-        super(fileName);
-        ArrayList listHM = super.getStrategy().getHMList();
+    public PaymentFileReader() {
+        listHM = processor.getHMList();
     }
 
     public ArrayList<Integer> getIds(LocalDateTime date){

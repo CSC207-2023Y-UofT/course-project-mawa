@@ -1,15 +1,17 @@
 package InterfaceAdapters;
 
+import UseCases.NotificationFileProcessor;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class NotificationFileReader extends FileHandler{
+public class NotificationFileReader{
     private ArrayList listHM;
+    private NotificationFileProcessor processor = NotificationFileProcessor.getInstance();
 
-    public NotificationFileReader(String fileName) {
-        super(fileName);
-        ArrayList listHM = super.getStrategy().getHMList();
+    public NotificationFileReader() {
+        listHM = processor.getHMList();
     }
 
     public ArrayList<Integer> getIds(LocalDateTime date){

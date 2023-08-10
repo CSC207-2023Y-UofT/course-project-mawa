@@ -11,7 +11,7 @@ public class UserFileReader{
     private UserFileProcessor processor = UserFileProcessor.getInstance();
 
     public UserFileReader(){
-        ArrayList listHM = processor.getHMList();
+        listHM = processor.getHMList();
     }
 
     public ArrayList<Integer> getIds(String name){
@@ -36,6 +36,11 @@ public class UserFileReader{
     public float getPay(int id){
         HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
         return (float)((ArrayList)hm.get(id)).get(UserProcessorConstants.PAY);
+    }
+
+    public String getRole(int id){
+        HashMap hm = (HashMap) listHM.get(UserProcessorConstants.ID);
+        return (String)((ArrayList)hm.get(id)).get(UserProcessorConstants.ROLE);
     }
 
     public String getSurname(int id){

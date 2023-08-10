@@ -1,32 +1,27 @@
 package FrameworksAndDrivers;
 
-import UseCases.FileNameConstants;
+import InterfaceAdapters.TimeOffButtonPresenter;
 import InterfaceAdapters.GUIElement;
-import InterfaceAdapters.ShiftFileReader;
 
 import javax.swing.*;
 import java.time.LocalDateTime;
 
 public class TimeOffButton extends JButton implements GUIElement {
     private int shift, employee;
-    private ShiftFileReader reader;
+    private TimeOffButtonPresenter presenter;
 
     public TimeOffButton(int shift, int employee){
         this.shift = shift;
         this.employee = employee;
-        try{
-            this.reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
-        }catch(Exception e){
-            System.out.println("Invalid File Name.");
-        }
+        this.presenter = new TimeOffButtonPresenter(this, shift);
         setText("Request Shift Off");
         repaint();
     }
 
     @Override
     public void nextPage() {
-        LocalDateTime date = reader.getDate(shift);
-        new RequestForm(date, date.plusHours((long) reader.getDuration(shift)), employee, shift);
+        LocalDateTime date = presenter.getDate();
+        new RequestForm(date, date.plusHours((long) presenter.getDuration()), employee, shift);
     }
 
     @Override

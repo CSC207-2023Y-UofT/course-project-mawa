@@ -17,7 +17,7 @@ public class DayCellPresenter implements ActionListener {
     private GUIElement button;
 
     public DayCellPresenter(Page gui, GUIElement button, float width, float height, ArrayList<Integer> shifts){
-        reader = new ShiftFileReader(FileNameConstants.SHIFT_FILE_NAME);
+        reader = new ShiftFileReader();
         this.width = width;
         this.height = height;
         this.gui = gui;

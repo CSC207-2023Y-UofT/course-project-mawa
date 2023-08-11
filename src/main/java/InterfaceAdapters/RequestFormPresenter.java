@@ -6,6 +6,7 @@ import UseCases.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class RequestFormPresenter implements ActionListener {
 
@@ -24,10 +25,12 @@ public class RequestFormPresenter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (e.getSource() == submitButton){
             NotificationBuilder nb = new NotificationBuilder();
             UserFileReader ufr = UserFileReader.getInstance();
             nb.createRequest(shift, reasonField.getContent(), employee, ufr.getHRId());
+            submitButton.nextPage();
         }else if (e.getSource() == cancelButton) {
             cancelButton.nextPage();
         }

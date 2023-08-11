@@ -31,11 +31,11 @@ public class DayCellPresenter implements ActionListener {
     public ArrayList<Integer> getYcoords(){
         ArrayList<Integer> ycoords = new ArrayList<>();
         ycoords.add(0);
-        for (int i:shifts) {
+        for (int i = 0; i< shifts.size(); i++) {
             ShiftFileReader reader = ShiftFileReader.getInstance();
             LocalDateTime time = reader.getDate(i);
             int y = (int) ((time.getHour() * 60.0 + time.getMinute()) / (60.0 * 24.0) * height * 0.7);
-            int x = (int) (2.6 * width / 3.0);
+            //int x = (int) (2.6 * width / 3.0);
             y = (int) Math.max((width / 15 + ycoords.get(i - 1)), y);
             ycoords.add(y);
         }

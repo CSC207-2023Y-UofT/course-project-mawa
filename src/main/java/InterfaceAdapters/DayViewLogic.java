@@ -67,13 +67,15 @@ public class DayViewLogic {
         for (ArrayList<Integer> s0 : shifts2D){
             for(int i = 0; i < s0.size(); i++){
                 ShiftFileReader reader = ShiftFileReader.getInstance();
-                Integer s = s0.get(i);
-                Rectangle area = new Rectangle((int) ((float) width /10 + i * 8 * width / 10 / s0.size()),
+                int s = s0.get(i);
+                Rectangle area = new Rectangle((int) (width /10 + i * 8 * width / 10 / s0.size()),
                         (int) yCoord(reader.getDate(s).getHour() - timeRange[0] + (float)reader.getDate(s).getMinute()/60,
                                 timeRange[1] - timeRange[0]),
                         (int) ((float) 8 * width / 10 / s0.size()),
                         (int) yCoord(reader.getDuration(s), timeRange[1] - timeRange[0]));
                 areas.add(area);
+                System.out.println(area.x);
+                System.out.println(area.y);
             }
         }
         return areas;
@@ -81,7 +83,7 @@ public class DayViewLogic {
 
     public ArrayList<ArrayList<Integer>> make2DList(){
         ArrayList<ArrayList<Integer>> shifts2D = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> shifts1 = (ArrayList<Integer>)shifts.clone();
+        ArrayList<Integer> shifts1 = new ArrayList<>(shifts);
         //know that shifts is already sorted by time
         while(shifts1.size() > 0){
             ArrayList<Integer> overlappingShifts = new ArrayList<Integer>();

@@ -17,7 +17,6 @@ public class DayViewBackground extends JPanel {
     public DayViewBackground(DayViewLogic dvl, float height, float width,
                              ArrayList<Integer> shifts, Page gui, int user){
         super();
-        setPreferredSize(new Dimension((int) width, (int) height));
         this.height = height;
         this.width = width;
         this.dvl = dvl;
@@ -51,7 +50,7 @@ public class DayViewBackground extends JPanel {
 
     public void addShifts(){
         ArrayList<Rectangle> areas = dvl.getShiftCellPosition();
-        for (int i:shifts){
+        for (int i = 0; i<shifts.size(); i++){
             ShiftCell cell = new ShiftCell(i, gui, user);
             cell.setBounds(areas.get(i));
             this.add(cell);

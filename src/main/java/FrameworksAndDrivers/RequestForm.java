@@ -32,15 +32,13 @@ public class RequestForm extends JFrame implements Page {
         double height = screenSize.height/2;
         setSize(new Dimension((int) width, (int) height));
         addTitle();
-        addHomeButton();
+        panel.add(titlePanel);
         addContent();
-        presenter = new RequestFormPresenter( submitButton, cancelButton,
+        presenter = new RequestFormPresenter(submitButton, cancelButton,
                 shift, reasonField, employee);
         this.submitButton.addActionListener(presenter);
         this.cancelButton.addActionListener(presenter);
         setVisible(true);
-
-
     }
 
     @Override
@@ -69,6 +67,7 @@ public class RequestForm extends JFrame implements Page {
         panel.add(reasonField);
         panel.add(cancelButton);
         panel.add(submitButton);
+        setContentPane(panel);
     }
     @Override
     public void setUser(int user) {
@@ -78,7 +77,7 @@ public class RequestForm extends JFrame implements Page {
     @Override
     public void addHomeButton() {
         titlePanel.add(new HomeButton(this, employee));
-        panel.add(titlePanel);
+
     }
 
     @Override

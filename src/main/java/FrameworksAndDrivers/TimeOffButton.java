@@ -15,17 +15,23 @@ public class TimeOffButton extends JButton implements GUIElement {
         this.employee = employee;
         this.presenter = new TimeOffButtonPresenter(this, shift);
         setText("Request Shift Off");
-        repaint();
+        addActionListener(presenter);
     }
 
     @Override
     public void nextPage() {
         LocalDateTime date = presenter.getDate();
-        new RequestForm(date, date.plusHours((long) presenter.getDuration()), employee, shift);
+        int hours = (int) Math.floor(presenter.getDuration());
+        int mins = (int) ((presenter.getDuration() - hours) * 60);
+        System.out.println(hours);
+        new RequestForm(date, date.plusHours(hours).plusMinutes(mins), employee, shift);
     }
 
     @Override
     public String getContent() {
-        return getText();
+        JOptionPane.showMessageDialog (null,
+                "You have already requested this shift off.",
+                "alert", JOptionPane.ERROR_MESSAGE);
+        return "Warning";
     }
 }

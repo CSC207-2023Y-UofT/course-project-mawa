@@ -38,8 +38,11 @@ public class ShiftCell extends JButton implements GUIElement{
 
     @Override
     public void nextPage() {
-        new ShiftView(shift, user);
-        gui.dispose();
+        if (presenter.isHR()){
+            new ShiftViewHRGUI();
+        }else {
+            new ShiftView(shift, user);
+        }
     }
 
     @Override

@@ -44,7 +44,7 @@ public class ShiftFileReader{
     public ArrayList<Integer> getIds(LocalDate date){
         ArrayList<Integer> ids = new ArrayList<>();
         for (Shift s:list){
-            if (s.getTime().toLocalDate() == date){
+            if (s.getTime().toLocalDate().isEqual(date)){
                 ids.add(s.getShiftId());
             }
         }

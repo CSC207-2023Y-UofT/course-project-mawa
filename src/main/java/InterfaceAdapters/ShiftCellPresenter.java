@@ -1,6 +1,8 @@
 package InterfaceAdapters;
 
 import UseCases.ShiftFileReader;
+import UseCases.UserFileReader;
+import UseCases.UserTypeConstants;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +16,11 @@ public class ShiftCellPresenter implements ActionListener {
         this.shift = shift;
         this.user = user;
         this.button = button;
+    }
+
+    public boolean isHR(){
+        UserFileReader reader = UserFileReader.getInstance();
+        return reader.getType(user).equals(UserTypeConstants.HR);
     }
 
     public String getString(){

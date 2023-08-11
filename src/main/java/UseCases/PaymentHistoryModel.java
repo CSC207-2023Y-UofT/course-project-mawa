@@ -54,11 +54,12 @@ public class PaymentHistoryModel {
     public ArrayList<String> paylistTolist( ArrayList<Payment> payments){
 
         for (Payment payment : payments) {
-            String temp = "Employee " + payment.getEmployee() + "Has been paid" +
-                    payment.getPayment_amount() + "On" + payment.getDate().toString();
+            String temp = "Employee " + payment.getEmployee() + " has been paid" +
+                    payment.getPayment_amount() + " on " + payment.getDate().toString();
             string_list.add(temp);
             temp = "";
         }
+        System.out.println(string_list);
         return string_list;
     }
 

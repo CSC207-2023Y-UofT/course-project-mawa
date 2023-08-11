@@ -79,6 +79,7 @@ public class HomePage implements ActionListener, Page {
                     frame.dispose();
                     break;
                 case "Notification Center":
+                    new NotificationGUI(userID);
                     //Open notification center here
                     frame.dispose();
                     break;

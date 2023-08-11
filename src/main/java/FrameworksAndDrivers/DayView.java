@@ -84,7 +84,8 @@ public class DayView extends JFrame implements Page {
     @Override
     public void update() {
         dvl.update();
-        dvb.reload();
+        new DayView(day, weekday,isPayday, dvl.getShifts(), user);
+        dispose();
     }
 
     public static void main(String[] args){

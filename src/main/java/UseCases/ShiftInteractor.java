@@ -53,7 +53,7 @@ public class ShiftInteractor implements Interactor<Shift> {
    public void writeData(Shift shift){
 
        ArrayList<Shift> shiftList = this.readData();
-      shiftList.add(shift);
+       shiftList.add(shift);
        try{
            FileOutputStream file = new FileOutputStream(FileNameConstants.SHIFT_FILE_NAME);
            ObjectOutputStream output = new ObjectOutputStream(file);

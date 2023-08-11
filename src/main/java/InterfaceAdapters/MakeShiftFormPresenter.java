@@ -13,14 +13,16 @@ import java.time.format.DateTimeFormatter;
 
 public class MakeShiftFormPresenter implements ActionListener {
     private GUIElement timeField, durationField;
-    private GUIElement submitButton;
+    private GUIElement submitButton, cancelButton;
     private LocalDate date;
     private Page gui;
     public MakeShiftFormPresenter(GUIElement timeField, GUIElement durationField,
-                                  GUIElement submitButton, LocalDate date, Page gui){
+                                  GUIElement submitButton, GUIElement cancelButton,
+                                  LocalDate date, Page gui){
         this.timeField = timeField;
         this.durationField = durationField;
         this.submitButton = submitButton;
+        this.cancelButton = cancelButton;
         this.date = date;
         this.gui = gui;
     }
@@ -33,6 +35,8 @@ public class MakeShiftFormPresenter implements ActionListener {
             maker.makeShift();
             gui.update();
             submitButton.nextPage();
+        } else if (e.getSource() == cancelButton){
+            cancelButton.nextPage();
         }
     }
 }

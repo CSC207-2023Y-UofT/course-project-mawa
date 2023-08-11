@@ -31,7 +31,6 @@ public class DayViewBackground extends JPanel {
 
     public void paintComponent(Graphics g2) {
         super.paintComponent(g2);
-        //Graphics2D g2 = (Graphics2D) g;
         ArrayList<Integer> timeRange = dvl.getHours();
         float increment = (float) (14 * height / 15) /(timeRange.get(timeRange.size() - 1) - timeRange.get(0));
         for (int y : timeRange){
@@ -59,13 +58,14 @@ public class DayViewBackground extends JPanel {
         }
     }
 
-    public void reload(){
+    /*public void reload(){
         shifts = dvl.getShifts();
         removeAll();
+        revalidate();
         repaint();
         addShifts();
 
-    }
+    }*/
 
 
 

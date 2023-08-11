@@ -50,7 +50,7 @@ public class DayView extends JFrame implements Page {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
-        int[] timeRange = dvl.getTimeRange();
+        Integer[] timeRange = dvl.getHours().toArray(new Integer[dvl.getHours().size()]);
         for (int i : timeRange){
             g2.drawString(String.valueOf(i), (float) getWidth() /14,
                     (float) ((14 * getHeight() / 15) * i) /(timeRange[1] - timeRange[0]) + (float) getHeight() /30);

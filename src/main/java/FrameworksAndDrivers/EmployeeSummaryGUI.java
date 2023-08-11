@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 
 
 public class EmployeeSummaryGUI implements ActionListener, Page {
@@ -41,6 +42,12 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
         if (presenter.getMap().containsKey(source)){
             new PaymentHistory(presenter.getMap().get(source),viewerID);
             frame.dispose();
+        } else if (presenter.getMap2().containsKey(source)){
+            presenter.makePayment(presenter.getMap2().get(source));
+            JOptionPane.showMessageDialog(null, presenter.getName(presenter.getMap2().get(source)) +
+                            " has been paid for the month of "
+                            + LocalDateTime.now().getMonth() + ".",
+                    "", JOptionPane.INFORMATION_MESSAGE);
         } else if (source.equals(back)){
             new ManageEmployeesGUI(viewerID);
             frame.dispose();
@@ -55,7 +62,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
     public void makeHeader(){
         //Before the list of employees, the names of the attributes being shown are displayed at
         //the beginning of the page, hence the label creation here.
-        titlePanel.setLayout(new GridLayout(1, 13));
+        titlePanel.setLayout(new GridLayout(1, 14));
         titlePanel.add(new JLabel("First Name:"));
         titlePanel.add(new JLabel("Surname:"));
         titlePanel.add(new JLabel("Gender:"));
@@ -67,6 +74,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
         titlePanel.add(new JLabel("Type:"));
         titlePanel.add(new JLabel("Salary/Wage:"));
         titlePanel.add(new JLabel("View Payment History:"));
+        titlePanel.add(new JLabel("Make Payment:"));
     }
 
 
@@ -86,6 +94,9 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
             all_panels.add(panel);
         }
         for (JButton button: presenter.getMap().keySet()){
+            button.addActionListener(this);
+        }
+        for (JButton button: presenter.getMap2().keySet()){
             button.addActionListener(this);
         }
 

@@ -27,7 +27,6 @@ public class Login implements Page{
     }
 
     public static void main(String[] args){
-
         new Login();
 
     }

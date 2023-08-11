@@ -9,11 +9,11 @@ import static org.instancio.Select.field;
 
 public class TestDayCellPresenter {
     private DayCellPresenter dcp;
-    @BeforeAll
+    /*@BeforeAll
     public void setUp(){
         dcp =  Instancio.of(DayCellPresenter.class)
                 .set(field(Shift::getTime), LocalDateTime.of())
                 .create();
 
-    }
+    }*/
 }

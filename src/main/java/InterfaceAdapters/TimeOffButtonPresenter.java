@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class TimeOffButtonPresenter implements ActionListener {
     private GUIElement button;
     private int shift;
-    private ShiftFileReader reader = ShiftFileReader.getInstance();
     public TimeOffButtonPresenter(GUIElement button, int shift){
 
         this.button = button;
@@ -17,9 +16,11 @@ public class TimeOffButtonPresenter implements ActionListener {
     }
 
     public LocalDateTime getDate(){
+        ShiftFileReader reader = ShiftFileReader.getInstance();
         return reader.getDate(shift);
     }
     public float getDuration(){
+        ShiftFileReader reader = ShiftFileReader.getInstance();
         return reader.getDuration(shift);
     }
     @Override

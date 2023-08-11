@@ -15,14 +15,12 @@ public class DayCellPresenter implements ActionListener {
     private float width, height;
     private ArrayList<Integer> shifts;
     private boolean isPayDay;
-    private ShiftFileReader reader;
     private GUIElement button;
     private String day;
 
     public DayCellPresenter(Page gui, GUIElement button, float width, float height, ArrayList<Integer> shifts,
                             String day){
         this.day = day;
-        reader = ShiftFileReader.getInstance();
         this.width = width;
         this.height = height;
         this.gui = gui;
@@ -34,6 +32,7 @@ public class DayCellPresenter implements ActionListener {
         ArrayList<Integer> ycoords = new ArrayList<>();
         ycoords.add(0);
         for (int i:shifts) {
+            ShiftFileReader reader = ShiftFileReader.getInstance();
             LocalDateTime time = reader.getDate(i);
             int y = (int) ((time.getHour() * 60.0 + time.getMinute()) / (60.0 * 24.0) * height * 0.7);
             int x = (int) (2.6 * width / 3.0);

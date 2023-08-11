@@ -6,14 +6,13 @@ import UseCases.UserFileReader;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class ShiftPresenter implements ActionListener {
     private int shift;
     private Page gui;
     private int employee;
     private GUIElement timeOffButton;
-    private ShiftFileReader shiftDB = ShiftFileReader.getInstance();
-    private UserFileReader userDB = UserFileReader.getInstance();
 
     public ShiftPresenter(int shift, Page gui, GUIElement timeOffButton, int employee){
 
@@ -25,15 +24,20 @@ public class ShiftPresenter implements ActionListener {
     }
 
     public LocalDateTime getDate(){
+        ShiftFileReader shiftDB = ShiftFileReader.getInstance();
         return shiftDB.getDate(shift);
     }
     public float getDuration(){
+        ShiftFileReader shiftDB = ShiftFileReader.getInstance();
         return shiftDB.getDuration(shift);
     }
     public String getCoworkerString(){
         String coworkers = "";
-        for (int id : shiftDB.getCoworkers(shift)){
+        ShiftFileReader shiftDB = ShiftFileReader.getInstance();
+        ArrayList<Integer> co = shiftDB.getCoworkers(shift);
+        for (int id : co){
             if (id != employee){
+                UserFileReader userDB = UserFileReader.getInstance();
                 coworkers += String.format(", %s %s", userDB.getFirstName(id),
                         userDB.getSurname(id));
             }

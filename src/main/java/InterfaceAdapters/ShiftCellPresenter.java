@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 public class ShiftCellPresenter implements ActionListener {
     private GUIElement button;
     private int shift, user;
-    private ShiftFileReader reader = ShiftFileReader.getInstance();
 
     public ShiftCellPresenter(GUIElement button, int shift, int user) {
         this.shift = shift;
@@ -18,6 +17,7 @@ public class ShiftCellPresenter implements ActionListener {
     }
 
     public String getString(){
+        ShiftFileReader reader = ShiftFileReader.getInstance();
         return reader.getDate(shift).format(DateTimeFormatter.ofPattern("HH:mm"));
     }
     @Override

@@ -11,7 +11,6 @@ public class RequestFormPresenter implements ActionListener {
 
     private GUIElement submitButton, cancelButton, reasonField;
     private int employee, shift;
-    private ShiftFileReader reader;
     public RequestFormPresenter(GUIElement submitButton, GUIElement cancelButton,
                                 int shift, GUIElement reasonField,
                                 int employee){
@@ -20,7 +19,6 @@ public class RequestFormPresenter implements ActionListener {
         this.shift= shift;
         this.reasonField = reasonField;
         this.employee = employee;
-        reader = ShiftFileReader.getInstance();
 
     }
 

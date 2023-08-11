@@ -13,9 +13,7 @@ public class DayViewLogic {
 
     private ArrayList<Integer> shifts;
     private float width, height;
-    private ShiftFileReader reader;
     private int user;
-    private UserFileReader ureader;
     private LocalDate date;
     public DayViewLogic(ArrayList<Integer> shifts, float width, float height, int user,
                         LocalDate date){
@@ -25,16 +23,16 @@ public class DayViewLogic {
         this.height = height;
         this.user = user;
         this.date = date;
-        reader = ShiftFileReader.getInstance();
-        ureader = UserFileReader.getInstance();
     }
 
     public boolean isHR(){
+        UserFileReader ureader = UserFileReader.getInstance();
         return ureader.getType(user).equals(UserTypeConstants.HR);
     }
 
     public int[] getTimeRange(){
         if (shifts.size() > 0){
+            ShiftFileReader reader = ShiftFileReader.getInstance();
             return (new int[] {Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2),
                     Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour() + 2)});
         } else{
@@ -68,6 +66,7 @@ public class DayViewLogic {
         ArrayList<ArrayList<Integer>> shifts2D = make2DList();
         for (ArrayList<Integer> s0 : shifts2D){
             for(int i = 0; i < s0.size(); i++){
+                ShiftFileReader reader = ShiftFileReader.getInstance();
                 Integer s = s0.get(i);
                 Rectangle area = new Rectangle((int) ((float) width /10 + i * 8 * width / 10 / s0.size()),
                         (int) yCoord(reader.getDate(s).getHour() - timeRange[0] + (float)reader.getDate(s).getMinute()/60,
@@ -106,6 +105,7 @@ public class DayViewLogic {
     }
 
     public boolean isOverlapping(Integer shift1, Integer shift2) {
+        ShiftFileReader reader = ShiftFileReader.getInstance();
         LocalDateTime start1 = reader.getDate(shift1);
         LocalDateTime end1 = reader.getDate(shift1).plus(Duration.ofMinutes((long) (reader.getDuration(shift1)* 60)));
         LocalDateTime start2 = reader.getDate(shift2);

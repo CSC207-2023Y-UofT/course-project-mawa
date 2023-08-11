@@ -7,6 +7,7 @@ import Entities.UserNotification;
 import javax.management.Notification;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ShiftViewHRModel{
     int notificationID;
@@ -76,7 +77,7 @@ public class ShiftViewHRModel{
                     equals = true;
                 }
             }
-            if(!equals){
+            if(!equals && !Objects.equals(u.getType(), "HR")){
                 usersNotOnShift.add(u);
             }
         }

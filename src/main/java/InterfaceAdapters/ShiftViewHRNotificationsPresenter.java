@@ -1,12 +1,8 @@
 package InterfaceAdapters;
-import Entities.Shift;
-import FrameworksAndDrivers.ShiftView;
 import UseCases.ShiftViewHRModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 public class ShiftViewHRNotificationsPresenter {
     JFrame frame;
     ShiftViewHRModel HRModel;
@@ -28,6 +24,15 @@ public class ShiftViewHRNotificationsPresenter {
         shiftDateLabel.setFont(new Font(shiftDateLabel.getFont().getName(), shiftDateLabel.getFont().getStyle(), 20));
         shiftTimeLabel.setFont(new Font(shiftDateLabel.getFont().getName(), shiftDateLabel.getFont().getStyle(), 15));
         frame.add(shiftTitlePanel, BorderLayout.PAGE_START);
+    }
+
+    public void updateEmployeesOnShiftList(String selected){
+        HRModel.getEmployeesNotOnShiftList().removeElement(selected);
+        HRModel.getEmployeesOnShiftList().addElement(selected);
+    }
+    public void updateEmployeesNotOnShiftList(String selected){
+        HRModel.getEmployeesNotOnShiftList().addElement(selected);
+        HRModel.getEmployeesOnShiftList().removeElement(selected);
     }
 
 }

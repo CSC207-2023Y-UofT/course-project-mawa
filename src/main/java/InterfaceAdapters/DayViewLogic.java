@@ -102,12 +102,15 @@ public class DayViewLogic {
                 if (isOverlapping(overlappingShifts.get(0), shifts1.get(j))){
                     overlappingShifts.add(shifts1.get(j));
                     shifts1.remove(j);
-                } else{
-                    break;
                 }
             }
             shifts2D.add(overlappingShifts);
         }
+        ArrayList<Integer> newShifts = new ArrayList<>();
+        for(ArrayList<Integer> a : shifts2D){
+            newShifts.addAll(a);
+        }
+        this.shifts = newShifts;
         return shifts2D;
     }
 

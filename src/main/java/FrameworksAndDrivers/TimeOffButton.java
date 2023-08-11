@@ -23,7 +23,6 @@ public class TimeOffButton extends JButton implements GUIElement {
         LocalDateTime date = presenter.getDate();
         int hours = (int) Math.floor(presenter.getDuration());
         int mins = (int) ((presenter.getDuration() - hours) * 60);
-        System.out.println(hours);
         new RequestForm(date, date.plusHours(hours).plusMinutes(mins), employee, shift);
     }
 

@@ -87,10 +87,4 @@ public class DayView extends JFrame implements Page {
         new DayView(day, weekday,isPayday, dvl.getShifts(), user);
         dispose();
     }
-
-    public static void main(String[] args){
-
-        new DayView(LocalDate.now(),"Fri", true,
-                new ArrayList<Integer>(),1);
-    }
 }

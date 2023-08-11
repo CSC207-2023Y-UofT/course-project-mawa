@@ -1,6 +1,7 @@
 package InterfaceAdapters;
 
 import Entities.User;
+import FrameworksAndDrivers.RequestForm;
 import UseCases.*;
 
 import java.awt.*;
@@ -68,11 +69,15 @@ public class DayViewLogic {
             for(int i = 0; i < s0.size(); i++){
                 ShiftFileReader reader = ShiftFileReader.getInstance();
                 int s = s0.get(i);
+                int hours = (int) Math.floor(reader.getDuration(s));
+                int mins = (int) ((reader.getDuration(s) - hours) * 60);
+                LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
                 Rectangle area = new Rectangle((int) (width /10 + i * 8 * width / 10 / s0.size()),
                         (int) yCoord(reader.getDate(s).getHour() - timeRange[0] + (float)reader.getDate(s).getMinute()/60,
                                 timeRange[1] - timeRange[0]),
                         (int) ((float) 8 * width / 10 / s0.size()),
-                        (int) yCoord(reader.getDuration(s), timeRange[1] - timeRange[0]));
+                        (int) yCoord(time2.getHour() - timeRange[0] + (float)time2.getMinute()/60,
+                                timeRange[1] - timeRange[0]));
                 areas.add(area);
                 System.out.println(area.x);
                 System.out.println(area.y);

@@ -1,7 +1,6 @@
 package InterfaceAdapters;
 
-import FrameworksAndDrivers.CustomTextField;
-import UseCases.ShiftInteractor;
+
 import UseCases.ShiftMaker;
 
 import java.awt.event.ActionEvent;

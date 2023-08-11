@@ -63,8 +63,8 @@ public class EmployeeSummaryPresenter{
     public HashMap<JButton, Integer> getMap2() {return this.payButtonsToIDs;}
 
     public void makePayment(int id){
-        PaymentMaker p = new PaymentMaker();
-        //p.makePayment(id);
+        PaymentMaker p = new PaymentMaker(id);
+        p.makePayment();
     }
 
     public String getName(int id){

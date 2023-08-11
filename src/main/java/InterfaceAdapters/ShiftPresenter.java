@@ -44,7 +44,7 @@ public class ShiftPresenter implements ActionListener{
                         userDB.getSurname(id));
             }
         }
-        if (co.size() > 0){
+        if (co.size() > 1){
             return coworkers.substring(2);
         }
         return "No coworkers";

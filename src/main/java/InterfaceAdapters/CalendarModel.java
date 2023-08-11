@@ -34,10 +34,13 @@ public class CalendarModel {
             ArrayList<Integer> userShifts = shiftDB.getIds(user);
             ArrayList<Integer> dayShifts = shiftDB.getIds(day);
             if (userShifts.size() > 0 && dayShifts.size() > 0){
-                shifts = (ArrayList<Integer>) List.copyOf(userShifts.stream()
-                        .distinct()
-                        .filter(dayShifts::contains)
-                        .collect(Collectors.toSet()));
+                for (int i:userShifts){
+                    for (int j:dayShifts){
+                        if (i == j){
+                            shifts.add(i);
+                        }
+                    }
+                }
             } else{
                 shifts = new ArrayList<Integer>();
             }

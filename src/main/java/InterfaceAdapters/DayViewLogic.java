@@ -75,11 +75,11 @@ public class DayViewLogic {
                 int mins = (int) ((reader.getDuration(s) - hours) * 60);
                 LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
                 Rectangle area = new Rectangle((int) (width /10 + i * 8 * width / 10 / s0.size()),
-                        (int) (yCoord(reader.getDate(s).getHour() - timeRange[0] + (float)(reader.getDate(s).getMinute())/60,
-                                                        timeRange[1] - timeRange[0]) + increment),
+                        (int) (yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float)(reader.getDate(s).getMinute())/60,
+                                                        timeRange[1] - timeRange[0])),
                         (int) ((float) 8 * width / 10 / s0.size()),
-                        (int) yCoord(time2.getHour() - timeRange[0] + (float)time2.getMinute()/60,
-                                timeRange[1] - timeRange[0])/2);
+                        (int) yCoord(reader.getDuration(s) + 1 + (float)time2.getMinute()/60,
+                                timeRange[1] - timeRange[0]));
                 areas.add(area);
             }
         }

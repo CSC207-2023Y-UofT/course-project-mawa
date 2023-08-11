@@ -51,11 +51,12 @@ public class DayViewBackground extends JPanel {
     public void addShifts(Graphics g){
         ArrayList<Rectangle> areas = dvl.getShiftCellPosition();
         for (int i = 0; i<shifts.size(); i++){
+
+            g.drawRect((int) areas.get(i).getX(), (int) areas.get(i).getY(),
+                    areas.get(i).getBounds().width, areas.get(i).getBounds().height);
             ShiftCell cell = new ShiftCell(i, gui, user, width);
             cell.setBounds(areas.get(i));
             this.add(cell);
-            g.drawRect((int) areas.get(i).getX(), (int) areas.get(i).getY(),
-                    areas.get(i).getBounds().width, areas.get(i).getBounds().height);
         }
     }
 

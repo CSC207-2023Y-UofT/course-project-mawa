@@ -95,7 +95,6 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
        // history_panel.add(scroller, BorderLayout.CENTER);
 
         adding_list= presenter.PaymentHistoryPresenter(employee_id);
-        System.out.println(adding_list);
 
         for(int i=0; i<adding_list.size();i++){
             mylist.addElement(adding_list.get(i));

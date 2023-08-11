@@ -9,7 +9,6 @@ import java.awt.*;
 public class ShiftCell extends JButton implements GUIElement{
     private int shift;
     private Color colour;
-    private ShiftFileReader reader;
     private Page gui;
     private int user;
     private ShiftCellPresenter presenter;
@@ -39,11 +38,16 @@ public class ShiftCell extends JButton implements GUIElement{
     @Override
     public void nextPage() {
         if (presenter.isHR()){
-            new ShiftViewHRGUI();
+            new ShiftViewHRGUI(shift);
         }else {
             new ShiftView(shift, user);
         }
     }
+
+    /*@Override
+    public void nextPage() {
+        new ShiftView(shift, user);
+    }*/
 
     @Override
     public String getContent() {

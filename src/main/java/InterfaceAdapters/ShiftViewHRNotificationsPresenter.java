@@ -38,5 +38,8 @@ public class ShiftViewHRNotificationsPresenter {
     public void updateShiftEmployeesandNotification(){
         HRModel.updateShiftandNotification();
     }
+    public void updateShiftEmployees(){
+        HRModel.updateShift();
+    }
 
 }

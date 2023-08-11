@@ -28,6 +28,13 @@ public class ShiftViewHRModel{
         usersToString();
         populateUsersLists();
     }
+    public ShiftViewHRModel(int shiftId){
+        ShiftFileReader sfr = ShiftFileReader.getInstance();
+        shift = sfr.getShift(shiftId);
+        getUsers();
+        usersToString();
+        populateUsersLists();
+    }
 
 
 
@@ -109,6 +116,22 @@ public class ShiftViewHRModel{
                     UserNotificationInteractor uni = new UserNotificationInteractor();
                     uni.update(notif);
                 }
+            }
+        }
+        for(int i = 0; i < usersNotOnShiftString.length; i++){
+            if(employeesOnShift.contains(usersNotOnShiftString[i])){
+                userID.add(usersNotOnShift.get(i).getUserNum());
+            }
+        }
+        shift.setCoworkers(userID);
+        ShiftInteractor si = new ShiftInteractor();
+        si.update(shift);
+    }
+    public void updateShift(){
+        ArrayList<Integer> userID = new ArrayList<>();
+        for(int i = 0; i < usersOnShiftString.length; i++){
+            if(employeesOnShift.contains(usersOnShiftString[i])){
+                userID.add(usersOnShift.get(i).getUserNum());
             }
         }
         for(int i = 0; i < usersNotOnShiftString.length; i++){

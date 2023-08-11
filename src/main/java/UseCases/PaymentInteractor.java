@@ -30,7 +30,7 @@ public class PaymentInteractor implements Interactor<Payment> {
       try{
           FileOutputStream file = new FileOutputStream(FileNameConstants.PAYMENT_FILE_NAME);
           ObjectOutputStream output = new ObjectOutputStream(file);
-          output.writeObject(payment);
+          output.writeObject(paymentList);
           output.close();
           PaymentFileReader.getInstance().update();
       } catch (IOException e){

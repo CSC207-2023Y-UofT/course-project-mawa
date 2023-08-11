@@ -14,7 +14,7 @@ import java.util.Date;
  * The payment maker is used to make payments and it should be automatically ran
  * because it runs on system's time and date.
  */
-public class PaymentMaker{
+public class PaymentMakerNew{
 
     private ArrayList<Payment> paylist;
 
@@ -30,7 +30,10 @@ public class PaymentMaker{
 
     private LocalDateTime date= LocalDateTime.now();
 
+    private PaymentInteractor p;
+
     private ShiftInteractor si = new ShiftInteractor();
+    private PaymentInteractor pi = new PaymentInteractor();
     private ArrayList<Shift> shifts;
     private int id;
 
@@ -46,26 +49,33 @@ public class PaymentMaker{
      * The payment maker creates and instance of the payment interactor and stores
      * the size of the payment list in a variable called numberOfpayments
      */
-    public PaymentMaker(int employee_id){
+    public PaymentMakerNew(int employee_id,int id){
 
         this.employee_id=employee_id;
-        PaymentInteractor pi = new PaymentInteractor();
-        numberOfPayments = pi.readData().size();
+        numberOfPayments = p.readData().size();
         this.employee_name= reader.getFirstName(employee_id)+reader.getSurname(employee_id);
         this.emp_type=reader.getType(employee_id);
-        this.id= numberOfPayments + 1;
+        this.id= id;
 
         if (this.emp_type.equals("Salary Worker")){
             this.pay_amount= reader.getPay(employee_id)/12;
         } else if (this.emp_type.equals("Wage Worker") ){
             shifts=si.readData();
-            this.pay_amount=wageWorker_Payment(employee_id,shifts);
+            this.pay_amount=WageWorker_Payment(employee_id,shifts);
 
         }
+        pi.writeData(new Payment(this.employee_id,this.pay_amount,this.date,this.id));
+
+
+
+
+
+
+
 
 
     }
-    public  float wageWorker_Payment(int employee_id, ArrayList<Shift> shiftArray){
+    public  float WageWorker_Payment(int employee_id, ArrayList<Shift> shiftArray){
         float hours=0;
         for(int i = 0; i <shiftArray.size();i++){
             if (shiftArray.get(i).getCoworkers().contains(employee_id) ){
@@ -78,11 +88,6 @@ public class PaymentMaker{
         }
         return hours;
 
-    }
-
-    public void makePayment(){
-        PaymentInteractor pi = new PaymentInteractor();
-        pi.writeData(new Payment(this.employee_id,this.pay_amount,this.date,this.id));
     }
 
 

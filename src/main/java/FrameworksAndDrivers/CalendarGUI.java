@@ -14,7 +14,7 @@ public class CalendarGUI extends JFrame implements Page {
     private int month;
     private int year;
     private int user;
-    private JPanel panel;
+    private JPanel panel = new JPanel();
     private ArrayList<Component> headerButtons = new ArrayList<Component>();
     private CalendarPresenter presenter;
     private JPanel panelGrid;
@@ -32,6 +32,7 @@ public class CalendarGUI extends JFrame implements Page {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         addTitle();
         addContent();
+        this.setVisible(true);
 
     }
 
@@ -47,7 +48,7 @@ public class CalendarGUI extends JFrame implements Page {
                     i > (firstDay.lengthOfMonth() + firstDay.getDayOfWeek().getValue() - 1)){
                 panelGrid.add(new DayCell(this, null, "", false, new ArrayList<Integer>(), user));
             } else{
-                int dayNum = i - firstDay.getDayOfWeek().getValue() - 1;
+                int dayNum = i - firstDay.getDayOfWeek().getValue();
                 Object[] day = model.getDayInfo(dayNum);
                 DayCell dayCell = new DayCell(this, LocalDate.of(year, month, dayNum),
                         CalendarConstants.days[(dayNum + firstDay.getDayOfWeek().getValue()) % 7],
@@ -79,7 +80,6 @@ public class CalendarGUI extends JFrame implements Page {
 
     @Override
     public void addTitle() {
-        panel = layoutHeader();
         this.setContentPane(panel);
     }
 

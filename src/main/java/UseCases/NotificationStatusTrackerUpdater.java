@@ -9,7 +9,7 @@ public class NotificationStatusTrackerUpdater {
     int user;
     UserNotification[][] notifications;
 
-    UserController uc = new UserController();
+    UserActivator uc = new UserActivator();
     String[] resolved;
     String[] unresolved;
 

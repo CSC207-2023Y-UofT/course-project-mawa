@@ -10,8 +10,6 @@ public class PaymentHistoryPresenter {
 
         PaymentHistoryModel model= new PaymentHistoryModel();
         thereturn_list= model.PaymentHistoryModel(emp_id);
-
-        System.out.println(thereturn_list);
         return thereturn_list;
 
 

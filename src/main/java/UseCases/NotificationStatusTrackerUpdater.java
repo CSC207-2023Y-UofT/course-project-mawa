@@ -100,4 +100,13 @@ public class NotificationStatusTrackerUpdater {
 
         return null;
     }
+
+    public UserNotification userNotificationFromString(String notification){
+        for(int i = 0; i < this.unresolved.length; i++){
+            if (notification.equalsIgnoreCase(this.unresolved[i])){
+                return this.notifications[1][i];
+            }
+        }
+        return null;
+    }
 }

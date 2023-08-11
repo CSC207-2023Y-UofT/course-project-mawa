@@ -34,6 +34,9 @@ public class NotificationHRListModel extends DefaultListModel<String> {
             }
         }
     }
+    public int getNotificationID(String notification){
+        return status.userNotificationFromString(notification).getNotifId();
+    }
     public void updateList(String notification, boolean deny, DefaultListModel<String> notifications){
         /*
         Updates UserNotification entity to resolved, if boolean deny is false,

@@ -28,4 +28,8 @@ public class UserNotificationPresenter {
         unresolvedList.updateList(selected, true, resolvedList.listModel);
     }
 
+    public int NotificationID(String notification){
+       return unresolvedList.getNotificationID(notification);
+    }
+
 }

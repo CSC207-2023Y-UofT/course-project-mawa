@@ -23,7 +23,9 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
     public NotificationHRListModel unresolvedNotificationListModel;
     public NotificationHRListModel resolvedNotificationListModel;
     public UserNotificationPresenter presenter;
+    public int user;
     public NotificationHRGUI(int userID) {
+        user = userID;
         this.unresolvedNotificationListModel = new NotificationHRListModel(userID, false);
         this.resolvedNotificationListModel = new NotificationHRListModel(userID, true);
         this.frame.setLayout(new GridLayout(1, 2));
@@ -49,7 +51,9 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("Reschedule".equals(e.getActionCommand())) {
-            presenter.rescheduleUpdateListModel(unresolvedNotificationList.getSelectedValue());
+            //presenter.rescheduleUpdateListModel(unresolvedNotificationList.getSelectedValue());
+            new ShiftViewHRGUI(presenter.NotificationID(unresolvedNotificationList.getSelectedValue()), user);
+            this.dispose();
         }
         if ("Deny".equals(e.getActionCommand())) {
             presenter.denyUpdateListModel(unresolvedNotificationList.getSelectedValue());

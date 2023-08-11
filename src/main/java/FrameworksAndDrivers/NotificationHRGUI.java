@@ -39,7 +39,10 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         rescheduleShiftButton.addActionListener(this);
         homeButton.setActionCommand("home");
         homeButton.addActionListener(this);
-
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BorderLayout());
+        buttonPanel.add(homeButton, BorderLayout.WEST);
+        this.frame.add(buttonPanel, BorderLayout.PAGE_START);
         this.unresolvedNotificationList = new JList<String>(unresolvedNotificationListModel.getListModel());
         this.resolvedNotificationList = new JList<String>(resolvedNotificationListModel.getListModel());
         this.unresolvedNotificationListScroller = new JScrollPane(this.unresolvedNotificationList);
@@ -49,6 +52,7 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
                 unresolvedNotificationListScroller, rescheduleShiftButton, denyRequestButton).panel);
         lowerPanel.add(new NotificationListPanelBuilder(frame, resolvedNotificationLabel, resolvedNotificationList,
                 resolvedNotificationListScroller, true).panel);
+        this.frame.add(lowerPanel, BorderLayout.CENTER);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
         this.frame.setTitle("Notifications");
@@ -60,10 +64,15 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         if ("Reschedule".equals(e.getActionCommand())) {
             //presenter.rescheduleUpdateListModel(unresolvedNotificationList.getSelectedValue());
             new ShiftViewHRGUI(presenter.NotificationID(unresolvedNotificationList.getSelectedValue()), user);
-            this.dispose();
+            this.frame.dispose();
         }
-        if ("Deny".equals(e.getActionCommand())) {
+        else if ("Deny".equals(e.getActionCommand())) {
             presenter.denyUpdateListModel(unresolvedNotificationList.getSelectedValue());
+        }
+        else if ("home".equals(e.getActionCommand())) {
+            //presenter.rescheduleUpdateListModel(unresolvedNotificationList.getSelectedValue());
+            new HomePage(user);
+            this.frame.dispose();
         }
     }
 }

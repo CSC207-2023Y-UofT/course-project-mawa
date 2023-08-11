@@ -52,8 +52,12 @@ public class ShiftViewHRModel{
     }
 
     public JLabel getShiftTimeLabel(){
+
         float time = shift.getTime().getHour()+shift.getDuration();
-        String date = "Shift Time: " + shift.getTime().getHour() + " to " + time;
+        int hour = (int) time;
+        int minutes = (int) (60*(time-hour));
+
+        String date = "Shift Time: " + shift.getTime().getHour()+":"+ shift.getTime().getMinute() + " to " + hour +":"+ minutes;
         return new JLabel(date);
     }
 

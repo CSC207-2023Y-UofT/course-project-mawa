@@ -26,10 +26,6 @@ public class Login implements Page{
         addContent();
     }
 
-    public static void main(String[] args){
-        new Login();
-
-    }
 
     @Override
     public void addTitle() {

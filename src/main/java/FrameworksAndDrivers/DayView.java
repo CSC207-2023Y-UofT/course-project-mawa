@@ -37,8 +37,9 @@ public class DayView extends JFrame implements Page {
         this.dvl = new DayViewLogic(shifts, screenSize.width, (float) (21 * screenSize.height) /30,
                 user, day);
         setUser(user);
-        dvb = new DayViewBackground(dvl, (float) (21 * screenSize.height) /30, screenSize.width,
-                shifts, this, user);
+        this.shifts = dvl.getShifts();
+        dvb = new DayViewBackground(dvl, (float) (21 * screenSize.height) /30,
+                screenSize.width, this, user);
         panel = new JPanel(new BorderLayout());
         panel.add(dvb, BorderLayout.CENTER);
         titlePanel = new JPanel(new FlowLayout());
@@ -46,6 +47,7 @@ public class DayView extends JFrame implements Page {
         addHomeButton();
         addContent();
         setContentPane(panel);
+        this.shifts = dvl.getShifts();
         setVisible(true);
     }
 

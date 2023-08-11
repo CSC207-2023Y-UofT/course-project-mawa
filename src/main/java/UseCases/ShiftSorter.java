@@ -19,6 +19,10 @@ public class ShiftSorter implements Sorter<Shift>{
         for (Shift s:shiftObj){
             sorted.add(s.getShiftId());
         }
+        for(Shift s:shiftObj) {
+            System.out.println(s.getTime());
+        }
+        System.out.println(sorted);
         return sorted;
     }
 }

@@ -35,17 +35,23 @@ public class CompleteUserListPresenter{
         panel.add(new JLabel(type));
         panel.add(new JLabel(Float.toString(fr.getPay(id))));
         //Depending on whether the user is currently active, the end of the panel will differ.
-        if (fr.getActive(id)){
+        if (fr.getType(id).equals("HR")){
             panel.add(new JLabel("Yes"));
-            JButton b = new JButton("Deactivate");
-            buttonsToIDs.put(b, id);
-            panel.add(b);
+            panel.add(new JLabel("N/A"));
         } else{
-            panel.add(new JLabel("No"));
-            JButton b = new JButton("Re-Activate");
-            buttonsToIDs.put(b, id);
-            panel.add(b);
+            if (fr.getActive(id)){
+                panel.add(new JLabel("Yes"));
+                JButton b = new JButton("Deactivate");
+                buttonsToIDs.put(b, id);
+                panel.add(b);
+            } else{
+                panel.add(new JLabel("No"));
+                JButton b = new JButton("Re-Activate");
+                buttonsToIDs.put(b, id);
+                panel.add(b);
+            }
         }
+
         return panel;
     }
 

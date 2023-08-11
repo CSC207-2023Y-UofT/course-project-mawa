@@ -13,10 +13,18 @@ public class ShiftMaker {
         this.duration = duration;
     }
 
-    public void makeShift(){
+    public void makeShift() throws InvalidTimeException {
         ShiftInteractor interactor = new ShiftInteractor();
         ShiftFileReader reader = ShiftFileReader.getInstance();
-        Shift shift = new Shift(date,new ArrayList<Integer>(), duration, reader.getIds().size() + 1);
-        interactor.writeData(shift);
+        int hours = (int) Math.floor(duration);
+        int mins = (int) ((duration - hours) * 60);
+        LocalDateTime time2 = date.plusHours(hours).plusMinutes(mins);
+        if (time2.toLocalDate().isEqual(date.toLocalDate())){
+            Shift shift = new Shift(date,new ArrayList<Integer>(), duration, reader.getIds().size() + 1);
+            interactor.writeData(shift);
+        } else{
+            throw new InvalidTimeException();
+        }
+
     }
 }

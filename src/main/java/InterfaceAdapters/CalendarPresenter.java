@@ -55,11 +55,13 @@ public class CalendarPresenter implements ActionListener {
                 model.setYear(Integer.parseInt(Objects.requireNonNull(yearSelector.getContent())));
                 gui.update();
                 year = model.getYear();
+                System.out.println(yearSelector.getContent());
 
             } else if(e.getItem() == monthSelector){
                 model.setMonth(Integer.parseInt(Objects.requireNonNull(monthSelector.getContent())));
                 gui.update();
                 month = model.getMonth();
+                System.out.println(monthSelector.getContent());
             }
         }
     }*/

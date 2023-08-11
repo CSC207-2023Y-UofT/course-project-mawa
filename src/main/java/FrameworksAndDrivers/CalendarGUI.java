@@ -18,14 +18,20 @@ public class CalendarGUI extends JFrame implements Page {
     private ArrayList<Component> headerButtons = new ArrayList<Component>();
     private CalendarPresenter presenter;
     private JPanel panelGrid;
+    private String[] yearRange;
 
     public CalendarGUI(int month, int year, int user){
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+        yearRange = new String[]{String.valueOf(year - 3), String.valueOf(year - 2),
+                String.valueOf(year - 1), String.valueOf(year),
+                String.valueOf(year + 1)};
         this.month = month;
         this.year = year;
         this.firstDay = LocalDate.of(year, month, 1);
         this.lastDay = LocalDate.of(year, month, firstDay.lengthOfMonth());
         setUser(user);
+        monthList = new CustomComboBox(CalendarConstants.months);
+        yearList = new CustomComboBox(yearRange);
         //this.panel = new JPanel(new BorderLayout());
         this.model = new CalendarModel(this.year, this.month, this.user);
         this.presenter = new CalendarPresenter(this.year, this.month, this.user,
@@ -62,12 +68,10 @@ public class CalendarGUI extends JFrame implements Page {
     }
     private JPanel layoutHeader() {
         JPanel pageLayout = new JPanel(new BorderLayout());
-        monthList = new CustomComboBox(CalendarConstants.months);
         monthList.setSelectedItem(CalendarConstants.months[month - 1]);
         //monthList.addItemListener(presenter);
         monthList.addActionListener(presenter);
         headerButtons.add(monthList);
-        yearList = new CustomComboBox(presenter.getYearRange());
         yearList.setSelectedItem(String.valueOf(year));
         //yearList.addItemListener(presenter);
         yearList.addActionListener(presenter);
@@ -114,8 +118,8 @@ public class CalendarGUI extends JFrame implements Page {
         setMonth(model.getMonth());
         this.firstDay = LocalDate.of(year, month, 1);
         this.lastDay = LocalDate.of(year, month, firstDay.lengthOfMonth());
-        panelGrid.removeAll();
-        layoutDays();
+        new CalendarGUI(month, year, user);
+        dispose();
 
     }
 

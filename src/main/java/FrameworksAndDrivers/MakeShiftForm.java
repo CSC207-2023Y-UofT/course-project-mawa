@@ -33,7 +33,10 @@ public class MakeShiftForm extends JFrame implements Page {
         double width = screenSize.width/2.5;
         double height = screenSize.height/2;
         setSize(new Dimension((int) width, (int) height));
-        presenter = new MakeShiftFormPresenter(timeField, durationField, submitButton, date, gui);
+        presenter = new MakeShiftFormPresenter(timeField, durationField, submitButton, cancelButton,
+                date, gui, this);
+        submitButton.addActionListener(presenter);
+        cancelButton.addActionListener(presenter);
         addTitle();
         addContent();
         setContentPane(mainPanel);
@@ -67,11 +70,6 @@ public class MakeShiftForm extends JFrame implements Page {
 
     }
 
-    @Override
-    public void dispose() {
-
-    }
-
 
     @Override
     public void addHomeButton() {
@@ -79,6 +77,8 @@ public class MakeShiftForm extends JFrame implements Page {
 
     @Override
     public void update() {
-
+        JOptionPane.showMessageDialog (null,
+                "Shifts can only span within one day.",
+                "alert", JOptionPane.ERROR_MESSAGE);
     }
 }

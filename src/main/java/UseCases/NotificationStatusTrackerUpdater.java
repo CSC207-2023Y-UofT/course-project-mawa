@@ -2,6 +2,7 @@ package UseCases;
 import Entities.Shift;
 import Entities.User;
 import Entities.UserNotification;
+import Entities.UserNotificationResponse;
 
 import java.util.ArrayList;
 
@@ -44,8 +45,9 @@ public class NotificationStatusTrackerUpdater {
     }
 
     public String[] NotificationsToString(UserNotification[] notifications, int userID){
-        UserFileReader userFilerReader = new UserFileReader();
+        UserFileReader userFilerReader = UserFileReader.getInstance();
         ShiftInteractor shiftInteractor = new ShiftInteractor();
+        User user = userFilerReader.getUser(userID);
         ArrayList<String> noti = new ArrayList<>();
         for(UserNotification n: notifications){
             User recipient = userFilerReader.getUser(n.getRecipientId());
@@ -53,14 +55,24 @@ public class NotificationStatusTrackerUpdater {
             User sender = userFilerReader.getUser(n.getSenderId());
             String senderUserName = sender.getFirstname() + " " + sender.getSurname();
             Shift shift = shiftInteractor.getShiftByID(n.getShiftId());
+            String item = "";
             if (n.getResolvedStatus() && n.getDenyStatus()) {
-                String item = recipientUserName + "has denied your request for time off on your " +shift.getDuration()+ "hour shift on " + shift.getTime().toString();
+                if (user.getType().equals("HR")){
+                    item = recipientUserName + " has denied "+ senderUserName +"'s request for time off on your " +shift.getDuration()+ " hour shift on " +  shift.getTime().getYear()+ "-" + shift.getTime().getMonthValue()+ "-" +shift.getTime().getDayOfMonth();
+                }else {
+                    item = recipientUserName + " has denied your request for time off on your " + shift.getDuration() + " hour shift on " + shift.getTime().getYear() + "-" + shift.getTime().getMonthValue() + "-" + shift.getTime().getDayOfMonth();
+                }
                 noti.add(item);
             }else if(n.getResolvedStatus() && !n.getDenyStatus()){
-                String item = recipientUserName + "has accepted your request for time off on your " +shift.getDuration()+ "hour shift on " + shift.getTime().toString();
+                if(user.getType().equals("HR")){
+                    item = recipientUserName + " has accepted "+ senderUserName +"'s request for time off on your " + shift.getDuration() + " hour shift on " + shift.getTime().getYear() + "-" + shift.getTime().getMonthValue() + "-" + shift.getTime().getDayOfMonth();
+                }
+                else {
+                    item = recipientUserName + " has accepted your request for time off on your " + shift.getDuration() + " hour shift on " + shift.getTime().getYear() + "-" + shift.getTime().getMonthValue() + "-" + shift.getTime().getDayOfMonth();
+                }
                 noti.add(item);
             }else if(!n.getResolvedStatus()){
-                String item = senderUserName + "Has requested time of on their " +shift.getDuration()+ "hour shift on " + shift.getTime().toString();
+                item = senderUserName + " has requested time of on their " +shift.getDuration()+ " hour shift on " +  shift.getTime().getYear()+ "-" + shift.getTime().getMonthValue()+ "-" +shift.getTime().getDayOfMonth();
                 noti.add(item);
             }
         }
@@ -70,7 +82,7 @@ public class NotificationStatusTrackerUpdater {
         return stringNotifications;
     }
 
-    public void notificationUpdater(String notification, boolean deny){
+    public UserNotification notificationUpdater(String notification, boolean deny){
         UserNotificationInteractor db = new UserNotificationInteractor();
         for(int i = 0; i < this.unresolved.length; i++){
             if (notification.equalsIgnoreCase(this.unresolved[i])){
@@ -78,11 +90,23 @@ public class NotificationStatusTrackerUpdater {
                 if (deny){
                     item.deny();
                     db.update(item);
+                    return item;
                 }else{
                     item.resolve();
                     db.update(item);
                 }
             }
         }
+
+        return null;
+    }
+
+    public UserNotification userNotificationFromString(String notification){
+        for(int i = 0; i < this.unresolved.length; i++){
+            if (notification.equalsIgnoreCase(this.unresolved[i])){
+                return this.notifications[1][i];
+            }
+        }
+        return null;
     }
 }

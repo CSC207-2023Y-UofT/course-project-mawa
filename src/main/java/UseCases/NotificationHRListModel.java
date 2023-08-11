@@ -1,4 +1,6 @@
 package UseCases;
+import Entities.UserNotification;
+
 import javax.swing.*;
 
 public class NotificationHRListModel extends DefaultListModel<String> {
@@ -27,17 +29,24 @@ public class NotificationHRListModel extends DefaultListModel<String> {
                 this.listModel.addElement(s);
             }
         }else{
-            for(String s: status.getUnresolvedArray()){
-                this.listModel.addElement(s);
+            for (int i = 0; i < status.getUnresolvedArray().length; i++){
+                this.listModel.addElement(status.getUnresolvedArray()[i]);
             }
         }
     }
-    public void updateList(String notification, boolean deny){
+    public int getNotificationID(String notification){
+        return status.userNotificationFromString(notification).getNotifId();
+    }
+    public void updateList(String notification, boolean deny, DefaultListModel<String> notifications){
         /*
         Updates UserNotification entity to resolved, if boolean deny is false,
         otherwise sets entity to resolved and denied.
          */
-        status.notificationUpdater(notification, deny);
+        UserNotification n = status.notificationUpdater(notification, deny);
+        if (n!=null){
+            UserNotification[] notif = {n};
+            notifications.add(0, status.NotificationsToString(notif, user)[0]);
+        }
         status = new NotificationStatusTrackerUpdater(user);
     }
 

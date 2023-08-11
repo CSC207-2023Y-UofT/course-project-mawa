@@ -24,7 +24,8 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
     private String[] employeesNotOnShift;
 
 
-    public ShiftViewHRGUI(){
+    public ShiftViewHRGUI(int notificationID, int userID){
+        System.out.print(notificationID + userID);
         this.frame.setLayout(new BorderLayout());
         JPanel shiftTitlePanel = new JPanel();
         shiftTitlePanel.setLayout(new GridLayout(2,1));
@@ -115,7 +116,7 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
         if ("Add".equals(e.getActionCommand())) {
 
             this.revalidate();
-            new ShiftViewHRGUI();
+
             this.frame.dispose();
         }
 

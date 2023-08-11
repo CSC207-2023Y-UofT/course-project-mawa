@@ -1,5 +1,6 @@
 package FrameworksAndDrivers;
 
+import UseCases.NotificationHRListModel;
 import UseCases.NotificationListPanelBuilder;
 
 import javax.swing.*;
@@ -11,17 +12,17 @@ public class NotificationEmployeeGUI extends JFrame {
     public JScrollPane resolvedNotificationListScroller;
     public JList<String> unresolvedNotificationList;
     public JList<String> resolvedNotificationList;
-    public DefaultListModel<String> unresolvedNotificationListModel = new DefaultListModel<String>();
-    public DefaultListModel<String> resolvedNotificationListModel = new DefaultListModel<String>();
+    public NotificationHRListModel unresolvedNotificationListModel;
+    public NotificationHRListModel resolvedNotificationListModel;
 
     public NotificationEmployeeGUI(int userID) {
         this.frame.setLayout(new GridLayout(1, 2));
-        for (int i = 0; i < 100; i++) {
-            unresolvedNotificationListModel.add(i, "i");
-        }
-        resolvedNotificationListModel.add(0, "bye");
-        this.unresolvedNotificationList = new JList<String>(unresolvedNotificationListModel);
-        this.resolvedNotificationList = new JList<String>(resolvedNotificationListModel);
+        unresolvedNotificationListModel = new NotificationHRListModel(userID, false);
+        unresolvedNotificationListModel.populateList();
+        resolvedNotificationListModel = new NotificationHRListModel(userID, true);
+        resolvedNotificationListModel.populateList();
+        this.unresolvedNotificationList = new JList<String>(unresolvedNotificationListModel.getListModel());
+        this.resolvedNotificationList = new JList<String>(resolvedNotificationListModel.getListModel());
         this.unresolvedNotificationListScroller = new JScrollPane(this.unresolvedNotificationList);
         this.resolvedNotificationListScroller = new JScrollPane(this.resolvedNotificationList);
         JLabel unresolvedNotificationLabel = new JLabel("Unresolved Notifications");

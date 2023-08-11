@@ -12,7 +12,7 @@ public class ShiftViewHRNotificationsPresenter {
         frame = view;
         HRModel = model;
     }
-    public void addShiftLabels(){
+    public void addShiftLabels(JPanel panel){
         JLabel shiftDateLabel = HRModel.getShiftDateLabel();
         JLabel shiftTimeLabel = HRModel.getShiftTimeLabel();
         JPanel shiftTitlePanel = new JPanel();
@@ -23,7 +23,7 @@ public class ShiftViewHRNotificationsPresenter {
         shiftTimeLabel.setHorizontalAlignment(JLabel.CENTER);
         shiftDateLabel.setFont(new Font(shiftDateLabel.getFont().getName(), shiftDateLabel.getFont().getStyle(), 20));
         shiftTimeLabel.setFont(new Font(shiftDateLabel.getFont().getName(), shiftDateLabel.getFont().getStyle(), 15));
-        frame.add(shiftTitlePanel, BorderLayout.PAGE_START);
+        panel.add(shiftTitlePanel, BorderLayout.PAGE_START);
     }
 
     public void updateEmployeesOnShiftList(String selected){
@@ -33,6 +33,10 @@ public class ShiftViewHRNotificationsPresenter {
     public void updateEmployeesNotOnShiftList(String selected){
         HRModel.getEmployeesNotOnShiftList().addElement(selected);
         HRModel.getEmployeesOnShiftList().removeElement(selected);
+    }
+
+    public void updateShiftEmployeesandNotification(){
+        HRModel.updateShiftandNotification();
     }
 
 }

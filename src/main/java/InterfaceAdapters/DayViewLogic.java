@@ -18,7 +18,7 @@ public class DayViewLogic {
     private LocalDate date;
     public DayViewLogic(ArrayList<Integer> shifts, float width, float height, int user,
                         LocalDate date){
-        this.shifts = ShiftSorter.sortShiftsByDate(shifts);
+        this.shifts = new ShiftSorter().sortShiftsByDate(shifts);
         System.out.println(shifts.size());
         this.width = width;
         this.height = height;
@@ -46,7 +46,7 @@ public class DayViewLogic {
     public void update(){
         ShiftFileReader sReader = ShiftFileReader.getInstance();
         shifts = sReader.getIds(date);
-        shifts = ShiftSorter.sortShiftsByDate(shifts);
+        shifts = new ShiftSorter().sortShiftsByDate(shifts);
     }
 
     public ArrayList<Integer> getShifts(){

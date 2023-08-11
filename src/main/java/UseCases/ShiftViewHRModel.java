@@ -6,6 +6,8 @@ import Entities.UserNotification;
 
 import javax.management.Notification;
 import javax.swing.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -47,17 +49,18 @@ public class ShiftViewHRModel{
     }
 
     public JLabel getShiftDateLabel(){
-        String date = "Date: " + shift.getTime().getDayOfWeek() + ", " +shift.getTime().getMonth().toString() + ", " + shift.getTime().getYear();
+        String date = "Date: " + shift.getTime().getDayOfWeek() + ", " +shift.getTime().getMonth().toString() + " "+shift.getTime().getDayOfMonth()+", " + shift.getTime().getYear();
         return new JLabel(date);
     }
 
     public JLabel getShiftTimeLabel(){
 
-        float time = shift.getTime().getHour()+shift.getDuration();
-        int hour = (int) time;
-        int minutes = (int) (60*(time-hour));
-
-        String date = "Shift Time: " + shift.getTime().getHour()+":"+ shift.getTime().getMinute() + " to " + hour +":"+ minutes;
+        LocalDateTime time = shift.getTime().plusHours((int)shift.getDuration())
+                .plusMinutes((long) ((shift.getDuration() - (int)shift.getDuration())*60));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String dateTime1 = shift.getTime().format(formatter);
+        String dateTime2 = time.format(formatter);
+        String date = "Shift Time: " + dateTime1 + " to " + dateTime2;
         return new JLabel(date);
     }
 

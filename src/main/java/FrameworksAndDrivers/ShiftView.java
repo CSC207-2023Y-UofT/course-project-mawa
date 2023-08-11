@@ -6,6 +6,7 @@ import InterfaceAdapters.*;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ShiftView extends JFrame implements Page {
@@ -54,7 +55,7 @@ public class ShiftView extends JFrame implements Page {
 
     @Override
     public void addContent() {
-        JLabel time = new JLabel("Start Time: " + date.getHour() + ":" + date.getMinute());
+        JLabel time = new JLabel("Start Time: " + date.format(DateTimeFormatter.ofPattern("HH:mm")));
         JLabel durationLabel = new JLabel("Duration (hours): " + duration);
         JLabel coworkersLabelTitle = new JLabel("Shift Coworkers: ");
         JLabel coworkersLabel = new JLabel(presenter.getCoworkerString());

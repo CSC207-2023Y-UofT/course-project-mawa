@@ -12,10 +12,12 @@ public class ShiftCell extends JButton implements GUIElement{
     private Page gui;
     private int user;
     private ShiftCellPresenter presenter;
+    private float width;
 
-    public ShiftCell(int shift, Page gui, int user){
+    public ShiftCell(int shift, Page gui, int user, float width){
         super();
         this.shift = shift;
+        this.width = width;
         this.colour = new Color((int)(Math.random() * 0x1000000));
         this.gui = gui;
         this.user = user;
@@ -24,7 +26,7 @@ public class ShiftCell extends JButton implements GUIElement{
     }
     public void paintComponent(Graphics g1) {
         super.paintComponent(g1);
-        g1.drawString(presenter.getString(), getWidth()/5, getWidth()/5);
+        g1.drawString(presenter.getString(), (int) (width/5), (int) (width/5));
         setBackground(colour);
         setOpaque(true);
     }

@@ -105,7 +105,7 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener, Page {
         frame.add(panel, BorderLayout.CENTER);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
-        this.frame.setTitle("FrameworksAndDrivers.ShiftView");
+        this.frame.setTitle("ShiftView");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     private void createUserList(JPanel mainPanel, String listLabel,

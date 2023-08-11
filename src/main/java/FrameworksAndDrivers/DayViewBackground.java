@@ -51,7 +51,7 @@ public class DayViewBackground extends JPanel {
     public void addShifts(Graphics g){
         ArrayList<Rectangle> areas = dvl.getShiftCellPosition();
         for (int i = 0; i<shifts.size(); i++){
-            ShiftCell cell = new ShiftCell(i, gui, user);
+            ShiftCell cell = new ShiftCell(i, gui, user, width);
             cell.setBounds(areas.get(i));
             this.add(cell);
             g.drawRect((int) areas.get(i).getX(), (int) areas.get(i).getY(),
@@ -62,7 +62,7 @@ public class DayViewBackground extends JPanel {
     public void addShifts(){
         ArrayList<Rectangle> areas = dvl.getShiftCellPosition();
         for (int i = 0; i<shifts.size(); i++){
-            ShiftCell cell = new ShiftCell(i, gui, user);
+            ShiftCell cell = new ShiftCell(i, gui, user, width);
             cell.setBounds(areas.get(i));
             this.add(cell);
         }

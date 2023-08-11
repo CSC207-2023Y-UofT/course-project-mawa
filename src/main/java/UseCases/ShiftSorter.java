@@ -7,8 +7,8 @@ import java.util.Collections;
 
 import Entities.*;
 
-public final class ShiftSorter implements Sorter<Shift>{
-    public static ArrayList<Integer> sortShiftsByDate(ArrayList<Integer> shifts){
+public class ShiftSorter implements Sorter<Shift>{
+    public ArrayList<Integer> sortShiftsByDate(ArrayList<Integer> shifts){
         ShiftFileReader reader = ShiftFileReader.getInstance();
         ArrayList<Shift> shiftObj = new ArrayList<>();
         for (int i:shifts){

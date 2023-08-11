@@ -80,7 +80,6 @@ public class HomePage implements ActionListener, Page {
                     break;
                 case "Notification Center":
                     new NotificationGUI(userID);
-                    //Open notification center here
                     frame.dispose();
                     break;
                 case "Manage Employees":

@@ -14,44 +14,32 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
     private JFrame frame = new JFrame();
     private final JButton removeButton = new JButton("Remove");
     private final JButton addButton = new JButton("add");
-    private final JLabel shiftDateLabel = new JLabel("Date: Monday, July, 31st");
-    private final JLabel shiftTimeLabel = new JLabel("Shift Time: 6:00pm - 8:00pm");
     private JList<String> employeesOnShiftList;
     private JList<String> employeesNotOnShiftList;
     private JScrollPane employeesOnShiftScroller;
     private JScrollPane employeesNotOnShiftScroller;
-    private String[] employeesOnShift;
-    private String[] employeesNotOnShift;
     ShiftViewHRNotificationsPresenter presenter;
     ShiftViewHRModel model;
 
 
     public ShiftViewHRGUI(int notificationID, int userID){
-        model = new ShiftViewHRModel(notificationID);
+        model = new ShiftViewHRModel(notificationID, userID);
         this.frame.setLayout(new BorderLayout());
         presenter = new ShiftViewHRNotificationsPresenter(frame, model);
         presenter.addShiftLabels();
-
+        employeesOnShiftList = new JList<String>(model.getEmployeesOnShiftList());
+        employeesNotOnShiftList = new JList<String>(model.getEmployeesNotOnShiftList());
+        employeesOnShiftScroller = new JScrollPane(employeesOnShiftList);
+        employeesNotOnShiftScroller = new JScrollPane(employeesNotOnShiftList );
         JPanel employeeListPanel = new JPanel();
         employeeListPanel.setLayout(new GridLayout(1, 2));
-        populateLists(new String[]{"yes"});
-        createUserList(employeeListPanel,"Employees On Entities.Shift", employeesOnShiftList, employeesOnShiftScroller, removeButton, "Remove");
-        createUserList(employeeListPanel,"Employees Not On Entities.Shift", employeesNotOnShiftList, employeesNotOnShiftScroller, addButton, "Add");
+        createUserList(employeeListPanel,"Employees on Shift", employeesOnShiftList, employeesOnShiftScroller, removeButton, "Remove");
+        createUserList(employeeListPanel,"Employees not on Shift", employeesNotOnShiftList, employeesNotOnShiftScroller, addButton, "Add");
         this.frame.add(employeeListPanel, BorderLayout.CENTER);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
         this.frame.setTitle("FrameworksAndDrivers.ShiftView");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    private void populateLists(String[] notifications) {
-        String[] unresolvedNotifications = new String[]{"hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",};
-        String[] resolvedNotifications = new String[]{"bye", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",};
-        employeesOnShiftList = new JList<String>(unresolvedNotifications);
-        employeesNotOnShiftList = new JList<String>(resolvedNotifications);
-        employeesOnShiftScroller = new JScrollPane(employeesOnShiftList);
-        employeesNotOnShiftScroller = new JScrollPane(employeesNotOnShiftList );
-
     }
 
     private void createUserList(JPanel mainPanel, String listLabel,
@@ -60,7 +48,7 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
         JLabel label = new JLabel(listLabel);
         JPanel listPanel = new JPanel();
         ListSetter(list, panel, label);
-        if (Objects.equals(label.getText(), "Employees On Entities")) {
+        if (Objects.equals(label.getText(), "Employees on Shift")) {
             list.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     if (e.getClickCount() == 2) {
@@ -108,10 +96,11 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("Add".equals(e.getActionCommand())) {
-
+            presenter.updateEmployeesOnShiftList(employeesNotOnShiftList.getSelectedValue());
             this.revalidate();
-
-            this.frame.dispose();
+        }else if ("Remove".equals(e.getActionCommand())) {
+            presenter.updateEmployeesNotOnShiftList(employeesOnShiftList.getSelectedValue());
+            this.revalidate();
         }
 
     }

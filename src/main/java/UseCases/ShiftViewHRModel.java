@@ -16,14 +16,28 @@ public class ShiftViewHRModel{
     ArrayList<User> usersNotOnShift = new ArrayList<User>();
     String[] usersOnShiftString;
     String[] usersNotOnShiftString;
+    int userId;
 
 
-    public ShiftViewHRModel(int notificationId){
+    public ShiftViewHRModel(int notificationId, int userID){
         notificationID = notificationId;
+        userId = userID;
         getShiftFromNotificationId();
         getUsers();
         usersToString();
         populateUsersLists();
+        for(int i: shift.getCoworkers()){
+            System.out.print(i);
+        }
+    }
+
+
+
+    public DefaultListModel<String> getEmployeesOnShiftList(){
+        return this.employeesOnShift;
+    }
+    public DefaultListModel<String> getEmployeesNotOnShiftList(){
+        return this.employeesNotOnShift;
     }
 
     public JLabel getShiftDateLabel(){
@@ -66,12 +80,12 @@ public class ShiftViewHRModel{
     public void usersToString(){
         usersOnShiftString = new String[usersOnShift.size()];
         for(int i = 0; i < usersOnShift.size(); i++){
-            String item =  usersOnShift.get(i).getFirstname()+ " " + usersOnShift.get(i).getFirstname() + " (" +usersOnShift.get(i).getRole() + ")";
+            String item =  usersOnShift.get(i).getFirstname()+ " " + usersOnShift.get(i).getSurname() + " (" +usersOnShift.get(i).getRole() + ")";
             usersOnShiftString[i] = item;
         }
         usersNotOnShiftString = new String[usersNotOnShift.size()];
         for(int i = 0; i < usersNotOnShift.size(); i++){
-            String item =  usersNotOnShift.get(i).getFirstname()+ " " + usersNotOnShift.get(i).getFirstname() + " (" +usersNotOnShift.get(i).getRole() + ")";
+            String item =  usersNotOnShift.get(i).getFirstname()+ " " + usersNotOnShift.get(i).getSurname() + " (" +usersNotOnShift.get(i).getRole() + ")";
             usersNotOnShiftString[i] = item;
         }
     }

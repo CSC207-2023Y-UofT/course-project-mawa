@@ -1,7 +1,6 @@
 package InterfaceAdapters;
 
 
-import UseCases.UserController;
 import UseCases.UserFileReader;
 
 import javax.swing.*;
@@ -69,8 +68,4 @@ public class CompleteUserListPresenter{
         return buttonsToIDs;
     }
 
-    public void changeActivation (int IDnum){
-        UserController uc = new UserController();
-        uc.changeActivation(IDnum);
-    }
 }

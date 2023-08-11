@@ -6,7 +6,7 @@ import Entities.User;
 
 import java.util.ArrayList;
 
-public class UserController {
+public class UserActivator {
 
     private UserFileReader ufr = UserFileReader.getInstance();
 

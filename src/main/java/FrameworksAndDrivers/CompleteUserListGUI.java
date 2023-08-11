@@ -1,7 +1,6 @@
 package FrameworksAndDrivers;
 
 import InterfaceAdapters.CompleteUserListPresenter;
-import UseCases.UserController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +38,8 @@ public class CompleteUserListGUI implements ActionListener, Page {
         //If a activate/deactivate button is clicked, the user factory updates the user, and the page is reloaded to show the change.
         Object source = e.getSource();
         if (presenter.getMap().containsKey(source)){
-            presenter.changeActivation(presenter.getMap().get(source));
+            UserController uc = new UserController();
+            uc.changeActivation(presenter.getMap().get(source));
             new CompleteUserListGUI(viewerID);
             frame.dispose();
             JOptionPane.showMessageDialog(null, "Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);

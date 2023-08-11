@@ -7,35 +7,30 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
-import InterfaceAdapters.*;
-import FrameworksAndDrivers.*;
+import InterfaceAdapters.ShiftViewHRNotificationsPresenter;
+import UseCases.ShiftViewHRModel;
 
 public class ShiftViewHRGUI extends JFrame implements ActionListener {
     private JFrame frame = new JFrame();
     private final JButton removeButton = new JButton("Remove");
     private final JButton addButton = new JButton("add");
     private final JLabel shiftDateLabel = new JLabel("Date: Monday, July, 31st");
-    private final JLabel shiftTimeLabel = new JLabel("Entities.Shift Time: 6:00pm - 8:00pm");
+    private final JLabel shiftTimeLabel = new JLabel("Shift Time: 6:00pm - 8:00pm");
     private JList<String> employeesOnShiftList;
     private JList<String> employeesNotOnShiftList;
     private JScrollPane employeesOnShiftScroller;
     private JScrollPane employeesNotOnShiftScroller;
     private String[] employeesOnShift;
     private String[] employeesNotOnShift;
+    ShiftViewHRNotificationsPresenter presenter;
+    ShiftViewHRModel model;
 
 
     public ShiftViewHRGUI(int notificationID, int userID){
-        System.out.print(notificationID + userID);
+        model = new ShiftViewHRModel(notificationID);
         this.frame.setLayout(new BorderLayout());
-        JPanel shiftTitlePanel = new JPanel();
-        shiftTitlePanel.setLayout(new GridLayout(2,1));
-        shiftTitlePanel.add(shiftDateLabel);
-        shiftTitlePanel.add(shiftTimeLabel);
-        shiftDateLabel.setHorizontalAlignment(JLabel.CENTER);
-        shiftTimeLabel.setHorizontalAlignment(JLabel.CENTER);
-        shiftDateLabel.setFont(new Font(shiftDateLabel.getFont().getName(), shiftDateLabel.getFont().getStyle(), 20));
-        shiftTimeLabel.setFont(new Font(shiftDateLabel.getFont().getName(), shiftDateLabel.getFont().getStyle(), 15));
-        frame.add(shiftTitlePanel, BorderLayout.PAGE_START);
+        presenter = new ShiftViewHRNotificationsPresenter(frame, model);
+        presenter.addShiftLabels();
 
         JPanel employeeListPanel = new JPanel();
         employeeListPanel.setLayout(new GridLayout(1, 2));
@@ -50,7 +45,6 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
     }
 
     private void populateLists(String[] notifications) {
-
         String[] unresolvedNotifications = new String[]{"hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",};
         String[] resolvedNotifications = new String[]{"bye", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",};
         employeesOnShiftList = new JList<String>(unresolvedNotifications);
@@ -66,7 +60,7 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener {
         JLabel label = new JLabel(listLabel);
         JPanel listPanel = new JPanel();
         ListSetter(list, panel, label);
-        if (Objects.equals(label.getText(), "Employees On Entities.Shift")) {
+        if (Objects.equals(label.getText(), "Employees On Entities")) {
             list.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     if (e.getClickCount() == 2) {

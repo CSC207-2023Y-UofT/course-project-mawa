@@ -92,8 +92,8 @@ public class AddHRGUI implements ActionListener, Page {
                         Long.parseLong(phnum.trim()), emailEnter.getText(), "HR Worker", "HR",
                         pwdEnter.getText(), (float) 0);
 
-                new Login();
                 frame.dispose();
+                new Login();
                 JOptionPane.showMessageDialog(null, "HR account has been added.", "", JOptionPane.INFORMATION_MESSAGE);
             }
 

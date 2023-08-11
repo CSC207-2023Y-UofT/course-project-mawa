@@ -26,9 +26,7 @@ public class UserNotificationInteractor implements Interactor<UserNotification> 
 
     public void update(UserNotification n){
        ArrayList<UserNotification> notifs = this.readData();
-       for (UserNotification noti: notifs){
-           notifs.removeIf(notif -> n.getNotifId() == noti.getNotifId());
-       }
+       notifs.removeIf(notif -> n.getNotifId() == notif.getNotifId());
        notifs.add(n);
       try {
           FileOutputStream file = new FileOutputStream(FileNameConstants.NOTIFICATION_FILE_NAME);

@@ -21,14 +21,11 @@ public class UserNotificationPresenter {
 
     public void rescheduleUpdateListModel(String selected){
         unresolvedList.listModel.removeElement(selected);
-        resolvedList.listModel.add(0, selected);
-        unresolvedList.updateList(selected, false);
+         unresolvedList.updateList(selected, false, resolvedList.listModel);
     }
     public void denyUpdateListModel(String selected){
         unresolvedList.listModel.removeElement(selected);
-        resolvedList.listModel.add(0, selected);
-        unresolvedList.updateList(selected, true);
-
+        unresolvedList.updateList(selected, true, resolvedList.listModel);
     }
 
 }

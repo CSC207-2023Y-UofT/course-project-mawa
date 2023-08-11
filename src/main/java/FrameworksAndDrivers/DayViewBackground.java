@@ -17,7 +17,6 @@ public class DayViewBackground extends JPanel {
     public DayViewBackground(DayViewLogic dvl, float height, float width,
                              ArrayList<Integer> shifts, Page gui, int user){
         super();
-        setPreferredSize(new Dimension((int) width, (int) height));
         this.height = height;
         this.width = width;
         this.dvl = dvl;
@@ -31,7 +30,6 @@ public class DayViewBackground extends JPanel {
 
     public void paintComponent(Graphics g2) {
         super.paintComponent(g2);
-        //Graphics2D g2 = (Graphics2D) g;
         ArrayList<Integer> timeRange = dvl.getHours();
         float increment = (float) (14 * height / 15) /(timeRange.get(timeRange.size() - 1) - timeRange.get(0));
         for (int y : timeRange){
@@ -52,20 +50,21 @@ public class DayViewBackground extends JPanel {
 
     public void addShifts(){
         ArrayList<Rectangle> areas = dvl.getShiftCellPosition();
-        for (int i:shifts){
+        for (int i = 0; i<shifts.size(); i++){
             ShiftCell cell = new ShiftCell(i, gui, user);
             cell.setBounds(areas.get(i));
             this.add(cell);
         }
     }
 
-    public void reload(){
+    /*public void reload(){
         shifts = dvl.getShifts();
         removeAll();
+        revalidate();
         repaint();
         addShifts();
 
-    }
+    }*/
 
 
 

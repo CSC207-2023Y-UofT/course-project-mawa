@@ -1,6 +1,7 @@
 package InterfaceAdapters;
 
 import Entities.User;
+import FrameworksAndDrivers.RequestForm;
 import UseCases.*;
 
 import java.awt.*;
@@ -13,27 +14,26 @@ public class DayViewLogic {
 
     private ArrayList<Integer> shifts;
     private float width, height;
-    private ShiftFileReader reader;
     private int user;
-    private UserFileReader ureader;
     private LocalDate date;
     public DayViewLogic(ArrayList<Integer> shifts, float width, float height, int user,
                         LocalDate date){
         this.shifts = ShiftSorter.sortShiftsByDate(shifts);
+        System.out.println(shifts.size());
         this.width = width;
         this.height = height;
         this.user = user;
         this.date = date;
-        reader = ShiftFileReader.getInstance();
-        ureader = UserFileReader.getInstance();
     }
 
     public boolean isHR(){
+        UserFileReader ureader = UserFileReader.getInstance();
         return ureader.getType(user).equals(UserTypeConstants.HR);
     }
 
     public int[] getTimeRange(){
         if (shifts.size() > 0){
+            ShiftFileReader reader = ShiftFileReader.getInstance();
             return (new int[] {Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2),
                     Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour() + 2)});
         } else{
@@ -45,6 +45,7 @@ public class DayViewLogic {
     public void update(){
         ShiftFileReader sReader = ShiftFileReader.getInstance();
         shifts = sReader.getIds(date);
+        shifts = ShiftSorter.sortShiftsByDate(shifts);
     }
 
     public ArrayList<Integer> getShifts(){
@@ -66,13 +67,20 @@ public class DayViewLogic {
         ArrayList<ArrayList<Integer>> shifts2D = make2DList();
         for (ArrayList<Integer> s0 : shifts2D){
             for(int i = 0; i < s0.size(); i++){
-                Integer s = s0.get(i);
-                Rectangle area = new Rectangle((int) ((float) width /10 + i * 8 * width / 10 / s0.size()),
+                ShiftFileReader reader = ShiftFileReader.getInstance();
+                int s = s0.get(i);
+                int hours = (int) Math.floor(reader.getDuration(s));
+                int mins = (int) ((reader.getDuration(s) - hours) * 60);
+                LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
+                Rectangle area = new Rectangle((int) (width /10 + i * 8 * width / 10 / s0.size()),
                         (int) yCoord(reader.getDate(s).getHour() - timeRange[0] + (float)reader.getDate(s).getMinute()/60,
                                 timeRange[1] - timeRange[0]),
                         (int) ((float) 8 * width / 10 / s0.size()),
-                        (int) yCoord(reader.getDuration(s), timeRange[1] - timeRange[0]));
+                        (int) yCoord(time2.getHour() - timeRange[0] + (float)time2.getMinute()/60,
+                                timeRange[1] - timeRange[0]));
                 areas.add(area);
+                System.out.println(area.x);
+                System.out.println(area.y);
             }
         }
         return areas;
@@ -80,7 +88,7 @@ public class DayViewLogic {
 
     public ArrayList<ArrayList<Integer>> make2DList(){
         ArrayList<ArrayList<Integer>> shifts2D = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> shifts1 = (ArrayList<Integer>)shifts.clone();
+        ArrayList<Integer> shifts1 = new ArrayList<>(shifts);
         //know that shifts is already sorted by time
         while(shifts1.size() > 0){
             ArrayList<Integer> overlappingShifts = new ArrayList<Integer>();
@@ -104,6 +112,7 @@ public class DayViewLogic {
     }
 
     public boolean isOverlapping(Integer shift1, Integer shift2) {
+        ShiftFileReader reader = ShiftFileReader.getInstance();
         LocalDateTime start1 = reader.getDate(shift1);
         LocalDateTime end1 = reader.getDate(shift1).plus(Duration.ofMinutes((long) (reader.getDuration(shift1)* 60)));
         LocalDateTime start2 = reader.getDate(shift2);

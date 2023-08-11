@@ -21,7 +21,6 @@ public class DayView extends JFrame implements Page {
     private boolean isPayday;
     private ArrayList<Integer> shifts;
     private JPanel panel;
-    private ArrayList<ShiftCell> cells;
     private int user;
     private DayViewLogic dvl;
     private JPanel titlePanel;
@@ -33,7 +32,6 @@ public class DayView extends JFrame implements Page {
         this.weekday = weekday;
         this.isPayday = isPayday;
         this.shifts = shifts;
-        this.cells = new ArrayList<ShiftCell>();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.dvl = new DayViewLogic(shifts, screenSize.width, (float) (21 * screenSize.height) /30,

@@ -24,7 +24,6 @@ public class DayViewBackground extends JPanel {
         this.gui = gui;
         this.user = user;
         repaint();
-        addShifts();
         setVisible(true);
     }
 
@@ -41,6 +40,7 @@ public class DayViewBackground extends JPanel {
                     (int) ( (6 * width) /7),
                     (int) yCoord(i, timeRange.get(timeRange.size() - 1) - timeRange.get(0)));
         }
+        addShifts(g2);
 
     }
 

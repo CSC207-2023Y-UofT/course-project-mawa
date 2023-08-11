@@ -34,8 +34,9 @@ public class DayViewLogic {
     public int[] getTimeRange(){
         if (shifts.size() > 0){
             ShiftFileReader reader = ShiftFileReader.getInstance();
-            return (new int[] {Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2),
-                    Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour() + 2)});
+            return (new int[] {Math.min(Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2), 8),
+                    (int) Math.max(Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour()
+                                    + reader.getDuration(shifts.get(0))+ 2), 18)});
         } else{
             return (new int[] {8,18});
         }
@@ -65,6 +66,7 @@ public class DayViewLogic {
         ArrayList<Rectangle> areas = new ArrayList<Rectangle>();
         int[] timeRange = getTimeRange();
         ArrayList<ArrayList<Integer>> shifts2D = make2DList();
+        float increment = (float) (14 * height / 15) /(timeRange[1] - timeRange[0]);
         for (ArrayList<Integer> s0 : shifts2D){
             for(int i = 0; i < s0.size(); i++){
                 ShiftFileReader reader = ShiftFileReader.getInstance();
@@ -73,17 +75,19 @@ public class DayViewLogic {
                 int mins = (int) ((reader.getDuration(s) - hours) * 60);
                 LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
                 Rectangle area = new Rectangle((int) (width /10 + i * 8 * width / 10 / s0.size()),
-                        (int) yCoord(reader.getDate(s).getHour() - timeRange[0] + (float)reader.getDate(s).getMinute()/60,
+                        (int) yCoord(reader.getDate(s).getHour() - timeRange[0] + (float)(reader.getDate(s).getMinute())/60,
                                 timeRange[1] - timeRange[0]),
                         (int) ((float) 8 * width / 10 / s0.size()),
                         (int) yCoord(time2.getHour() - timeRange[0] + (float)time2.getMinute()/60,
                                 timeRange[1] - timeRange[0]));
                 areas.add(area);
-                System.out.println(area.x);
-                System.out.println(area.y);
             }
         }
         return areas;
+    }
+
+    private float yCoord(float i, float scale){
+        return (( (14 * height) /15) * i / scale + height /30);
     }
 
     public ArrayList<ArrayList<Integer>> make2DList(){
@@ -105,10 +109,6 @@ public class DayViewLogic {
             shifts2D.add(overlappingShifts);
         }
         return shifts2D;
-    }
-
-    private float yCoord(float i, float scale){
-        return (((float) (14 * height) /15) * i / scale + (float) height /30);
     }
 
     public boolean isOverlapping(Integer shift1, Integer shift2) {

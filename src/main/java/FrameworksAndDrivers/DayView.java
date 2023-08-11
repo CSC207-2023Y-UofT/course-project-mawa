@@ -37,9 +37,6 @@ public class DayView extends JFrame implements Page {
         this.dvl = new DayViewLogic(shifts, screenSize.width, (float) (21 * screenSize.height) /30,
                 user, day);
         setUser(user);
-        if (isPayday){
-            setBackground(Color.GREEN);
-        }
         dvb = new DayViewBackground(dvl, (float) (21 * screenSize.height) /30, screenSize.width,
                 shifts, this, user);
         panel = new JPanel(new BorderLayout());
@@ -74,7 +71,7 @@ public class DayView extends JFrame implements Page {
 
     @Override
     public void addHomeButton() {
-        HomeButton hb = new HomeButton((Page)this, user);
+        HomeButton hb = new HomeButton(this, user);
         titlePanel.add(hb);
         panel.add(titlePanel, BorderLayout.PAGE_START);
     }

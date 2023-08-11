@@ -32,29 +32,26 @@ public class DayCell extends JButton implements GUIElement{
             setBackground(Color.GREEN);
             setOpaque(true);
         }
-        this.presenter = new DayCellPresenter(gui, this, getWidth(), getHeight(), shifts, weekday);
+        this.presenter = new DayCellPresenter(gui, this, 80, 80, shifts, weekday);
         this.addActionListener(presenter);
-        setVisible(true);
         repaint();
 
     }
 
     public void paintComponent(Graphics g1) {
+        super.paintComponent(g1);
         if (weekday.equals("")){
             setBackground(Color.GRAY);
             setOpaque(true);
             return;
         }
-        super.paintComponent(g1);
-        /*int x = (int)(2.6 * getWidth() / 3.0);
+        int x = (int)(2.6 * getWidth() / 3.0);
         ArrayList<Integer> ycoords = presenter.getYcoords();
-        if (ycoords.size() > 1){
-            for (int y:ycoords) {
+        for (int y:ycoords) {
                 g1.setColor(Color.RED);
-                g1.fillOval(x , y, getWidth() / 15, getWidth() / 15);
-                g1.drawOval(x, y, getWidth() / 15, getWidth() / 15);
-            }
-        }*/
+                g1.fillOval(x , y, 80 / 15, 80 / 15);
+                g1.drawOval(x, y, 80 / 15, 80 / 15);
+        }
 
     }
 

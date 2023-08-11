@@ -31,7 +31,7 @@ public class DayCellPresenter implements ActionListener {
     public ArrayList<Integer> getYcoords(){
         ArrayList<Integer> ycoords = new ArrayList<>();
         ycoords.add(0);
-        for (int i = 0; i< shifts.size(); i++) {
+        for (int i = 1; i< shifts.size()+1; i++) {
             ShiftFileReader reader = ShiftFileReader.getInstance();
             LocalDateTime time = reader.getDate(i);
             int y = (int) ((time.getHour() * 60.0 + time.getMinute()) / (60.0 * 24.0) * height * 0.7);
@@ -39,6 +39,7 @@ public class DayCellPresenter implements ActionListener {
             y = (int) Math.max((width / 15 + ycoords.get(i - 1)), y);
             ycoords.add(y);
         }
+        ycoords.remove(0);
         return ycoords;
     }
 

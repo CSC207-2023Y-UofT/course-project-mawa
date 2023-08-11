@@ -63,6 +63,8 @@ public class CalendarGUI extends JFrame implements Page {
                 DayCell dayCell = new DayCell(this, LocalDate.of(year, month, dayNum),
                         CalendarConstants.days[(dayNum + firstDay.getDayOfWeek().getValue() - 1) % 7],
                         payDay, shifts, user);
+                dayCell.setVisible(true);
+                dayCell.repaint();
                 panelGrid.add(dayCell);
             }
         }
@@ -91,6 +93,7 @@ public class CalendarGUI extends JFrame implements Page {
 
     @Override
     public void addTitle() {
+        panel = layoutHeader();
         this.setContentPane(panel);
     }
 

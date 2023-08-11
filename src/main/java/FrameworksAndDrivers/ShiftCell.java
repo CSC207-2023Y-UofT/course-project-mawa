@@ -23,10 +23,10 @@ public class ShiftCell extends JButton implements GUIElement{
         this.addActionListener(presenter);
     }
     public void paintComponent(Graphics g1) {
-        setBackground(colour);
-        setOpaque(true);
         super.paintComponent(g1);
         g1.drawString(presenter.getString(), getWidth()/5, getWidth()/5);
+        setBackground(colour);
+        setOpaque(true);
     }
 
     public int getShift(){

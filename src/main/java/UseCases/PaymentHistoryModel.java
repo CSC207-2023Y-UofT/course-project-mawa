@@ -2,12 +2,16 @@ package UseCases;
 
 import Entities.Payment;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
 public class PaymentHistoryModel {
+
      private ArrayList<Payment> emp_payments = new ArrayList<>();
      private PaymentInteractor interactor = new PaymentInteractor();
+    private UserFileReader reader=UserFileReader.getInstance();
      private ArrayList<Payment> allpayments;
     private ArrayList<String> string_list = new ArrayList<>();
     private int emp;
@@ -16,13 +20,23 @@ public class PaymentHistoryModel {
     */
     private ArrayList<String> second_list;/*  This list is used to store
     a sting of payments that includes the given employee after transferring list 1 to strings*/
+    private DateTimeFormatter get_month= DateTimeFormatter.ofPattern("MM");
+    private DateTimeFormatter get_year= DateTimeFormatter.ofPattern("yyy");
+    private DateTimeFormatter get_day= DateTimeFormatter.ofPattern("dd");
+
+
+
 
     public ArrayList<String> PaymentHistoryModel(int employee_id){
         this.emp=employee_id;
+
         first_list=user_paymentlist(this.emp);
         second_list= paylistTolist(first_list);
-
         return second_list;
+    }
+    public String label(int employee_id){
+        return reader.getFirstName(employee_id)+" "+ reader.getSurname(employee_id);
+
     }
 
 
@@ -54,12 +68,14 @@ public class PaymentHistoryModel {
     public ArrayList<String> paylistTolist( ArrayList<Payment> payments){
 
         for (Payment payment : payments) {
-            String temp = "Employee " + payment.getEmployee() + " has been paid" +
-                    payment.getPayment_amount() + " on " + payment.getDate().toString();
+            String this_month=payment.getDate().format(get_month);//stores  month as a string
+            String this_day=payment.getDate().format(get_day);//stores  day as a string
+            String this_year=payment.getDate().format(get_year);//stores  year as a string
+            String temp = " This Employee has been paid " +
+                    payment.getPayment_amount() + " on " +this_year+" / "+this_month+" / "+this_day ;
             string_list.add(temp);
             temp = "";
         }
-        System.out.println(string_list);
         return string_list;
     }
 

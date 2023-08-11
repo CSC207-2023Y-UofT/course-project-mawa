@@ -36,13 +36,13 @@ public class DayView extends JFrame implements Page {
         this.cells = new ArrayList<ShiftCell>();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.dvl = new DayViewLogic(shifts, screenSize.width, (float) (20 * screenSize.height) /30,
+        this.dvl = new DayViewLogic(shifts, screenSize.width, (float) (29 * screenSize.height) /30,
                 user, day);
         setUser(user);
         if (isPayday){
             setBackground(Color.GREEN);
         }
-        dvb = new DayViewBackground(dvl, (float) (20 * screenSize.height) /30, screenSize.width,
+        dvb = new DayViewBackground(dvl, (float) (29 * screenSize.height) /30, screenSize.width,
                 shifts, this, user);
         panel = new JPanel(new BorderLayout());
         panel.add(dvb, BorderLayout.CENTER);
@@ -84,7 +84,12 @@ public class DayView extends JFrame implements Page {
     @Override
     public void update() {
         dvl.update();
-        new DayView(day, weekday,isPayday, dvl.getShifts(), user);
-        dispose();
+        dvb.reload();
+    }
+
+    public static void main(String[] args){
+
+        new DayView(LocalDate.now(),"Fri", true,
+                new ArrayList<Integer>(),1);
     }
 }

@@ -33,10 +33,7 @@ public class MakeShiftForm extends JFrame implements Page {
         double width = screenSize.width/2.5;
         double height = screenSize.height/2;
         setSize(new Dimension((int) width, (int) height));
-        presenter = new MakeShiftFormPresenter(timeField, durationField, submitButton, cancelButton,
-                date, gui);
-        submitButton.addActionListener(presenter);
-        cancelButton.addActionListener(presenter);
+        presenter = new MakeShiftFormPresenter(timeField, durationField, submitButton, date, gui);
         addTitle();
         addContent();
         setContentPane(mainPanel);
@@ -67,6 +64,11 @@ public class MakeShiftForm extends JFrame implements Page {
 
     @Override
     public void setUser(int user) {
+
+    }
+
+    @Override
+    public void dispose() {
 
     }
 

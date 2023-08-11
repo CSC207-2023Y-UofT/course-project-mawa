@@ -14,18 +14,20 @@ import java.util.stream.Collectors;
 
 public class CalendarModel {
     private int year, month, user;
+    private ShiftFileReader shiftDB;
+    private UserFileReader userDB;
 
     public CalendarModel(int year, int month, int user){
         this.year = year;
         this.month = month;
         this.user = user;
+        shiftDB= ShiftFileReader.getInstance();
+        userDB = UserFileReader.getInstance();
     }
 
     public ArrayList<Integer> getShifts(int dayNum){
         LocalDate day = LocalDate.of(year, month, dayNum);
-        ArrayList<Integer> shifts;
-        ShiftFileReader shiftDB= ShiftFileReader.getInstance();
-        UserFileReader userDB = UserFileReader.getInstance();
+        ArrayList<Integer> shifts = new ArrayList<>();
         if (userDB.getType(user).equals("HR")){
             shifts = shiftDB.getIds(day);
         } else{

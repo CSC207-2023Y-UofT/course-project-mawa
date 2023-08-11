@@ -45,16 +45,19 @@ public class DayCell extends JButton implements GUIElement{
             setOpaque(true);
             return;
         }
-        super.paintComponent(g1);
-        /*int x = (int)(2.6 * getWidth() / 3.0);
+        Graphics2D g = (Graphics2D) g1.create();
+        super.paintComponent(g);
+        int x = (int)(2.6 * getWidth() / 3.0);
         ArrayList<Integer> ycoords = presenter.getYcoords();
         if (ycoords.size() > 1){
             for (int y:ycoords) {
-                g1.setColor(Color.RED);
-                g1.fillOval(x , y, getWidth() / 15, getWidth() / 15);
-                g1.drawOval(x, y, getWidth() / 15, getWidth() / 15);
+                g.setColor(Color.RED);
+                g.fillOval(x , y, getWidth() / 15, getWidth() / 15);
+                g.drawOval(x, y, getWidth() / 15, getWidth() / 15);
             }
-        }*/
+        }
+
+        g.dispose();
 
     }
 

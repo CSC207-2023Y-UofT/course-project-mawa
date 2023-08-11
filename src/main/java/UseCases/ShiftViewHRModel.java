@@ -2,6 +2,7 @@ package UseCases;
 
 import Entities.Shift;
 import Entities.User;
+import Entities.UserNotification;
 
 import javax.management.Notification;
 import javax.swing.*;
@@ -26,9 +27,6 @@ public class ShiftViewHRModel{
         getUsers();
         usersToString();
         populateUsersLists();
-        for(int i: shift.getCoworkers()){
-            System.out.print(i);
-        }
     }
 
 
@@ -96,5 +94,30 @@ public class ShiftViewHRModel{
         for(String b: usersNotOnShiftString){
             employeesNotOnShift.addElement(b);
         }
+    }
+
+    public void updateShiftandNotification(){
+        NotificationFileReader nfr = NotificationFileReader.getInstance();
+        UserNotification notif = nfr.getUserNotification(notificationID);
+        ArrayList<Integer> userID = new ArrayList<>();
+        for(int i = 0; i < usersOnShiftString.length; i++){
+            if(employeesOnShift.contains(usersOnShiftString[i])){
+                userID.add(usersOnShift.get(i).getUserNum());
+            }else{
+                if(usersOnShift.get(i).getUserNum() == notif.getSenderId()){
+                    notif.resolve();
+                    UserNotificationInteractor uni = new UserNotificationInteractor();
+                    uni.update(notif);
+                }
+            }
+        }
+        for(int i = 0; i < usersNotOnShiftString.length; i++){
+            if(employeesOnShift.contains(usersNotOnShiftString[i])){
+                userID.add(usersNotOnShift.get(i).getUserNum());
+            }
+        }
+        shift.setCoworkers(userID);
+        ShiftInteractor si = new ShiftInteractor();
+        si.update(shift);
     }
 }

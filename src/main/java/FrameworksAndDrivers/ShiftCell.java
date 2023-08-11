@@ -23,6 +23,7 @@ public class ShiftCell extends JButton implements GUIElement{
         this.user = user;
         presenter = new ShiftCellPresenter(this, shift, user);
         this.addActionListener(presenter);
+        repaint();
     }
     public void paintComponent(Graphics g1) {
         super.paintComponent(g1);

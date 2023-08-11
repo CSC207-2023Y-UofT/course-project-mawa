@@ -41,6 +41,7 @@ public class ShiftView extends JFrame implements Page {
         setContentPane(panel);
         closeButton.addActionListener(presenter);
         this.setVisible(true);
+        repaint();
     }
 
     @Override

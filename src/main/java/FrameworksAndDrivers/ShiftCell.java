@@ -27,7 +27,6 @@ public class ShiftCell extends JButton implements GUIElement{
         setOpaque(true);
         super.paintComponent(g1);
         g1.drawString(presenter.getString(), getWidth()/5, getWidth()/5);
-        g1.dispose();
     }
 
     public int getShift(){

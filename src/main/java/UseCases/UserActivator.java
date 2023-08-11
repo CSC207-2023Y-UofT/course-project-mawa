@@ -6,9 +6,11 @@ import Entities.User;
 
 import java.util.ArrayList;
 
-public class UserController {
+public class UserActivator {
 
     private UserFileReader ufr = UserFileReader.getInstance();
+
+    private UserInteractor ui = new UserInteractor();
 
     public void changeActivation(int IDNum){
         //Obtain the user object corresponding to the given ID, make the desired modification,
@@ -18,22 +20,27 @@ public class UserController {
         ShiftInteractor si = new ShiftInteractor();
         ArrayList<Shift> shifts = si.readData();
         if (ufr.getActive(IDNum)){
+            User user = this.idToUser(IDNum);
             for (Shift shift: shifts){
                 shift.removeCoworker(IDNum); //May need to use a shift factory here.
                 si.update(shift);
             }
-            idToUser(IDNum).setActive(false);
+            user.setActive(false);
+            ui.update(user);
         } else{
-            idToUser(IDNum).setActive(true);
+            User user = this.idToUser(IDNum);
+            user.setActive(true);
+            ui.update(user);
         }
-        ui.update(idToUser(IDNum));
+
+        ui.update(this.idToUser(IDNum));
 
 
     }
 
     public User idToUser(int idNum){
         //Obtain the user object associated with this id, which is needed to change its activation.
-        ArrayList<User> users = new ArrayList();
+        ArrayList<User> users = ui.readData();
         for (User user: users){
             if (user.getUserNum() == idNum){
                 return user;

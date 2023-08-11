@@ -22,19 +22,6 @@ public class Payment {
 
     }
 
-
-    /*public String getPayment_message(){
-
-        if (employee.isActive()==true){
-
-            return payment_message;
-        }
-        else {
-            return "The chosen employee is not currently Active";
-        }
-    }*/ //please move this to a presenter, it should not be in the entity class
-
-
     public int getPaymentId(){return this.paymentId;}
     public void setPayment_message(String message){
         this.payment_message=message;

@@ -38,6 +38,7 @@ public class DayCellPresenter implements ActionListener {
         }
         return ycoords;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         button.nextPage();

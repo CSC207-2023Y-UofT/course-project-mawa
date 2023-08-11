@@ -1,133 +1,83 @@
 package UseCases;
 import Entities.Payment;
-import Entities.Shift;
-import Entities.User;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
-public class PaymentMaker{
+public class PaymentMaker {
 
-    private ArrayList<Payment> paylist;
+    private ArrayList<Integer> userList;
 
-    private ArrayList<User> userlist;
+    private UserFileReader ui;
 
-    private UserInteractor ui = new UserInteractor();
+    private ShiftFileReader si;
 
-    private ShiftInteractor si = new ShiftInteractor();
+    private PaymentFileReader pi;
+    private PaymentInteractor interactor;
 
-    private PaymentInteractor pi = new PaymentInteractor();
-
-    static int numberOfPayments;
-
-    private LocalDateTime currentDate= LocalDateTime.now();
-    private DateTimeFormatter get_month= DateTimeFormatter.ofPattern("MM");
-    private DateTimeFormatter get_year= DateTimeFormatter.ofPattern("yyy");
-    private DateTimeFormatter get_day= DateTimeFormatter.ofPattern("dd");
-
-    private ArrayList<User> emplpoyee_list = ui.readData();
-    private ArrayList<User> salary_worker = new ArrayList<>();
-    private ArrayList<User> wage_worker = new ArrayList<>();
+    private int numberOfPayments;
+    private LocalDateTime currentDate = LocalDateTime.now();
+    private ArrayList<Integer> salary_worker;
+    private ArrayList<Integer> wage_worker;
 
 
-   public PaymentMaker(){
+    public PaymentMaker() {
+        si = ShiftFileReader.getInstance();
+        pi = PaymentFileReader.getInstance();
+        ui = UserFileReader.getInstance();
+        interactor = new PaymentInteractor();
+        userList = ui.getIds();
+        numberOfPayments = pi.getIds().size();
+        salary_worker = new ArrayList<>();
+        wage_worker = new ArrayList<>();
+    }
 
-        PaymentInteractor p = new PaymentInteractor();
-        numberOfPayments = p.readData().size();
-   }
+    public boolean isDoublePayment(){
+        int mostRecentPayment = Collections.max(pi.getIds());
+        return pi.getDate(mostRecentPayment).toLocalDate().isEqual(currentDate.toLocalDate()) ||
+                pi.getDate(mostRecentPayment).toLocalDate().isAfter(currentDate.toLocalDate());
+    }
 
-   public void makePayment(){
+    public void makePayment() {
 
-       String this_month=currentDate.format(get_month);
-       String this_day=currentDate.format(get_day);
+        if (!isDoublePayment()) {
+            for (Integer i : userList) {
+                if (ui.getRole(i).equals(UserTypeConstants.SALARY_WORKER)) {
+                    salary_worker.add(i);
+                } else if (ui.getRole(i).equals(UserTypeConstants.WAGE_WORKER)) {
+                    wage_worker.add(i);
+                }
+            }
+            LocalDate lastFri = LocalDate.from(currentDate.with(TemporalAdjusters.lastInMonth(DayOfWeek.FRIDAY)));
+            if (LocalDate.from(currentDate).isEqual(lastFri)) {
+                for (int sw : salary_worker) {
+                    float pay_amount = ui.getPay(sw) / 12;
+                    interactor.writeData(new Payment(sw, pay_amount, currentDate, numberOfPayments + 1));
+                    numberOfPayments += 1;
+                }
+                for (int ww : wage_worker) {
+                    float pay_amount = wageWorkerMonthlyHours(si.getIds(ww)) * ui.getPay(ww);
+                    interactor.writeData(new Payment(ww, pay_amount, currentDate, numberOfPayments + 1));
+                    numberOfPayments += 1;
+                }
+            }
+        }
+    }
 
-       for (User user : emplpoyee_list) {
-           if (user.getRole().equals("Salary Worker")) {
-               salary_worker.add(user);
-           }
-       }
-       for (User user : emplpoyee_list) {
-           if (user.getRole().equals("Wage Worker")) {
-               wage_worker.add(user);
-           }
-       }
-
-
-
-
-       try {
-
-           if (this_month.equals("1") || this_month.equals("3") || this_month.equals("5")
-                   || this_month.equals("7") || this_month.equals("8") ||this_month=="10"||this_month=="12") {
-               if ( this_day.equals("Friday") &Integer.parseInt(this_day)>=24){
-
-                   for (int i=0; i< salary_worker.size();i++){
-
-                       float pay_amount=salary_worker.get(i).getPay()/12;
-                       pi.writeData(new Payment(salary_worker.get(i).getUserNum(), pay_amount ,currentDate, numberOfPayments + 1));
-                       numberOfPayments += 1;
-
-                   }
-
-               }
-           } else if (this_month.equals("4") || this_month.equals("6") || this_month.equals("9")
-                   || this_month.equals("11")) {
-               if (this_day.equals("Friday") &Integer.parseInt(this_day)>=23){
-
-                   for (int i=0; i< salary_worker.size();i++){
-
-                       float pay_amount=salary_worker.get(i).getPay()/12;
-                       pi.writeData(new Payment(salary_worker.get(i).getUserNum(),pay_amount,currentDate, numberOfPayments + 1));
-                       numberOfPayments += 1;
-
-                   }
-                   for (int i=0; i< wage_worker.size();i++){
-
-                       float pay_amount=wage_Worker_monthly_hour_calculator(si.readData(), wage_worker.get(i)) * wage_worker.get(i).getPay();
-                       pi.writeData(new Payment(wage_worker.get(i).getUserNum(),pay_amount,currentDate, numberOfPayments + 1));
-                       numberOfPayments += 1;
-
-                   }
-               }
-
-           }
-           else {
-               if (this_day.equals("Friday") &Integer.parseInt(this_day)>=21){
-                   for (int i=0; i< salary_worker.size();i++){
-
-                       float pay_amount=salary_worker.get(i).getPay()/12;
-                      pi.writeData(new Payment(salary_worker.get(i).getUserNum(),pay_amount,currentDate, numberOfPayments + 1));
-                      numberOfPayments += 1;
-
-                   }
-                   for (int i=0; i< wage_worker.size();i++){
-
-                       int pay_amount=wage_Worker_monthly_hour_calculator(si.readData(),wage_worker.get(i));
-                       pi.writeData(new Payment(wage_worker.get(i).getUserNum(),pay_amount,currentDate, numberOfPayments + 1));
-                       numberOfPayments += 1;
-
-                   }
-               }
-           }
-
-       } catch (Exception e) {
-           throw new RuntimeException(e);
-       }
-
-
-   }
-   public int wage_Worker_monthly_hour_calculator(ArrayList<Shift> shiftArray, User worker){
-       int monthly_hours=0;
-       for(int i = 0; i <shiftArray.size();i++){
-           if (shiftArray.get(i).getCoworkers().contains(worker)){
-               monthly_hours+=shiftArray.get(i).getDuration();
-           }
-       }
-       return monthly_hours;
-   }
-
-   }
-
-
+    public float wageWorkerMonthlyHours(ArrayList<Integer> shifts) {
+        float hours = 0;
+        for (int s : shifts) {
+            if (si.getDate(s).getMonth().equals(currentDate.getMonth()) &&
+                    si.getDate(s).getYear() == currentDate.getYear()) {
+                hours += si.getDuration(s);
+            }
+        }
+        return hours;
+    }
+}

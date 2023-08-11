@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 
 
 public class EmployeeSummaryGUI implements ActionListener, Page {
@@ -19,6 +20,10 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
 
     private JPanel titlePanel = new JPanel();
 
+
+    private JButton back = new JButton("Back");
+
+    private JPanel backPanel = new JPanel();
     public EmployeeSummaryGUI(int id){
         //Create the UI by storing the viewer, and adding the title, panels.
         this.setUser(id);
@@ -35,7 +40,17 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
         //the particular employee.
         Object source = e.getSource();
         if (presenter.getMap().containsKey(source)){
-            //Open payment history page using the value with source as a key.
+            new PaymentHistory(presenter.getMap().get(source),viewerID);
+            frame.dispose();
+        } else if (presenter.getMap2().containsKey(source)){
+            presenter.makePayment(presenter.getMap2().get(source));
+            JOptionPane.showMessageDialog(null, presenter.getName(presenter.getMap2().get(source)) +
+                            " has been paid for the month of "
+                            + LocalDateTime.now().getMonth() + ".",
+                    "", JOptionPane.INFORMATION_MESSAGE);
+        } else if (source.equals(back)){
+            new ManageEmployeesGUI(viewerID);
+            frame.dispose();
         }
     }
 
@@ -47,7 +62,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
     public void makeHeader(){
         //Before the list of employees, the names of the attributes being shown are displayed at
         //the beginning of the page, hence the label creation here.
-        titlePanel.setLayout(new GridLayout(1, 13));
+        titlePanel.setLayout(new GridLayout(1, 14));
         titlePanel.add(new JLabel("First Name:"));
         titlePanel.add(new JLabel("Surname:"));
         titlePanel.add(new JLabel("Gender:"));
@@ -59,6 +74,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
         titlePanel.add(new JLabel("Type:"));
         titlePanel.add(new JLabel("Salary/Wage:"));
         titlePanel.add(new JLabel("View Payment History:"));
+        titlePanel.add(new JLabel("Make Payment:"));
     }
 
 
@@ -67,13 +83,20 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
     public void addContent() {
         //Add the title panel and those of each employee. Also make the buttons respond to a click.
         JPanel all_panels = new JPanel();
+        backPanel.setLayout(new GridLayout(1, 1));
+        backPanel.add(back);
+        back.addActionListener(this);
         all_panels.setLayout(new BoxLayout(all_panels, BoxLayout.Y_AXIS));
         this.makeHeader();
+        all_panels.add(backPanel);
         all_panels.add(titlePanel);
         for (JPanel panel: presenter.makeEmployeePanels()){
             all_panels.add(panel);
         }
         for (JButton button: presenter.getMap().keySet()){
+            button.addActionListener(this);
+        }
+        for (JButton button: presenter.getMap2().keySet()){
             button.addActionListener(this);
         }
 

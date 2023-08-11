@@ -52,7 +52,7 @@ public class DayViewLogic {
         return areas;
     }
 
-    private ArrayList<ArrayList<Integer>> make2DList(){
+    public ArrayList<ArrayList<Integer>> make2DList(){
         ArrayList<ArrayList<Integer>> shifts2D = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> shifts1 = (ArrayList<Integer>)shifts.clone();
         //know that shifts is already sorted by time
@@ -77,7 +77,7 @@ public class DayViewLogic {
         return (((float) (14 * height) /15) * i / scale + (float) height /30);
     }
 
-    private boolean isOverlapping(Integer shift1, Integer shift2) {
+    public boolean isOverlapping(Integer shift1, Integer shift2) {
         LocalDateTime start1 = reader.getDate(shift1);
         LocalDateTime end1 = reader.getDate(shift1).plus(Duration.ofMinutes((long) (reader.getDuration(shift1)* 60)));
         LocalDateTime start2 = reader.getDate(shift2);

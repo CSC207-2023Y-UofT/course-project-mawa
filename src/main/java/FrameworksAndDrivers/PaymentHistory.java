@@ -28,6 +28,7 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
     private int employer_id;
     private ArrayList<Payment> allpayments;
 
+
     private ArrayList<String> adding_list= new ArrayList<>();
     private PaymentHistoryPresenter presenter= new PaymentHistoryPresenter();
 
@@ -92,7 +93,10 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
         //JScrollPane scroller = new JScrollPane(paymentlist);
         //scroller.setPreferredSize(new Dimension(225, 100));
         //scroller.setAlignmentX(LEFT_ALIGNMENT);
-        // history_panel.add(scroller, BorderLayout.CENTER);
+
+
+       // history_panel.add(scroller, BorderLayout.CENTER);
+
 
         adding_list= presenter.PaymentHistoryPresenter(employee_id);
 

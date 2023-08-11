@@ -14,7 +14,7 @@ public class CalendarGUI extends JFrame implements Page {
     private int month;
     private int year;
     private int user;
-    private JPanel panel;
+    private JPanel panel = new JPanel();
     private ArrayList<Component> headerButtons = new ArrayList<Component>();
     private CalendarPresenter presenter;
     private JPanel panelGrid;
@@ -33,7 +33,7 @@ public class CalendarGUI extends JFrame implements Page {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         addTitle();
         addContent();
-        setVisible(true);
+        this.setVisible(true);
 
     }
 
@@ -85,7 +85,6 @@ public class CalendarGUI extends JFrame implements Page {
 
     @Override
     public void addTitle() {
-        panel = layoutHeader();
         this.setContentPane(panel);
     }
 

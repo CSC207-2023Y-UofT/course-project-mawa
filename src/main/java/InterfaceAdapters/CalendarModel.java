@@ -24,24 +24,32 @@ public class CalendarModel {
         shiftDB= ShiftFileReader.getInstance();
         userDB = UserFileReader.getInstance();
     }
-    public Object[] getDayInfo(int dayNum){
+
+    public ArrayList<Integer> getShifts(int dayNum){
         LocalDate day = LocalDate.of(year, month, dayNum);
-        LocalDate lastFri =  day.with(TemporalAdjusters.lastInMonth(DayOfWeek.FRIDAY));
-        boolean isPayDay = day.isEqual(lastFri);
-        ArrayList<Integer> shifts = null;
+        ArrayList<Integer> shifts = new ArrayList<>();
         if (userDB.getType(user).equals("HR")){
             shifts = shiftDB.getIds(day);
         } else{
-            shifts = (ArrayList<Integer>) List.copyOf(shiftDB.getIds(user).stream()
-                    .distinct()
-                    .filter(shiftDB.getIds(day)::contains)
-                    .collect(Collectors.toSet()));
+            ArrayList<Integer> userShifts = shiftDB.getIds(user);
+            ArrayList<Integer> dayShifts = shiftDB.getIds(day);
+            if (userShifts.size() > 0 && dayShifts.size() > 0){
+                shifts = (ArrayList<Integer>) List.copyOf(userShifts.stream()
+                        .distinct()
+                        .filter(dayShifts::contains)
+                        .collect(Collectors.toSet()));
+            } else{
+                shifts = new ArrayList<Integer>();
+            }
         }
+        return shifts;
+    }
 
-        Object[] dayInfo = new Object[CalendarConstants.dayFormat.length];
-        dayInfo[CalendarConstants.dayInfoPayDay] = isPayDay;
-        dayInfo[CalendarConstants.dayInfoShifts] = shifts;
-        return(dayInfo);
+    public boolean isPayDay(int dayNum){
+        LocalDate day = LocalDate.of(year, month, dayNum);
+        LocalDate lastFri =  day.with(TemporalAdjusters.lastInMonth(DayOfWeek.FRIDAY));
+        boolean isPayDay = day.isEqual(lastFri);
+        return isPayDay;
     }
 
     public void setYear(int year){

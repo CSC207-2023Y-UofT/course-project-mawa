@@ -8,9 +8,9 @@ public final class CalendarConstants {
         // restrict instantiation
     }
 
-    public static final String[] months = new String[]{"January", "February", "March",
-            "April", "May", "June", "July", "August", "September", "October", "November",
-            "December"};
+    public static final String[] months = new String[]{"JANUARY", "FEBRUARY", "MARCH",
+            "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER",
+            "DECEMBER"};
     public static final String[] days = new String[]{"Mon.", "Tues.", "Wed.", "Thur.",
             "Fri.", "Sat.", "Sun."};
     

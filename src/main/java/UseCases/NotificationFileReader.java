@@ -53,6 +53,16 @@ public class NotificationFileReader{
         return ids;
     }
 
+    public ArrayList<Integer> getIds(int shift){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (UserNotification u:list){
+            if(u.getShiftId() == shift){
+                ids.add(u.getNotifId());
+            }
+        }
+        return ids;
+    }
+
     public ArrayList<Integer> getIdsBySender(int id){
         ArrayList<Integer> ids = new ArrayList<>();
         for (UserNotification u:list){

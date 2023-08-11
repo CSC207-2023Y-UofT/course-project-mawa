@@ -9,26 +9,27 @@ import java.awt.*;
 public class ShiftCell extends JButton implements GUIElement{
     private int shift;
     private Color colour;
-    private ShiftFileReader reader;
     private Page gui;
     private int user;
     private ShiftCellPresenter presenter;
+    private float width;
 
-    public ShiftCell(int shift, Page gui, int user){
+    public ShiftCell(int shift, Page gui, int user, float width){
         super();
         this.shift = shift;
-        this.colour = Color.cyan;
+        this.width = width;
+        this.colour = new Color((int)(Math.random() * 0x1000000));
         this.gui = gui;
         this.user = user;
         presenter = new ShiftCellPresenter(this, shift, user);
+        this.addActionListener(presenter);
+        repaint();
     }
     public void paintComponent(Graphics g1) {
+        super.paintComponent(g1);
+        g1.drawString(presenter.getString(), (int) (width/5), (int) (width/5));
         setBackground(colour);
         setOpaque(true);
-        Graphics2D g = (Graphics2D) g1.create();
-        super.paintComponent(g);
-        g.drawString(presenter.getString(), getWidth()/5, getWidth()/5);
-        g.dispose();
     }
 
     public int getShift(){
@@ -37,9 +38,17 @@ public class ShiftCell extends JButton implements GUIElement{
 
     @Override
     public void nextPage() {
-        new ShiftView(shift, user);
-        gui.dispose();
+        if (presenter.isHR()){
+            new ShiftViewHRGUI(shift);
+        }else {
+            new ShiftView(shift, user);
+        }
     }
+
+    /*@Override
+    public void nextPage() {
+        new ShiftView(shift, user);
+    }*/
 
     @Override
     public String getContent() {

@@ -1,10 +1,11 @@
 package InterfaceAdapters;
 
-import UseCases.ShiftFileReader;
-import UseCases.ShiftSorter;
+import Entities.User;
+import UseCases.*;
 
 import java.awt.*;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -13,16 +14,41 @@ public class DayViewLogic {
     private ArrayList<Integer> shifts;
     private float width, height;
     private ShiftFileReader reader;
-    public DayViewLogic(ArrayList<Integer> shifts, float width, float height){
+    private int user;
+    private UserFileReader ureader;
+    private LocalDate date;
+    public DayViewLogic(ArrayList<Integer> shifts, float width, float height, int user,
+                        LocalDate date){
         this.shifts = ShiftSorter.sortShiftsByDate(shifts);
         this.width = width;
         this.height = height;
+        this.user = user;
+        this.date = date;
         reader = ShiftFileReader.getInstance();
+        ureader = UserFileReader.getInstance();
+    }
+
+    public boolean isHR(){
+        return ureader.getType(user).equals(UserTypeConstants.HR);
     }
 
     public int[] getTimeRange(){
-        return (new int[] {Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2),
-                Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour() + 2)});
+        if (shifts.size() > 0){
+            return (new int[] {Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2),
+                    Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour() + 2)});
+        } else{
+            return (new int[] {8,18});
+        }
+
+    }
+
+    public void update(){
+        ShiftFileReader sReader = ShiftFileReader.getInstance();
+        shifts = sReader.getIds(date);
+    }
+
+    public ArrayList<Integer> getShifts(){
+        return shifts;
     }
 
     public ArrayList<Integer> getHours(){

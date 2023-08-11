@@ -11,9 +11,12 @@ public class HomeButton extends JButton implements ActionListener {
     private Page currPage;
     private int userId;
     public HomeButton(Page currPage, int userId){
+        super();
+        this.setText("Home");
         this.addActionListener(this);
         this.currPage = currPage;
         this.userId = userId;
+        setVisible(true);
     }
 
 

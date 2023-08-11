@@ -18,17 +18,19 @@ public class RequestForm extends JFrame implements Page {
     private RequestFormPresenter presenter;
 
     public RequestForm(LocalDateTime t1, LocalDateTime t2, int employee, int shift){
+        this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         this.time1 = t1;
         this.time2 = t2;
         this.submitButton = new CloseButton(this, "Submit Time Off Request");
         this.cancelButton = new CloseButton(this, "Cancel");
         this.shift = shift;
         setUser(employee);
-        panel = new JPanel(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        double width = screenSize.getWidth()/2.5;
-        double height = screenSize.getHeight()/2;
-        setPreferredSize(new Dimension((int) width, (int) height));
+        double width = screenSize.width/2.5;
+        double height = screenSize.height/2;
+        setSize(new Dimension((int) width, (int) height));
         addTitle();
         addHomeButton();
         addContent();

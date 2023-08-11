@@ -1,12 +1,16 @@
 package InterfaceAdapters;
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Objects;
 
 
-public class CalendarPresenter implements ItemListener {
+public class CalendarPresenter implements ActionListener {
     private int year, month, user;
     private String[] yearRange;
     private Page gui;
@@ -32,8 +36,21 @@ public class CalendarPresenter implements ItemListener {
     }
 
     @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == yearSelector){
+            model.setYear(Integer.parseInt(Objects.requireNonNull(yearSelector.getContent())));
+            gui.update();
+            year = model.getYear();
+        } else if (e.getSource() == monthSelector){
+            model.setMonth(Month.valueOf((String) Objects.requireNonNull(monthSelector.getContent())).getValue());
+            gui.update();
+            month = model.getMonth();
+        }
+    }
+
+    /*@Override
     public void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == ItemEvent.DESELECTED){
+        if (e.getStateChange() == ItemEvent.SELECTED){
             if(e.getItem() == yearSelector){
                 model.setYear(Integer.parseInt(Objects.requireNonNull(yearSelector.getContent())));
                 gui.update();
@@ -45,5 +62,5 @@ public class CalendarPresenter implements ItemListener {
                 month = model.getMonth();
             }
         }
-    }
+    }*/
 }

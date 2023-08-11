@@ -5,8 +5,10 @@ import UseCases.ShiftSorter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DayCellPresenter implements ActionListener {
     private Page gui;
@@ -15,8 +17,11 @@ public class DayCellPresenter implements ActionListener {
     private boolean isPayDay;
     private ShiftFileReader reader;
     private GUIElement button;
+    private String day;
 
-    public DayCellPresenter(Page gui, GUIElement button, float width, float height, ArrayList<Integer> shifts){
+    public DayCellPresenter(Page gui, GUIElement button, float width, float height, ArrayList<Integer> shifts,
+                            String day){
+        this.day = day;
         reader = ShiftFileReader.getInstance();
         this.width = width;
         this.height = height;
@@ -26,7 +31,6 @@ public class DayCellPresenter implements ActionListener {
     }
 
     public ArrayList<Integer> getYcoords(){
-        ArrayList<Integer> sortedShifts = ShiftSorter.sortShiftsByDate(shifts);
         ArrayList<Integer> ycoords = new ArrayList<>();
         ycoords.add(0);
         for (int i:shifts) {
@@ -41,7 +45,9 @@ public class DayCellPresenter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        button.nextPage();
-        gui.dispose();
+        if (e.getSource().equals(button) && !day.equals("")){
+            button.nextPage();
+            gui.dispose();
+        }
     }
 }

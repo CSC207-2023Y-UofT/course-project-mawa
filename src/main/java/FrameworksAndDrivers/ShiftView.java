@@ -26,6 +26,7 @@ public class ShiftView extends JFrame implements Page {
         addContent();
         this.presenter = new ShiftPresenter(shift, this, timeOffButton, employee);
         this.date = presenter.getDate();
+        this.setVisible(true);
     }
 
     @Override

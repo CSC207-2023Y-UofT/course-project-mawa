@@ -1,4 +1,5 @@
 package InterfaceAdapters;
+import UseCases.PaymentMaker;
 import UseCases.UserFileReader;
 
 import javax.swing.*;
@@ -11,13 +12,15 @@ public class EmployeeSummaryPresenter{
     //Each button must correspond to a different employee, so this maps makes that association.
     private HashMap<JButton, Integer> payHistButtonsToIDs = new HashMap<JButton, Integer>();
 
+    private HashMap<JButton, Integer> payButtonsToIDs = new HashMap<JButton, Integer>();
+
     private UserFileReader fr = UserFileReader.getInstance();
 
     public JPanel makeEmployeePanel(int id) {
         //Make a panel containing all of an employee's information, with a button at the end that
         //Corresponds to that employee.
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 13));
+        panel.setLayout(new GridLayout(1, 14));
         panel.add(new JLabel(fr.getFirstName(id)));
         panel.add(new JLabel(fr.getSurname(id)));
         panel.add(new JLabel(fr.getGender(id)));
@@ -31,7 +34,10 @@ public class EmployeeSummaryPresenter{
         panel.add(new JLabel(Float.toString(fr.getPay(id))));
         JButton d = new JButton("View Payment History");
         payHistButtonsToIDs.put(d, id);
+        JButton c = new JButton("Pay For the Month");
+        payButtonsToIDs.put(c, id);
         panel.add(d);
+        panel.add(c);
         return panel;
 
     }
@@ -52,6 +58,18 @@ public class EmployeeSummaryPresenter{
 
     public HashMap<JButton, Integer> getMap(){
         return this.payHistButtonsToIDs;
+    }
+
+    public HashMap<JButton, Integer> getMap2() {return this.payButtonsToIDs;}
+
+    public void makePayment(int id){
+        PaymentMaker p = new PaymentMaker();
+        //p.makePayment(id);
+    }
+
+    public String getName(int id){
+        UserFileReader ufr = UserFileReader.getInstance();
+        return ufr.getFirstName(id) + " " + ufr.getSurname(id);
     }
 
 }

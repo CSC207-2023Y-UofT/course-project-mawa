@@ -88,7 +88,7 @@ public class HomePage implements ActionListener, Page {
                     frame.dispose();
                     break;
                 case "View Payment History":
-                    //Open the employees' payment history.
+                    new PaymentHistory(userID, 1);
                     frame.dispose();
                     break;
             }

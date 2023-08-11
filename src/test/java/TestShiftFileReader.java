@@ -17,7 +17,7 @@ public class TestShiftFileReader {
     private List<Shift> list;
     private List<Integer> idList;
     @BeforeAll
-    void setUp(){
+    public void setUp(){
         reader = ShiftFileReader.getInstance();
         interactor = new ShiftInteractor();
         list = Instancio.ofList(Shift.class).size(10).create();
@@ -28,32 +28,32 @@ public class TestShiftFileReader {
         }
     }
     @Test
-    void testUpdate(){
+    public void testUpdate(){
         reader.update();
         assertEquals(reader.getIds().size(), list.size(), "update should provide new data.");
     }
 
     @Test
-    void testCheckShift(){
+    public void testCheckShift(){
         reader.checkShift(idList.get(0));
         assertEquals(list.get(0), reader.getShift(idList.get(0)),
                 "checkShift should produce the same shift as indicated by the id inputted.");
     }
     @Test
-    void testGetCoworkers(){
+    public void testGetCoworkers(){
         assertEquals(list.get(0).getCoworkers(), reader.getCoworkers(idList.get(0)),
                 "The coworker id list fetched from ShiftFileReader should be the same" +
                         "as the object's coworker attribute.");
     }
     @Test
-    void testGetAllIds(){
+    public void testGetAllIds(){
         assertEquals(idList, reader.getIds(),
                 "The id lst retrieved from ShiftFileReader should be the same as a list " +
                         "of ids from the complete shift list.");
     }
 
     @Test
-    void testGetIdsByEmpId(){
+    public void testGetIdsByEmpId(){
         int empId = 444;
         list.get(1).addCoworker(empId);
         list.get(3).addCoworker(empId);

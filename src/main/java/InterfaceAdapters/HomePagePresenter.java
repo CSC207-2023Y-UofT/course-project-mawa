@@ -1,5 +1,5 @@
 package InterfaceAdapters;
-import UseCases.UserController;
+
 import UseCases.UserFileReader;
 
 import javax.swing.*;
@@ -12,7 +12,6 @@ public class HomePagePresenter {
     public ArrayList<JButton> makeHomeButtons(int id){
         //Return a list of buttons which are displayed on the homepage, depending if the providec
         //id represents an HR or employee account.
-        UserController uc = new UserController();
         ArrayList<JButton> buttons = new ArrayList<>();
         buttons.add(new JButton("Schedule"));
         buttons.add(new JButton("Notification Center"));

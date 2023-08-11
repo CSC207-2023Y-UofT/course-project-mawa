@@ -23,22 +23,31 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
     public NotificationHRListModel unresolvedNotificationListModel;
     public NotificationHRListModel resolvedNotificationListModel;
     public UserNotificationPresenter presenter;
+    public int user;
     public NotificationHRGUI(int userID) {
+        user = userID;
+        JPanel lowerPanel = new JPanel();
+        JButton homeButton = new JButton("HomeButton");
         this.unresolvedNotificationListModel = new NotificationHRListModel(userID, false);
         this.resolvedNotificationListModel = new NotificationHRListModel(userID, true);
-        this.frame.setLayout(new GridLayout(1, 2));
+        lowerPanel.setLayout(new GridLayout(1, 2));
+        this.frame.setLayout(new BorderLayout());
+
         denyRequestButton.setActionCommand("Deny");
         denyRequestButton.addActionListener(this);
         rescheduleShiftButton.setActionCommand("Reschedule");
         rescheduleShiftButton.addActionListener(this);
-        this.unresolvedNotificationList = new JList<String>(unresolvedNotificationListModel.listModel);
-        this.resolvedNotificationList = new JList<String>(resolvedNotificationListModel.listModel);
+        homeButton.setActionCommand("home");
+        homeButton.addActionListener(this);
+
+        this.unresolvedNotificationList = new JList<String>(unresolvedNotificationListModel.getListModel());
+        this.resolvedNotificationList = new JList<String>(resolvedNotificationListModel.getListModel());
         this.unresolvedNotificationListScroller = new JScrollPane(this.unresolvedNotificationList);
         this.resolvedNotificationListScroller = new JScrollPane(this.resolvedNotificationList);
         this.presenter = new UserNotificationPresenter(userID, unresolvedNotificationListModel, resolvedNotificationListModel);
-        this.frame.add(new NotificationListPanelBuilder(frame, unresolvedNotificationLabel, unresolvedNotificationList,
+        lowerPanel.add(new NotificationListPanelBuilder(frame, unresolvedNotificationLabel, unresolvedNotificationList,
                 unresolvedNotificationListScroller, rescheduleShiftButton, denyRequestButton).panel);
-        this.frame.add(new NotificationListPanelBuilder(frame, resolvedNotificationLabel, resolvedNotificationList,
+        lowerPanel.add(new NotificationListPanelBuilder(frame, resolvedNotificationLabel, resolvedNotificationList,
                 resolvedNotificationListScroller, true).panel);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);
@@ -49,11 +58,12 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("Reschedule".equals(e.getActionCommand())) {
-            presenter.rescheduleUpdateListModel(unresolvedNotificationList.getSelectedValue());
+            //presenter.rescheduleUpdateListModel(unresolvedNotificationList.getSelectedValue());
+            new ShiftViewHRGUI(presenter.NotificationID(unresolvedNotificationList.getSelectedValue()), user);
+            this.dispose();
         }
         if ("Deny".equals(e.getActionCommand())) {
             presenter.denyUpdateListModel(unresolvedNotificationList.getSelectedValue());
         }
-
     }
 }

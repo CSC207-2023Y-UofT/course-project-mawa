@@ -17,6 +17,7 @@ dependencies {
     implementation 'org.instancio:instancio-parent:3.0.0'
     testImplementation('org.junit.jupiter:junit-jupiter:5.6.0')
     implementation('org.hibernate:hibernate-core:5.6.1.Final')
+    testImplementation('org.mockito:mockito-core:5.2.0')
 }
 
 test {

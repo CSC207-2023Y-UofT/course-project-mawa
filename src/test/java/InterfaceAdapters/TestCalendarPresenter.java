@@ -1,16 +1,15 @@
 package InterfaceAdapters;
 
-import static org.mockito.Mockito.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-
 import java.awt.event.ActionEvent;
 import java.time.Month;
+
+import static org.mockito.Mockito.*;
 
 
 class TestCalendarPresenter {
@@ -30,14 +29,14 @@ class TestCalendarPresenter {
     private CalendarPresenter calendarPresenter;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
 
         calendarPresenter = new CalendarPresenter(mockGui, mockModel, mockYearSelector, mockMonthSelector);
     }
 
     @Test
-    void testActionPerformedYearSelector() {
+    public void testActionPerformedYearSelector() {
         when(mockYearSelector.getContent()).thenReturn("2023");
 
         ActionEvent mockActionEvent = mock(ActionEvent.class);
@@ -50,7 +49,7 @@ class TestCalendarPresenter {
     }
 
     @Test
-    void testActionPerformedMonthSelector() {
+    public void testActionPerformedMonthSelector() {
         when(mockMonthSelector.getContent()).thenReturn("AUGUST"); // Replace with valid month name
 
         ActionEvent mockActionEvent = mock(ActionEvent.class);

@@ -84,7 +84,6 @@ public class ShiftView extends JFrame implements Page {
 
     @Override
     public void update() {
-
         new RequestForm(date, date.plusHours((long) presenter.getDuration()), employee, shift);
     }
 

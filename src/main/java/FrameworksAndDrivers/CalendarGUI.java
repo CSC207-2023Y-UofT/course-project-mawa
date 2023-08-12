@@ -6,6 +6,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import InterfaceAdapters.*;
 
+/**
+ * The CalendarGUI class represents a graphical user interface for displaying a calendar.
+ * It extends JFrame and implements the Page interface.
+ */
 public class CalendarGUI extends JFrame implements Page {
     private LocalDate firstDay, lastDay;
     private int numSections;
@@ -20,6 +24,13 @@ public class CalendarGUI extends JFrame implements Page {
     private JPanel panelGrid;
     private String[] yearRange;
 
+    /**
+     * Constructs a CalendarGUI object.
+     *
+     * @param month The month to display.
+     * @param year The year to display.
+     * @param user The user viewing the GUI.
+     */
     public CalendarGUI(int month, int year, int user){
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         yearRange = new String[]{String.valueOf(year - 3), String.valueOf(year - 2),
@@ -30,8 +41,8 @@ public class CalendarGUI extends JFrame implements Page {
         this.firstDay = LocalDate.of(year, month, 1);
         this.lastDay = LocalDate.of(year, month, firstDay.lengthOfMonth());
         setUser(user);
-        monthList = new CustomComboBox(CalendarConstants.months);
-        yearList = new CustomComboBox(yearRange);
+        monthList = new CustomComboBox<String>(CalendarConstants.months);
+        yearList = new CustomComboBox<String>(yearRange);
         //this.panel = new JPanel(new BorderLayout());
         this.model = new CalendarModel(this.year, this.month, this.user);
         this.presenter = new CalendarPresenter(this.year, this.month, this.user,
@@ -44,6 +55,11 @@ public class CalendarGUI extends JFrame implements Page {
 
     }
 
+    /**
+     * Creates the panel that displays calendar days.
+     *
+     * @return A JPanel containing the calendar days.
+     */
     private JPanel layoutDays(){
         numSections = 7 +
                 (int)Math.ceil((firstDay.lengthOfMonth() + firstDay.getDayOfWeek().getValue() - 1) / 7) * 7;
@@ -70,14 +86,18 @@ public class CalendarGUI extends JFrame implements Page {
         }
         return panelGrid;
     }
+
+    /**
+     * Creates the panel layout for the header section.
+     *
+     * @return A JPanel containing the header components.
+     */
     private JPanel layoutHeader() {
         JPanel pageLayout = new JPanel(new BorderLayout());
         monthList.setSelectedItem(CalendarConstants.months[month - 1]);
-        //monthList.addItemListener(presenter);
         monthList.addActionListener(presenter);
         headerButtons.add(monthList);
         yearList.setSelectedItem(String.valueOf(year));
-        //yearList.addItemListener(presenter);
         yearList.addActionListener(presenter);
         headerButtons.add(yearList);
         addHomeButton();
@@ -88,9 +108,6 @@ public class CalendarGUI extends JFrame implements Page {
         pageLayout.add(headerPanel, BorderLayout.PAGE_START);
         return pageLayout;
     }
-
-
-
     @Override
     public void addTitle() {
         panel = layoutHeader();
@@ -116,6 +133,10 @@ public class CalendarGUI extends JFrame implements Page {
         headerButtons.add(hb);
     }
 
+    /**
+     * Updates the calendar display with new data (by creating new instance) due to
+     * changing the selected month or year.
+     */
     @Override
     public void update() {
         setYear(model.getYear());

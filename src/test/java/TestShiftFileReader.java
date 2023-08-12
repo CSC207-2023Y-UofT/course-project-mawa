@@ -2,8 +2,9 @@ import Entities.Shift;
 import UseCases.ShiftFileReader;
 import UseCases.ShiftInteractor;
 import org.instancio.Instancio;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class TestShiftFileReader {
     private ShiftInteractor interactor;
     private List<Shift> list;
     private List<Integer> idList;
-    @BeforeAll
+    @BeforeEach
     public void setUp(){
         reader = ShiftFileReader.getInstance();
         interactor = new ShiftInteractor();

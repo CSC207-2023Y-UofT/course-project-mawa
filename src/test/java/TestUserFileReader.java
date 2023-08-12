@@ -2,8 +2,9 @@ import Entities.User;
 import UseCases.UserFileReader;
 import UseCases.UserInteractor;
 import org.instancio.Instancio;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class TestUserFileReader {
     private UserInteractor interactor;
     private List<User> list;
     private List<Integer> idList;
-    @BeforeAll
+    @BeforeEach
     public void setUp(){
         reader = UserFileReader.getInstance();
         interactor = new UserInteractor();

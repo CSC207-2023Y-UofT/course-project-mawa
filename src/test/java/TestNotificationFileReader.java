@@ -2,7 +2,8 @@ import Entities.UserNotification;
 import UseCases.NotificationFileReader;
 import UseCases.UserNotificationInteractor;
 import org.instancio.Instancio;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class TestNotificationFileReader {
     private UserNotificationInteractor interactor;
     private List<UserNotification> list;
     private List<Integer> idList;
-    @BeforeAll
+    @BeforeEach
     public void setUp(){
         reader = NotificationFileReader.getInstance();
         interactor = new UserNotificationInteractor();

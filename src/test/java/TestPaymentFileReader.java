@@ -2,8 +2,9 @@ import Entities.Payment;
 import UseCases.PaymentFileReader;
 import UseCases.PaymentInteractor;
 import org.instancio.Instancio;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class TestPaymentFileReader {
     private PaymentInteractor interactor;
     private List<Payment> list;
     private List<Integer> idList;
-    @BeforeAll
+    @BeforeEach
     public void setUp(){
         reader = PaymentFileReader.getInstance();
         interactor = new PaymentInteractor();

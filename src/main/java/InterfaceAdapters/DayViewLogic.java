@@ -1,21 +1,32 @@
 package InterfaceAdapters;
 
-import Entities.User;
-import FrameworksAndDrivers.RequestForm;
 import UseCases.*;
 
 import java.awt.*;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * The DayViewLogic class provides logic for the DayView component.
+ * It handles time ranges, and ShiftCell positions.
+ */
 public class DayViewLogic {
 
     private ArrayList<Integer> shifts;
     private float width, height;
     private int user;
     private LocalDate date;
+
+    /**
+     * Constructs a DayViewLogic object.
+     *
+     * @param shifts The list of shift Ids.
+     * @param width The width of the render area.
+     * @param height The height of the render area.
+     * @param user The user associated with the view.
+     * @param date The LocalDate representing the date of the DayView.
+     */
     public DayViewLogic(ArrayList<Integer> shifts, float width, float height, int user,
                         LocalDate date){
         this.shifts = new ShiftSorter().sortShiftsByDate(shifts);
@@ -26,11 +37,22 @@ public class DayViewLogic {
         this.date = date;
     }
 
+    /**
+     * Checks if the user associated with the view is an HR user.
+     *
+     * @return true if the user is HR, false otherwise.
+     */
+
     public boolean isHR(){
         UserFileReader ureader = UserFileReader.getInstance();
         return ureader.getType(user).equals(UserTypeConstants.HR);
     }
 
+    /**
+     * Gets the time range to display based on the shifts.
+     *
+     * @return An array containing the start and end hours of the time range.
+     */
     public int[] getTimeRange(){
         if (shifts.size() > 0){
             ShiftFileReader reader = ShiftFileReader.getInstance();
@@ -43,16 +65,29 @@ public class DayViewLogic {
 
     }
 
+    /**
+     * Updates the shifts to be associated with the view.
+     */
     public void update(){
         ShiftFileReader sReader = ShiftFileReader.getInstance();
         shifts = sReader.getIds(date);
         shifts = new ShiftSorter().sortShiftsByDate(shifts);
     }
 
+    /**
+     * Gets the list of shifts.
+     *
+     * @return The list of shifts.
+     */
     public ArrayList<Integer> getShifts(){
         return shifts;
     }
 
+    /**
+     * Gets the list of all hours within the time range.
+     *
+     * @return The list of hours.
+     */
     public ArrayList<Integer> getHours(){
         int[] timeRange = getTimeRange();
         ArrayList<Integer> allHours = new ArrayList<Integer>();
@@ -62,11 +97,20 @@ public class DayViewLogic {
         return allHours;
     }
 
+    /**
+     * Gets the position of shift cells within the view.
+     *
+     * @return The list of Rectangles representing cell positions.
+     */
     public ArrayList<Rectangle> getShiftCellPosition(){
         ArrayList<Rectangle> areas = new ArrayList<Rectangle>();
         int[] timeRange = getTimeRange();
-        ArrayList<ArrayList<Integer>> shifts2D = make2DList();
-        float increment = (float) (14 * height / 15) /(timeRange[1] - timeRange[0]);
+        ArrayList<ArrayList<Integer>> shifts2D = DayViewModel.make2DList(shifts);
+        ArrayList<Integer> newShifts = new ArrayList<>();
+        for(ArrayList<Integer> a : shifts2D){
+            newShifts.addAll(a);
+        }
+        this.shifts = newShifts;
         for (ArrayList<Integer> s0 : shifts2D){
             for(int i = 0; i < s0.size(); i++){
                 ShiftFileReader reader = ShiftFileReader.getInstance();
@@ -75,53 +119,15 @@ public class DayViewLogic {
                 int mins = (int) ((reader.getDuration(s) - hours) * 60);
                 LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
                 Rectangle area = new Rectangle((int) (width /10 + i * 8 * width / 10 / s0.size()),
-                        (int) (yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float)(reader.getDate(s).getMinute())/60,
-                                                        timeRange[1] - timeRange[0])),
+                        (int) (DayViewModel.yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float)(reader.getDate(s).getMinute())/60,
+                                                        timeRange[1] - timeRange[0], height)),
                         (int) ((float) 8 * width / 10 / s0.size()),
-                        (int) yCoord(reader.getDuration(s) + 1 + (float)time2.getMinute()/60,
-                                timeRange[1] - timeRange[0]));
+                        (int) DayViewModel.yCoord(reader.getDuration(s) + 1 + (float)time2.getMinute()/60,
+                                timeRange[1] - timeRange[0], height));
                 areas.add(area);
             }
         }
         return areas;
-    }
-
-    private float yCoord(float i, float scale){
-        return (( (14 * height) /15) * i / scale + height /30);
-    }
-
-    public ArrayList<ArrayList<Integer>> make2DList(){
-        ArrayList<ArrayList<Integer>> shifts2D = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> shifts1 = new ArrayList<>(shifts);
-        //know that shifts is already sorted by time
-        while(shifts1.size() > 0){
-            ArrayList<Integer> overlappingShifts = new ArrayList<Integer>();
-            overlappingShifts.add(shifts1.get(0));
-            shifts1.remove(0);
-            for (int j = 0; j < shifts1.size(); j ++){
-                if (isOverlapping(overlappingShifts.get(0), shifts1.get(j))){
-                    overlappingShifts.add(shifts1.get(j));
-                    shifts1.remove(j);
-                }
-            }
-            shifts2D.add(overlappingShifts);
-        }
-        ArrayList<Integer> newShifts = new ArrayList<>();
-        for(ArrayList<Integer> a : shifts2D){
-            newShifts.addAll(a);
-        }
-        this.shifts = newShifts;
-        return shifts2D;
-    }
-
-    public boolean isOverlapping(Integer shift1, Integer shift2) {
-
-        ShiftFileReader reader = ShiftFileReader.getInstance();
-        LocalDateTime start1 = reader.getDate(shift1);
-        LocalDateTime end1 = reader.getDate(shift1).plus(Duration.ofMinutes((long) (reader.getDuration(shift1)* 60)));
-        LocalDateTime start2 = reader.getDate(shift2);
-        LocalDateTime end2 = reader.getDate(shift2).plus(Duration.ofMinutes((long) (reader.getDuration(shift2) * 60)));
-        return (start1.isBefore(end2) && start2.isBefore(end1) && !shift1.equals(shift2));
     }
 
 }

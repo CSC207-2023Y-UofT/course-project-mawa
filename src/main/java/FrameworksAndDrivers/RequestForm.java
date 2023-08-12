@@ -1,29 +1,35 @@
 package FrameworksAndDrivers;
-
-
-import FrameworksAndDrivers.HomeButton;
 import InterfaceAdapters.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
-
+/**
+ * The RequestForm class represents a graphical user interface for submitting a time off request.
+ * It extends JFrame and implements the Page interface.
+ */
 public class RequestForm extends JFrame implements Page {
-    private int employee, shift;
+    private int employee;
     private LocalDateTime time1, time2;
     private JLabel startField, endField;
     private CustomTextField reasonField;
     private CloseButton submitButton, cancelButton;
     private JPanel panel, titlePanel;
     private RequestFormPresenter presenter;
-
+    /**
+     * Constructs a RequestForm object.
+     *
+     * @param t1 The start time of the time off request.
+     * @param t2 The end time of the time off request.
+     * @param employee The ID of the employee submitting the request.
+     * @param shift The ID of the shift associated with the request.
+     */
     public RequestForm(LocalDateTime t1, LocalDateTime t2, int employee, int shift){
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         this.time1 = t1;
         this.time2 = t2;
         this.submitButton = new CloseButton(this, "Submit Time Off Request");
         this.cancelButton = new CloseButton(this, "Cancel");
-        this.shift = shift;
         setUser(employee);
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));

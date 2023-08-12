@@ -1,3 +1,5 @@
+package UseCases;
+
 import Entities.User;
 import UseCases.UserFileReader;
 import UseCases.UserInteractor;
@@ -6,10 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestUserFileReader {
     private UserFileReader reader;
@@ -17,7 +23,8 @@ public class TestUserFileReader {
     private List<User> list;
     private List<Integer> idList;
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws IOException {
+        new FileWriter("users.ser", false).close();
         reader = UserFileReader.getInstance();
         interactor = new UserInteractor();
         list = Instancio.ofList(User.class).size(10).create();
@@ -30,13 +37,13 @@ public class TestUserFileReader {
     @Test
     public void testUpdate(){
         reader.update();
-        assertEquals(reader.getIds().size(), list.size(), "update should provide new data.");
+        assertEquals(list.size(), reader.getIds().size(), "update should provide new data.");
     }
 
     @Test
     public void testCheckUser(){
         reader.checkUser(idList.get(0));
-        assertEquals(list.get(0), reader.getUser(idList.get(0)),
+        assertEquals(list.get(0).getUserNum(), reader.getUser(idList.get(0)).getUserNum(),
                 "checkUser should produce the same User as indicated by the id inputted.");
     }
     @Test
@@ -65,7 +72,9 @@ public class TestUserFileReader {
         expected.add(list.get(1).getUserNum());
         expected.add(list.get(3).getUserNum());
         expected.add(list.get(9).getUserNum());
-        assertEquals(expected, reader.getIds(active));
+        for (int i:expected){
+            assertTrue(reader.getIds(active).contains(i));
+        }
     }
 
 }

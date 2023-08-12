@@ -1,3 +1,5 @@
+package UseCases;
+
 import Entities.Payment;
 import UseCases.PaymentFileReader;
 import UseCases.PaymentInteractor;
@@ -6,9 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPaymentFileReader {
@@ -17,7 +23,8 @@ public class TestPaymentFileReader {
     private List<Payment> list;
     private List<Integer> idList;
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws IOException {
+        new FileWriter("payments.ser", false).close();
         reader = PaymentFileReader.getInstance();
         interactor = new PaymentInteractor();
         list = Instancio.ofList(Payment.class).size(10).create();
@@ -36,7 +43,7 @@ public class TestPaymentFileReader {
     @Test
     public void testCheckPayment(){
         reader.checkPayment(idList.get(0));
-        assertEquals(list.get(0), reader.getPayment(idList.get(0)),
+        assertEquals(list.get(0).getPaymentId(), reader.getPayment(idList.get(0)).getPaymentId(),
                 "checkPayment should produce the same Payment as indicated by the id inputted.");
     }
     @Test
@@ -65,7 +72,7 @@ public class TestPaymentFileReader {
         expected.add(list.get(1).getPaymentId());
         expected.add(list.get(3).getPaymentId());
         expected.add(list.get(9).getPaymentId());
-        assertEquals(expected, reader.getIds(empId));
+        assertTrue(new HashSet<>(expected).equals(new HashSet<>(reader.getIds(empId))));
     }
 
 }

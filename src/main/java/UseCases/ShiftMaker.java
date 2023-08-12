@@ -9,6 +9,8 @@ import java.util.ArrayList;
  * The ShiftMaker class provides a method for creating shifts.
  */
 public class ShiftMaker {
+    public ShiftInteractor interactor  = new ShiftInteractor();
+    public ShiftFileReader reader = ShiftFileReader.getInstance();
     private LocalDateTime date;
     private float duration;
 
@@ -28,8 +30,6 @@ public class ShiftMaker {
      * @throws InvalidTimeException If the shift's end time is not on the same date as the start time.
      */
     public void makeShift() throws InvalidTimeException {
-        ShiftInteractor interactor = new ShiftInteractor();
-        ShiftFileReader reader = ShiftFileReader.getInstance();
         int hours = (int) Math.floor(duration);
         int mins = (int) ((duration - hours) * 60);
         LocalDateTime time2 = date.plusHours(hours).plusMinutes(mins);

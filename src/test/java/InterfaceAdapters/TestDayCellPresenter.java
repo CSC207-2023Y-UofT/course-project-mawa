@@ -1,3 +1,5 @@
+package InterfaceAdapters;
+
 import Entities.Shift;
 import InterfaceAdapters.DayCellPresenter;
 import org.instancio.Instancio;

@@ -12,7 +12,6 @@ public final class DayCellModel { //not really a model in the sense that it does
      * @param hour The hour component of the shift time.
      * @param minute The minute component of the shift time.
      * @param height The total height available for rendering.
-     * @param width The total width available for rendering.
      * @param prev The previous Y coordinate for avoiding overlapping shifts.
      * @return The calculated Y coordinate for rendering the shift.
      */

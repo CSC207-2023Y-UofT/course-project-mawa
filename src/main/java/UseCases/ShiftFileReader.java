@@ -19,6 +19,12 @@ public class ShiftFileReader{
         interactor = new ShiftInteractor();
         list = interactor.readData();
     }
+
+    protected ShiftFileReader(String isTest){
+        shift = new Shift(LocalDateTime.now(), new ArrayList<Integer>(), (float)0, -11);
+        interactor = new ShiftInteractor();
+        list = interactor.readData();
+    }
     /**
      * Get the singleton instance of ShiftFileReader.
      *

@@ -1,13 +1,13 @@
 package UseCases;
 
-import Entities.Shift;
-import Entities.User;
 import Entities.UserNotification;
 import Entities.UserNotificationRequest;
 
 import java.time.LocalDateTime;
 import java.util.*;
-
+/**
+ * The NotificationFileReader class provides methods to read UserNotifications from a data source.
+ */
 public class NotificationFileReader{
     private static NotificationFileReader instance;
     private UserNotification userNotification;
@@ -19,12 +19,20 @@ public class NotificationFileReader{
         interactor = new UserNotificationInteractor();
         list = interactor.readData();
     }
+    /**
+     * Get the singleton instance of NotificationFileReader.
+     *
+     * @return The instance of NotificationFileReader.
+     */
     public static NotificationFileReader getInstance(){
         if (instance == null) {
             instance = new NotificationFileReader();
         }
         return instance;
     }
+    /**
+     * Update the list of user notifications from the data source via interactor.
+     */
     public void update(){
         list = interactor.readData();
     }
@@ -154,7 +162,12 @@ public class NotificationFileReader{
         }
         return ids;
     }
-
+    /**
+     * Get the UserNotification object for the specified notification ID.
+     *
+     * @param id The ID of the user notification.
+     * @return The UserNotification object.
+     */
     public UserNotification getUserNotification(int id){
         checkNotification(id);
         return userNotification;

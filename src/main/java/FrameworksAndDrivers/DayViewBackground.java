@@ -9,25 +9,41 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
+/**
+ * The DayViewBackground class represents the "background" (not an accurate name,
+ * but I'm too tired to change it) panel for the DayView, displaying time lines and shifts.
+ * It extends JPanel.
+ */
 public class DayViewBackground extends JPanel {
     private DayViewLogic dvl;
     private float height, width;
     private int user;
     private ArrayList<Integer> shifts;
-    private Page gui;
     private boolean painted;
-    public DayViewBackground(DayViewLogic dvl, float height, float width, Page gui, int user){
+
+    /**
+     * Constructs a DayViewBackground object.
+     *
+     * @param dvl The DayViewLogic associated with the overall DayView.
+     * @param height The height of the render area.
+     * @param width The width of the render area.
+     * @param user The user viewing the panel.
+     */
+    public DayViewBackground(DayViewLogic dvl, float height, float width, int user){
         super();
         this.height = height;
         this.width = width;
         this.dvl = dvl;
         this.shifts = dvl.getShifts();
-        this.gui = gui;
         this.user = user;
         this.painted = false;
         setVisible(true);
     }
-
+    /**
+     * Paints the background panel, including time slots and shifts.
+     *
+     * @param g2 The Graphics object used for painting.
+     */
     public void paintComponent(Graphics g2) {
         super.paintComponent(g2);
         if (!painted) {
@@ -48,10 +64,22 @@ public class DayViewBackground extends JPanel {
 
     }
 
+    /**
+     * Calculates the Y coordinate based on scale and index.
+     *
+     * @param i The index.
+     * @param scale The scale (range of indicies).
+     * @return The calculated Y coordinate.
+     */
     private float yCoord(float i, float scale){
         return (((float) (14 * height) /15) * i / scale + (float) height /30);
     }
 
+    /**
+     * Adds ShiftCells to this.
+     *
+     * @param g The Graphics context used for painting.
+     */
     public void addShifts(Graphics g){
         this.shifts = dvl.getShifts();
         ArrayList<Rectangle> areas = dvl.getShiftCellPosition();
@@ -59,33 +87,10 @@ public class DayViewBackground extends JPanel {
 
             g.drawRect((int) areas.get(i).getX(), (int) areas.get(i).getY(),
                     areas.get(i).getBounds().width, areas.get(i).getBounds().height);
-            ShiftCell cell = new ShiftCell(shifts.get(i), gui, user, width);
+            ShiftCell cell = new ShiftCell(shifts.get(i), user);
             cell.setBounds(areas.get(i));
             this.add(cell);
         }
 
     }
-
-    public void addShifts(){
-        this.shifts = dvl.getShifts();
-        ArrayList<Rectangle> areas = dvl.getShiftCellPosition();
-        for (int i = 0; i<shifts.size(); i++){
-            ShiftCell cell = new ShiftCell(i, gui, user, width);
-            cell.setBounds(areas.get(i));
-            this.add(cell);
-        }
-
-    }
-
-    /*public void reload(){
-        shifts = dvl.getShifts();
-        removeAll();
-        revalidate();
-        repaint();
-        addShifts();
-
-    }*/
-
-
-
 }

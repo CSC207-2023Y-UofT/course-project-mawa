@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
-public abstract class UserNotification implements Serializable {
+public class UserNotification implements Serializable {
     private final int notifId;
     private final String message;
     private final int senderId;

@@ -9,6 +9,8 @@ import Entities.*;
  */
 public class ShiftSorter implements Sorter<Shift> {
 
+    public ShiftFileReader reader = ShiftFileReader.getInstance();;
+
     /**
      * Sorts shifts by date in ascending order.
      *
@@ -16,7 +18,6 @@ public class ShiftSorter implements Sorter<Shift> {
      * @return The sorted list of shift IDs.
      */
     public ArrayList<Integer> sortShiftsByDate(ArrayList<Integer> shifts){
-        ShiftFileReader reader = ShiftFileReader.getInstance();
         ArrayList<Shift> shiftObj = new ArrayList<>();
         for (int i:shifts){
             shiftObj.add(reader.getShift(i));

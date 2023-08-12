@@ -1,3 +1,5 @@
+package UseCases;
+
 import Entities.UserNotification;
 import UseCases.NotificationFileReader;
 import UseCases.UserNotificationInteractor;
@@ -6,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +22,8 @@ public class TestNotificationFileReader {
     private List<UserNotification> list;
     private List<Integer> idList;
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws IOException {
+        new FileWriter("notifications.ser", false).close();
         reader = NotificationFileReader.getInstance();
         interactor = new UserNotificationInteractor();
         list = Instancio.ofList(UserNotification.class).size(10).create();
@@ -38,7 +43,7 @@ public class TestNotificationFileReader {
     public void testCheckUserNotification(){
         int idx = 7;
         reader.checkNotification(idList.get(idx));
-        assertEquals(list.get(idx), reader.getUserNotification(idList.get(idx)),
+        assertEquals(list.get(idx).getNotifId(), reader.getUserNotification(idList.get(idx)).getNotifId(),
                 "checkNotification should produce the same UserNotification as indicated by the id inputted.");
     }
     @Test

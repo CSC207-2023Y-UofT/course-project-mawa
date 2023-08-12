@@ -1,10 +1,10 @@
+package InterfaceAdapters;
+
 import Entities.Shift;
 import InterfaceAdapters.DayViewLogic;
 import UseCases.ShiftInteractor;
 import org.instancio.Instancio;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
-public class TestDayCellLogic {
+public class TestDayViewLogic {
     private List<Shift> shifts;
     private ArrayList<Integer> shiftIds;
     private DayViewLogic dvl;

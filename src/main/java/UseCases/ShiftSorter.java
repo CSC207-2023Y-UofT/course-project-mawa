@@ -1,13 +1,20 @@
 package UseCases;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import Entities.*;
+/**
+ * The ShiftSorter class provides methods for sorting shifts based on different criteria (theoretically).
+ */
+public class ShiftSorter implements Sorter<Shift> {
 
-public class ShiftSorter implements Sorter<Shift>{
+    /**
+     * Sorts shifts by date in ascending order.
+     *
+     * @param shifts The list of shift IDs to be sorted.
+     * @return The sorted list of shift IDs.
+     */
     public ArrayList<Integer> sortShiftsByDate(ArrayList<Integer> shifts){
         ShiftFileReader reader = ShiftFileReader.getInstance();
         ArrayList<Shift> shiftObj = new ArrayList<>();

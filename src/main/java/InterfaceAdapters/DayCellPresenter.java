@@ -48,8 +48,7 @@ public class DayCellPresenter implements ActionListener {
         for (int i = 1; i< shifts.size()+1; i++) {
             ShiftFileReader reader = ShiftFileReader.getInstance();
             LocalDateTime time = reader.getDate(i);
-            int y = DayCellModel.getYcoord(time.getHour(), time.getMinute(), height,
-                    width, ycoords.get(i -1));
+            int y = DayCellModel.getYcoord(time.getHour(), time.getMinute(), height, ycoords.get(i -1));
             ycoords.add(y);
         }
         ycoords.remove(0);

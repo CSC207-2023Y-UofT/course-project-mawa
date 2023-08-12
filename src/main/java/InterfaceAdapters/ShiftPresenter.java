@@ -1,6 +1,5 @@
 package InterfaceAdapters;
 
-import UseCases.NotificationFileReader;
 import UseCases.ShiftFileReader;
 import UseCases.UserFileReader;
 
@@ -9,17 +8,26 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ShiftPresenter implements ActionListener{
+/**
+ * The ShiftPresenter class handles the presentation logic for displaying shift details.
+ * It implements the ActionListener interface.
+ */
+public class ShiftPresenter implements ActionListener {
     private int shift;
-    private Page gui;
     private int employee;
     private GUIElement closeButton;
 
-    public ShiftPresenter(int shift, Page gui, GUIElement closeButton, int employee){
+    /**
+     * Constructs a ShiftPresenter object.
+     *
+     * @param shift The ID of the shift.
+     * @param closeButton The GUIElement representing the close button.
+     * @param employee The ID of the user associated with the shift.
+     */
+    public ShiftPresenter(int shift, GUIElement closeButton, int employee){
 
             this.shift = shift;
             System.out.println(shift);
-            this.gui = gui;
             this.closeButton = closeButton;
             this.employee = employee;
 
@@ -33,6 +41,12 @@ public class ShiftPresenter implements ActionListener{
         ShiftFileReader shiftDB = ShiftFileReader.getInstance();
         return shiftDB.getDuration(shift);
     }
+    /**
+     * Generates a string representing coworkers for the shift (excluding the
+     * employee viewing shift).
+     *
+     * @return A formatted string containing the names of coworkers for the shift.
+     */
     public String getCoworkerString(){
         String coworkers = "";
         ShiftFileReader shiftDB = ShiftFileReader.getInstance();
@@ -50,7 +64,11 @@ public class ShiftPresenter implements ActionListener{
         return "No coworkers";
     }
 
-
+    /**
+     * Handles action event from the closeButton GUIElement.
+     *
+     * @param e The action event.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == closeButton){

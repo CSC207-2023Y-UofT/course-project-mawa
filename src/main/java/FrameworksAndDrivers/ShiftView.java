@@ -1,14 +1,16 @@
 package FrameworksAndDrivers;
 
-import FrameworksAndDrivers.HomeButton;
 import InterfaceAdapters.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
+/**
+ * The ShiftView class represents a GUI for displaying shift details for an Employee viewer.
+ * It extends JFrame and implements the Page interface.
+ */
 public class ShiftView extends JFrame implements Page {
     private JPanel panel, titlePanel, contentPanel;
     private int shift;
@@ -18,7 +20,12 @@ public class ShiftView extends JFrame implements Page {
     private LocalDateTime date;
     private CloseButton closeButton;
     private float duration;
-
+    /**
+     * Constructs a ShiftView object.
+     *
+     * @param shift The ID of the shift.
+     * @param employee The ID of the user associated with the shift.
+     */
     public ShiftView(int shift, int employee) {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -31,7 +38,7 @@ public class ShiftView extends JFrame implements Page {
         panel = new JPanel(new BorderLayout());
         contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
-        this.presenter = new ShiftPresenter(shift, this, closeButton, employee);
+        this.presenter = new ShiftPresenter(shift, closeButton, employee);
         this.date = presenter.getDate();
         this.duration = presenter.getDuration();
         addTitle();
@@ -82,6 +89,9 @@ public class ShiftView extends JFrame implements Page {
         titlePanel.add(hb);
     }
 
+    /**
+     * Handles updates to the GUI by showing a RequestForm.
+     */
     @Override
     public void update() {
         new RequestForm(date, date.plusHours((long) presenter.getDuration()), employee, shift);

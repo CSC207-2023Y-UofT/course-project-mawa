@@ -31,7 +31,6 @@ public class CalendarModel {
         this.year = year;
         this.month = month;
         this.user = user;
-        shiftDB= ShiftFileReader.getInstance();
         userDB = UserFileReader.getInstance();
     }
 
@@ -43,6 +42,7 @@ public class CalendarModel {
      * @return An ArrayList of shift Ids for the specified day.
      */
     public ArrayList<Integer> getShifts(int dayNum){
+        shiftDB= ShiftFileReader.getInstance();
         LocalDate day = LocalDate.of(year, month, dayNum);
         ArrayList<Integer> shifts = new ArrayList<>();
         if (userDB.getType(user).equals("HR")){

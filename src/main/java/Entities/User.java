@@ -2,6 +2,9 @@ package Entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+/**
+ * The User class represents a user (employee or HR) in the system.
+ */
 public class User implements Serializable {
     private int userNum;
     private long phoneNum;
@@ -13,7 +16,21 @@ public class User implements Serializable {
 
     private String role;
     private float pay;
-
+    /**
+     * Constructs a User instance with the specified parameters.
+     *
+     * @param surname    The surname of the user.
+     * @param firstname  The first name of the user.
+     * @param gender     The gender of the user.
+     * @param email      The email address of the user.
+     * @param roleName   The role name of the user.
+     * @param uNum       The unique user number.
+     * @param phoneNum   The phone number of the user.
+     * @param dob        The date of birth of the user in "YYYY-MM-dd" format.
+     * @param password   The password of the user.
+     * @param type       The type of user (e.g., HR, Salary Worker, etc.).
+     * @param pay        The pay rate of the user.
+     */
     public User(String surname, String firstname, String gender, String email,
 
                 String roleName, int uNum, long phoneNum, String dob, char[] password,

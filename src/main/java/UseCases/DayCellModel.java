@@ -16,7 +16,7 @@ public final class DayCellModel { //not really a model in the sense that it does
      * @param prev The previous Y coordinate for avoiding overlapping shifts.
      * @return The calculated Y coordinate for rendering the shift.
      */
-    public static int getYcoord(int hour, int minute, float height, float width, int prev){
+    public static int getYcoord(int hour, int minute, float height, int prev){
         int y = (int) ((hour * 60.0 + minute) / (60.0 * 24.0) * height * 0.7);
         y = (int) Math.max((height / 15 + prev), y);
         return y;

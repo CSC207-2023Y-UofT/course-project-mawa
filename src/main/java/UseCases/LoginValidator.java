@@ -3,13 +3,19 @@ package UseCases;
 
 import java.util.ArrayList;
 
+/**
+ * The LoginValidator class validates user credentials during the login process.
+ */
 public class LoginValidator {
-    private int employeeID;
-    private char[] password;
-
-    private UserInteractor interactor = new UserInteractor();
     private UserFileReader empDB;
 
+    /**
+     * Validates the provided employee ID and password.
+     *
+     * @param empID The employee ID to validate.
+     * @param pwd   The password to validate as a character array (safer than a String).
+     * @return The employee ID if credentials are valid, or -1 if invalid.
+     */
     public int validateCredentials(int empID, char[] pwd){
         empDB = UserFileReader.getInstance();
         ArrayList<Integer> allActiveUsers = empDB.getIds(true);

@@ -6,7 +6,6 @@ import Entities.*;
 public class main {
 
     public static void main(String[] args){
-
         EmptyAppValidator eav = new EmptyAppValidator();
         if (eav.isEmpty()){
             new AddHRGUI();

@@ -66,6 +66,7 @@ public class PaymentMaker{
 
     }
     public  float wageWorker_Payment(int employee_id, ArrayList<Shift> shiftArray){
+        UserFileReader reader = UserFileReader.getInstance();
         float hours=0;
         for(int i = 0; i <shiftArray.size();i++){
             if (shiftArray.get(i).getCoworkers().contains(employee_id) ){
@@ -76,7 +77,7 @@ public class PaymentMaker{
                 }
             }
         }
-        return hours;
+        return hours * reader.getPay(employee_id);
 
     }
 

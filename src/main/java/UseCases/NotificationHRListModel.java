@@ -42,9 +42,9 @@ public class NotificationHRListModel extends DefaultListModel<String> {
         Updates UserNotification entity to resolved, if boolean deny is false,
         otherwise sets entity to resolved and denied.
          */
-        UserNotification n = status.notificationUpdater(notification, deny);
+        Object n = status.notificationUpdater(notification, deny);
         if (n!=null){
-            UserNotification[] notif = {n};
+            UserNotification[] notif = {(UserNotification) n};
             notifications.add(0, status.NotificationsToString(notif, user)[0]);
         }
         status = new NotificationStatusTrackerUpdater(user);

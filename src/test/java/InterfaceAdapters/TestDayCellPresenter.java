@@ -1,9 +1,7 @@
 package InterfaceAdapters;
 
-import Entities.Shift;
 import UseCases.ShiftFileReader;
 import org.instancio.Instancio;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

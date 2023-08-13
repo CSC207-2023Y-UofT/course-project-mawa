@@ -27,7 +27,7 @@ public class TestDayViewModel {
         shifts.add(shift2);
         shifts.add(shift3);
         for (Shift s:shifts){
-            if (reader.getIds().contains(1)){
+            if (reader.getIds().contains(s.getShiftId())){
                 interactor.update(s);
             }else{
                 interactor.writeData(s);

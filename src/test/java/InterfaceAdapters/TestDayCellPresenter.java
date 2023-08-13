@@ -1,12 +1,15 @@
 package InterfaceAdapters;
 
+import Entities.Shift;
 import UseCases.ShiftFileReader;
 import org.instancio.Instancio;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static org.instancio.Select.field;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestDayCellPresenter {
@@ -15,6 +18,7 @@ public class TestDayCellPresenter {
     @Test
     public void testGetYCoords(){
         dcp =  Instancio.of(DayCellPresenter.class)
+                .set(field(Shift::getTime), LocalDateTime.now())
                 .create();
         LocalDateTime time1 = LocalDateTime.of(2023, 8, 11, 9, 0);
         LocalDateTime time2 = LocalDateTime.of(2023, 8, 11, 13, 0);

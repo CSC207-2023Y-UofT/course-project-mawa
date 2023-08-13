@@ -21,7 +21,7 @@ public class UserNotificationPresenter {
 
     public void rescheduleUpdateListModel(String selected){
         unresolvedList.listModel.removeElement(selected);
-         unresolvedList.updateList(selected, false, resolvedList.listModel);
+        unresolvedList.updateList(selected, false, resolvedList.listModel);
     }
     public void denyUpdateListModel(String selected){
         unresolvedList.listModel.removeElement(selected);

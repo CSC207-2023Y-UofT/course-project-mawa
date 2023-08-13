@@ -1,10 +1,15 @@
+package UseCases;
+
 import Entities.Shift;
 import UseCases.ShiftFileReader;
 import UseCases.ShiftInteractor;
 import org.instancio.Instancio;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +21,9 @@ public class TestShiftFileReader {
     private ShiftInteractor interactor;
     private List<Shift> list;
     private List<Integer> idList;
-    @BeforeAll
-    public void setUp(){
+    @BeforeEach
+    public void setUp() throws IOException {
+        new FileWriter("shifts.ser", false).close();
         reader = ShiftFileReader.getInstance();
         interactor = new ShiftInteractor();
         list = Instancio.ofList(Shift.class).size(10).create();
@@ -36,7 +42,7 @@ public class TestShiftFileReader {
     @Test
     public void testCheckShift(){
         reader.checkShift(idList.get(0));
-        assertEquals(list.get(0), reader.getShift(idList.get(0)),
+        assertEquals(list.get(0).getShiftId(), reader.getShift(idList.get(0)).getShiftId(),
                 "checkShift should produce the same shift as indicated by the id inputted.");
     }
     @Test

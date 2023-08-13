@@ -42,7 +42,7 @@ public class PaymentInteractor implements Interactor<Payment> {
     @Override
     public void update(Payment p) {
         ArrayList<Payment> paymentList = this.readData();
-        paymentList.removeIf(payment -> p.getPaymentId() == p.getPaymentId());
+        paymentList.removeIf(payment -> p.getPaymentId() == payment.getPaymentId());
         paymentList.add(p);
         try{
             FileOutputStream file = new FileOutputStream(FileNameConstants.PAYMENT_FILE_NAME);

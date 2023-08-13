@@ -31,7 +31,7 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener, Page {
     private CloseButton closeButton;
     public ShiftViewHRGUI(int notificationID, int userID){
         userId = userID;
-        //JButton homeButton = new JButton("Home");
+        JButton homeButton = new JButton("Home");
         closeButton = new CloseButton(this, "Close");
 
         JPanel panel = new JPanel();
@@ -45,14 +45,14 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener, Page {
         employeesNotOnShiftScroller = new JScrollPane(employeesNotOnShiftList );
 
 
-       // homeButton.setActionCommand("home");
-       // homeButton.addActionListener(this);
+       homeButton.setActionCommand("home");
+       homeButton.addActionListener(this);
         closeButton.setActionCommand("close");
         closeButton.addActionListener(this);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout());
-       // buttonPanel.add(homeButton, BorderLayout.WEST);
-        buttonPanel.add(closeButton, BorderLayout.WEST);
+        buttonPanel.add(homeButton, BorderLayout.WEST);
+        //buttonPanel.add(closeButton, BorderLayout.WEST);
 
         this.frame.add(buttonPanel, BorderLayout.PAGE_START);
 

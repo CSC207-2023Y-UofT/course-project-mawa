@@ -8,24 +8,41 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
+/**
+ * The CalendarModel class represents the model component for the CalendarGUI.
+ * It provides methods to retrieve shifts, check payday, and manage year and month information.
+ */
 public class CalendarModel {
     private int year, month, user;
     private ShiftFileReader shiftDB;
     private UserFileReader userDB;
 
+    /**
+     * Constructs a CalendarModel object with the specified year, month, and user.
+     *
+     * @param year The year of the calendar.
+     * @param month The month of the calendar.
+     * @param user The user associated with the calendar.
+     */
+
     public CalendarModel(int year, int month, int user){
         this.year = year;
         this.month = month;
         this.user = user;
-        shiftDB= ShiftFileReader.getInstance();
         userDB = UserFileReader.getInstance();
     }
 
+    /**
+     * Retrieves the list of shifts for a specific day, for HR. Retrieves the intersection
+     * of all shifts on this day and all shifts of the user, for Employees.
+     *
+     * @param dayNum The day of the month.
+     * @return An ArrayList of shift Ids for the specified day.
+     */
     public ArrayList<Integer> getShifts(int dayNum){
+        shiftDB= ShiftFileReader.getInstance();
         LocalDate day = LocalDate.of(year, month, dayNum);
         ArrayList<Integer> shifts = new ArrayList<>();
         if (userDB.getType(user).equals("HR")){
@@ -48,6 +65,12 @@ public class CalendarModel {
         return shifts;
     }
 
+    /**
+     * Checks if a specific day is a payday (last Friday of the month).
+     *
+     * @param dayNum The day of the month.
+     * @return True if the day is a payday, false otherwise.
+     */
     public boolean isPayDay(int dayNum){
         LocalDate day = LocalDate.of(year, month, dayNum);
         LocalDate lastFri =  day.with(TemporalAdjusters.lastInMonth(DayOfWeek.FRIDAY));

@@ -5,12 +5,24 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The Shift class represents a work shift.
+ */
 public class Shift implements Serializable {
     private LocalDateTime time;
     private float duration;
     private List<Integer> coworkers;
 
     private int shiftId;
+
+    /**
+     * Constructs a Shift instance with the specified parameters.
+     *
+     * @param time      The start time of the shift.
+     * @param coworkers The list of coworker IDs.
+     * @param duration  The duration of the shift in hours.
+     * @param shiftId   The unique ID of the shift.
+     */
 
     public Shift(LocalDateTime time, List<Integer> coworkers, float duration, int shiftId){
         this.time = time;
@@ -41,7 +53,7 @@ public class Shift implements Serializable {
         this.coworkers = this.coworkers.stream().distinct().collect(Collectors.toList());
     }
 
-    public void removeCoworker(Integer coworker){
+    public void removeCoworker(int coworker){
         if (this.coworkers.contains(coworker)){
             this.coworkers.remove(coworker);
         }

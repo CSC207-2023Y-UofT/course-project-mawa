@@ -1,11 +1,12 @@
 package UseCases;
 
-import Entities.Shift;
 import Entities.User;
 
 import java.time.LocalDate;
 import java.util.*;
-
+/**
+ * The UserFileReader class provides methods to read user records from a data source.
+ */
 public class UserFileReader{
     private User user;
     private static UserFileReader instance;
@@ -19,13 +20,30 @@ public class UserFileReader{
         list = interactor.readData();
     }
 
-    public static UserFileReader getInstance(){
+    protected UserFileReader(String forTest){
+        user = new User("", "", "", "", "", -10,
+                0, "9999-12-31", new char[]{"q".charAt(0)}, UserTypeConstants.SALARY_WORKER, -111);
+        interactor = new UserInteractor();
+        list = interactor.readData();
+    }
+
+    /**
+     * Get the singleton instance of UserFileReader.
+     *
+     * @return The instance of UserFileReader.
+     */
+    public static UserFileReader getInstance() {
         if (instance == null) {
             instance = new UserFileReader();
         }
         return instance;
     }
 
+    /**
+     * Check if the specified user ID matches the currently loaded user record, and update if necessary.
+     *
+     * @param id The ID of the user.
+     */
     public void checkUser(int id){
         if (user.getUserNum() == id){
             return;
@@ -38,7 +56,9 @@ public class UserFileReader{
         }
         System.out.println("Invalid User Number");
     }
-
+    /**
+     * Update the list of user records from the data source.
+     */
     public void update(){
         list = interactor.readData();
     }
@@ -116,7 +136,12 @@ public class UserFileReader{
         }
         return ids;
     }
-
+    /**
+     * Get the User object for the specified user ID.
+     *
+     * @param id The ID of the user.
+     * @return The User object.
+     */
     public User getUser(int id){
         checkUser(id);
         return user;

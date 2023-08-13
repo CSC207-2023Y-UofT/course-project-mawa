@@ -9,17 +9,26 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+/**
+ * The MakeShiftForm class represents a graphical user interface for scheduling a new shift.
+ * It extends JFrame and implements the Page interface.
+ */
 public class MakeShiftForm extends JFrame implements Page {
     private LocalDate date;
     private JPanel mainPanel, contentPanel, titlePanel, footerPanel;
     private CloseButton submitButton, cancelButton;
     private CustomTextField timeField, durationField;
     private MakeShiftFormPresenter presenter;
-    private Page gui;
+
+    /**
+     * Constructs a MakeShiftForm object.
+     *
+     * @param date The date for which the shift is being scheduled.
+     * @param gui The user interface associated with the form.
+     */
     public MakeShiftForm(LocalDate date, Page gui){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.date = date;
-        this.gui = gui;
         mainPanel = new JPanel(new BorderLayout());
         contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
@@ -69,12 +78,13 @@ public class MakeShiftForm extends JFrame implements Page {
     public void setUser(int user) {
 
     }
-
-
     @Override
     public void addHomeButton() {
     }
-
+    /**
+     * Updates the user interface to display an error message indicating that shifts can only span within one day.
+     * This method uses a JOptionPane to show the error message as a dialog box.
+     */
     @Override
     public void update() {
         JOptionPane.showMessageDialog (null,

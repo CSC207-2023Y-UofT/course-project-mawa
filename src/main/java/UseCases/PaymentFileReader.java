@@ -1,12 +1,12 @@
 package UseCases;
 
 import Entities.Payment;
-import Entities.Shift;
-import Entities.User;
 
 import java.time.LocalDateTime;
 import java.util.*;
-
+/**
+ * The PaymentFileReader class provides methods to read payment records from a data source.
+ */
 public class PaymentFileReader{
     private static PaymentFileReader instance;
     private Payment payment;
@@ -18,13 +18,22 @@ public class PaymentFileReader{
         interactor = new PaymentInteractor();
         list = interactor.readData();
     }
-
+    /**
+     * Get the singleton instance of PaymentFileReader.
+     *
+     * @return The instance of PaymentFileReader.
+     */
     public static PaymentFileReader getInstance(){
         if (instance == null) {
             instance = new PaymentFileReader();
         }
         return instance;
     }
+    /**
+     * Check if the specified payment ID matches the currently loaded payment record, and update if necessary.
+     *
+     * @param id The ID of the payment.
+     */
     public void checkPayment(int id){
         if (payment.getPaymentId() == id){
             return;
@@ -38,10 +47,19 @@ public class PaymentFileReader{
         System.out.println("Invalid Payment ID");
     }
 
-    public void update(){
+    /**
+     * Update the list of payment records from the data source.
+     */
+    public void update() {
         list = interactor.readData();
     }
 
+    /**
+     * Get a list of payment IDs for payments made on the specified date.
+     *
+     * @param date The date for which to retrieve payment IDs.
+     * @return A list of payment IDs.
+     */
     public ArrayList<Integer> getIds(LocalDateTime date){
         ArrayList<Integer> ids = new ArrayList<>();
         for (Payment p:list){
@@ -83,7 +101,12 @@ public class PaymentFileReader{
         }
         return ids;
     }
-
+    /**
+     * Get the Payment object for the specified payment ID.
+     *
+     * @param id The ID of the payment.
+     * @return The Payment object.
+     */
     public Payment getPayment(int id){
         checkPayment(id);
         return payment;

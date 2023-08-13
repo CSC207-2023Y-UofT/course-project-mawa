@@ -31,14 +31,16 @@ public final class DayViewModel {
         ArrayList<ArrayList<Integer>> shifts2D = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> shifts1 = new ArrayList<>(shifts);
         //know that shifts is already sorted by time
-        while(shifts1.size() > 0){
+        while(shifts1.size()>0) {
             ArrayList<Integer> overlappingShifts = new ArrayList<Integer>();
             overlappingShifts.add(shifts1.get(0));
             shifts1.remove(0);
-            for (int j = 0; j < shifts1.size(); j ++){
-                if (isOverlapping(overlappingShifts.get(0), shifts1.get(j))){
-                    overlappingShifts.add(shifts1.get(j));
-                    shifts1.remove(j);
+            while(shifts1.size()>0) {
+                if (isOverlapping(overlappingShifts.get(0), shifts1.get(0))) {
+                    overlappingShifts.add(shifts1.get(0));
+                    shifts1.remove(0);
+                }else{
+                    break;
                 }
             }
             shifts2D.add(overlappingShifts);

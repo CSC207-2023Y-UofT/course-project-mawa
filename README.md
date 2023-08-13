@@ -38,10 +38,21 @@ lead to either a Calendar, Notification Center, Payment History,
 or Employee Information (depending on if HR or Employee is logged in).\
 As of now, there may only be one HR account (with Employee Number of 1), but there can be many Employee accounts.\
 Data from:
-- users is stored in "users.ser"
-- shifts is stored in "shifts.ser"
-- payments is stored in "payments.ser"
-- notifications is stored in "notifications.ser"
+- users are stored in "users.ser"
+- shifts are stored in "shifts.ser"
+- payments are stored in "payments.ser"
+- notifications are stored in "notifications.ser"
+
+## Testing
+Most of the testing coverage is applicable to the UseCase, InterfaceAdapter, and Entity layers.
+As well, even though we have many GUI classes, they don't have much testable logic contained in them (as per SRP, CA, and MVP),
+so we focused our testing efforts in the lower three layers. Some of the presenters (like HomeButtonPresenter), were not worth testing 
+because their logic is very shallow and is very similar to that of the CalendarPresenter (for which testing is provided), so 
+we decided that testing these presenters was not worth the time it would take to write tests for them.\
+JavaDoc is sparse in our testing modules because we have designed the tests to be quite simple (as aided by CA) and adequately explained by
+their method names.
+Our testing coverage is ________________
+
 
 ## Software Design
 The classes are packaged into their CA layers to help with

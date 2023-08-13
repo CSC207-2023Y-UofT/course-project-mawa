@@ -1,11 +1,8 @@
 package UseCases;
 
 import Entities.Payment;
-import UseCases.PaymentFileReader;
-import UseCases.PaymentInteractor;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.FileWriter;
@@ -14,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPaymentFileReader {

@@ -1,39 +1,81 @@
 # Employee Management Software
+### By: MAWA
 
-This is a template repository for CSC 207 projects. 
-This repository contains starter code for a gradle project.
-It also contains workflow documents that give instructions on how to manage your Github repository and how to use Github Projects for efficient collaboration.
+## Project description:
+This application allows you to:\
+As an HR worker
+- Schedule shifts for your employees
+- Receive and respond to time-off requests from your employees
+- Keep track of payments to your employees
+- Create records for new employees
+- Mark existing employees as inactive (and reactivate them)\
+As an Employee
+- See shifts that you are scheduled for
+- Request shifts off
+- See if HR has accepted/denied your request
+- See past payments
+- See a summary of your employee information
 
-## Checklist For Your Project
-- [ ] Verify the correct settings for your project repository
-- [ ] Set up Github Projects
-- [ ] Create the implementation plan using issues and Github Projects
-- [ ] Create deveopment branches for your features
-- [ ] Use pull requests to merge finished features into main branch
-- [ ] Conduct code reviews
+This project currently only saves data locally, so data persistence is limited to 
+one device. We are working towards having the data being stored on the web. 
+There is also still input validation that needs to be done.
+## How to Install and Run the Application
+- [ ] Clone this repo (https://github.com/CSC207-2023Y-UofT/course-project-mawa.git)
+- [ ] Run the "Main" file (in src/main/java directory)
+## Dependencies
+This project is a gradle repository built using SDK version corretto-11.0.20.\
+The GUI uses Java Swing.
+Testing is dependent on JUnit5, Instancio, and Mockito.
 
-**If your team has trouble with any of these steps, please ask on Piazza. For example, with how GitHub Classroom works, your team *may* not have permissions to do some of the first few steps, in which case we'll post alternative instructions as needed.**
+## Using the application
+If there are no users in "users.ser", you will be prompted to
+create a new HR account. You can then log in with the HR
+account and create new Employees as an HR user. Once there are new
+employees saved, these employees can log in with their
+Employee Numbers and Passwords.\
+From the login, you will see a Home Page of buttons that will
+lead to either a Calendar, Notification Center, Payment History, 
+or Employee Information (depending on if HR or Employee is logged in).\
+As of now, there may only be one HR account (with Employee Number of 1), but there can be many Employee accounts.\
+Data from:
+- users is stored in "users.ser"
+- shifts is stored in "shifts.ser"
+- payments is stored in "payments.ser"
+- notifications is stored in "notifications.ser"
 
-## Workflow Documents
+## Software Design
+The classes are packaged into their CA layers to help with
+software development. Due to this packaging decision, all of the GUI 
+dependent classes are in FrameworksAndDrivers, so making the application
+look prettier is no issue.\
+The key design patterns used in the project are MVP(for most GUI Pages), and 
+the Singleton Design Pattern for the ____FileReader classes. The Facade 
+Design Pattern is used within some InterfaceAdapter classes (such as getXCoord() in 
+DayCellPresenter directly calling DayCellModel's getXCoord()
+to allow the DayCell that exists in the FrameworksAndDrivers layer to access
+UseCase level information).\
+Despite the tight coupling between some GUI elements, our UseCases are able to
+operate pretty independently. 
 
-* Github Workflow: Please refer to the workflow that was introduced in the first lab. You should follow this when working on your code. The following document provides additional details too.
+## How to Contribute
+We welcome all suggestions for how to improve the design of our software (this is our
+first GitHub project)! We are still students and are looking to make this application more
+professional.\
+To add to the repo, please clone it and make a pull request with your improvements. We may or may not 
+accept it, but we will try to converse you about what you think should be changed/added.\
+We are also open to comments on our code (CA violations, Code Smells, other opportunities for
+refactoring, feature requests). 
+If you would like to have your code incorporated into the project, please email one of us.
 
-* [Project Planning and Development Guide](project_plan_dev.md): This document helps you to understand how to create and maintain a project plan for your class project. **This document helps you to complete the Implementation Plan Milestone.**
+## Credits
+Main Programmers:\
+(MAWA)\
+Megan Ding: megan.ding@mail.utoronto.ca\
+Ahmad Khazan: ahmad.khazan@mail.utoronto.ca\
+William Boitor: william.boitor@mail.utoronto.ca\
+Alinikan Agharezakashi: alinikan.agharezakashi@mail.utoronto.ca\
 
-## Gradle Project
-Import this project into your Intellij editor. It should automatically recognise this as a gradle repository.
-The starter code was built using SDK version 11.0.1. Ensure that you are using this version for this project. (You can, of course, change the SDK version as per your requirement if your team has all agreed to use a different version)
+Thank you to Radian Gondokaryono for providing us with guidance during the 
+design process and support with timely feedback! (and a stellar grade...pls)
 
-You have been provided with two starter files for demonstration: HelloWorld and HelloWorldTest.
 
-You will find HelloWorld in `src/main/java/tutorial` directory. Right click on the HelloWorld file and click on `Run HelloWorld.main()`.
-This should run the program and print on your console.
-
-You will find HelloWorldTest in `src/test/java/tutorial` directory. Right click on the HelloWorldTest file and click on `Run HelloWorldTest`.
-All tests should pass. Your team can remove this sample of how testing works once you start adding your project code to the repo.
-
-Moving forward, we expect you to maintain this project structure. You *should* use Gradle as the build environment, but it is fine if your team prefers to use something else -- just remove the gradle files and push your preferred project setup. Assuming you stick with Gradle, your source code should go into `src/main/java` (you can keep creating more subdirectories as per your project requirement). Every source class can auto-generate a test file for you. For example, open HelloWorld.java file and click on the `HelloWorld` variable as shown in the image below. You should see an option `Generate` and on clicking this your should see an option `Test`. Clicking on this will generate a JUnit test file for `HelloWorld` class. This was used to generate the `HelloWorldTest`.
-
-![image](https://user-images.githubusercontent.com/5333020/196066655-d3c97bf4-fdbd-46b0-b6ae-aeb8dbcf351d.png)
-
-You can create another simple class and try generating a test for this class.

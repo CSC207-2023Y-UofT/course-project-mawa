@@ -55,7 +55,6 @@ public final class DayViewModel {
      * @return true if the shifts overlap, false otherwise.
      */
     public static boolean isOverlapping(Integer shift1, Integer shift2) {
-
         ShiftFileReader reader = ShiftFileReader.getInstance();
         LocalDateTime start1 = reader.getDate(shift1);
         LocalDateTime end1 = reader.getDate(shift1).plus(Duration.ofMinutes((long) (reader.getDuration(shift1)* 60)));

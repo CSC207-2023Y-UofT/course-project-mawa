@@ -17,14 +17,15 @@ public class TestDayCellPresenter {
 
     @Test
     public void testGetYCoords(){
+        ArrayList<Integer> shifts = new ArrayList<>();
+        shifts.add(1);
+        shifts.add(2);
         dcp =  Instancio.of(DayCellPresenter.class)
+                .set(field(DayCellPresenter.class, "shifts"), shifts)
                 .create();
         dcp.height = 10000;
         LocalDateTime time1 = LocalDateTime.of(2023, 8, 11, 9, 0);
         LocalDateTime time2 = LocalDateTime.of(2023, 8, 11, 13, 0);
-        ArrayList<Integer> shifts = new ArrayList<>();
-        shifts.add(1);
-        shifts.add(2);
         ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
             @Override
             public LocalDateTime getDate(int id) {

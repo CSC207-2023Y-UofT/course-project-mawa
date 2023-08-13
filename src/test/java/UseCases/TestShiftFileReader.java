@@ -1,11 +1,8 @@
 package UseCases;
 
 import Entities.Shift;
-import UseCases.ShiftFileReader;
-import UseCases.ShiftInteractor;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.FileWriter;

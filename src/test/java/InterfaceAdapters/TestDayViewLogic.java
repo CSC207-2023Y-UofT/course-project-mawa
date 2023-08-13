@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -67,66 +67,7 @@ public class TestDayViewLogic {
                 "be consecutive integers from the beginning (inclusive) of time range to end (exclusive).");
     }
 
-    /*@Test
-    public void testIsOverlapping(){
-        ArrayList<Float> durations = new ArrayList<>();
-        durations.add(0.5F);
-        durations.add(4F);
-        durations.add(1.3f);
-        durations.add(1f);
-        durations.add(0.5F);
-        durations.add(1f);
-        durations.add(1f);
-        durations.add(2f);
-        durations.add(3f);
-        durations.add(1f);
-        for (int i = 0; i < shifts.size(); i++){
-            shifts.get(i).setDuration(durations.get(i));
-            interactor.update(shifts.get(i));
-        }
-        assertTrue(dvl.isOverlapping(shifts.get(7).getShiftId(), shifts.get(8).getShiftId()));
-        assertFalse(dvl.isOverlapping(shifts.get(7).getShiftId(), shifts.get(6).getShiftId()));
-        assertFalse(dvl.isOverlapping(shifts.get(2).getShiftId(), shifts.get(4).getShiftId()));
-    }*/
-    /*@Test
-    public void testMake2DList(){
-        ArrayList<Float> durations = new ArrayList<>();
-        durations.add(0.5F);
-        durations.add(4F);
-        durations.add(1.3f);
-        durations.add(1f);
-        durations.add(0.5F);
-        durations.add(1f);
-        durations.add(1f);
-        durations.add(2f);
-        durations.add(3f);
-        durations.add(1f);
-        for (int i = 0; i < shifts.size(); i++){
-            shifts.get(i).setDuration(durations.get(i));
-            interactor.update(shifts.get(i));
-        }
-        ArrayList<Integer> list1 = new ArrayList<>();
-        list1.add(shifts.get(0).getShiftId());
-        list1.add(shifts.get(1).getShiftId());
-        ArrayList<Integer> list2 = new ArrayList<>();
-        list2.add(shifts.get(5).getShiftId());
-        ArrayList<Integer> list3 = new ArrayList<>();
-        list3.add(shifts.get(2).getShiftId());
-        ArrayList<Integer> list4 = new ArrayList<>();
-        list4.add(shifts.get(9).getShiftId());
-        ArrayList<Integer> list5 = new ArrayList<>();
-        list5.add(shifts.get(3).getShiftId());
-        list5.add(shifts.get(4).getShiftId());
-        ArrayList<Integer> list6 = new ArrayList<>();
-        list6.add(shifts.get(6).getShiftId());
-        ArrayList<Integer> list7 = new ArrayList<>();
-        list7.add(shifts.get(7).getShiftId());
-        list7.add(shifts.get(8).getShiftId());
-        ArrayList<ArrayList<Integer>> exLst = new ArrayList<>();
-        exLst.add(list1);exLst.add(list2);exLst.add(list3);exLst.add(list4);
-        exLst.add(list5);exLst.add(list6);exLst.add(list7);
-        assertEquals(exLst, dvl.make2DList());
-    }*/
+
 
 
 }

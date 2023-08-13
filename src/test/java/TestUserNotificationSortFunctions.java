@@ -1,7 +1,7 @@
 import Entities.User;
 import Entities.UserNotification;
 import Entities.UserNotificationRequest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.time.LocalDateTime;

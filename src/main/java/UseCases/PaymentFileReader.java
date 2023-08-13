@@ -91,7 +91,7 @@ public class PaymentFileReader{
 
     public float getAmount(int id){
         checkPayment(id);
-        return payment.getPayment_amount();
+        return payment.getPaymentAmount();
     }
 
     public ArrayList<Integer> getIds(){

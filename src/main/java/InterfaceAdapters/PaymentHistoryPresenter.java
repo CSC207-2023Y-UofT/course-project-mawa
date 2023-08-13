@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class PaymentHistoryPresenter {
     private ArrayList<String>  thereturn_list;
-    private String label;
     public ArrayList<String> PaymentHistoryPresenter(int emp_id){
 
         PaymentHistoryModel model= new PaymentHistoryModel();

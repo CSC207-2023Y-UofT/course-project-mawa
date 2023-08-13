@@ -19,6 +19,7 @@ public class DayViewLogic {
     private float width, height;
     private int user;
     private LocalDate date;
+    protected ShiftFileReader reader;
 
     /**
      * Constructs a DayViewLogic object.
@@ -37,6 +38,7 @@ public class DayViewLogic {
         this.height = height;
         this.user = user;
         this.date = date;
+        this.reader = ShiftFileReader.getInstance();
     }
 
     /**
@@ -57,7 +59,6 @@ public class DayViewLogic {
      */
     public int[] getTimeRange(){
         if (shifts.size() > 0){
-            ShiftFileReader reader = ShiftFileReader.getInstance();
             return (new int[] {Math.min(Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2), 8),
                     (int) Math.max(Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour()
                                     + reader.getDuration(shifts.get(0))+ 2), 18)});
@@ -71,8 +72,7 @@ public class DayViewLogic {
      * Updates the shifts to be associated with the view.
      */
     public void update(){
-        ShiftFileReader sReader = ShiftFileReader.getInstance();
-        shifts = sReader.getIds(date);
+        shifts = reader.getIds(date);
         shifts = new ShiftSorter().sortShiftsByDate(shifts);
     }
 

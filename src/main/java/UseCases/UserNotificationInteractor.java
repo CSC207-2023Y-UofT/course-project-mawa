@@ -2,17 +2,19 @@ package UseCases;
 
 import java.io.*;
 import java.util.ArrayList;
-import UseCases.*;
 import Entities.*;
 
 public class UserNotificationInteractor implements Interactor<UserNotification> {
+    private String fileName;
+    public UserNotificationInteractor(){ this.fileName = FileNameConstants.NOTIFICATION_FILE_NAME;}
+    public UserNotificationInteractor(String isTest){this.fileName = "testNotifications.ser";}
 
    public ArrayList<UserNotification> readData(){
 
        ArrayList<UserNotification> notifList = new ArrayList<>();
 
        try{
-           FileInputStream file = new FileInputStream(FileNameConstants.NOTIFICATION_FILE_NAME);
+           FileInputStream file = new FileInputStream(fileName);
            ObjectInputStream input = new ObjectInputStream(file);
            notifList.addAll ((ArrayList<UserNotification>) input.readObject()) ;
 
@@ -29,7 +31,7 @@ public class UserNotificationInteractor implements Interactor<UserNotification> 
        notifs.removeIf(notif -> n.getNotifId() == notif.getNotifId());
        notifs.add(n);
       try {
-          FileOutputStream file = new FileOutputStream(FileNameConstants.NOTIFICATION_FILE_NAME);
+          FileOutputStream file = new FileOutputStream(fileName);
           ObjectOutputStream output = new ObjectOutputStream(file);
           output.writeObject(notifs);
           output.close();
@@ -44,7 +46,7 @@ public class UserNotificationInteractor implements Interactor<UserNotification> 
       ArrayList<UserNotification> notifList = this.readData();
       notifList.add(notification);
       try {
-          FileOutputStream file = new FileOutputStream(FileNameConstants.NOTIFICATION_FILE_NAME);
+          FileOutputStream file = new FileOutputStream(fileName);
           ObjectOutputStream output = new ObjectOutputStream(file);
           output.writeObject(notifList);
           output.close();

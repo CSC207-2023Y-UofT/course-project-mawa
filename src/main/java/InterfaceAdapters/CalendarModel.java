@@ -3,6 +3,7 @@ package InterfaceAdapters;
 
 import UseCases.ShiftFileReader;
 import UseCases.UserFileReader;
+import UseCases.UserTypeConstants;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
  */
 public class CalendarModel {
     private int year, month, user;
-    private ShiftFileReader shiftDB;
-    private UserFileReader userDB;
+    public ShiftFileReader shiftDB;
+    public UserFileReader userDB;
 
     /**
      * Constructs a CalendarModel object with the specified year, month, and user.
@@ -32,6 +33,7 @@ public class CalendarModel {
         this.month = month;
         this.user = user;
         userDB = UserFileReader.getInstance();
+        shiftDB= ShiftFileReader.getInstance();
     }
 
     /**
@@ -42,10 +44,9 @@ public class CalendarModel {
      * @return An ArrayList of shift Ids for the specified day.
      */
     public ArrayList<Integer> getShifts(int dayNum){
-        shiftDB= ShiftFileReader.getInstance();
         LocalDate day = LocalDate.of(year, month, dayNum);
         ArrayList<Integer> shifts = new ArrayList<>();
-        if (userDB.getType(user).equals("HR")){
+        if (userDB.getType(user).equals(UserTypeConstants.HR)){
             shifts = shiftDB.getIds(day);
         } else{
             ArrayList<Integer> userShifts = shiftDB.getIds(user);

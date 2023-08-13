@@ -45,8 +45,8 @@ public class TestDayViewModel {
         ArrayList<Integer> shiftids = new ArrayList<Integer>();
         shiftids.add(1);shiftids.add(2);shiftids.add(3);
         ArrayList<ArrayList<Integer>> shifts2D = DayViewModel.make2DList(shiftids);
-        assertEquals(3, shifts2D.size());
-        assertEquals(3, shifts2D.get(1).size());
+        assertEquals(2, shifts2D.size());
+        assertEquals(1, shifts2D.get(1).size());
         assertEquals(1, shifts2D.get(0).get(0));
     }
 

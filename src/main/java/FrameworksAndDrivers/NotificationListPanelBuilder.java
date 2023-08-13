@@ -32,7 +32,7 @@ public class NotificationListPanelBuilder extends JPanel {
         }
         this.add(listPanel, BorderLayout.CENTER);
     }
-    public NotificationListPanelBuilderWithButtons(JLabel label, JList<String> list, JScrollPane scroller, JButton rescheduleShiftButton, JButton denyRequestButton){
+    public NotificationListPanelBuilder(JLabel label, JList<String> list, JScrollPane scroller, JButton rescheduleShiftButton, JButton denyRequestButton){
         /*
         Creates a List Panel, with a centered label above a list, which occupies the majority of the panel,
         and two buttons centered underneath the list. Double-clicking on list entry clicks Reschedule Button.

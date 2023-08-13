@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
  * The Shift class represents a work shift.
  */
 public class Shift implements Serializable {
+    private static final long serialVersionUID = -2897122322699581259L;
     private LocalDateTime time;
     private float duration;
     private List<Integer> coworkers;
@@ -75,5 +76,9 @@ public class Shift implements Serializable {
 
     public void setDuration(float dur){
         duration = dur;
+    }
+
+    public void setShiftId(int i) {
+        this.shiftId = i;
     }
 }

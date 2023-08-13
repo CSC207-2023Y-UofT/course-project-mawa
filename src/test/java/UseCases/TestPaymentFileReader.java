@@ -45,7 +45,7 @@ public class TestPaymentFileReader {
     }
     @Test
     public void testGetAmount(){
-        assertEquals(list.get(0).getPayment_amount(), reader.getAmount(idList.get(0)),
+        assertEquals(list.get(0).getPaymentAmount(), reader.getAmount(idList.get(0)),
                 "The payment amount fetched from PaymentFileReader should be the same" +
                         "as the object's payment amount attribute.");
     }

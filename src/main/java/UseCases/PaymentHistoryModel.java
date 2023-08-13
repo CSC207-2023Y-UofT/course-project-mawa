@@ -72,7 +72,7 @@ public class PaymentHistoryModel {
             String this_day=payment.getDate().format(get_day);//stores  day as a string
             String this_year=payment.getDate().format(get_year);//stores  year as a string
             String temp = " This Employee has been paid " +
-                    payment.getPayment_amount() + " on " +this_year+" / "+this_month+" / "+this_day ;
+                    payment.getPaymentAmount() + " on " +this_year+" / "+this_month+" / "+this_day ;
             string_list.add(temp);
             temp = "";
         }

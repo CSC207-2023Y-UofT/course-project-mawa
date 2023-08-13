@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 
 public class UserInteractor implements Interactor<User> {
+    private String fileName;
+    public UserInteractor(){this.fileName = FileNameConstants.USER_FILE_NAME;}
+    public UserInteractor(String isTest){this.fileName = "testUsers.ser";}
 
     public ArrayList<User> readData() {
 
@@ -16,7 +19,7 @@ public class UserInteractor implements Interactor<User> {
         ArrayList<User> userList = new ArrayList<>();
 
         try{
-            FileInputStream file = new FileInputStream(FileNameConstants.USER_FILE_NAME);
+            FileInputStream file = new FileInputStream(fileName);
             ObjectInputStream input = new ObjectInputStream(file);
             userList.addAll ((ArrayList<User>) input.readObject()) ;
 
@@ -34,7 +37,7 @@ public class UserInteractor implements Interactor<User> {
         users.removeIf(user -> u.getUserNum() == user.getUserNum());
         users.add(u);
         try {
-            FileOutputStream file = new FileOutputStream(FileNameConstants.USER_FILE_NAME);
+            FileOutputStream file = new FileOutputStream(fileName);
             ObjectOutputStream output = new ObjectOutputStream(file);
             output.writeObject(users);
             output.close();
@@ -49,7 +52,7 @@ public class UserInteractor implements Interactor<User> {
         ArrayList<User> userList = this.readData();
         userList.add(user);
             try {
-                FileOutputStream file = new FileOutputStream(FileNameConstants.USER_FILE_NAME);
+                FileOutputStream file = new FileOutputStream(fileName);
                 ObjectOutputStream output = new ObjectOutputStream(file);
                 output.writeObject(userList);
                 output.close();

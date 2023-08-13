@@ -1,19 +1,20 @@
 package UseCases;
 
-import UseCases.*;
 import Entities.*;
 
 import java.io.*;
 import java.util.ArrayList;
 
 public class ShiftInteractor implements Interactor<Shift> {
-  
+    private String fileName;
+    public ShiftInteractor(){this.fileName = FileNameConstants.SHIFT_FILE_NAME;}
+    public ShiftInteractor(String isTest){this.fileName = "testShifts.ser";}
   public ArrayList<Shift> readData(){
 
       ArrayList<Shift> shiftList = new ArrayList<>();
 
       try{
-          FileInputStream file = new FileInputStream(FileNameConstants.SHIFT_FILE_NAME);
+          FileInputStream file = new FileInputStream(fileName);
           ObjectInputStream input = new ObjectInputStream(file);
           shiftList.addAll ((ArrayList<Shift>) input.readObject()) ;
 
@@ -39,7 +40,7 @@ public class ShiftInteractor implements Interactor<Shift> {
         shifts.removeIf(shift -> s.getShiftId() == shift.getShiftId());
         shifts.add(s);
         try{
-            FileOutputStream file = new FileOutputStream(FileNameConstants.SHIFT_FILE_NAME);
+            FileOutputStream file = new FileOutputStream(fileName);
             ObjectOutputStream output = new ObjectOutputStream(file);
             output.writeObject(shifts);
             output.close();
@@ -55,7 +56,7 @@ public class ShiftInteractor implements Interactor<Shift> {
        ArrayList<Shift> shiftList = this.readData();
        shiftList.add(shift);
        try{
-           FileOutputStream file = new FileOutputStream(FileNameConstants.SHIFT_FILE_NAME);
+           FileOutputStream file = new FileOutputStream(fileName);
            ObjectOutputStream output = new ObjectOutputStream(file);
            output.writeObject(shiftList);
            output.close();

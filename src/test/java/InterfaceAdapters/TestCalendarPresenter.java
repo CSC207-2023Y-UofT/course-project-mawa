@@ -16,16 +16,12 @@ public class TestCalendarPresenter {
 
     @Mock
     private Page mockGui;
-
     @Mock
     private CalendarModel mockModel;
-
     @Mock
     private GUIElement mockYearSelector;
-
     @Mock
     private GUIElement mockMonthSelector;
-
     private CalendarPresenter calendarPresenter;
 
     @BeforeEach

@@ -12,7 +12,7 @@ import java.time.Month;
 import static org.mockito.Mockito.*;
 
 
-class TestCalendarPresenter {
+public class TestCalendarPresenter {
 
     @Mock
     private Page mockGui;
@@ -50,8 +50,7 @@ class TestCalendarPresenter {
 
     @Test
     public void testActionPerformedMonthSelector() {
-        when(mockMonthSelector.getContent()).thenReturn("AUGUST"); // Replace with valid month name
-
+        when(mockMonthSelector.getContent()).thenReturn("AUGUST");
         ActionEvent mockActionEvent = mock(ActionEvent.class);
         when(mockActionEvent.getSource()).thenReturn(mockMonthSelector);
 

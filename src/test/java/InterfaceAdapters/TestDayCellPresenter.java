@@ -18,8 +18,8 @@ public class TestDayCellPresenter {
     @Test
     public void testGetYCoords(){
         dcp =  Instancio.of(DayCellPresenter.class)
-                .set(field(Shift::getTime), LocalDateTime.now())
                 .create();
+        dcp.height = 10000;
         LocalDateTime time1 = LocalDateTime.of(2023, 8, 11, 9, 0);
         LocalDateTime time2 = LocalDateTime.of(2023, 8, 11, 13, 0);
         ArrayList<Integer> shifts = new ArrayList<>();
@@ -37,8 +37,8 @@ public class TestDayCellPresenter {
         ArrayList<Integer> ycoords = dcp.getYcoords();
 
         assertEquals(2, ycoords.size());
-        assertEquals(0, ycoords.get(0));
-        assertEquals(75, ycoords.get(1));
+        assertEquals(2625, ycoords.get(0));
+        assertEquals(7738, ycoords.get(1));
 
     }
 

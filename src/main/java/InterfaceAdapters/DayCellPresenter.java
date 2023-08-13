@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class DayCellPresenter implements ActionListener {
     private Page gui;
-    private float width, height;
+    public float width, height;
     private ArrayList<Integer> shifts;
     private GUIElement button;
     public ShiftFileReader reader = ShiftFileReader.getInstance();

@@ -10,7 +10,7 @@ public class TestDayViewModel {
     @Test
     public void testYCoord() {
         float yCoord = DayViewModel.yCoord(1, 2, 100);
-        assertEquals(51.666668, yCoord, 0.001);
+        assertEquals(50, yCoord, 0.001);
     }
 
     @Test

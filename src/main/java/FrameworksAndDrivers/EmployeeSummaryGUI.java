@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 
 public class EmployeeSummaryGUI implements ActionListener, Page {
@@ -17,6 +18,10 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
     private JFrame frame = new JFrame();
 
     private EmployeeSummaryPresenter presenter = new EmployeeSummaryPresenter();
+
+    private HashMap<JButton, Integer> payHistButtonsToIDs = new HashMap<JButton, Integer>();
+
+    private HashMap<JButton, Integer> payButtonsToIDs = new HashMap<JButton, Integer>();
 
     private JPanel titlePanel = new JPanel();
 
@@ -39,12 +44,12 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
         //If a button to view payment history is clicked, direct to the payment history page for
         //the particular employee.
         Object source = e.getSource();
-        if (presenter.getMap().containsKey(source)){
-            new PaymentHistory(presenter.getMap().get(source),viewerID);
+        if (payHistButtonsToIDs.containsKey(source)){
+            new PaymentHistory(payHistButtonsToIDs.get(source),viewerID);
             frame.dispose();
-        } else if (presenter.getMap2().containsKey(source)){
-            presenter.makePayment(presenter.getMap2().get(source));
-            JOptionPane.showMessageDialog(null, presenter.getName(presenter.getMap2().get(source)) +
+        } else if (payButtonsToIDs.containsKey(source)){
+            presenter.makePayment(payButtonsToIDs.get(source));
+            JOptionPane.showMessageDialog(null, presenter.getName(payButtonsToIDs.get(source)) +
                             " has been paid for the month of "
                             + LocalDateTime.now().getMonth() + ".",
                     "", JOptionPane.INFORMATION_MESSAGE);
@@ -82,6 +87,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
     @Override
     public void addContent() {
         //Add the title panel and those of each employee. Also make the buttons respond to a click.
+
         JPanel all_panels = new JPanel();
         backPanel.setLayout(new GridLayout(1, 1));
         backPanel.add(back);
@@ -90,15 +96,27 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
         this.makeHeader();
         all_panels.add(backPanel);
         all_panels.add(titlePanel);
-        for (JPanel panel: presenter.makeEmployeePanels()){
+        for (Object[] attributes: presenter.makeEmployeePanels()){
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(1, 12));
+            for (int i = 0; i < 10; i ++){
+                panel.add(new JLabel((String) attributes[i]));
+            }
+            if ((Integer)attributes[10] == 0){
+                panel.add(new JLabel("N/A"));
+                panel.add(new JLabel("N/A"));
+            }
+            JButton d = new JButton("View Payment History");
+            payHistButtonsToIDs.put(d, (Integer)attributes[10]);
+            JButton c = new JButton("Pay For the Month");
+            payButtonsToIDs.put(c, (Integer)attributes[10]);
+            c.addActionListener(this);
+            d.addActionListener(this);
+            panel.add(d);
+            panel.add(c);
             all_panels.add(panel);
         }
-        for (JButton button: presenter.getMap().keySet()){
-            button.addActionListener(this);
-        }
-        for (JButton button: presenter.getMap2().keySet()){
-            button.addActionListener(this);
-        }
+
 
         JScrollPane sp = new JScrollPane(all_panels, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         frame.add(sp, BorderLayout.CENTER);

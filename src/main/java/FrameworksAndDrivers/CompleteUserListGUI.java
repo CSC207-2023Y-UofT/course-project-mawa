@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import InterfaceAdapters.*;
 
@@ -16,6 +17,8 @@ public class CompleteUserListGUI implements ActionListener, Page {
     private int viewerID;
 
     private CompleteUserListPresenter presenter = new CompleteUserListPresenter();
+
+    private HashMap<JButton, Integer> buttonsToIDs = new HashMap<JButton, Integer>();
 
     private JPanel titlePanel = new JPanel();
 
@@ -37,9 +40,9 @@ public class CompleteUserListGUI implements ActionListener, Page {
     public void actionPerformed(ActionEvent e) {
         //If a activate/deactivate button is clicked, the user factory updates the user, and the page is reloaded to show the change.
         Object source = e.getSource();
-        if (presenter.getMap().containsKey(source)){
+        if (buttonsToIDs.containsKey(source)){
             UserController uc = new UserController();
-            uc.changeActivation(presenter.getMap().get(source));
+            uc.changeActivation(buttonsToIDs.get(source));
             new CompleteUserListGUI(viewerID);
             frame.dispose();
             JOptionPane.showMessageDialog(null, "Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
@@ -83,15 +86,28 @@ public class CompleteUserListGUI implements ActionListener, Page {
         this.makeHeader();
         all_panels.add(backPanel);
         all_panels.add(titlePanel);
-        for (JPanel panel: presenter.makeUserPanels()){
+        for (Object[] attributes: presenter.makeUserPanels()){
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(1, 13));
+            for (int i = 0; i < 11; i ++){
+                panel.add(new JLabel((String) attributes[i]));
+            }
+            if ((Integer)attributes[11] == 0){
+                panel.add(new JLabel("N/A"));
+            } else {
+                String s;
+                if (attributes[10].equals("Yes")){
+                    s = "Deactivate";
+                } else{
+                    s = "Reactivate";
+                }
+                JButton b = new JButton(s);
+                buttonsToIDs.put(b, (Integer)attributes[11]);
+                b.addActionListener(this);
+                panel.add(b);
+            }
             all_panels.add(panel);
         }
-        for (JButton button: presenter.getMap().keySet()){
-            button.addActionListener(this);
-        }
-
-
-
 
         JScrollPane sp = new JScrollPane(all_panels, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         frame.add(sp, BorderLayout.CENTER);

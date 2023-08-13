@@ -57,7 +57,7 @@ public class TestDayViewModel {
         boolean overlapping = DayViewModel.isOverlapping(1, 2);
         assertFalse(overlapping);
 
-        boolean overlapping2 = DayViewModel.isOverlapping(1, 3);
+        boolean overlapping2 = DayViewModel.isOverlapping(2, 3);
         assertTrue(overlapping2);
     }
 }

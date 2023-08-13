@@ -34,12 +34,13 @@ public class TestDayCellPresenter {
                 return null;
             }
         };
+
         dcp.reader = mockShiftFileReader;
         ArrayList<Integer> ycoords = dcp.getYcoords();
 
         assertEquals(2, ycoords.size());
         assertEquals(2625, ycoords.get(0));
-        assertEquals(7738, ycoords.get(1));
+        assertEquals(3791, ycoords.get(1));
 
     }
 

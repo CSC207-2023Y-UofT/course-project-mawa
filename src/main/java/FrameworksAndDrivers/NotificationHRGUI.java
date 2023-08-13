@@ -8,16 +8,10 @@ import java.awt.event.ActionListener;
 import UseCases.NotificationHRListModel;
 import InterfaceAdapters.UserNotificationPresenter;
 
-import UseCases.NotificationListPanelBuilder;
-
 public class NotificationHRGUI extends JFrame implements ActionListener {
-    private JFrame frame = new JFrame();
+    private final JFrame frame = new JFrame();
     public JScrollPane unresolvedNotificationListScroller;
     public JScrollPane resolvedNotificationListScroller;
-    private final JLabel unresolvedNotificationLabel = new JLabel("Unresolved Notifications");
-    private final JLabel resolvedNotificationLabel = new JLabel("Resolved Notifications");
-    private final JButton denyRequestButton = new JButton("Deny Request");
-    private final JButton rescheduleShiftButton = new JButton("Reschedule Shift");
     public JList<String> unresolvedNotificationList;
     public JList<String> resolvedNotificationList;
     public NotificationHRListModel unresolvedNotificationListModel;
@@ -33,8 +27,10 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         lowerPanel.setLayout(new GridLayout(1, 2));
         this.frame.setLayout(new BorderLayout());
 
+        JButton denyRequestButton = new JButton("Deny Request");
         denyRequestButton.setActionCommand("Deny");
         denyRequestButton.addActionListener(this);
+        JButton rescheduleShiftButton = new JButton("Reschedule Shift");
         rescheduleShiftButton.setActionCommand("Reschedule");
         rescheduleShiftButton.addActionListener(this);
         homeButton.setActionCommand("home");
@@ -48,10 +44,12 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         this.unresolvedNotificationListScroller = new JScrollPane(this.unresolvedNotificationList);
         this.resolvedNotificationListScroller = new JScrollPane(this.resolvedNotificationList);
         this.presenter = new UserNotificationPresenter(userID, unresolvedNotificationListModel, resolvedNotificationListModel);
-        lowerPanel.add(new NotificationListPanelBuilder(frame, unresolvedNotificationLabel, unresolvedNotificationList,
-                unresolvedNotificationListScroller, rescheduleShiftButton, denyRequestButton).panel);
-        lowerPanel.add(new NotificationListPanelBuilder(frame, resolvedNotificationLabel, resolvedNotificationList,
-                resolvedNotificationListScroller, true).panel);
+        JLabel unresolvedNotificationLabel = new JLabel("Unresolved Notifications");
+        lowerPanel.add(new NotificationListPanelBuilderWithButtons(unresolvedNotificationLabel, unresolvedNotificationList,
+                unresolvedNotificationListScroller, rescheduleShiftButton, denyRequestButton));
+        JLabel resolvedNotificationLabel = new JLabel("Resolved Notifications");
+        lowerPanel.add(new NotificationListPanelBuilder(resolvedNotificationLabel, resolvedNotificationList,
+                resolvedNotificationListScroller, true));
         this.frame.add(lowerPanel, BorderLayout.CENTER);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);

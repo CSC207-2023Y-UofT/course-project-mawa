@@ -1,7 +1,6 @@
 package FrameworksAndDrivers;
 
 import UseCases.NotificationHRListModel;
-import UseCases.NotificationListPanelBuilder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;;
 
 public class NotificationEmployeeGUI extends JFrame implements ActionListener {
-    private JFrame frame = new JFrame();
+    private final JFrame frame = new JFrame();
     public JScrollPane unresolvedNotificationListScroller;
     public JScrollPane resolvedNotificationListScroller;
     public JList<String> unresolvedNotificationList;
@@ -39,11 +38,11 @@ public class NotificationEmployeeGUI extends JFrame implements ActionListener {
         this.unresolvedNotificationListScroller = new JScrollPane(this.unresolvedNotificationList);
         this.resolvedNotificationListScroller = new JScrollPane(this.resolvedNotificationList);
         JLabel unresolvedNotificationLabel = new JLabel("Unresolved Notifications");
-        panel.add(new NotificationListPanelBuilder(frame, unresolvedNotificationLabel, unresolvedNotificationList,
-                unresolvedNotificationListScroller, false).panel);
+        panel.add(new NotificationListPanelBuilder(unresolvedNotificationLabel, unresolvedNotificationList,
+                unresolvedNotificationListScroller, false));
         JLabel resolvedNotificationLabel = new JLabel("Resolved Notifications");
-        panel.add(new NotificationListPanelBuilder(frame, resolvedNotificationLabel, resolvedNotificationList,
-                resolvedNotificationListScroller, false).panel);
+        panel.add(new NotificationListPanelBuilder(resolvedNotificationLabel, resolvedNotificationList,
+                resolvedNotificationListScroller, false));
         this.frame.add(panel, BorderLayout.CENTER);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);

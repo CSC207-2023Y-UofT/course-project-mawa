@@ -2,28 +2,28 @@ package InterfaceAdapters;
 import UseCases.ShiftViewHRModel;
 
 import javax.swing.*;
-import java.awt.*;
+
 public class ShiftViewHRNotificationsPresenter {
-    JFrame frame;
+
     ShiftViewHRModel HRModel;
-
-
-    public ShiftViewHRNotificationsPresenter(JFrame view, ShiftViewHRModel model){
-        frame = view;
-        HRModel = model;
+    public ShiftViewHRNotificationsPresenter(int shiftId){
+        HRModel = new ShiftViewHRModel(shiftId);
     }
-    public void addShiftLabels(JPanel panel){
-        JLabel shiftDateLabel = HRModel.getShiftDateLabel();
-        JLabel shiftTimeLabel = HRModel.getShiftTimeLabel();
-        JPanel shiftTitlePanel = new JPanel();
-        shiftTitlePanel.setLayout(new GridLayout(2,1));
-        shiftTitlePanel.add(shiftDateLabel);
-        shiftTitlePanel.add(shiftTimeLabel);
-        shiftDateLabel.setHorizontalAlignment(JLabel.CENTER);
-        shiftTimeLabel.setHorizontalAlignment(JLabel.CENTER);
-        shiftDateLabel.setFont(new Font(shiftDateLabel.getFont().getName(), shiftDateLabel.getFont().getStyle(), 20));
-        shiftTimeLabel.setFont(new Font(shiftDateLabel.getFont().getName(), shiftDateLabel.getFont().getStyle(), 15));
-        panel.add(shiftTitlePanel, BorderLayout.PAGE_START);
+
+    public ShiftViewHRNotificationsPresenter(int userId, int notificationId){
+        HRModel = new ShiftViewHRModel(notificationId, userId);
+    }
+    public DefaultListModel<String> employeesOnShiftList(){
+        return HRModel.getEmployeesOnShiftList();
+    }
+    public DefaultListModel<String> employeesNotOnShiftList(){
+        return HRModel.getEmployeesNotOnShiftList();
+    }
+    public JLabel getDateLabel(){
+        return HRModel.getShiftDateLabel();
+    }
+    public JLabel getTimeLabel(){
+        return HRModel.getShiftTimeLabel();
     }
 
     public void updateEmployeesOnShiftList(String selected){
@@ -35,7 +35,7 @@ public class ShiftViewHRNotificationsPresenter {
         HRModel.getEmployeesOnShiftList().removeElement(selected);
     }
 
-    public void updateShiftEmployeesandNotification(){
+    public void updateShiftEmployeesAndNotification(){
         HRModel.updateShiftandNotification();
     }
     public void updateShiftEmployees(){

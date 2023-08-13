@@ -15,6 +15,9 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
     public UserNotificationHRPresenter presenter;
     public int user;
     public NotificationHRGUI(int userID) {
+        /*
+        Creates GUI for Notification page for HR.
+         */
         user = userID;
         JPanel lowerPanel = new JPanel();
         JButton homeButton = new JButton("Home");

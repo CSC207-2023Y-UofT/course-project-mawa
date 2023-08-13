@@ -43,6 +43,16 @@ Data from:
 - payments is stored in "payments.ser"
 - notifications is stored in "notifications.ser"
 
+## Testing
+Most of the testing coverage is applicable to the UseCase and InterfaceAdapter layers.
+This is because our Entities are very simple, and are essentially tables of information (not a lot worth testing).
+As well, even though we have manu GUI classes, they don't have much testable logic contained in them (as per SRP, CA, and MVP),
+so we focused our testing efforts in the middle two layers. Some of the presenters (like HomeButtonPresenter), were not worth testing 
+because their logic is very shallow and is very similar to that of the CalendarPresenter (for which testing is provided), so 
+we decided that testing these presenters was not worth the time it would take to write tests for them.\
+Our testing coverage is ________________
+
+
 ## Software Design
 The classes are packaged into their CA layers to help with
 software development. Due to this packaging decision, all of the GUI 

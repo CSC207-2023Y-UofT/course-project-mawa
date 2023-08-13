@@ -6,6 +6,8 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * The DayViewLogic class provides logic for the DayView component.
@@ -110,24 +112,57 @@ public class DayViewLogic {
         for(ArrayList<Integer> a : shifts2D){
             newShifts.addAll(a);
         }
-        this.shifts = newShifts;
-        for (ArrayList<Integer> s0 : shifts2D){
-            for(int i = 0; i < s0.size(); i++){
+        this.shifts = removeDuplicates(newShifts);
+            for(int j = 0;j<shifts2D.size();j++) {
                 ShiftFileReader reader = ShiftFileReader.getInstance();
-                int s = s0.get(i);
-                int hours = (int) Math.floor(reader.getDuration(s));
-                int mins = (int) ((reader.getDuration(s) - hours) * 60);
-                LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
-                Rectangle area = new Rectangle((int) (width /10 + i * 8 * width / 10 / s0.size()),
-                        (int) (DayViewModel.yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float)(reader.getDate(s).getMinute())/60,
-                                                        timeRange[1] - timeRange[0], height)),
-                        (int) ((float) 8 * width / 10 / s0.size()),
-                        (int) DayViewModel.yCoord(reader.getDuration(s) + 1 + (float)time2.getMinute()/60,
-                                timeRange[1] - timeRange[0], height));
-                areas.add(area);
-            }
+                ArrayList<Integer> s0 = shifts2D.get(j);
+                int offset = 0;
+                for (int i = 0;i<s0.size();i++) {
+                    int s = s0.get(i);
+                    if (j>0){
+                        offset = findSmallestIndexNotOverlapping(s,shifts2D.get(j-1));
+                    }
+                        int hours = (int) Math.floor(reader.getDuration(s));
+                        int mins = (int) ((reader.getDuration(s) - hours) * 60);
+                        LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
+                        Rectangle area = new Rectangle();
+                        if (offset < 0 || j < 1){
+                            area = new Rectangle((int) (width / 10 + i * 8 * width / 10 / s0.size()),
+                                    (int) (DayViewModel.yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float) (reader.getDate(s).getMinute()) / 60,
+                                            timeRange[1] - timeRange[0], height)),
+                                    (int) (((float) 8 * width / 10 / s0.size())),
+                                    (int) DayViewModel.yCoord(reader.getDuration(s) + (float) time2.getMinute() / 60,
+                                            timeRange[1] - timeRange[0], height));
+                        } else{
+                            area = new Rectangle((int) (width / 10 + i * 8 * width / 10 / s0.size()),
+                                    (int) (DayViewModel.yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float) (reader.getDate(s).getMinute()) / 60,
+                                            timeRange[1] - timeRange[0], height)),
+                                    (int) (((float) 8 * width / 10 / s0.size()) - ((width - areas.get(offset).x)/s0.size())),
+                                    (int) DayViewModel.yCoord(reader.getDuration(s) + (float) time2.getMinute() / 60,
+                                            timeRange[1] - timeRange[0], height));
+                        }
+                        areas.add(area);
+                }
         }
         return areas;
+    }
+
+    private ArrayList<Integer> removeDuplicates(ArrayList<Integer> list)
+    {
+        Set<Integer> set = new LinkedHashSet<>();
+        set.addAll(list);
+        list.clear();
+        list.addAll(set);
+        return list;
+    }
+
+    private int findSmallestIndexNotOverlapping(int s1, ArrayList<Integer> prevShifts){
+        for (int i = 0; i<prevShifts.size();i++){
+            if (DayViewModel.isOverlapping(s1, prevShifts.get(i))){
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

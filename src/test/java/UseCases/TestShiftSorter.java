@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import Entities.Shift;
-import UseCases.ShiftFileReader;
-import UseCases.ShiftSorter;
 import org.junit.jupiter.api.Test;
 
 public class TestShiftSorter {

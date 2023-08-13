@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-class TestDayViewModel {
+public class TestDayViewModel {
 
     @Test
-    void testYCoord() {
+    public void testYCoord() {
         float yCoord = DayViewModel.yCoord(1, 2, 100);
         assertEquals(51.666668, yCoord, 0.001);
     }
 
     @Test
-    void testMake2DList() {
+    public void testMake2DList() {
         ArrayList<Integer> shifts = new ArrayList<>();
         shifts.add(1);
         shifts.add(2);
@@ -27,7 +27,7 @@ class TestDayViewModel {
     }
 
     @Test
-    void testIsOverlapping() {
+    public void testIsOverlapping() {
         ShiftFileReader reader = ShiftFileReader.getInstance();
 
         LocalDateTime start1 = LocalDateTime.of(2023, 8, 11, 9, 0);

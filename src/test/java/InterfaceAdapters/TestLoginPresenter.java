@@ -2,7 +2,6 @@ package InterfaceAdapters;
 
 import Entities.User;
 import UseCases.EmptyAppValidator;
-import UseCases.LoginValidator;
 import UseCases.UserFileReader;
 import UseCases.UserInteractor;
 import org.instancio.Instancio;
@@ -51,9 +50,7 @@ public class TestLoginPresenter {
     @Test
     public void startWithHREmpty() throws IOException {
         new FileWriter("testUsers.ser", false).close();
-        EmptyAppValidator mockEmptyAppValidator = mock(EmptyAppValidator.class);
-        mockEmptyAppValidator.ui = new UserInteractor("test");
-        when(mockEmptyAppValidator.isEmpty()).thenReturn(true);
+        EmptyAppValidator mockEmptyAppValidator = new EmptyAppValidator("test");
         presenter.eav = mockEmptyAppValidator;
         boolean result = presenter.startWithHR();
 
@@ -65,11 +62,10 @@ public class TestLoginPresenter {
         User user = Instancio.create(User.class);
         UserInteractor interactor = new UserInteractor("test");
         interactor.writeData(user);
-        EmptyAppValidator mockEmptyAppValidator = mock(EmptyAppValidator.class);
-        mockEmptyAppValidator.ui = new UserInteractor("test");
-        when(mockEmptyAppValidator.isEmpty()).thenReturn(false);
-
+        EmptyAppValidator mockEmptyAppValidator = new EmptyAppValidator("test");
+        presenter.eav = mockEmptyAppValidator;
         boolean result = presenter.startWithHR();
+
 
         assertFalse(result);
     }

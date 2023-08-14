@@ -15,6 +15,8 @@ import java.time.format.DateTimeFormatter;
 public class ShiftCellPresenter implements ActionListener {
     private GUIElement button;
     private int shift, user;
+    protected UserFileReader userReader;
+    protected ShiftFileReader shiftReader;
 
     /**
      * Constructs a ShiftCellPresenter object.
@@ -27,6 +29,8 @@ public class ShiftCellPresenter implements ActionListener {
         this.shift = shift;
         this.user = user;
         this.button = button;
+        this.userReader = UserFileReader.getInstance();
+        this.shiftReader = ShiftFileReader.getInstance();
     }
 
     /**
@@ -35,8 +39,7 @@ public class ShiftCellPresenter implements ActionListener {
      * @return True if the user is HR, false otherwise.
      */
     public boolean isHR() {
-        UserFileReader reader = UserFileReader.getInstance();
-        return reader.getType(user).equals(UserTypeConstants.HR);
+        return userReader.getType(user).equals(UserTypeConstants.HR);
     }
 
     /**
@@ -45,8 +48,7 @@ public class ShiftCellPresenter implements ActionListener {
      * @return The formatted string representation of the shift time.
      */
     public String getString(){
-        ShiftFileReader reader = ShiftFileReader.getInstance();
-        return reader.getDate(shift).format(DateTimeFormatter.ofPattern("HH:mm"));
+        return shiftReader.getDate(shift).format(DateTimeFormatter.ofPattern("HH:mm"));
     }
     /**
      * Handles when the ShiftCell gets clicked.

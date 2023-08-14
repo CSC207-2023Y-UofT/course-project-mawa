@@ -56,7 +56,7 @@ public class Shift implements Serializable {
 
     public void removeCoworker(int coworker){
         if (this.coworkers.contains(coworker)){
-            this.coworkers.remove(coworker);
+            this.coworkers.remove(this.coworkers.indexOf(coworker));
         }
 
     }

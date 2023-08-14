@@ -20,10 +20,10 @@ public class UserFileReader{
         list = interactor.readData();
     }
 
-    protected UserFileReader(String forTest){
+    public UserFileReader(String forTest){
         user = new User("", "", "", "", "", -10,
                 0, "9999-12-31", new char[]{"q".charAt(0)}, UserTypeConstants.SALARY_WORKER, -111);
-        interactor = new UserInteractor();
+        interactor = new UserInteractor("test");
         list = interactor.readData();
     }
 

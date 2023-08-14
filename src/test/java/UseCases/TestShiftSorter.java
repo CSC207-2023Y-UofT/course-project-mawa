@@ -18,7 +18,7 @@ public class TestShiftSorter {
         ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
             @Override
             public Shift getShift(int id) {
-                return new Shift(LocalDateTime.now().plusDays(id), new ArrayList<Integer>(), 0, id);
+                return new Shift(LocalDateTime.now().plusHours(id), new ArrayList<Integer>(), 0, id);
             }
         };
 

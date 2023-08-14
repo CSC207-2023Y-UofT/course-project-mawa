@@ -22,7 +22,7 @@ public class ShiftFileReader{
 
     protected ShiftFileReader(String isTest){
         shift = new Shift(LocalDateTime.now(), new ArrayList<Integer>(), (float)0, -11);
-        interactor = new ShiftInteractor();
+        interactor = new ShiftInteractor("test");
         list = interactor.readData();
     }
     /**

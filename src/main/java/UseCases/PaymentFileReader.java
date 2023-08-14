@@ -23,6 +23,12 @@ public class PaymentFileReader{
      *
      * @return The instance of PaymentFileReader.
      */
+
+    public PaymentFileReader(String isTest) {
+        payment = new Payment(-21, 15.56F, LocalDateTime.now(), -71);
+        interactor = new PaymentInteractor("test");
+        list = interactor.readData();
+    }
     public static PaymentFileReader getInstance(){
         if (instance == null) {
             instance = new PaymentFileReader();

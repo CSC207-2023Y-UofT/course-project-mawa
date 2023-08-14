@@ -13,12 +13,7 @@ public class TestShiftMaker {
     @Test
     void testMakeShiftValidTime() {
         // Create a mock ShiftInteractor and ShiftFileReader
-        ShiftInteractor mockShiftInteractor = new ShiftInteractor() {
-            @Override
-            public void writeData(Shift shift) {
-                // Mock writeData method
-            }
-        };
+        ShiftInteractor mockShiftInteractor = new ShiftInteractor("test");
         ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
             @Override
             public ArrayList<Integer> getIds() {
@@ -37,12 +32,7 @@ public class TestShiftMaker {
     @Test
     void testMakeShiftInvalidTime() {
         // Create a mock ShiftInteractor and ShiftFileReader
-        ShiftInteractor mockShiftInteractor = new ShiftInteractor() {
-            @Override
-            public void writeData(Shift shift) {
-                // Mock writeData method
-            }
-        };
+        ShiftInteractor mockShiftInteractor = new ShiftInteractor("test");
         ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
             @Override
             public ArrayList<Integer> getIds() {

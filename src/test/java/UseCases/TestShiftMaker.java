@@ -3,7 +3,6 @@ package UseCases;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import Entities.Shift;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

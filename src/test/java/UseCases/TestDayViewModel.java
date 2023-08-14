@@ -16,8 +16,8 @@ public class TestDayViewModel {
         LocalDateTime start2 = LocalDateTime.of(2023, 8, 11, 12, 0);
         LocalDateTime start3 = LocalDateTime.of(2023, 8, 11, 17, 0);
 
-        ShiftInteractor interactor = new ShiftInteractor();
-        ShiftFileReader reader = ShiftFileReader.getInstance();
+        ShiftInteractor interactor = new ShiftInteractor("test");
+        ShiftFileReader reader = new ShiftFileReader("test");
         Shift shift1 = new Shift(start1, new ArrayList<Integer>(), 3, 1);
         Shift shift2 = new Shift(start2, new ArrayList<Integer>(), 7, 2);
         Shift shift3 = new Shift(start3, new ArrayList<Integer>(), 7, 3);
@@ -32,6 +32,7 @@ public class TestDayViewModel {
                 interactor.writeData(s);
             }
         }
+        reader.update();
     }
 
     @Test
@@ -44,7 +45,7 @@ public class TestDayViewModel {
     public void testMake2DList() {
         ArrayList<Integer> shiftids = new ArrayList<Integer>();
         shiftids.add(1);shiftids.add(2);shiftids.add(3);
-        ArrayList<ArrayList<Integer>> shifts2D = DayViewModel.make2DList(shiftids);
+        ArrayList<ArrayList<Integer>> shifts2D = new DayViewModel().make2DList(shiftids);
         assertEquals(2, shifts2D.size());
         assertEquals(2, shifts2D.get(1).size());
         assertEquals(1, shifts2D.get(0).get(0));
@@ -53,10 +54,10 @@ public class TestDayViewModel {
     @Test
     public void testIsOverlapping() {
 
-        boolean overlapping = DayViewModel.isOverlapping(1, 2);
+        boolean overlapping = new DayViewModel("test").isOverlapping(1, 2);
         assertFalse(overlapping);
 
-        boolean overlapping2 = DayViewModel.isOverlapping(2, 3);
+        boolean overlapping2 = new DayViewModel("test").isOverlapping(2, 3);
         assertTrue(overlapping2);
     }
 }

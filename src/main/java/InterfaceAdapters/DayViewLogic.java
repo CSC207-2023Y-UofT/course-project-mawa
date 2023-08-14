@@ -110,7 +110,7 @@ public class DayViewLogic {
     public ArrayList<Rectangle> getShiftCellPosition(){
         ArrayList<Rectangle> areas = new ArrayList<Rectangle>();
         int[] timeRange = getTimeRange();
-        ArrayList<ArrayList<Integer>> shifts2D = DayViewModel.make2DList(shifts);
+        ArrayList<ArrayList<Integer>> shifts2D = new DayViewModel().make2DList(shifts);
         ArrayList<Integer> newShifts = new ArrayList<>();
         for(ArrayList<Integer> a : shifts2D){
             newShifts.addAll(a);
@@ -161,7 +161,7 @@ public class DayViewLogic {
 
     private int findSmallestIndexNotOverlapping(int s1, ArrayList<Integer> prevShifts){
         for (int i = 0; i<prevShifts.size();i++){
-            if (DayViewModel.isOverlapping(s1, prevShifts.get(i))){
+            if (new DayViewModel().isOverlapping(s1, prevShifts.get(i))){
                 return i;
             }
         }

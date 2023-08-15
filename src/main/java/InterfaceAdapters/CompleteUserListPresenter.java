@@ -1,20 +1,24 @@
 package InterfaceAdapters;
 
-
 import UseCases.UserFileReader;
 import java.util.ArrayList;
 
-public class CompleteUserListPresenter{
+/**
+ * The CompleteUserListPresenter class handles presenting user data for display.
+ * It creates arrays of user information and lists of arrays for UI rendering.
+ * This class is part of the MVP design pattern.
+ */
+public class CompleteUserListPresenter {
 
     private UserFileReader fr = UserFileReader.getInstance();
 
-
-
-    public Object[] makeUserPanel(int id){
-        //Create a single panel which displays a users information, and has a button which
-        //is to serve the function of activating/deactivating the employee depending on their
-        //existing status.
-
+    /**
+     * Creates an array of user information for display.
+     *
+     * @param id The ID of the user for whom to create the array.
+     * @return An array of objects representing user information for display.
+     */
+    public Object[] makeUserPanel(int id) {
         Object[] userPanelList = new Object[12];
         userPanelList[0] = fr.getFirstName(id);
         userPanelList[1] = fr.getSurname(id);
@@ -26,29 +30,35 @@ public class CompleteUserListPresenter{
         userPanelList[7] = fr.getDob(id).toString();
         userPanelList[8] = fr.getType(id);
         userPanelList[9] = Float.toString(fr.getPay(id));
-        if (fr.getActive(id)){
+
+        if (fr.getActive(id)) {
             userPanelList[10] = "Yes";
-        } else{
+        } else {
             userPanelList[10] = "No";
         }
-        if (fr.getType(id).equals("HR")){
+
+        if (fr.getType(id).equals("HR")) {
             userPanelList[11] = 0;
-        } else{
+        } else {
             userPanelList[11] = id;
         }
-        return userPanelList;
 
+        return userPanelList;
     }
 
-    public ArrayList<Object[]> makeUserPanels(){
-        //Get the users from the file and create an array of attributes for each of them, and return them in a list.
+    /**
+     * Creates arrays of user information for multiple users.
+     *
+     * @return An ArrayList of arrays of objects, each representing user information for display.
+     */
+    public ArrayList<Object[]> makeUserPanels() {
         ArrayList<Object[]> panels = new ArrayList<>();
         ArrayList<Integer> users = fr.getIds();
-        for (Integer user: users){
+
+        for (Integer user : users) {
             panels.add(this.makeUserPanel(user));
         }
+
         return panels;
     }
-
-
 }

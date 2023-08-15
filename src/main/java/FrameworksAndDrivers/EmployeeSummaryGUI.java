@@ -2,6 +2,7 @@ package FrameworksAndDrivers;
 
 import InterfaceAdapters.EmployeeSummaryPresenter;
 import InterfaceAdapters.Page;
+import InterfaceAdapters.UserController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,8 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
     private JFrame frame = new JFrame();
 
     private EmployeeSummaryPresenter presenter = new EmployeeSummaryPresenter();
+
+    private UserController controller = new UserController();
 
     private HashMap<JButton, Integer> payHistButtonsToIDs = new HashMap<JButton, Integer>();
 
@@ -48,7 +51,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
             new PaymentHistory(payHistButtonsToIDs.get(source),viewerID);
             frame.dispose();
         } else if (payButtonsToIDs.containsKey(source)){
-            presenter.makePayment(payButtonsToIDs.get(source));
+            controller.makePayment(payButtonsToIDs.get(source));
             JOptionPane.showMessageDialog(null, presenter.getName(payButtonsToIDs.get(source)) +
                             " has been paid for the month of "
                             + LocalDateTime.now().getMonth() + ".",

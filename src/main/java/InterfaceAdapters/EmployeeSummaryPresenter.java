@@ -1,17 +1,26 @@
 package InterfaceAdapters;
+
 import UseCases.PaymentMaker;
 import UseCases.UserFileReader;
 
 import java.util.ArrayList;
 
-public class EmployeeSummaryPresenter{
+/**
+ * The EmployeeSummaryPresenter class handles presenting employee summary data for display.
+ * It creates arrays of employee information and lists of arrays for UI rendering.
+ * This class is part of the MVP design pattern.
+ */
+public class EmployeeSummaryPresenter {
 
     private UserFileReader fr = UserFileReader.getInstance();
 
+    /**
+     * Creates an array of employee information for display.
+     *
+     * @param id The ID of the employee for whom to create the array.
+     * @return An array of objects representing employee information for display.
+     */
     public Object[] makeEmployeePanel(int id) {
-        //Make a panel containing all of an employee's information, with a button at the end that
-        //Corresponds to that employee.
-
         Object[] employeePanelList = new Object[11];
         employeePanelList[0] = fr.getFirstName(id);
         employeePanelList[1] = fr.getSurname(id);
@@ -23,43 +32,43 @@ public class EmployeeSummaryPresenter{
         employeePanelList[7] = fr.getDob(id).toString();
         employeePanelList[8] = fr.getType(id);
         employeePanelList[9] = Float.toString(fr.getPay(id));
-        if (fr.getType(id).equals("Volunteer")){
+
+        if (fr.getType(id).equals("Volunteer")) {
             employeePanelList[10] = 0;
-        } else{
+        } else {
             employeePanelList[10] = id;
         }
+
         return employeePanelList;
-
-        /*
-        panel.setLayout(new GridLayout(1, 12));
-
-        return panel;*/
-
     }
 
-    public ArrayList<Object[]> makeEmployeePanels(){
-        //Get employees from the database, and if they are active, add their panel to a list, which
-        //is returned.
+    /**
+     * Creates arrays of employee information for active employees (excluding HR) for display.
+     *
+     * @return An ArrayList of arrays of objects, each representing employee information for display.
+     */
+    public ArrayList<Object[]> makeEmployeePanels() {
         ArrayList<Object[]> lists = new ArrayList<>();
         ArrayList<Integer> users = fr.getIds();
-        for (Integer user: users){
-            if (!fr.getType(user).equals("HR") && fr.getActive(user)){
+
+        for (Integer user : users) {
+            if (!fr.getType(user).equals("HR") && fr.getActive(user)) {
                 lists.add(this.makeEmployeePanel(user));
             }
-
         }
+
         return lists;
     }
 
 
-    public void makePayment(int id){
-        PaymentMaker p = new PaymentMaker(id);
-        p.makePayment();
-    }
-
-    public String getName(int id){
+    /**
+     * Retrieves the name of an employee based on their ID.
+     *
+     * @param id The ID of the employee.
+     * @return The full name of the employee.
+     */
+    public String getName(int id) {
         UserFileReader ufr = UserFileReader.getInstance();
         return ufr.getFirstName(id) + " " + ufr.getSurname(id);
     }
-
 }

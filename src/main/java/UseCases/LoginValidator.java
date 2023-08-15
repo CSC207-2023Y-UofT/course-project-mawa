@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * The LoginValidator class validates user credentials during the login process.
  */
 public class LoginValidator {
-    public UserFileReader empDB = UserFileReader.getInstance();;
+    public UserFileReader empDB = UserFileReader.getInstance();
 
     /**
      * Validates the provided employee ID and password.

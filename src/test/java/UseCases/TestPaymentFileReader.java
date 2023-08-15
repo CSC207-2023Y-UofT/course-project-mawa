@@ -21,15 +21,16 @@ public class TestPaymentFileReader {
     private List<Integer> idList;
     @BeforeEach
     public void setUp() throws IOException {
-        new FileWriter("payments.ser", false).close();
-        reader = PaymentFileReader.getInstance();
-        interactor = new PaymentInteractor();
+        new FileWriter("testPayments.ser", false).close();
+        reader = new PaymentFileReader("test");
+        interactor = new PaymentInteractor("test");
         list = Instancio.ofList(Payment.class).size(10).create();
         idList = new ArrayList<>();
         for (Payment s:list){
             interactor.writeData(s);
             idList.add(s.getPaymentId());
         }
+        reader.update();
     }
     @Test
     public void testUpdate(){
@@ -65,6 +66,7 @@ public class TestPaymentFileReader {
         for (Payment s:list){
             interactor.update(s);
         }
+        reader.update();
         ArrayList<Integer> expected = new ArrayList<Integer>();
         expected.add(list.get(1).getPaymentId());
         expected.add(list.get(3).getPaymentId());

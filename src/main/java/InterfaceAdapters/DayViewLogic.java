@@ -20,6 +20,7 @@ public class DayViewLogic {
     private int user;
     private LocalDate date;
     protected ShiftFileReader reader;
+    protected ShiftSorter sorter;
 
     /**
      * Constructs a DayViewLogic object.
@@ -32,8 +33,9 @@ public class DayViewLogic {
      */
     public DayViewLogic(ArrayList<Integer> shifts, float width, float height, int user,
                         LocalDate date){
-        this.shifts = new ShiftSorter().sortShiftsByDate(shifts);
-        System.out.println(shifts.size());
+        this.sorter = new ShiftSorter();
+        this.shifts = shifts;
+        System.out.println(this.shifts);
         this.width = width;
         this.height = height;
         this.user = user;
@@ -58,8 +60,9 @@ public class DayViewLogic {
      * @return An array containing the start and end hours of the time range.
      */
     public int[] getTimeRange(){
+        shifts = sorter.sortShiftsByDate(shifts);
         if (shifts.size() > 0){
-            return (new int[] {Math.min(Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2), 8),
+            return (new int[] {Math.min(Math.max(0, -2 + reader.getDate(shifts.get(0)).getHour()), 8),
                     (int) Math.max(Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour()
                                     + reader.getDuration(shifts.get(0))+ 2), 18)});
         } else{
@@ -107,7 +110,7 @@ public class DayViewLogic {
     public ArrayList<Rectangle> getShiftCellPosition(){
         ArrayList<Rectangle> areas = new ArrayList<Rectangle>();
         int[] timeRange = getTimeRange();
-        ArrayList<ArrayList<Integer>> shifts2D = DayViewModel.make2DList(shifts);
+        ArrayList<ArrayList<Integer>> shifts2D = new DayViewModel().make2DList(shifts);
         ArrayList<Integer> newShifts = new ArrayList<>();
         for(ArrayList<Integer> a : shifts2D){
             newShifts.addAll(a);
@@ -125,7 +128,7 @@ public class DayViewLogic {
                         int hours = (int) Math.floor(reader.getDuration(s));
                         int mins = (int) ((reader.getDuration(s) - hours) * 60);
                         LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
-                        Rectangle area = new Rectangle();
+                        Rectangle area;
                         if (offset < 0 || j < 1){
                             area = new Rectangle((int) (width / 10 + i * 8 * width / 10 / s0.size()),
                                     (int) (DayViewModel.yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float) (reader.getDate(s).getMinute()) / 60,
@@ -158,7 +161,7 @@ public class DayViewLogic {
 
     private int findSmallestIndexNotOverlapping(int s1, ArrayList<Integer> prevShifts){
         for (int i = 0; i<prevShifts.size();i++){
-            if (DayViewModel.isOverlapping(s1, prevShifts.get(i))){
+            if (new DayViewModel().isOverlapping(s1, prevShifts.get(i))){
                 return i;
             }
         }

@@ -8,6 +8,8 @@ import UseCases.LoginValidator;
  */
 public class LoginPresenter {
     private Page gui;
+    protected LoginValidator loginValidator;
+    protected EmptyAppValidator eav = new EmptyAppValidator();
 
     /**
      * Constructs a LoginPresenter object.
@@ -16,6 +18,7 @@ public class LoginPresenter {
      */
     public LoginPresenter(Page gui){
         this.gui = gui;
+        this.loginValidator = new LoginValidator();
     }
 
     /**
@@ -26,7 +29,7 @@ public class LoginPresenter {
      * @return The authenticated user's ID, or nonsense value if credentials are invalid.
      */
     public int handleUser(int userId, char[] pwd){
-        int id = new LoginValidator().validateCredentials(userId, pwd);
+        int id = loginValidator.validateCredentials(userId, pwd);
         return id;
     }
     /**
@@ -36,7 +39,6 @@ public class LoginPresenter {
      * @return true if the application starts with making HR account, false otherwise.
      */
     public boolean startWithHR(){
-        EmptyAppValidator eav = new EmptyAppValidator();
         return eav.isEmpty();
     }
 

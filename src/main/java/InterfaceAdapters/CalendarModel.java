@@ -17,8 +17,8 @@ import java.util.ArrayList;
  */
 public class CalendarModel {
     private int year, month, user;
-    public ShiftFileReader shiftDB;
-    public UserFileReader userDB;
+    protected ShiftFileReader shiftDB;
+    protected UserFileReader userDB;
 
     /**
      * Constructs a CalendarModel object with the specified year, month, and user.

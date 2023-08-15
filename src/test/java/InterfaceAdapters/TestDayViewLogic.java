@@ -4,6 +4,7 @@ import Entities.Shift;
 import InterfaceAdapters.DayViewLogic;
 import UseCases.ShiftFileReader;
 import UseCases.ShiftInteractor;
+import UseCases.ShiftSorter;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +52,7 @@ public class TestDayViewLogic {
         times.add(LocalDateTime.of(2022, 2, 10, 8, 11));
         for (int i = 0; i < shifts.size(); i++){
             shifts.get(i).setTime(times.get(i));
-            shifts.get(i).setShiftId(i);
+            shifts.get(i).setShiftId(i + 2);
             shiftIds.add(shifts.get(i).getShiftId());
             interactor.update(shifts.get(i));
         }
@@ -83,6 +84,9 @@ public class TestDayViewLogic {
             }
         };
         dvl.reader = mockShiftFileReader;
+        ShiftSorter sorter = new ShiftSorter();
+        sorter.reader = mockShiftFileReader;
+        dvl.sorter = sorter;
 
         Assertions.assertTrue(Arrays.equals(new int[]{0, 24}, dvl.getTimeRange()));
     }
@@ -109,6 +113,9 @@ public class TestDayViewLogic {
             }
         };
         dvl.reader = mockShiftFileReader;
+        ShiftSorter sorter = new ShiftSorter();
+        sorter.reader = mockShiftFileReader;
+        dvl.sorter = sorter;
         ArrayList<Integer> exHourRange = new ArrayList<>();
         for (int i = 0; i < 24; i++){
             exHourRange.add(i);

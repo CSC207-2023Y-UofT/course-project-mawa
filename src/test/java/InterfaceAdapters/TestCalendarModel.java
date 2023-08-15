@@ -9,8 +9,10 @@ import Entities.User;
 import InterfaceAdapters.CalendarModel;
 import UseCases.ShiftFileReader;
 import UseCases.ShiftInteractor;
+import UseCases.UserFileReader;
 import UseCases.UserInteractor;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -23,8 +25,8 @@ import java.util.List;
 
 public class TestCalendarModel {
 
-    @BeforeAll
-    public static void setUp() throws IOException {
+    @BeforeEach
+    public void setUp() throws IOException {
         new FileWriter("testUsers.ser", false).close();
 
         UserInteractor userInteractor = new UserInteractor("test");
@@ -43,7 +45,7 @@ public class TestCalendarModel {
         shiftInteractor.writeData(new Shift(LocalDateTime.of(2023, 8, 10, 1, 2),
                 (List<Integer>) workers, 4.5F, 1));
         shiftInteractor.writeData(new Shift(LocalDateTime.of(2023, 8, 10, 21, 2),
-                (List<Integer>) workers, 4.5F, 2));
+                (List<Integer>) workers, 1F, 2));
 
     }
 
@@ -64,8 +66,8 @@ public class TestCalendarModel {
             }
         };
         calendarModel.shiftDB = mockShiftFileReader;
+        calendarModel.userDB = new UserFileReader("test");
         ArrayList<Integer> shifts = calendarModel.getShifts(10);
-
         assertTrue(shifts.contains(2));
         assertFalse(shifts.contains(3));
 
@@ -98,6 +100,7 @@ public class TestCalendarModel {
             }
         };
         calendarModel.shiftDB = mockShiftFileReader;
+        calendarModel.userDB = new UserFileReader("test");
         ArrayList<Integer> shifts = calendarModel.getShifts(10);
 
         assertTrue(shifts.contains(2));

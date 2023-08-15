@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 /**
  * Unit test for TimeOffButtonPresenter class.
  */
-public class TestTimeOffButtonPresenter {
+public class TimeOffButtonPresenterTest {
 
     private GUIElement mockButton;
     private NotificationFileReader mockNotificationFileReader;

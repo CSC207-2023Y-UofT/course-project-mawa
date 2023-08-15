@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Unit test for User entity class.
  */
-public class TestUser {
+public class UserTest {
 
     private User user;
     private LocalDate dob;

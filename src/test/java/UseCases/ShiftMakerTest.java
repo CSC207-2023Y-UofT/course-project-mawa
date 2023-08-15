@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Unit test for ShiftMaker class.
  */
-public class TestShiftMaker {
+public class ShiftMakerTest {
 
     @Test
     void testMakeShiftValidTime() {

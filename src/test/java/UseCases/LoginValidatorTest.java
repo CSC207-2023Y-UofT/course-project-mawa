@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Unit test for LoginValidator class.
  */
-public class TestLoginValidator {
+public class LoginValidatorTest {
     private UserFileReader mockUserFileReader;
 
     private class MockUserFileReader extends UserFileReader {

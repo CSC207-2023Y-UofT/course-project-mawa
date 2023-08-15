@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit test for ShiftSorter class.
  */
-public class TestShiftSorter {
+public class ShiftSorterTest {
 
     @Test
     void testSortShiftsByDate() {

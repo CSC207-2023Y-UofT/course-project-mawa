@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Unit test for PaymentFileReader class.
  */
-public class TestPaymentFileReader {
+public class PaymentFileReaderTest {
     private PaymentFileReader reader;
     private PaymentInteractor interactor;
     private List<Payment> list;

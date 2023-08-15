@@ -5,22 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import UseCases.ShiftFileReader;
-import UseCases.ShiftInteractor;
 import UseCases.UserFileReader;
-import UseCases.UserInteractor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
+
 /**
  * Unit test for CalendarModel class.
  */
-public class TestCalendarModel {
+public class CalendarModelTest {
     ShiftFileReader mockShiftFileReader;
     @BeforeEach
     public void setUp() throws IOException {

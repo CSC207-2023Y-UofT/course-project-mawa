@@ -1,25 +1,22 @@
 package InterfaceAdapters;
 
 import UseCases.ShiftFileReader;
-import UseCases.ShiftInteractor;
 import UseCases.ShiftSorter;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class TestDayViewLogic {
+public class DayViewLogicTest {
     private ArrayList<Integer> shiftIds;
     private ArrayList<Float> durations;
     private DayViewLogic dvl;

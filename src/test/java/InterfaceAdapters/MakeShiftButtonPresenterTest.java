@@ -9,17 +9,17 @@ import static org.mockito.Mockito.*;
 /**
  * Unit test for MakeShiftButtonPresenter class.
  */
-class TestMakeShiftButtonPresenter {
+public class MakeShiftButtonPresenterTest {
     private GUIElement mockButton;
     private MakeShiftButtonPresenter presenter;
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         mockButton = mock(GUIElement.class);
         presenter = new MakeShiftButtonPresenter(mockButton);
     }
 
     @Test
-    void actionPerformedMakeShiftButton() {
+    public void actionPerformedMakeShiftButton() {
         ActionEvent mockEvent = mock(ActionEvent.class);
         when(mockEvent.getSource()).thenReturn(mockButton);
         presenter.actionPerformed(mockEvent);
@@ -28,7 +28,7 @@ class TestMakeShiftButtonPresenter {
     }
 
     @Test
-    void actionPerformedOtherButtonClicked() {
+    public void actionPerformedOtherButtonClicked() {
         ActionEvent mockEvent = mock(ActionEvent.class);
         when(mockEvent.getSource()).thenReturn(mock(GUIElement.class));
         presenter.actionPerformed(mockEvent);

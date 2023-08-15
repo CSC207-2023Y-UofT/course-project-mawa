@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 /**
  * Unit test for ShiftPresenter class.
  */
-public class TestShiftPresenter {
+public class ShiftPresenterTest {
 
     private ShiftFileReader mockShiftFileReader;
     private UserFileReader mockUserFileReader;

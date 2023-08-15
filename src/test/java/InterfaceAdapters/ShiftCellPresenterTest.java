@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 /**
  * Unit test for ShiftCellPresenter class.
  */
-public class TestShiftCellPresenter {
+public class ShiftCellPresenterTest {
 
     private GUIElement mockButton;
     private ShiftCellPresenter presenter;

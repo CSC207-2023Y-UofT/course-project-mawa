@@ -9,7 +9,7 @@ import static org.mockito.Mockito.*;
 /**
  * Unit test for HomeButtonPresenter class.
  */
-public class TestHomeButtonPresenter {
+public class HomeButtonPresenterTest {
 
     private Page mockGUI;
     private GUIElement mockButton;

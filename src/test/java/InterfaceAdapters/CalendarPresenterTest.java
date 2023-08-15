@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 /**
  * Unit test for Calendar Presenter class.
  */
-public class TestCalendarPresenter {
+public class CalendarPresenterTest {
 
     @Mock
     private Page mockGui;

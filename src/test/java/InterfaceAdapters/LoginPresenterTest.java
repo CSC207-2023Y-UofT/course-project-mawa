@@ -2,15 +2,11 @@ package InterfaceAdapters;
 
 import UseCases.EmptyAppValidator;
 import UseCases.LoginValidator;
-import UseCases.UserFileReader;
-import UseCases.UserInteractor;
-import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.FileWriter;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +14,7 @@ import static org.mockito.Mockito.*;
 /**
  * Unit test for LoginPresenter class.
  */
-public class TestLoginPresenter {
+public class LoginPresenterTest {
     @Mock
     private Page mockGui;
     @Mock

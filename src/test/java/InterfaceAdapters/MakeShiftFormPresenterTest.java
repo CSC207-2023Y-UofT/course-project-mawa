@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 /**
  * Unit test for MakeShiftFormPresenter class.
  */
-class TestMakeShiftFormPresenter {
+public class MakeShiftFormPresenterTest {
 
     private GUIElement mockTimeField;
     private GUIElement mockDurationField;
@@ -21,7 +21,7 @@ class TestMakeShiftFormPresenter {
     private MakeShiftFormPresenter presenter;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         mockTimeField = mock(GUIElement.class);
         mockDurationField = mock(GUIElement.class);
         mockSubmitButton = mock(GUIElement.class);
@@ -34,7 +34,7 @@ class TestMakeShiftFormPresenter {
     }
 
     @Test
-    void actionPerformedValidInput() {
+    public void actionPerformedValidInput() {
         when(mockSubmitButton.getContent()).thenReturn("Submit");
         when(mockTimeField.getContent()).thenReturn("12:00");
         when(mockDurationField.getContent()).thenReturn("4.5");
@@ -48,7 +48,7 @@ class TestMakeShiftFormPresenter {
     }
 
     @Test
-    void actionPerformedInvalidInput() {
+    public void actionPerformedInvalidInput() {
         when(mockSubmitButton.getContent()).thenReturn("Submit");
         when(mockTimeField.getContent()).thenReturn("23:00");
         when(mockDurationField.getContent()).thenReturn("4.5");
@@ -62,7 +62,7 @@ class TestMakeShiftFormPresenter {
     }
 
     @Test
-    void actionPerformedNextPage() {
+    public void actionPerformedNextPage() {
         when(mockCancelButton.getContent()).thenReturn("Cancel");
 
         presenter.actionPerformed(new ActionEvent(mockCancelButton, ActionEvent.ACTION_PERFORMED, null));

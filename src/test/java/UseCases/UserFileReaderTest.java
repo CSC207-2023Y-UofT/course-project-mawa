@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Unit test for UserFileReader class.
  */
-public class TestUserFileReader {
+public class UserFileReaderTest {
     private UserFileReader reader;
     private UserInteractor interactor;
     private List<User> list;

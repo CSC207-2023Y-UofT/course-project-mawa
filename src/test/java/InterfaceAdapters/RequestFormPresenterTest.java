@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 /**
  * Unit test for RequestFormPresenter  class.
  */
-public class TestRequestFormPresenter {
+public class RequestFormPresenterTest {
 
     private RequestFormPresenter requestFormPresenter;
     private GUIElement submitButton;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Unit test for DayViewModel class.
  */
-public class TestDayViewModel {
+public class DayViewModelTest {
     @BeforeEach
     public void setUp(){
         LocalDateTime start1 = LocalDateTime.of(2023, 8, 11, 9, 0);

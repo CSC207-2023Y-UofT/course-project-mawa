@@ -49,12 +49,17 @@ public class ShiftViewHRModel{
     }
 
     public JLabel getShiftDateLabel(){
+        /*
+        Returns a JLabel that refers to this shifts date
+         */
         String date = "Date: " + shift.getTime().getDayOfWeek() + ", " +shift.getTime().getMonth().toString() + " "+shift.getTime().getDayOfMonth()+", " + shift.getTime().getYear();
         return new JLabel(date);
     }
 
     public JLabel getShiftTimeLabel(){
-
+        /*
+        Returns a JLabel that refers to this shifts time.
+         */
         LocalDateTime time = shift.getTime().plusHours((int)shift.getDuration())
                 .plusMinutes((long) ((shift.getDuration() - (int)shift.getDuration())*60));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -65,6 +70,9 @@ public class ShiftViewHRModel{
     }
 
     public void getShiftFromNotificationId(){
+        /*
+        returns ShiftId, that is located in the current Notification.
+         */
         NotificationFileReader notif = NotificationFileReader.getInstance();
         ShiftFileReader sr = ShiftFileReader.getInstance();
         int id = notif.getUserNotification(notificationID).getShiftId();
@@ -72,6 +80,9 @@ public class ShiftViewHRModel{
     }
 
     public void getUsers(){
+        /*
+        Populates user lists, whether on not users are on shift or not.
+         */
         UserFileReader ur = UserFileReader.getInstance();
         UserInteractor ui = new UserInteractor();
         for(int i: shift.getCoworkers()){
@@ -112,6 +123,10 @@ public class ShiftViewHRModel{
     }
 
     public void updateShiftAndNotification(){
+        /*
+        Updates the employees on this shift. Depending on the positions of the employees on the DefaultListModel.
+        Also resolved notification if the user who requested a time off, is no longer on the shift.
+         */
         NotificationFileReader nfr = NotificationFileReader.getInstance();
         UserNotification notif = nfr.getUserNotification(notificationID);
         ArrayList<Integer> userID = new ArrayList<>();
@@ -136,6 +151,9 @@ public class ShiftViewHRModel{
         si.update(shift);
     }
     public void updateShift(){
+        /*
+        Updates the employees on this shift. Depending on the positions of the employees on the DefaultListModel.
+         */
         ArrayList<Integer> userID = new ArrayList<>();
         for(int i = 0; i < usersOnShiftString.length; i++){
             if(employeesOnShift.contains(usersOnShiftString[i])){

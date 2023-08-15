@@ -22,11 +22,11 @@ public class UserFactoryTest {
     
     @Before
     public void setUp(){
-        ui = new UserInteractor();
-        uf = new UserFactory();
+        ui = new UserInteractor("k");
+        uf = new UserFactory("j");
         int n = ui.readData().size();
         user = new User("Boitor", "William", "Male", "william.boitor@gmail.com", "Senior Actuarial Analyst",
-                n + 1, 6475504453L, "2003-01-06", new char[]{'a', 'b', 'c', '1', '2', '3'}, "Salary Worker",
+                n + 1, 6475504453L, "2003-01-06", new char[]{'w', 'i', 'l', 'l', 'i', 'a', 'm', '1', '2', '3'}, "Salary Worker",
                 150000.00F);
         uf.makeUser("Boitor", "William", "Male", "2003", "01",
                 "06", 6475504453L, "william.boitor@gmail.com", "Senior Actuarial Analyst",

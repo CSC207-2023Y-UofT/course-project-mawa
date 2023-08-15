@@ -9,7 +9,9 @@ import java.util.ArrayList;
 
 import static org.instancio.Select.field;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Unit test for DayCellPresenter class.
+ */
 public class TestDayCellPresenter {
     private DayCellPresenter dcp;
 
@@ -20,7 +22,7 @@ public class TestDayCellPresenter {
         shifts.add(2);
         dcp =  Instancio.of(DayCellPresenter.class)
                 .set(field(DayCellPresenter.class, "shifts"), shifts)
-                .create();
+                .create();//make a DayCellPresenter with predetermined shifts
         dcp.height = 10000;
         LocalDateTime time1 = LocalDateTime.of(2023, 8, 11, 9, 0);
         LocalDateTime time2 = LocalDateTime.of(2023, 8, 11, 13, 0);

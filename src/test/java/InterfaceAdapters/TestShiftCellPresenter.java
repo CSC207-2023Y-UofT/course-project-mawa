@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
+/**
+ * Unit test for ShiftCellPresenter class.
+ */
 public class TestShiftCellPresenter {
 
     private GUIElement mockButton;
@@ -32,9 +34,7 @@ public class TestShiftCellPresenter {
     @Test
     public void isHRUserIsHR() {
         when(mockUserFileReader.getType(2)).thenReturn(UserTypeConstants.HR);
-
         boolean result = presenter.isHR();
-
         assertTrue(result);
         verify(mockUserFileReader).getType(2);
     }
@@ -42,7 +42,6 @@ public class TestShiftCellPresenter {
     @Test
     public void isHRUserIsNotHR() {
         when(mockUserFileReader.getType(2)).thenReturn(UserTypeConstants.WAGE_WORKER);
-
         boolean result = presenter.isHR();
 
         assertFalse(result);

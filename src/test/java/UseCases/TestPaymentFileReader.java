@@ -13,7 +13,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Unit test for PaymentFileReader class.
+ */
 public class TestPaymentFileReader {
     private PaymentFileReader reader;
     private PaymentInteractor interactor;
@@ -21,7 +23,7 @@ public class TestPaymentFileReader {
     private List<Integer> idList;
     @BeforeEach
     public void setUp() throws IOException {
-        new FileWriter("testPayments.ser", false).close();
+        new FileWriter("testPayments.ser", false).close();//clear test payment file
         reader = new PaymentFileReader("test");
         interactor = new PaymentInteractor("test");
         list = Instancio.ofList(Payment.class).size(10).create();

@@ -1,15 +1,15 @@
 package InterfaceAdapters;
 
-import UseCases.InvalidTimeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static org.mockito.Mockito.*;
-
+/**
+ * Unit test for MakeShiftFormPresenter class.
+ */
 class TestMakeShiftFormPresenter {
 
     private GUIElement mockTimeField;
@@ -29,10 +29,8 @@ class TestMakeShiftFormPresenter {
         mockGUI = mock(Page.class);
         mockForm = mock(Page.class);
 
-        presenter = new MakeShiftFormPresenter(
-                mockTimeField, mockDurationField, mockSubmitButton, mockCancelButton,
-                LocalDate.now(), mockGUI, mockForm
-        );
+        presenter = new MakeShiftFormPresenter(mockTimeField, mockDurationField,
+                mockSubmitButton, mockCancelButton, LocalDate.now(), mockGUI, mockForm);
     }
 
     @Test
@@ -41,7 +39,8 @@ class TestMakeShiftFormPresenter {
         when(mockTimeField.getContent()).thenReturn("12:00");
         when(mockDurationField.getContent()).thenReturn("4.5");
 
-        presenter.actionPerformed(new ActionEvent(mockSubmitButton, ActionEvent.ACTION_PERFORMED, null));
+        presenter.actionPerformed(new ActionEvent(mockSubmitButton,
+                ActionEvent.ACTION_PERFORMED, null));
 
         verify(mockSubmitButton).nextPage();
         verify(mockGUI).update();
@@ -54,7 +53,8 @@ class TestMakeShiftFormPresenter {
         when(mockTimeField.getContent()).thenReturn("23:00");
         when(mockDurationField.getContent()).thenReturn("4.5");
 
-        presenter.actionPerformed(new ActionEvent(mockSubmitButton, ActionEvent.ACTION_PERFORMED, null));
+        presenter.actionPerformed(new ActionEvent(mockSubmitButton,
+                ActionEvent.ACTION_PERFORMED, null));
 
         verify(mockSubmitButton, never()).nextPage();
         verify(mockGUI, never()).update();

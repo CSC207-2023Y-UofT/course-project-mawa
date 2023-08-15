@@ -4,103 +4,69 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import Entities.Shift;
-import Entities.User;
-import InterfaceAdapters.CalendarModel;
 import UseCases.ShiftFileReader;
 import UseCases.ShiftInteractor;
 import UseCases.UserFileReader;
 import UseCases.UserInteractor;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Unit test for CalendarModel class.
+ */
 public class TestCalendarModel {
-
+    ShiftFileReader mockShiftFileReader;
     @BeforeEach
     public void setUp() throws IOException {
-        new FileWriter("testUsers.ser", false).close();
-
-        UserInteractor userInteractor = new UserInteractor("test");
-        userInteractor.writeData(new User("", "", "", "", "",
-                3, 123, "2005-01-07", null, "", 1));
-        userInteractor.writeData(new User("", "", "", "", "",
-                4, 123, "2005-01-07", null, "", 1));
-        userInteractor.writeData(new User("", "", "", "", "",
-                1, 123, "2005-01-07", null, "HR", 1));
-
-        new FileWriter("testShifts.ser", false).close();
-        ShiftInteractor shiftInteractor = new ShiftInteractor("test");
         ArrayList<Integer> workers = new ArrayList<>();
         workers.add(3);
         workers.add(44);
-        shiftInteractor.writeData(new Shift(LocalDateTime.of(2023, 8, 10, 1, 2),
-                (List<Integer>) workers, 4.5F, 1));
-        shiftInteractor.writeData(new Shift(LocalDateTime.of(2023, 8, 10, 21, 2),
-                (List<Integer>) workers, 1F, 2));
+        mockShiftFileReader = new ShiftFileReader("test") {
+            @Override
+            public ArrayList<Integer> getIds(LocalDate date) {
+                ArrayList<Integer> ds = new ArrayList<>();
+                ds.add(1);ds.add(2);
+                return ds;
+            }
+            @Override
+            public ArrayList<Integer> getIds(int user) {
+                ArrayList<Integer> ds = new ArrayList<>();
+                if (workers.contains(user)){
+                    ds.add(1);ds.add(2);
+                }
+                return ds;
+            }
+        };//make shift reader have an expected output
 
     }
 
     @Test
     void testGetShiftsHR() {
         CalendarModel calendarModel = new CalendarModel(2023, 8, 1);
-        ShiftInteractor shiftInteractor = new ShiftInteractor("test");
-        ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
+        calendarModel.shiftDB = mockShiftFileReader;
+        calendarModel.userDB = new UserFileReader("test"){
             @Override
-            public ArrayList<Integer> getIds(LocalDate date) {
-                ArrayList<Integer> ds = new ArrayList<>();
-                for (Shift s: shiftInteractor.readData()){
-                    if (s.getTime().toLocalDate().isEqual(date)){
-                        ds.add(s.getShiftId());
-                    }
-                }
-                return ds;
+            public String getType(int user) {
+                if (user == 1){return "HR";}
+                return "";
             }
         };
-        calendarModel.shiftDB = mockShiftFileReader;
-        calendarModel.userDB = new UserFileReader("test");
         ArrayList<Integer> shifts = calendarModel.getShifts(10);
         assertTrue(shifts.contains(2));
-        assertFalse(shifts.contains(3));
+        assertFalse(shifts.contains(3));//make sure HR gets all shifts on the day and not any others
 
     }
 
     @Test
     void testGetShiftsEmployee() {
         CalendarModel calendarModel = new CalendarModel(2023, 8, 3);
-        ShiftInteractor shiftInteractor = new ShiftInteractor("test");
-        ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
-            @Override
-            public ArrayList<Integer> getIds(LocalDate date) {
-                ArrayList<Integer> ds = new ArrayList<>();
-                for (Shift s: shiftInteractor.readData()){
-                    if (s.getTime().toLocalDate().isEqual(date)){
-                        ds.add(s.getShiftId());
-                    }
-                }
-                return ds;
-            }
-            @Override
-            public ArrayList<Integer> getIds(int user) {
-                ArrayList<Integer> ds = new ArrayList<>();
-                for (Shift s: shiftInteractor.readData()){
-                    if (s.getCoworkers().contains(user)){
-                        ds.add(s.getShiftId());
-                    }
-                }
-                return ds;
-            }
-        };
         calendarModel.shiftDB = mockShiftFileReader;
-        calendarModel.userDB = new UserFileReader("test");
         ArrayList<Integer> shifts = calendarModel.getShifts(10);
 
         assertTrue(shifts.contains(2));
@@ -132,7 +98,7 @@ public class TestCalendarModel {
 
     @Test
     void testGetUser() {
-        CalendarModel calendarModel = new CalendarModel(2023, 8, 456); // Replace with valid user ID
+        CalendarModel calendarModel = new CalendarModel(2023, 8, 456);
         assertEquals(456, calendarModel.getUser());
     }
 }

@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
+/**
+ * Unit test for DayViewModel class.
+ */
 public class TestDayViewModel {
     @BeforeEach
     public void setUp(){

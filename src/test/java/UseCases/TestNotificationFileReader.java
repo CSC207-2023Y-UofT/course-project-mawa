@@ -1,12 +1,9 @@
 package UseCases;
 
 import Entities.UserNotification;
-import UseCases.NotificationFileReader;
-import UseCases.UserNotificationInteractor;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,7 +12,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Unit test for NotificationFileReader class.
+ */
 public class TestNotificationFileReader {
     private NotificationFileReader reader;
     private UserNotificationInteractor interactor;
@@ -23,7 +22,7 @@ public class TestNotificationFileReader {
     private List<Integer> idList;
     @BeforeEach
     public void setUp() throws IOException {
-        new FileWriter("testNotifications.ser", false).close();
+        new FileWriter("testNotifications.ser", false).close();//clear test notification file
         reader = new NotificationFileReader("test");
         interactor = new UserNotificationInteractor("test");
         list = Instancio.ofList(UserNotification.class).size(10).create();

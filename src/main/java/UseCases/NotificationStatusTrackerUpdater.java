@@ -27,6 +27,11 @@ public class NotificationStatusTrackerUpdater {
     }
 
     public UserNotification[][] getSortedResolvedAndUnresolvedNotifications(int userID){
+        /*
+        Finds all Notifications that are either created by user, or are received by user.
+        These notifications are sorted, ie. UserNotification[0][0] is the latest UserNotification,
+        related to user.
+         */
         UserNotificationInteractor db = new UserNotificationInteractor();
         ArrayList<UserNotification> list = db.getNotificationByUserID(userID);
         ArrayList<UserNotification> resolved = new ArrayList<>();
@@ -45,6 +50,9 @@ public class NotificationStatusTrackerUpdater {
     }
 
     public String[] NotificationsToString(UserNotification[] notifications, int userID){
+        /*
+        Takes a array of UserNotifications and returns string representations of them, in an array.
+         */
         UserFileReader userFilerReader = UserFileReader.getInstance();
         ShiftInteractor shiftInteractor = new ShiftInteractor();
         User user = userFilerReader.getUser(userID);
@@ -83,6 +91,9 @@ public class NotificationStatusTrackerUpdater {
     }
 
     public UserNotification notificationUpdater(String notification, boolean deny){
+        /*
+        Whichever notification string refers to is either resolved or denied, depending on boolean inputted.
+         */
         UserNotificationInteractor db = new UserNotificationInteractor();
         for(int i = 0; i < this.unresolved.length; i++){
             if (notification.equalsIgnoreCase(this.unresolved[i])){
@@ -102,6 +113,9 @@ public class NotificationStatusTrackerUpdater {
     }
 
     public UserNotification userNotificationFromString(String notification){
+        /*
+        Returns of UserNotification that this string refers to.
+         */
         for(int i = 0; i < this.unresolved.length; i++){
             if (notification.equalsIgnoreCase(this.unresolved[i])){
                 return this.notifications[1][i];

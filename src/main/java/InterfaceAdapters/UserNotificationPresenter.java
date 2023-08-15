@@ -18,10 +18,16 @@ public abstract class UserNotificationPresenter {
         this.unresolvedList.populateList();
     }
     public DefaultListModel<String> getUnresolvedDefaultList(){
+        /*
+        Returns a DefaultListModel of all unresolved notifications either created by or directed at this user.
+         */
         return this.unresolvedList.getListModel();
     }
 
     public DefaultListModel<String> getResolvedDefaultList(){
+                /*
+        Returns a DefaultListModel of all resolved notifications either created by or directed at this user.
+         */
         return this.resolvedList.getListModel();
     }
 

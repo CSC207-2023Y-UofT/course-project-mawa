@@ -12,6 +12,7 @@ public class UserNotificationInteractor implements Interactor<UserNotification> 
 
     private String fileName; // Stores the name of the user notification data file.
 
+
     /**
      * Default constructor that initializes the UserNotificationInteractor with the default notification data file name.
      */

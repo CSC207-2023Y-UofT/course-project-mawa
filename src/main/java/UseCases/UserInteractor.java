@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class UserInteractor implements Interactor<User> {
 
+
     private String fileName; // Stores the name of the user data file.
 
     /**
@@ -37,7 +38,7 @@ public class UserInteractor implements Interactor<User> {
     public ArrayList<User> readData() {
         ArrayList<User> userList = new ArrayList<>();
 
-        try {
+        try{
             FileInputStream file = new FileInputStream(fileName);
             ObjectInputStream input = new ObjectInputStream(file);
             userList.addAll((ArrayList<User>) input.readObject());
@@ -79,14 +80,15 @@ public class UserInteractor implements Interactor<User> {
         ArrayList<User> userList = this.readData();
         userList.add(user);
 
-        try {
-            FileOutputStream file = new FileOutputStream(fileName);
-            ObjectOutputStream output = new ObjectOutputStream(file);
-            output.writeObject(userList);
-            output.close();
-            UserFileReader.getInstance().update();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+            try {
+                FileOutputStream file = new FileOutputStream(fileName);
+                ObjectOutputStream output = new ObjectOutputStream(file);
+                output.writeObject(userList);
+                output.close();
+                UserFileReader.getInstance().update();
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+
     }
 }

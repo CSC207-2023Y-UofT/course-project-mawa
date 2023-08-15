@@ -45,8 +45,7 @@ public class CalendarGUI extends JFrame implements Page {
         yearList = new CustomComboBox<String>(yearRange);
         //this.panel = new JPanel(new BorderLayout());
         this.model = new CalendarModel(this.year, this.month, this.user);
-        this.presenter = new CalendarPresenter(this.year, this.month, this.user,
-                this, model, yearList, monthList);
+        this.presenter = new CalendarPresenter(this, model, yearList, monthList);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         addTitle();
         addContent();
@@ -54,6 +53,36 @@ public class CalendarGUI extends JFrame implements Page {
         this.setVisible(true);
 
     }
+    /**
+     * Constructs a CalendarGUI object.
+     *
+     * @param month The month to display.
+     * @param year The year to display.
+     * @param user The user viewing the GUI.
+     * @param yearRange The permissible range of years to view.
+     */
+    public CalendarGUI(int month, int year, int user, String[] yearRange){
+        this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+        this.yearRange = yearRange;
+        this.month = month;
+        this.year = year;
+        this.firstDay = LocalDate.of(year, month, 1);
+        this.lastDay = LocalDate.of(year, month, firstDay.lengthOfMonth());
+        setUser(user);
+        monthList = new CustomComboBox<String>(CalendarConstants.months);
+        yearList = new CustomComboBox<String>(yearRange);
+        //this.panel = new JPanel(new BorderLayout());
+        this.model = new CalendarModel(this.year, this.month, this.user);
+        this.presenter = new CalendarPresenter(this, model, yearList, monthList);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        addTitle();
+        addContent();
+
+        this.setVisible(true);
+
+    }
+
+
 
     /**
      * Creates the panel that displays calendar days.
@@ -135,7 +164,8 @@ public class CalendarGUI extends JFrame implements Page {
 
     /**
      * Updates the calendar display with new data (by creating new instance) due to
-     * changing the selected month or year.
+     * changing the selected month or year. Changing the year being viewed does not change
+     * the permissible years that may be viewed.
      */
     @Override
     public void update() {
@@ -143,7 +173,7 @@ public class CalendarGUI extends JFrame implements Page {
         setMonth(model.getMonth());
         this.firstDay = LocalDate.of(year, month, 1);
         this.lastDay = LocalDate.of(year, month, firstDay.lengthOfMonth());
-        new CalendarGUI(month, year, user);
+        new CalendarGUI(month, year, user, yearRange);
         dispose();
 
     }
@@ -156,7 +186,5 @@ public class CalendarGUI extends JFrame implements Page {
         this.month = month;
     }
 
-    public static void main(String[] args){
-        new CalendarGUI(8, 2023, 1);
-    }
+
 }

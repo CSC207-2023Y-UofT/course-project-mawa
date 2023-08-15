@@ -7,64 +7,103 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import Entities.Shift;
 import Entities.User;
 import InterfaceAdapters.CalendarModel;
+import UseCases.ShiftFileReader;
 import UseCases.ShiftInteractor;
+import UseCases.UserFileReader;
 import UseCases.UserInteractor;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestCalendarModel {
 
-    @BeforeAll
-    public static void setUp() throws IOException {
-        new FileWriter("users.ser", false).close();
+    @BeforeEach
+    public void setUp() throws IOException {
+        new FileWriter("testUsers.ser", false).close();
 
-        UserInteractor userInteractor = new UserInteractor();
+        UserInteractor userInteractor = new UserInteractor("test");
         userInteractor.writeData(new User("", "", "", "", "",
                 3, 123, "2005-01-07", null, "", 1));
         userInteractor.writeData(new User("", "", "", "", "",
                 4, 123, "2005-01-07", null, "", 1));
+        userInteractor.writeData(new User("", "", "", "", "",
+                1, 123, "2005-01-07", null, "HR", 1));
 
-        new FileWriter("shifts.ser", false).close();
-        ShiftInteractor shiftInteractor = new ShiftInteractor();
+        new FileWriter("testShifts.ser", false).close();
+        ShiftInteractor shiftInteractor = new ShiftInteractor("test");
         ArrayList<Integer> workers = new ArrayList<>();
         workers.add(3);
         workers.add(44);
         shiftInteractor.writeData(new Shift(LocalDateTime.of(2023, 8, 10, 1, 2),
                 (List<Integer>) workers, 4.5F, 1));
         shiftInteractor.writeData(new Shift(LocalDateTime.of(2023, 8, 10, 21, 2),
-                (List<Integer>) workers, 4.5F, 2));
+                (List<Integer>) workers, 1F, 2));
 
     }
 
     @Test
     void testGetShiftsHR() {
-        CalendarModel calendarModel = new CalendarModel(2023, 8, 3); // Replace with valid user ID
-
-        ArrayList<Integer> shifts = calendarModel.getShifts(10); // Replace with valid day number
-
-        // Test HR shift retrieval logic here
-        // You can use assertions to verify the correctness of the result
-        // For example:
-        assertTrue(shifts.contains(1)); // Replace with valid shift ID
-        assertTrue(shifts.contains(2)); // Replace with valid shift ID
-        // ...
+        CalendarModel calendarModel = new CalendarModel(2023, 8, 1);
+        ShiftInteractor shiftInteractor = new ShiftInteractor("test");
+        ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
+            @Override
+            public ArrayList<Integer> getIds(LocalDate date) {
+                ArrayList<Integer> ds = new ArrayList<>();
+                for (Shift s: shiftInteractor.readData()){
+                    if (s.getTime().toLocalDate().isEqual(date)){
+                        ds.add(s.getShiftId());
+                    }
+                }
+                return ds;
+            }
+        };
+        calendarModel.shiftDB = mockShiftFileReader;
+        calendarModel.userDB = new UserFileReader("test");
+        ArrayList<Integer> shifts = calendarModel.getShifts(10);
+        assertTrue(shifts.contains(2));
+        assertFalse(shifts.contains(3));
 
     }
 
     @Test
     void testGetShiftsEmployee() {
         CalendarModel calendarModel = new CalendarModel(2023, 8, 3);
-
+        ShiftInteractor shiftInteractor = new ShiftInteractor("test");
+        ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
+            @Override
+            public ArrayList<Integer> getIds(LocalDate date) {
+                ArrayList<Integer> ds = new ArrayList<>();
+                for (Shift s: shiftInteractor.readData()){
+                    if (s.getTime().toLocalDate().isEqual(date)){
+                        ds.add(s.getShiftId());
+                    }
+                }
+                return ds;
+            }
+            @Override
+            public ArrayList<Integer> getIds(int user) {
+                ArrayList<Integer> ds = new ArrayList<>();
+                for (Shift s: shiftInteractor.readData()){
+                    if (s.getCoworkers().contains(user)){
+                        ds.add(s.getShiftId());
+                    }
+                }
+                return ds;
+            }
+        };
+        calendarModel.shiftDB = mockShiftFileReader;
+        calendarModel.userDB = new UserFileReader("test");
         ArrayList<Integer> shifts = calendarModel.getShifts(10);
 
-        assertTrue(shifts.contains(1));
+        assertTrue(shifts.contains(2));
         assertFalse(shifts.contains(4));
 
     }

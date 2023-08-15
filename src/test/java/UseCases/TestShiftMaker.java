@@ -3,11 +3,6 @@ package UseCases;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import Entities.Shift;
-import UseCases.InvalidTimeException;
-import UseCases.ShiftFileReader;
-import UseCases.ShiftInteractor;
-import UseCases.ShiftMaker;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,12 +12,7 @@ public class TestShiftMaker {
     @Test
     void testMakeShiftValidTime() {
         // Create a mock ShiftInteractor and ShiftFileReader
-        ShiftInteractor mockShiftInteractor = new ShiftInteractor() {
-            @Override
-            public void writeData(Shift shift) {
-                // Mock writeData method
-            }
-        };
+        ShiftInteractor mockShiftInteractor = new ShiftInteractor("test");
         ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
             @Override
             public ArrayList<Integer> getIds() {
@@ -41,12 +31,7 @@ public class TestShiftMaker {
     @Test
     void testMakeShiftInvalidTime() {
         // Create a mock ShiftInteractor and ShiftFileReader
-        ShiftInteractor mockShiftInteractor = new ShiftInteractor() {
-            @Override
-            public void writeData(Shift shift) {
-                // Mock writeData method
-            }
-        };
+        ShiftInteractor mockShiftInteractor = new ShiftInteractor("test");
         ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
             @Override
             public ArrayList<Integer> getIds() {

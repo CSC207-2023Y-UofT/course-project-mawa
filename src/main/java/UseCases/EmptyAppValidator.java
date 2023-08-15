@@ -6,7 +6,9 @@ package UseCases;
  */
 public class EmptyAppValidator {
 
+
     private UserInteractor ui; // Handles interaction with user data.
+
 
     /**
      * Default constructor that initializes an instance of UserInteractor for regular usage.

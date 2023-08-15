@@ -2,19 +2,23 @@ package InterfaceAdapters;
 
 import Entities.Shift;
 import InterfaceAdapters.DayViewLogic;
+import UseCases.ShiftFileReader;
 import UseCases.ShiftInteractor;
+import UseCases.ShiftSorter;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -28,11 +32,12 @@ public class TestDayViewLogic {
     private ArrayList<LocalDateTime> times;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws IOException {
+        new FileWriter("testShifts.ser", false).close();
         shifts =  Instancio.ofList(Shift.class).size(10).create();
         width = 100;
         height = 10;
-        interactor = new ShiftInteractor();
+        interactor = new ShiftInteractor("test");
         times = new ArrayList<>();
         shiftIds = new ArrayList<>();
         times.add(LocalDateTime.of(2022, 2, 10, 1, 10));
@@ -47,18 +52,70 @@ public class TestDayViewLogic {
         times.add(LocalDateTime.of(2022, 2, 10, 8, 11));
         for (int i = 0; i < shifts.size(); i++){
             shifts.get(i).setTime(times.get(i));
+            shifts.get(i).setShiftId(i + 2);
             shiftIds.add(shifts.get(i).getShiftId());
             interactor.update(shifts.get(i));
         }
         dvl = new DayViewLogic(shiftIds, width, height, 2, LocalDate.now());
+
     }
 
     @Test
     public void testGetTimeRange(){
+        ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
+            @Override
+            public LocalDateTime getDate(int id) {
+                ArrayList<Shift> data = interactor.readData();
+                for (Shift s: data){
+                    if (s.getShiftId() == id){
+                        return s.getTime();
+                    }
+                }
+                return null;
+            }
+            @Override
+            public float getDuration(int id) {
+                for (Shift s: interactor.readData()){
+                    if (s.getShiftId() == id){
+                        return s.getDuration();
+                    }
+                }
+                return (float) -0.1;
+            }
+        };
+        dvl.reader = mockShiftFileReader;
+        ShiftSorter sorter = new ShiftSorter();
+        sorter.reader = mockShiftFileReader;
+        dvl.sorter = sorter;
+
         Assertions.assertTrue(Arrays.equals(new int[]{0, 24}, dvl.getTimeRange()));
     }
     @Test
     public void testGetHours(){
+        ShiftFileReader mockShiftFileReader = new ShiftFileReader("test") {
+            @Override
+            public LocalDateTime getDate(int id) {
+                for (Shift s: interactor.readData()){
+                    if (s.getShiftId() == id){
+                        return s.getTime();
+                    }
+                }
+                return null;
+            }
+            @Override
+            public float getDuration(int id) {
+                for (Shift s: interactor.readData()){
+                    if (s.getShiftId() == id){
+                        return s.getDuration();
+                    }
+                }
+                return (float) -0.1;
+            }
+        };
+        dvl.reader = mockShiftFileReader;
+        ShiftSorter sorter = new ShiftSorter();
+        sorter.reader = mockShiftFileReader;
+        dvl.sorter = sorter;
         ArrayList<Integer> exHourRange = new ArrayList<>();
         for (int i = 0; i < 24; i++){
             exHourRange.add(i);
@@ -67,66 +124,7 @@ public class TestDayViewLogic {
                 "be consecutive integers from the beginning (inclusive) of time range to end (exclusive).");
     }
 
-    /*@Test
-    public void testIsOverlapping(){
-        ArrayList<Float> durations = new ArrayList<>();
-        durations.add(0.5F);
-        durations.add(4F);
-        durations.add(1.3f);
-        durations.add(1f);
-        durations.add(0.5F);
-        durations.add(1f);
-        durations.add(1f);
-        durations.add(2f);
-        durations.add(3f);
-        durations.add(1f);
-        for (int i = 0; i < shifts.size(); i++){
-            shifts.get(i).setDuration(durations.get(i));
-            interactor.update(shifts.get(i));
-        }
-        assertTrue(dvl.isOverlapping(shifts.get(7).getShiftId(), shifts.get(8).getShiftId()));
-        assertFalse(dvl.isOverlapping(shifts.get(7).getShiftId(), shifts.get(6).getShiftId()));
-        assertFalse(dvl.isOverlapping(shifts.get(2).getShiftId(), shifts.get(4).getShiftId()));
-    }*/
-    /*@Test
-    public void testMake2DList(){
-        ArrayList<Float> durations = new ArrayList<>();
-        durations.add(0.5F);
-        durations.add(4F);
-        durations.add(1.3f);
-        durations.add(1f);
-        durations.add(0.5F);
-        durations.add(1f);
-        durations.add(1f);
-        durations.add(2f);
-        durations.add(3f);
-        durations.add(1f);
-        for (int i = 0; i < shifts.size(); i++){
-            shifts.get(i).setDuration(durations.get(i));
-            interactor.update(shifts.get(i));
-        }
-        ArrayList<Integer> list1 = new ArrayList<>();
-        list1.add(shifts.get(0).getShiftId());
-        list1.add(shifts.get(1).getShiftId());
-        ArrayList<Integer> list2 = new ArrayList<>();
-        list2.add(shifts.get(5).getShiftId());
-        ArrayList<Integer> list3 = new ArrayList<>();
-        list3.add(shifts.get(2).getShiftId());
-        ArrayList<Integer> list4 = new ArrayList<>();
-        list4.add(shifts.get(9).getShiftId());
-        ArrayList<Integer> list5 = new ArrayList<>();
-        list5.add(shifts.get(3).getShiftId());
-        list5.add(shifts.get(4).getShiftId());
-        ArrayList<Integer> list6 = new ArrayList<>();
-        list6.add(shifts.get(6).getShiftId());
-        ArrayList<Integer> list7 = new ArrayList<>();
-        list7.add(shifts.get(7).getShiftId());
-        list7.add(shifts.get(8).getShiftId());
-        ArrayList<ArrayList<Integer>> exLst = new ArrayList<>();
-        exLst.add(list1);exLst.add(list2);exLst.add(list3);exLst.add(list4);
-        exLst.add(list5);exLst.add(list6);exLst.add(list7);
-        assertEquals(exLst, dvl.make2DList());
-    }*/
+
 
 
 }

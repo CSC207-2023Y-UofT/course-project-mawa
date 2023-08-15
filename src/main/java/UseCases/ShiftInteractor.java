@@ -10,7 +10,9 @@ import java.util.ArrayList;
  */
 public class ShiftInteractor implements Interactor<Shift> {
 
+
     private String fileName; // Stores the name of the shift data file.
+
 
     /**
      * Default constructor that initializes the ShiftInteractor with the default shift data file name.
@@ -18,6 +20,7 @@ public class ShiftInteractor implements Interactor<Shift> {
     public ShiftInteractor() {
         this.fileName = FileNameConstants.SHIFT_FILE_NAME;
     }
+
 
     /**
      * Constructor that specifies the file name to be that of testing data.
@@ -74,7 +77,8 @@ public class ShiftInteractor implements Interactor<Shift> {
         shifts.removeIf(shift -> s.getShiftId() == shift.getShiftId());
         shifts.add(s);
 
-        try {
+        try{
+
             FileOutputStream file = new FileOutputStream(fileName);
             ObjectOutputStream output = new ObjectOutputStream(file);
             output.writeObject(shifts);
@@ -85,6 +89,7 @@ public class ShiftInteractor implements Interactor<Shift> {
         }
     }
 
+
     /**
      * Writes a new shift object to the shift data file.
      *
@@ -94,14 +99,15 @@ public class ShiftInteractor implements Interactor<Shift> {
         ArrayList<Shift> shiftList = this.readData();
         shiftList.add(shift);
 
-        try {
-            FileOutputStream file = new FileOutputStream(fileName);
-            ObjectOutputStream output = new ObjectOutputStream(file);
-            output.writeObject(shiftList);
-            output.close();
-            ShiftFileReader.getInstance().update();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+       try{
+           FileOutputStream file = new FileOutputStream(fileName);
+           ObjectOutputStream output = new ObjectOutputStream(file);
+           output.writeObject(shiftList);
+           output.close();
+           ShiftFileReader.getInstance().update();
+       } catch (IOException e){
+           System.out.println(e);
+       }
+
     }
 }

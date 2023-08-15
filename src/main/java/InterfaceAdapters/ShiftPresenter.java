@@ -16,6 +16,8 @@ public class ShiftPresenter implements ActionListener {
     private int shift;
     private int employee;
     private GUIElement closeButton;
+    protected ShiftFileReader shiftDB;
+    protected UserFileReader userDB;
 
     /**
      * Constructs a ShiftPresenter object.
@@ -25,20 +27,17 @@ public class ShiftPresenter implements ActionListener {
      * @param employee The ID of the user associated with the shift.
      */
     public ShiftPresenter(int shift, GUIElement closeButton, int employee){
-
             this.shift = shift;
-            System.out.println(shift);
             this.closeButton = closeButton;
             this.employee = employee;
-
+            this.shiftDB = ShiftFileReader.getInstance();
+            this.userDB= UserFileReader.getInstance();
     }
 
     public LocalDateTime getDate(){
-        ShiftFileReader shiftDB = ShiftFileReader.getInstance();
         return shiftDB.getDate(shift);
     }
     public float getDuration(){
-        ShiftFileReader shiftDB = ShiftFileReader.getInstance();
         return shiftDB.getDuration(shift);
     }
     /**
@@ -49,11 +48,9 @@ public class ShiftPresenter implements ActionListener {
      */
     public String getCoworkerString(){
         String coworkers = "";
-        ShiftFileReader shiftDB = ShiftFileReader.getInstance();
         ArrayList<Integer> co = shiftDB.getCoworkers(shift);
         for (int id : co){
             if (id != employee){
-                UserFileReader userDB = UserFileReader.getInstance();
                 coworkers += String.format(", %s %s", userDB.getFirstName(id),
                         userDB.getSurname(id));
             }

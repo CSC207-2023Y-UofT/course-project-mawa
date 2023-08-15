@@ -24,15 +24,16 @@ public class TestUserFileReader {
     private List<Integer> idList;
     @BeforeEach
     public void setUp() throws IOException {
-        new FileWriter("users.ser", false).close();
-        reader = UserFileReader.getInstance();
-        interactor = new UserInteractor();
+        new FileWriter("testUsers.ser", false).close();
+        reader = new UserFileReader("test");
+        interactor = new UserInteractor("test");
         list = Instancio.ofList(User.class).size(10).create();
         idList = new ArrayList<>();
         for (User s:list){
             interactor.writeData(s);
             idList.add(s.getUserNum());
         }
+        reader.update();
     }
     @Test
     public void testUpdate(){
@@ -68,6 +69,7 @@ public class TestUserFileReader {
         for (User s:list){
             interactor.update(s);
         }
+        reader.update();
         ArrayList<Integer> expected = new ArrayList<Integer>();
         expected.add(list.get(1).getUserNum());
         expected.add(list.get(3).getUserNum());

@@ -9,8 +9,8 @@ import java.util.ArrayList;
  * It implements the Interactor interface for payment objects.
  */
 public class PaymentInteractor implements Interactor<Payment> {
-
     private String fileName; // Stores the name of the payment data file.
+
 
     /**
      * Default constructor that initializes the PaymentInteractor with the default payment data file name.
@@ -27,6 +27,9 @@ public class PaymentInteractor implements Interactor<Payment> {
     public PaymentInteractor(String isTest) {
         this.fileName = "testPayments.ser";
     }
+
+
+
 
     /**
      * Reads payment data from the payment data file.
@@ -54,9 +57,11 @@ public class PaymentInteractor implements Interactor<Payment> {
      */
     public void writeData(Payment payment) {
         ArrayList<Payment> paymentList = this.readData();
+
         paymentList.add(payment);
 
-        try {
+        try{
+
             FileOutputStream file = new FileOutputStream(fileName);
             ObjectOutputStream output = new ObjectOutputStream(file);
             output.writeObject(paymentList);

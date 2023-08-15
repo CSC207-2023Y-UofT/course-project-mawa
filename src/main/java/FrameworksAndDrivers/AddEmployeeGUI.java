@@ -1,7 +1,7 @@
 package FrameworksAndDrivers;
 
 import InterfaceAdapters.Page;
-import InterfaceAdapters.UserFactoryInteractor;
+import InterfaceAdapters.UserController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
+/**
+ * The AddEmployeeGUI class represents a graphical user interface for adding employees.
+ * It allows HR users to input employee information and add them to the system.
+ */
 public class AddEmployeeGUI implements ActionListener, Page {
 
     private int viewerID;
 
-    private UserFactoryInteractor ufi = new UserFactoryInteractor();
+    private UserController uc = new UserController();
 
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
@@ -83,6 +87,11 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
 
 
+    /**
+     * Constructs the AddEmployeeGUI instance and initializes the GUI components.
+     *
+     * @param id The ID of the user accessing the GUI.
+     */
     public AddEmployeeGUI(int id){
         this.setUser(id);
         frame.setSize(600, 600);
@@ -97,8 +106,10 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Handle button clicks and user interactions here
 
         Object s = e.getSource();
+        //Verify that the salary entered is a valid number.
         boolean pay_numeric = true;
         if (payLab.isVisible()){
             try {
@@ -112,22 +123,27 @@ public class AddEmployeeGUI implements ActionListener, Page {
             String byr = dobyrEnter.getText();
             String bmth = dobmthEnter.getText();
             String bd = dobdayEnter.getText();
+            //Verify that the given phone number, and birthday information is only made of integers.
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+") && pay_numeric && typeSelect.getSelectedItem() != null){
 
-                    ufi.userFromInput(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
+                //Make the user, given that the input is valid.
+                uc.userFromInput(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth,
                             bd, Long.parseLong(phnum.trim()), emailEnter.getText(), roleEnter.getText(),
                             (String) typeSelect.getSelectedItem(), pwdEnter.getText(),
                             Float.parseFloat(payEnter.getText()));
 
 
+                //Go back to employee management afterward.
                 new ManageEmployeesGUI(viewerID);
                 frame.dispose();
+                //Confirmation message.
                 JOptionPane.showMessageDialog(null, "Employee has been added.", "", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
 
+        //Here is the handling of the drop-down menu for the type selection.
         if (s.equals(typeSelect)){
             if (typeSelect.getSelectedItem() == "Wage Worker"){
                 payLab.setVisible(true);
@@ -142,6 +158,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
                 payEnter.setVisible(false);
             }
         }
+        //The handling of the back button
         if (s.equals(back)){
             new ManageEmployeesGUI(viewerID);
             frame.dispose();
@@ -156,6 +173,7 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
     @Override
     public void addContent() {
+        // Set layout and add UI components to panels
         this.questionPanel.setLayout(new GridLayout(0, 2));
         this.dobPanel.setLayout(new GridLayout(1, 6));
         dobPanel.add(dobyrLab);
@@ -205,16 +223,18 @@ public class AddEmployeeGUI implements ActionListener, Page {
 
     @Override
     public void dispose() {
-
+        // Not used in this context
     }
 
     @Override
     public void addHomeButton() {
-
+        // Not used in this context
     }
 
     @Override
     public void update() {
-
+        // Not used in this context
     }
 }
+
+

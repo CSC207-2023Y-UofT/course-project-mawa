@@ -1,75 +1,74 @@
 package InterfaceAdapters;
+
 import UseCases.PaymentMaker;
 import UseCases.UserFileReader;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.HashMap;
 import java.util.ArrayList;
 
-public class EmployeeSummaryPresenter{
-
-    //Each button must correspond to a different employee, so this maps makes that association.
-    private HashMap<JButton, Integer> payHistButtonsToIDs = new HashMap<JButton, Integer>();
-
-    private HashMap<JButton, Integer> payButtonsToIDs = new HashMap<JButton, Integer>();
+/**
+ * The EmployeeSummaryPresenter class handles presenting employee summary data for display.
+ * It creates arrays of employee information and lists of arrays for UI rendering.
+ * This class is part of the MVP design pattern.
+ */
+public class EmployeeSummaryPresenter {
 
     private UserFileReader fr = UserFileReader.getInstance();
 
-    public JPanel makeEmployeePanel(int id) {
-        //Make a panel containing all of an employee's information, with a button at the end that
-        //Corresponds to that employee.
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 14));
-        panel.add(new JLabel(fr.getFirstName(id)));
-        panel.add(new JLabel(fr.getSurname(id)));
-        panel.add(new JLabel(fr.getGender(id)));
-        panel.add(new JLabel(fr.getEmail(id)));
-        panel.add(new JLabel(Long.toString(fr.getPhoneNumber(id))));
-        panel.add(new JLabel(fr.getRole(id)));
-        panel.add(new JLabel(Integer.toString(id)));
-        panel.add(new JLabel(fr.getDob(id).toString()));
-        String type = fr.getType(id);
-        panel.add(new JLabel(type));
-        panel.add(new JLabel(Float.toString(fr.getPay(id))));
-        JButton d = new JButton("View Payment History");
-        payHistButtonsToIDs.put(d, id);
-        JButton c = new JButton("Pay For the Month");
-        payButtonsToIDs.put(c, id);
-        panel.add(d);
-        panel.add(c);
-        return panel;
+    /**
+     * Creates an array of employee information for display.
+     *
+     * @param id The ID of the employee for whom to create the array.
+     * @return An array of objects representing employee information for display.
+     */
+    public Object[] makeEmployeePanel(int id) {
+        Object[] employeePanelList = new Object[11];
+        employeePanelList[0] = fr.getFirstName(id);
+        employeePanelList[1] = fr.getSurname(id);
+        employeePanelList[2] = fr.getGender(id);
+        employeePanelList[3] = fr.getEmail(id);
+        employeePanelList[4] = Long.toString(fr.getPhoneNumber(id));
+        employeePanelList[5] = fr.getRole(id);
+        employeePanelList[6] = Integer.toString(id);
+        employeePanelList[7] = fr.getDob(id).toString();
+        employeePanelList[8] = fr.getType(id);
+        employeePanelList[9] = Float.toString(fr.getPay(id));
 
-    }
-
-    public ArrayList<JPanel> makeEmployeePanels(){
-        //Get employees from the database, and if they are active, add their panel to a list, which
-        //is returned.
-        ArrayList<JPanel> panels = new ArrayList<>();
-        ArrayList<Integer> users = fr.getIds();
-        for (Integer user: users){
-            if (!fr.getType(user).equals("HR") && fr.getActive(user)){
-                panels.add(this.makeEmployeePanel(user));
-            }
-
+        if (fr.getType(id).equals("Volunteer")) {
+            employeePanelList[10] = 0;
+        } else {
+            employeePanelList[10] = id;
         }
-        return panels;
+
+        return employeePanelList;
     }
 
-    public HashMap<JButton, Integer> getMap(){
-        return this.payHistButtonsToIDs;
+    /**
+     * Creates arrays of employee information for active employees (excluding HR) for display.
+     *
+     * @return An ArrayList of arrays of objects, each representing employee information for display.
+     */
+    public ArrayList<Object[]> makeEmployeePanels() {
+        ArrayList<Object[]> lists = new ArrayList<>();
+        ArrayList<Integer> users = fr.getIds();
+
+        for (Integer user : users) {
+            if (!fr.getType(user).equals("HR") && fr.getActive(user)) {
+                lists.add(this.makeEmployeePanel(user));
+            }
+        }
+
+        return lists;
     }
 
-    public HashMap<JButton, Integer> getMap2() {return this.payButtonsToIDs;}
 
-    public void makePayment(int id){
-        PaymentMaker p = new PaymentMaker(id);
-        p.makePayment();
-    }
-
-    public String getName(int id){
+    /**
+     * Retrieves the name of an employee based on their ID.
+     *
+     * @param id The ID of the employee.
+     * @return The full name of the employee.
+     */
+    public String getName(int id) {
         UserFileReader ufr = UserFileReader.getInstance();
         return ufr.getFirstName(id) + " " + ufr.getSurname(id);
     }
-
 }

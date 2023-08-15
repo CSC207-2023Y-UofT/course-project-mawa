@@ -16,10 +16,9 @@ public class TestLoginValidator {
     private UserFileReader mockUserFileReader;
 
     private class MockUserFileReader extends UserFileReader {
+
         public MockUserFileReader() {
             super("test");
-            getInstance();
-
         }
 
         @Override

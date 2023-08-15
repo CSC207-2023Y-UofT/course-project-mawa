@@ -2,7 +2,7 @@
 ### By: MAWA
 
 ## Project description:
-This application allows you to:\
+This Java 8 application allows you to:\
 As an HR worker
 - Schedule shifts for your employees
 - Receive and respond to time-off requests from your employees
@@ -20,7 +20,7 @@ This project currently only saves data locally, so data persistence is limited t
 one device. We are working towards having the data being stored on the web. 
 There is also still input validation that needs to be done.
 ## How to Install and Run the Application
-- [ ] Clone this repo (https://github.com/CSC207-2023Y-UofT/course-project-mawa.git)
+- [ ] Clone this repo (git clone https://github.com/CSC207-2023Y-UofT/course-project-mawa.git)
 - [ ] Run the "Main" file (in src/main/java directory)
 ## Dependencies
 This project is a gradle repository built using SDK version corretto-11.0.20.\

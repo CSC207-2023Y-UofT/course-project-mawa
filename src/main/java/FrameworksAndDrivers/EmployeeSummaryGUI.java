@@ -12,6 +12,10 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 
+/**
+ * The EmployeeSummaryGUI class displays a summary of active employees with their attributes.
+ * Users can view payment history and make payments for employees.
+ */
 public class EmployeeSummaryGUI implements ActionListener, Page {
 
 
@@ -32,6 +36,12 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
     private JButton back = new JButton("Back");
 
     private JPanel backPanel = new JPanel();
+
+    /**
+     * Creates an instance of the EmployeeSummaryGUI class.
+     *
+     * @param id The ID of the user viewing the summary.
+     */
     public EmployeeSummaryGUI(int id){
         //Create the UI by storing the viewer, and adding the title, panels.
         this.setUser(id);
@@ -46,6 +56,7 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
     public void actionPerformed(ActionEvent e) {
         //If a button to view payment history is clicked, direct to the payment history page for
         //the particular employee.
+        //If a pay button is clicked, pay the employee and display a confirmation.
         Object source = e.getSource();
         if (payHistButtonsToIDs.containsKey(source)){
             new PaymentHistory(payHistButtonsToIDs.get(source),viewerID);
@@ -67,9 +78,10 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
         frame.setTitle("Active Employee Summary");
     }
 
+    /**
+     * Creates a header panel with labels for employee attributes.
+     */
     public void makeHeader(){
-        //Before the list of employees, the names of the attributes being shown are displayed at
-        //the beginning of the page, hence the label creation here.
         titlePanel.setLayout(new GridLayout(1, 14));
         titlePanel.add(new JLabel("First Name:"));
         titlePanel.add(new JLabel("Surname:"));
@@ -132,16 +144,16 @@ public class EmployeeSummaryGUI implements ActionListener, Page {
 
     @Override
     public void dispose() {
-
+        // Not used in this context
     }
 
     @Override
     public void addHomeButton() {
-
+        // Not used in this context
     }
 
     @Override
     public void update() {
-
+        // Not used in this context
     }
 }

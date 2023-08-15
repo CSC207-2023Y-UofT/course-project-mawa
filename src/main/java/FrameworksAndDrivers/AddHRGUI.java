@@ -7,11 +7,14 @@ import java.awt.event.ActionListener;
 import InterfaceAdapters.*;
 
 
-
+/**
+ * The AddHRGUI class represents a graphical user interface for adding HR accounts.
+ * It allows HR users to input employee information and add them to the system.
+ */
 public class AddHRGUI implements ActionListener, Page {
 
 
-    private UserFactoryInteractor ufi = new UserFactoryInteractor();
+    private UserController uc = new UserController();
 
     private JFrame frame = new JFrame();
     private JLabel firstNameLab = new JLabel("Given Name:");
@@ -66,7 +69,9 @@ public class AddHRGUI implements ActionListener, Page {
 
 
 
-
+    /**
+     * Constructs the AddHRGUI instance and initializes the GUI components.
+     */
     public AddHRGUI(){
         frame.setSize(600, 600);
         frame.setVisible(true);
@@ -80,15 +85,17 @@ public class AddHRGUI implements ActionListener, Page {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Handle button clicks and user interactions here
         Object s = e.getSource();
         if (s.equals(submitButton)){
             String phnum = phoneEnter.getText();
             String byr = dobyrEnter.getText();
             String bmth = dobmthEnter.getText();
             String bd = dobdayEnter.getText();
+            //Same verifications as in the AddEmployeeGUI.
             if(phnum.matches("\\d+") && byr.matches("\\d+") && bmth.matches("\\d+")
                     && bd.matches("\\d+")){
-                ufi.userFromInput(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth, bd,
+                uc.userFromInput(surnameEnter.getText(), firstNameEnter.getText(), genderEnter.getText(), byr, bmth, bd,
                         Long.parseLong(phnum.trim()), emailEnter.getText(), "HR Worker", "HR",
                         pwdEnter.getText(), (float) 0);
 
@@ -109,6 +116,7 @@ public class AddHRGUI implements ActionListener, Page {
 
     @Override
     public void addContent() {
+        // Set layout and add UI components to panels
         this.questionPanel.setLayout(new GridLayout(0, 2));
         this.dobPanel.setLayout(new GridLayout(1, 6));
         dobPanel.add(dobyrLab);
@@ -142,22 +150,22 @@ public class AddHRGUI implements ActionListener, Page {
 
     @Override
     public void setUser(int user) {
-
+        // Not used in this context
     }
 
     @Override
     public void dispose() {
-
+        // Not used in this context
     }
 
     @Override
     public void addHomeButton() {
-
+        // Not used in this context
     }
 
     @Override
     public void update() {
-
+        // Not used in this context
     }
 }
 

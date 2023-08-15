@@ -10,6 +10,10 @@ import java.util.HashMap;
 
 import InterfaceAdapters.*;
 
+/**
+ * The CompleteUserListGUI class displays a complete list of users with their attributes and activation status.
+ * Users can be activated or deactivated by clicking corresponding buttons.
+ */
 public class CompleteUserListGUI implements ActionListener, Page {
 
     private JFrame frame = new JFrame();
@@ -26,6 +30,11 @@ public class CompleteUserListGUI implements ActionListener, Page {
 
     private JPanel backPanel = new JPanel();
 
+    /**
+     * Creates an instance of the CompleteUserListGUI class.
+     *
+     * @param id The ID of the user viewing the list.
+     */
     public CompleteUserListGUI(int id){
         //Create the UI by first adding the title pane, and then adding the list of user panels.
         frame.setSize(600, 600);
@@ -38,7 +47,8 @@ public class CompleteUserListGUI implements ActionListener, Page {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        //If a activate/deactivate button is clicked, the user factory updates the user, and the page is reloaded to show the change.
+        //If a. activate/deactivate button is clicked, the controller makes a user factory updates the user, and the
+        // page is reloaded to show the change.
         Object source = e.getSource();
         if (buttonsToIDs.containsKey(source)){
             UserController uc = new UserController();
@@ -46,6 +56,7 @@ public class CompleteUserListGUI implements ActionListener, Page {
             new CompleteUserListGUI(viewerID);
             frame.dispose();
             JOptionPane.showMessageDialog(null, "Employee has been updated.", "", JOptionPane.INFORMATION_MESSAGE);
+            //Handling of the back button.
         } else if (source.equals(back)){
             new ManageEmployeesGUI(viewerID);
             frame.dispose();
@@ -57,6 +68,9 @@ public class CompleteUserListGUI implements ActionListener, Page {
         frame.setTitle("Complete User List");
     }
 
+    /**
+     * Creates a header panel with labels for user attributes.
+     */
     public void makeHeader(){
         //Make a panel which includes labels for all the attributes of the users the page shows.
         titlePanel.setLayout(new GridLayout(1, 12));
@@ -109,7 +123,8 @@ public class CompleteUserListGUI implements ActionListener, Page {
             all_panels.add(panel);
         }
 
-        JScrollPane sp = new JScrollPane(all_panels, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane sp = new JScrollPane(all_panels, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         frame.add(sp, BorderLayout.CENTER);
     }
 
@@ -120,16 +135,16 @@ public class CompleteUserListGUI implements ActionListener, Page {
 
     @Override
     public void dispose() {
-
+        // Not used in this context
     }
 
     @Override
     public void addHomeButton() {
-
+        // Not used in this context
     }
 
     @Override
     public void update() {
-
+        // Not used in this context
     }
 }

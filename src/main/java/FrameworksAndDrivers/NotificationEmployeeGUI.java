@@ -46,6 +46,9 @@ public class NotificationEmployeeGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        /*
+        If home button is clicked user is taken to the home page
+         */
         if ("home".equals(e.getActionCommand())) {
             new HomePage(user);
             this.frame.dispose();

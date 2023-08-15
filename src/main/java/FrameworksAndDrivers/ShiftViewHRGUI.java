@@ -27,11 +27,10 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener, Page {
     public ShiftViewHRGUI(int notificationID, int userID){
         userId = userID;
         JButton homeButton = new JButton("Home");
-        closeButton = new CloseButton(this, "Close");
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        presenter = new ShiftViewHRNotificationsPresenter(notificationID, userID);
+        presenter = new ShiftViewHRNotificationsPresenter(userID, notificationID);
         addShiftLabels(panel);
         employeesOnShiftList = new JList<String>(presenter.employeesOnShiftList());
         employeesNotOnShiftList = new JList<String>(presenter.employeesNotOnShiftList());
@@ -40,13 +39,9 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener, Page {
 
         homeButton.setActionCommand("home");
         homeButton.addActionListener(this);
-        closeButton.setActionCommand("close");
-        closeButton.addActionListener(this);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout());
         buttonPanel.add(homeButton, BorderLayout.WEST);
-        //buttonPanel.add(closeButton, BorderLayout.WEST);
-
         this.frame.add(buttonPanel, BorderLayout.PAGE_START);
 
         JPanel employeeListPanel = new JPanel();
@@ -170,8 +165,8 @@ public class ShiftViewHRGUI extends JFrame implements ActionListener, Page {
             this.revalidate();
         }
         else if ("home".equals(e.getActionCommand())) {
-            new HomePage(userId);
             presenter.updateShiftEmployeesAndNotification();
+            new HomePage(userId);
             this.frame.dispose();
         }else if ("home1".equals(e.getActionCommand())) {
             new HomePage(1);

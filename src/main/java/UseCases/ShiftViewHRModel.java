@@ -111,7 +111,7 @@ public class ShiftViewHRModel{
         }
     }
 
-    public void updateShiftandNotification(){
+    public void updateShiftAndNotification(){
         NotificationFileReader nfr = NotificationFileReader.getInstance();
         UserNotification notif = nfr.getUserNotification(notificationID);
         ArrayList<Integer> userID = new ArrayList<>();

@@ -2,7 +2,7 @@
 ### By: MAWA
 
 ## Project description:
-This application allows you to:\
+This Java 8 application allows you to:\
 As an HR worker
 - Schedule shifts for your employees
 - Receive and respond to time-off requests from your employees
@@ -20,7 +20,7 @@ This project currently only saves data locally, so data persistence is limited t
 one device. We are working towards having the data being stored on the web. 
 There is also still input validation that needs to be done.
 ## How to Install and Run the Application
-- [ ] Clone this repo (https://github.com/CSC207-2023Y-UofT/course-project-mawa.git)
+- [ ] Clone this repo (git clone https://github.com/CSC207-2023Y-UofT/course-project-mawa.git)
 - [ ] Run the "Main" file (in src/main/java directory)
 ## Dependencies
 This project is a gradle repository built using SDK version corretto-11.0.20.\
@@ -46,9 +46,7 @@ Data from:
 ## Testing
 Most of the testing coverage is applicable to the UseCase, InterfaceAdapter, and Entity layers.
 As well, even though we have many GUI classes, they don't have much testable logic contained in them (as per SRP, CA, and MVP),
-so we focused our testing efforts in the lower three layers. Some of the presenters (like HomeButtonPresenter), were not worth testing 
-because their logic is very shallow and is very similar to that of the CalendarPresenter (for which testing is provided), so 
-we decided that testing these presenters was not worth the time it would take to write tests for them.\
+so we focused our testing efforts in the lower three layers.\
 JavaDoc is sparse in our testing modules because we have designed the tests to be quite simple (as aided by CA) and adequately explained by
 their method names.
 Our testing coverage is ________________

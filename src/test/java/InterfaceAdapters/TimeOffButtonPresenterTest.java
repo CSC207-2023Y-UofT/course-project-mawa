@@ -11,8 +11,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-public class TestTimeOffButtonPresenter {
+/**
+ * Unit test for TimeOffButtonPresenter class.
+ */
+public class TimeOffButtonPresenterTest {
 
     private GUIElement mockButton;
     private NotificationFileReader mockNotificationFileReader;

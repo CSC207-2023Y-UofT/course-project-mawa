@@ -11,8 +11,10 @@ import java.awt.event.ActionEvent;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-public class TestShiftPresenter {
+/**
+ * Unit test for ShiftPresenter class.
+ */
+public class ShiftPresenterTest {
 
     private ShiftFileReader mockShiftFileReader;
     private UserFileReader mockUserFileReader;

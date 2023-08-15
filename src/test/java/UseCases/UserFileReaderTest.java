@@ -1,14 +1,10 @@
 package UseCases;
 
 import Entities.User;
-import UseCases.UserFileReader;
-import UseCases.UserInteractor;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,15 +12,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-public class TestUserFileReader {
+/**
+ * Unit test for UserFileReader class.
+ */
+public class UserFileReaderTest {
     private UserFileReader reader;
     private UserInteractor interactor;
     private List<User> list;
     private List<Integer> idList;
     @BeforeEach
     public void setUp() throws IOException {
-        new FileWriter("testUsers.ser", false).close();
+        new FileWriter("testUsers.ser", false).close();//clear test user file
         reader = new UserFileReader("test");
         interactor = new UserInteractor("test");
         list = Instancio.ofList(User.class).size(10).create();

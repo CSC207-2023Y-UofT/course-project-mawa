@@ -12,8 +12,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-public class TestShiftFileReader {
+/**
+ * Unit test for ShiftFileReader class.
+ */
+public class ShiftFileReaderTest {
     private ShiftFileReader reader;
     private ShiftInteractor interactor;
     private List<Shift> list;

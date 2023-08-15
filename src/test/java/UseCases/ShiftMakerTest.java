@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-public class TestShiftMaker {
+/**
+ * Unit test for ShiftMaker class.
+ */
+public class ShiftMakerTest {
 
     @Test
     void testMakeShiftValidTime() {

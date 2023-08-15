@@ -7,7 +7,10 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestUser {
+/**
+ * Unit test for User entity class.
+ */
+public class UserTest {
 
     private User user;
     private LocalDate dob;

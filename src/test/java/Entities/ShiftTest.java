@@ -9,8 +9,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-public class TestShift {
+/**
+ * Unit test for Shift entity class.
+ */
+public class ShiftTest {
     private Shift shift;
     private LocalDateTime time;
     private List<Integer> coworkers;

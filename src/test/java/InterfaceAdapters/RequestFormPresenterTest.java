@@ -8,8 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.event.ActionEvent;
-
-public class TestRequestFormPresenter {
+/**
+ * Unit test for RequestFormPresenter  class.
+ */
+public class RequestFormPresenterTest {
 
     private RequestFormPresenter requestFormPresenter;
     private GUIElement submitButton;
@@ -27,7 +29,8 @@ public class TestRequestFormPresenter {
         notificationBuilder = mock(NotificationBuilder.class);
         int shift = 1;
         int employee = 4;
-        requestFormPresenter = new RequestFormPresenter(submitButton, cancelButton, shift, reasonField, employee);
+        requestFormPresenter = new RequestFormPresenter(submitButton, cancelButton,
+                shift, reasonField, employee);
         requestFormPresenter.reader = userFileReader;
         requestFormPresenter.nb = notificationBuilder;
     }
@@ -37,10 +40,12 @@ public class TestRequestFormPresenter {
         when(userFileReader.getHRId()).thenReturn(7);
         when(reasonField.getContent()).thenReturn("Reason");
 
-        ActionEvent submitEvent = new ActionEvent(submitButton, ActionEvent.ACTION_PERFORMED, null);
+        ActionEvent submitEvent = new ActionEvent(submitButton,
+                ActionEvent.ACTION_PERFORMED, null);
         requestFormPresenter.actionPerformed(submitEvent);
         // Verify that the createRequest method was called with the expected arguments
-        verify(notificationBuilder).createRequest(eq(1), eq("Reason"), eq(4), eq(7));
+        verify(notificationBuilder).createRequest(eq(1), eq("Reason"),
+                eq(4), eq(7));
         // Verify that nextPage() method was called
         verify(submitButton).nextPage();
         // Verify that nextPage() method was not called
@@ -49,7 +54,8 @@ public class TestRequestFormPresenter {
 
     @Test
     public void testCancelButtonActionPerformed() {
-        ActionEvent cancelEvent = new ActionEvent(cancelButton, ActionEvent.ACTION_PERFORMED, null);
+        ActionEvent cancelEvent = new ActionEvent(cancelButton,
+                ActionEvent.ACTION_PERFORMED, null);
         requestFormPresenter.actionPerformed(cancelEvent);
 
         // Verify that nextPage() method was called on the cancelButton GUIElement

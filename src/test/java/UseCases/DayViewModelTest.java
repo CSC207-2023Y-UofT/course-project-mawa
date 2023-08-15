@@ -8,8 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-public class TestDayViewModel {
+/**
+ * Unit test for DayViewModel class.
+ */
+public class DayViewModelTest {
     @BeforeEach
     public void setUp(){
         LocalDateTime start1 = LocalDateTime.of(2023, 8, 11, 9, 0);

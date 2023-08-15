@@ -9,8 +9,10 @@ import java.util.List;
 
 import Entities.Shift;
 import org.junit.jupiter.api.Test;
-
-public class TestShiftSorter {
+/**
+ * Unit test for ShiftSorter class.
+ */
+public class ShiftSorterTest {
 
     @Test
     void testSortShiftsByDate() {

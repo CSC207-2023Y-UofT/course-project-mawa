@@ -11,8 +11,10 @@ import java.time.Month;
 
 import static org.mockito.Mockito.*;
 
-
-public class TestCalendarPresenter {
+/**
+ * Unit test for Calendar Presenter class.
+ */
+public class CalendarPresenterTest {
 
     @Mock
     private Page mockGui;
@@ -27,7 +29,6 @@ public class TestCalendarPresenter {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-
         calendarPresenter = new CalendarPresenter(mockGui, mockModel, mockYearSelector, mockMonthSelector);
     }
 
@@ -39,7 +40,6 @@ public class TestCalendarPresenter {
         when(mockActionEvent.getSource()).thenReturn(mockYearSelector);
 
         calendarPresenter.actionPerformed(mockActionEvent);
-
         verify(mockModel).setYear(ArgumentMatchers.eq(2023));
         verify(mockGui).update();
     }

@@ -3,16 +3,15 @@ package UseCases;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import UseCases.LoginValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import UseCases.UserFileReader;
 
 import java.util.ArrayList;
-
-public class TestLoginValidator {
-
+/**
+ * Unit test for LoginValidator class.
+ */
+public class LoginValidatorTest {
     private UserFileReader mockUserFileReader;
 
     private class MockUserFileReader extends UserFileReader {

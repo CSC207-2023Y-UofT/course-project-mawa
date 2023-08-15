@@ -6,18 +6,20 @@ import org.junit.jupiter.api.Test;
 import java.awt.event.ActionEvent;
 
 import static org.mockito.Mockito.*;
+/**
+ * Unit test for HomeButtonPresenter class.
+ */
+public class HomeButtonPresenterTest {
 
-public class TestHomeButtonPresenter {
-
-    private Page mockGui;
+    private Page mockGUI;
     private GUIElement mockButton;
     private HomeButtonPresenter presenter;
 
     @BeforeEach
     public void setUp() {
-        mockGui = mock(Page.class);
+        mockGUI = mock(Page.class);
         mockButton = mock(GUIElement.class);
-        presenter = new HomeButtonPresenter(mockGui, mockButton);
+        presenter = new HomeButtonPresenter(mockGUI, mockButton);
     }
 
     @Test
@@ -28,6 +30,6 @@ public class TestHomeButtonPresenter {
         presenter.actionPerformed(mockEvent);
 
         verify(mockButton).nextPage();
-        verify(mockGui).dispose();
+        verify(mockGUI).dispose();
     }
 }

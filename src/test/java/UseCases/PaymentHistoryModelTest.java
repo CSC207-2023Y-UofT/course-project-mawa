@@ -26,39 +26,41 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 class PaymentHistoryModelTest {
 
     @BeforeAll
      static void setup() throws IOException {
-        new FileWriter("testPayment.ser", false).close();
-        UserInteractor userInteractor = new UserInteractor("test");
-        userInteractor.writeData(new User("", "", "", "", "",
-                3, 123, "2005-01-07", null, "Salary Worker", 12));
-        userInteractor.writeData(new User("", "", "", "", "",
-                4, 123, "2005-01-07", null, "Salary Worker", 12));
-        userInteractor.writeData(new User("", "", "", "", "",
-                1, 123, "2005-01-07", null, "HR", 12));
-        new FileWriter("testPayment.ser", false).close();
-        PaymentInteractor paymentInteractor= new PaymentInteractor("test");
-        //paymentInteractor.writeData(new Payment(4,12,,1));
+        UserInteractor userInteractor = new UserInteractor();
+        userInteractor.update(new User("first", "last", "", "", "",
+                400, 123, "2005-01-07", null, "Salary Worker", 12));
+        PaymentInteractor paymentInteractor= new PaymentInteractor();
+        paymentInteractor.update(new Payment(400,12,LocalDateTime.now(),400));
+
 
     }
 
     @Test
     void paymentHistoryModel() {
+       // new FileWriter("Users.ser", false).close();
+        PaymentHistoryModel paymentHistoryModel=new PaymentHistoryModel();
+
+        ArrayList arrayList = new ArrayList<>(Collections.singleton(" This Employee has been paid " +
+                12.0 + " on " + "2023" + " / " + "08" + " / " + "15"));
+
+        assertEquals( arrayList,paymentHistoryModel.PaymentHistoryModel(400));
+
     }
 
     @Test
     void label() {
+        PaymentHistoryModel paymentHistoryModel=new PaymentHistoryModel();
+        assertEquals("last first",paymentHistoryModel.label(400));
+
     }
 
-    @Test
-    void user_paymentlist() {
-    }
 
-    @Test
-    void paylistTolist() {
-    }
+
 }

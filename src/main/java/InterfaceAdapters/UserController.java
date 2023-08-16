@@ -10,13 +10,29 @@ import UseCases.UserFactory;
  */
 public class UserController {
 
+    boolean isTest;
+
+    public UserController(){
+        isTest = false;
+    }
+
+    public UserController(String test){
+        isTest = true;
+    }
+
+
     /**
      * Changes the activation status of a user.
      *
      * @param IDnum The ID of the user for whom to change the activation status.
      */
     public void changeActivation(int IDnum) {
-        UserActivator ua = new UserActivator();
+        UserActivator ua;
+        if (isTest){
+            ua = new UserActivator(".");
+        } else{
+            ua = new UserActivator();
+        }
         ua.changeActivation(IDnum);
     }
 
@@ -26,7 +42,12 @@ public class UserController {
      * @param id The ID of the employee for whom to make the payment.
      */
     public void makePayment(int id) {
-        PaymentMaker p = new PaymentMaker(id);
+        PaymentMaker p;
+        if (isTest){
+            p = new PaymentMaker(id, ".");
+        } else{
+            p = new PaymentMaker(id);
+        }
         p.makePayment();
     }
 
@@ -49,7 +70,13 @@ public class UserController {
     public void userFromInput(String surname, String firstname, String gender, String byr, String bmth, String bd,
                               long phnum, String email, String role, String type, String password, Float pay) {
 
-        UserFactory uf = new UserFactory();
+        UserFactory uf;
+        if (isTest){
+            uf = new UserFactory(".");
+        } else {
+            uf = new UserFactory();
+        }
+
         float p;
         if (type.equals("Volunteer")) {
             p = 0;

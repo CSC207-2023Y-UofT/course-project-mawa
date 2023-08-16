@@ -8,7 +8,7 @@ import Entities.*;
  */
 public class UserFactory {
 
-    static int numUsers; // Keeps track of the total number of users.
+    private int numUsers; // Keeps track of the total number of users.
 
     private boolean isTest; // Indicates if the application is in a test environment.
 
@@ -73,4 +73,7 @@ public class UserFactory {
         uInt.writeData(new User(surname, firstname, gender, email, role, numUsers + 1, phoneNumber, bday, p, type, pay));
         numUsers += 1; // Increment the total number of users
     }
+
+    public int getNumUsers(){return this.numUsers;}
+
 }

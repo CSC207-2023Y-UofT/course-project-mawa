@@ -1,45 +1,44 @@
 package UseCases;
 
-import UseCases.*;
+
 import Entities.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-import java.util.ArrayList;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+
 
 
 public class UserActivatorTest {
 
-    private User user;
+    User user;
 
     private EmptyAppValidator eav = new EmptyAppValidator("l");
 
     private UserActivator a = new UserActivator("a");
 
+    private int id;
 
-    @Before
+
+    @BeforeEach
     public void SetUp(){
 
-        UserInteractor ui = new UserInteractor("m");
-        if (eav.isEmpty()){
-            user = new User("Boitor", "William", "Male", "william.boitor@gmail.com", "Senior Actuarial Analyst",
-                    1, 6475504453L, "2003-01-06", new char[]{'w', 'i', 'l', 'l', 'i', 'a', 'm', '1', '2', '3'}, "Salary Worker",
-                    150000.00F);
-            ui.writeData(user);
-        } else{
-            user = ui.readData().get(0);
-        }
+        UserFactory uf = new UserFactory(".");
+        UserInteractor ui = new UserInteractor(".");
+        uf.makeUser("Boitor", "William", "Male", "2003", "01",
+                "06", 6475504453L, "william.boitor@gmail.com", "Senior Actuarial Analyst",
+                "Salary Worker", "william123", 150000F);
+        user = ui.readData().get(ui.readData().size() - 1);
+        id = user.getUserNum();
 
     }
 
-    @Test(timeout = 50)
+    @Test
     public void TestActivationChange(){
-        a.changeActivation(1);
-        User newUser = a.idToUser(1);
+        a.changeActivation(id);
+        User newUser = a.idToUser(id);
         assertEquals(!user.isActive(), newUser.isActive());
     }
 

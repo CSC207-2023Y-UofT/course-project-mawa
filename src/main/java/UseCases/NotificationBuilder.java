@@ -9,7 +9,19 @@ import java.time.LocalDateTime;
  */
 public class NotificationBuilder {
 
-    private UserNotificationInteractor uni = new UserNotificationInteractor();
+    private UserNotificationInteractor uni;
+
+    private UserFileReader ufr;
+
+    public NotificationBuilder(){
+        this.uni = new UserNotificationInteractor();
+        this.ufr = UserFileReader.getInstance();
+    }
+
+    public NotificationBuilder(String test){
+        this.uni = new UserNotificationInteractor(test);
+        this.ufr = new UserFileReader(test);
+    }
 
     /**
      * Creates and sends a user notification.
@@ -20,7 +32,6 @@ public class NotificationBuilder {
      * @param receiver  The ID of the user receiving the notification.
      */
     public void createRequest(int shift, String message, int sender, int receiver) {
-        UserFileReader ufr = UserFileReader.getInstance();
 
         // Check the sender's user type to determine the notification type
         if (ufr.getType(sender).equals("HR")) {
@@ -31,4 +42,6 @@ public class NotificationBuilder {
             uni.writeData(new UserNotificationRequest(sender, receiver, shift, message, LocalDateTime.now()));
         }
     }
+
+    public UserFileReader getFileReader(){return ufr;}
 }

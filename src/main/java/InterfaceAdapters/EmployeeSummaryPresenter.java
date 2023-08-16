@@ -12,7 +12,16 @@ import java.util.ArrayList;
  */
 public class EmployeeSummaryPresenter {
 
-    private UserFileReader fr = UserFileReader.getInstance();
+    private UserFileReader fr;
+
+    public EmployeeSummaryPresenter(){
+        fr = UserFileReader.getInstance();
+    }
+
+    public EmployeeSummaryPresenter(String test){
+        fr = new UserFileReader(test);
+    }
+
 
     /**
      * Creates an array of employee information for display.
@@ -71,4 +80,8 @@ public class EmployeeSummaryPresenter {
         UserFileReader ufr = UserFileReader.getInstance();
         return ufr.getFirstName(id) + " " + ufr.getSurname(id);
     }
+
+    public UserFileReader getFr(){return this.fr;}
+
+
 }

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-public class UserInteractorTest {
+public class UserNotificationInteractorTest {
 
 
-    UserInteractor ui = new UserInteractor("p");
+    UserNotificationInteractor ui = new UserInteractor("p");
 
 
     @Test

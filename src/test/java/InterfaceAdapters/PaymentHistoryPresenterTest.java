@@ -26,10 +26,10 @@ class PaymentHistoryPresenterTest {
     public PaymentMaker paymentMaker;
     @BeforeAll
     static void setUp() {
-        UserInteractor userInteractor = new UserInteractor();
+        UserInteractor userInteractor = new UserInteractor("test");
         userInteractor.update(new User("first", "last", "", "", "",
                 400, 123, "2005-01-07", null, "Salary Worker", 12));
-        PaymentInteractor paymentInteractor= new PaymentInteractor();
+        PaymentInteractor paymentInteractor= new PaymentInteractor("test");
         paymentInteractor.update(new Payment(400,12,LocalDateTime.now(),400));
 
     }

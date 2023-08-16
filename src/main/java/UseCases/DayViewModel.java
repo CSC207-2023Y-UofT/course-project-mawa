@@ -50,6 +50,7 @@ public class DayViewModel {
                     break;
                 }
             }
+            System.out.println(overlappingShifts);
             shifts2D.add(overlappingShifts);
         }
 

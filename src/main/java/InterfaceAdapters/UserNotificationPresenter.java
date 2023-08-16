@@ -5,31 +5,30 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import UseCases.*;
 
-public class UserNotificationPresenter {
+public abstract class UserNotificationPresenter {
     public NotificationHRListModel unresolvedList;
     public NotificationHRListModel resolvedList;
     public int user;
 
-    public UserNotificationPresenter(int userID, NotificationHRListModel unresolvedList,
-                                     NotificationHRListModel resolvedList){
+    public UserNotificationPresenter(int userID){
         this.user = userID;
-        this.unresolvedList = unresolvedList;
-        this.resolvedList = resolvedList;
+        this.unresolvedList = new NotificationHRListModel(user, false);
+        this.resolvedList = new NotificationHRListModel(user, true);
         this.resolvedList.populateList();
         this.unresolvedList.populateList();
     }
-
-    public void rescheduleUpdateListModel(String selected){
-        unresolvedList.listModel.removeElement(selected);
-        unresolvedList.updateList(selected, false, resolvedList.listModel);
-    }
-    public void denyUpdateListModel(String selected){
-        unresolvedList.listModel.removeElement(selected);
-        unresolvedList.updateList(selected, true, resolvedList.listModel);
+    public DefaultListModel<String> getUnresolvedDefaultList(){
+        /*
+        Returns a DefaultListModel of all unresolved notifications either created by or directed at this user.
+         */
+        return this.unresolvedList.getListModel();
     }
 
-    public int NotificationID(String notification){
-       return unresolvedList.getNotificationID(notification);
+    public DefaultListModel<String> getResolvedDefaultList(){
+                /*
+        Returns a DefaultListModel of all resolved notifications either created by or directed at this user.
+         */
+        return this.resolvedList.getListModel();
     }
 
 }

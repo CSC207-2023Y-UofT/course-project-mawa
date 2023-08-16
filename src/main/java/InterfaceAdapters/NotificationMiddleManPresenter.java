@@ -6,7 +6,6 @@ public class NotificationMiddleManPresenter {
     int userId;
     public NotificationMiddleManPresenter(int userID){
         userId = userID;
-
     }
     public boolean isHR(){
         UserFileReader reader = UserFileReader.getInstance();

@@ -4,18 +4,24 @@ import UseCases.PaymentHistoryModel;
 import java.util.ArrayList;
 
 public class PaymentHistoryPresenter {
-    private ArrayList<String>  thereturn_list;
-    public ArrayList<String> PaymentHistoryPresenter(int emp_id){
+    private ArrayList<String> thereturnList;
+
+    /**
+     *
+     * @param empID is th id of the employee
+     * @return will return the paymenthistory list as a list of strings
+     */
+    public ArrayList<String> PaymentHistoryPresenter(int empID){
 
         PaymentHistoryModel model= new PaymentHistoryModel();
-        thereturn_list= model.PaymentHistoryModel(emp_id);
-        return thereturn_list;
+        thereturnList = model.PaymentHistoryModel(empID);
+        return thereturnList;
 
 
     }
-    public String getLabel(int employee_id){
+    public String getLabel(int employeeID){
         PaymentHistoryModel mod=new PaymentHistoryModel();
-        return mod.label(employee_id);
+        return mod.label(employeeID);
 
     }
 

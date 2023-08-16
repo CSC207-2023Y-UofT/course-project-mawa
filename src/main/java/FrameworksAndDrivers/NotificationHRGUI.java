@@ -4,37 +4,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import UseCases.NotificationHRListModel;
-import InterfaceAdapters.UserNotificationPresenter;
-
-import UseCases.NotificationListPanelBuilder;
+import InterfaceAdapters.UserNotificationHRPresenter;
 
 public class NotificationHRGUI extends JFrame implements ActionListener {
-    private JFrame frame = new JFrame();
+    private final JFrame frame = new JFrame();
     public JScrollPane unresolvedNotificationListScroller;
     public JScrollPane resolvedNotificationListScroller;
-    private final JLabel unresolvedNotificationLabel = new JLabel("Unresolved Notifications");
-    private final JLabel resolvedNotificationLabel = new JLabel("Resolved Notifications");
-    private final JButton denyRequestButton = new JButton("Deny Request");
-    private final JButton rescheduleShiftButton = new JButton("Reschedule Shift");
     public JList<String> unresolvedNotificationList;
     public JList<String> resolvedNotificationList;
-    public NotificationHRListModel unresolvedNotificationListModel;
-    public NotificationHRListModel resolvedNotificationListModel;
-    public UserNotificationPresenter presenter;
+    public UserNotificationHRPresenter presenter;
     public int user;
     public NotificationHRGUI(int userID) {
+        /*
+        Creates GUI for Notification page for HR.
+         */
         user = userID;
         JPanel lowerPanel = new JPanel();
         JButton homeButton = new JButton("Home");
-        this.unresolvedNotificationListModel = new NotificationHRListModel(userID, false);
-        this.resolvedNotificationListModel = new NotificationHRListModel(userID, true);
+        this.presenter = new UserNotificationHRPresenter(userID);
         lowerPanel.setLayout(new GridLayout(1, 2));
         this.frame.setLayout(new BorderLayout());
-
+        JButton denyRequestButton = new JButton("Deny Request");
         denyRequestButton.setActionCommand("Deny");
         denyRequestButton.addActionListener(this);
+        JButton rescheduleShiftButton = new JButton("Reschedule Shift");
         rescheduleShiftButton.setActionCommand("Reschedule");
         rescheduleShiftButton.addActionListener(this);
         homeButton.setActionCommand("home");
@@ -43,15 +36,16 @@ public class NotificationHRGUI extends JFrame implements ActionListener {
         buttonPanel.setLayout(new BorderLayout());
         buttonPanel.add(homeButton, BorderLayout.WEST);
         this.frame.add(buttonPanel, BorderLayout.PAGE_START);
-        this.unresolvedNotificationList = new JList<String>(unresolvedNotificationListModel.getListModel());
-        this.resolvedNotificationList = new JList<String>(resolvedNotificationListModel.getListModel());
+        this.unresolvedNotificationList = new JList<String>(presenter.getUnresolvedDefaultList());
+        this.resolvedNotificationList = new JList<String>(presenter.getResolvedDefaultList());
         this.unresolvedNotificationListScroller = new JScrollPane(this.unresolvedNotificationList);
         this.resolvedNotificationListScroller = new JScrollPane(this.resolvedNotificationList);
-        this.presenter = new UserNotificationPresenter(userID, unresolvedNotificationListModel, resolvedNotificationListModel);
-        lowerPanel.add(new NotificationListPanelBuilder(frame, unresolvedNotificationLabel, unresolvedNotificationList,
-                unresolvedNotificationListScroller, rescheduleShiftButton, denyRequestButton).panel);
-        lowerPanel.add(new NotificationListPanelBuilder(frame, resolvedNotificationLabel, resolvedNotificationList,
-                resolvedNotificationListScroller, true).panel);
+        JLabel unresolvedNotificationLabel = new JLabel("Unresolved Notifications");
+        lowerPanel.add(new NotificationListPanelBuilder(unresolvedNotificationLabel, unresolvedNotificationList,
+                unresolvedNotificationListScroller, rescheduleShiftButton, denyRequestButton));
+        JLabel resolvedNotificationLabel = new JLabel("Resolved Notifications");
+        lowerPanel.add(new NotificationListPanelBuilder(resolvedNotificationLabel, resolvedNotificationList,
+                resolvedNotificationListScroller, true));
         this.frame.add(lowerPanel, BorderLayout.CENTER);
         this.frame.setSize(600, 600);
         this.frame.setVisible(true);

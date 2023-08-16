@@ -3,9 +3,9 @@ package FrameworksAndDrivers;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import Entities.Payment;
+
 import InterfaceAdapters.PaymentHistoryPresenter;
-import UseCases.PaymentInteractor;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;;
 
@@ -16,18 +16,18 @@ import java.awt.event.ActionListener;;
 
 public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, ActionListener  {
 
-    private JFrame history_frame= new JFrame();
-    private JPanel history_panel = new JPanel();
+    private JFrame historyFrame = new JFrame();
+    private JPanel historyPanel = new JPanel();
 
-    private JPanel info_panel = new JPanel();
-    private JPanel button_panel= new JPanel();
+    private JPanel infoPanel = new JPanel();
+    private JPanel buttonPanel = new JPanel();
     private Label employeeLabel = new Label();
 
 
-    private int employee_id;
-    private int employer_id;
+    private int employeeID;
+    private int employerID;
 
-    private ArrayList<String> adding_list= new ArrayList<>();
+    private ArrayList<String> addingList = new ArrayList<>();
     private PaymentHistoryPresenter presenter= new PaymentHistoryPresenter();
 
     /**
@@ -39,24 +39,24 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
      */
     public PaymentHistory(int employee, int employer){
 
-        this.employee_id=employee;
-        this.employer_id=employer;
+        this.employeeID =employee;
+        this.employerID =employer;
         this.addTitle();
         JButton homebutton= new JButton("Home");
         homebutton.setActionCommand("home");
         homebutton.addActionListener(this);
         this.addHomeButton();
-        button_panel.add(homebutton);
-        history_frame.setSize(800, 600);
-        history_panel.setLayout(new BorderLayout());
+        buttonPanel.add(homebutton);
+        historyFrame.setSize(800, 600);
+        historyPanel.setLayout(new BorderLayout());
         this.addContent();
-        history_frame.add(history_panel,BorderLayout.CENTER);
-        history_frame.add(info_panel,BorderLayout.PAGE_START);
-        history_frame.add(button_panel,BorderLayout.PAGE_END);
-        history_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setUser(employee_id);
-        setUser(employer_id);
-        history_frame.setVisible(true);
+        historyFrame.add(historyPanel,BorderLayout.CENTER);
+        historyFrame.add(infoPanel,BorderLayout.PAGE_START);
+        historyFrame.add(buttonPanel,BorderLayout.PAGE_END);
+        historyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setUser(employeeID);
+        setUser(employerID);
+        historyFrame.setVisible(true);
 
 
 
@@ -68,7 +68,7 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
      */
     @Override
     public void addTitle() {
-        history_frame.setTitle("Payment History");
+        historyFrame.setTitle("Payment History");
 
     }
 
@@ -77,13 +77,13 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
      */
     @Override
     public void addContent() {
-        employeeLabel.setText(presenter.getLabel(employee_id));
-        info_panel.add(employeeLabel);
+        employeeLabel.setText(presenter.getLabel(employeeID));
+        infoPanel.add(employeeLabel);
         // below are codes related to then scroll bar and the list
         DefaultListModel<String> mylist = new DefaultListModel<>();
-        adding_list= presenter.PaymentHistoryPresenter(employee_id);
-        for(int i=0; i<adding_list.size();i++){
-            mylist.addElement(adding_list.get(i));
+        addingList = presenter.PaymentHistoryPresenter(employeeID);
+        for(int i = 0; i< addingList.size(); i++){
+            mylist.addElement(addingList.get(i));
         }
         JList<String> paymentlist = new JList<>(mylist);// creating a list to be shown
         paymentlist.setBackground(Color.gray);// having the ist to be gray so that it is more visible
@@ -94,7 +94,7 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
         JScrollPane scroller = new JScrollPane(paymentlist);
         scroller.setPreferredSize(new Dimension(225, 100));
         scroller.setAlignmentX(LEFT_ALIGNMENT);
-        history_panel.add(scroller, BorderLayout.CENTER);
+        historyPanel.add(scroller, BorderLayout.CENTER);
         //history_panel.add(paymentlist);
 
 
@@ -121,8 +121,8 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
     }
     public void actionPerformed(ActionEvent e) {
         if ("home".equals(e.getActionCommand())) {
-            new HomePage(employer_id);
-            history_frame.dispose();
+            new HomePage(employerID);
+            historyFrame.dispose();
         }
     }
 

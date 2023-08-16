@@ -1,0 +1,167 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ShiftCellPresenter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">InterfaceAdapters</a>
+</div>
+
+<h1>Coverage Summary for Class: ShiftCellPresenter (InterfaceAdapters)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShiftCellPresenter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package InterfaceAdapters;
+&nbsp;
+&nbsp;import UseCases.ShiftFileReader;
+&nbsp;import UseCases.UserFileReader;
+&nbsp;import UseCases.UserTypeConstants;
+&nbsp;
+&nbsp;import java.awt.event.ActionEvent;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;import java.time.format.DateTimeFormatter;
+&nbsp;
+&nbsp;/**
+&nbsp; * The ShiftCellPresenter class handles actions for ShiftCell buttons.
+&nbsp; * It implements the ActionListener interface.
+&nbsp; */
+&nbsp;public class ShiftCellPresenter implements ActionListener {
+&nbsp;    private GUIElement button;
+&nbsp;    private int shift, user;
+&nbsp;    protected UserFileReader userReader;
+&nbsp;    protected ShiftFileReader shiftReader;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a ShiftCellPresenter object.
+&nbsp;     *
+&nbsp;     * @param button The GUIElement button (the ShiftCell).
+&nbsp;     * @param shift The ID of the shift.
+&nbsp;     * @param user The ID of the user.
+&nbsp;     */
+<b class="fc">&nbsp;    public ShiftCellPresenter(GUIElement button, int shift, int user) {</b>
+<b class="fc">&nbsp;        this.shift = shift;</b>
+<b class="fc">&nbsp;        this.user = user;</b>
+<b class="fc">&nbsp;        this.button = button;</b>
+<b class="fc">&nbsp;        this.userReader = UserFileReader.getInstance();</b>
+<b class="fc">&nbsp;        this.shiftReader = ShiftFileReader.getInstance();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the user is of type HR.
+&nbsp;     *
+&nbsp;     * @return True if the user is HR, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean isHR() {
+<b class="fc">&nbsp;        return userReader.getType(user).equals(UserTypeConstants.HR);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets a formatted string representation of the shift start time.
+&nbsp;     *
+&nbsp;     * @return The formatted string representation of the shift time.
+&nbsp;     */
+&nbsp;    public String getString(){
+<b class="fc">&nbsp;        return shiftReader.getDate(shift).format(DateTimeFormatter.ofPattern(&quot;HH:mm&quot;));</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Handles when the ShiftCell gets clicked.
+&nbsp;     *
+&nbsp;     * @param e The ActionEvent object.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void actionPerformed(ActionEvent e) {
+<b class="fc">&nbsp;        if (e.getSource() == button){</b>
+<b class="fc">&nbsp;            button.nextPage();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

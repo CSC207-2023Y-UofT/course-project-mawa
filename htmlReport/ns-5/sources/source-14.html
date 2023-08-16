@@ -1,0 +1,199 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserActivator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: UserActivator (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserActivator</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;
+&nbsp;import Entities.Shift;
+&nbsp;import Entities.User;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;/**
+&nbsp; * The UserActivator class handles the activation and deactivation of user accounts.
+&nbsp; * It interacts with User and Shift objects and provides methods for changing user activation status.
+&nbsp; */
+&nbsp;public class UserActivator {
+&nbsp;
+<b class="nc">&nbsp;    private UserFileReader ufr = UserFileReader.getInstance(); // Provides access to user data.</b>
+&nbsp;
+&nbsp;    private boolean isTest; // Indicates if the application is in a test environment.
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Default constructor that sets the UserActivator for non-test usage.
+&nbsp;     */
+<b class="nc">&nbsp;    public UserActivator() {</b>
+<b class="nc">&nbsp;        isTest = false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor that allows specifying a test environment.
+&nbsp;     *
+&nbsp;     * @param t A string identifier indicating the use of a test environment.
+&nbsp;     */
+<b class="nc">&nbsp;    public UserActivator(String t) {</b>
+<b class="nc">&nbsp;        isTest = true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Changes the activation status of a user.
+&nbsp;     *
+&nbsp;     * @param IDNum The ID of the user whose activation status needs to be changed.
+&nbsp;     */
+&nbsp;    public void changeActivation(int IDNum) {
+&nbsp;        UserInteractor ui;
+&nbsp;        ShiftInteractor si;
+&nbsp;
+&nbsp;        // Initialize UserInteractor and ShiftInteractor based on the test environment
+<b class="nc">&nbsp;        if (isTest) {</b>
+<b class="nc">&nbsp;            ui = new UserInteractor(&quot;l&quot;);</b>
+<b class="nc">&nbsp;            si = new ShiftInteractor(&quot;.&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            ui = new UserInteractor();</b>
+<b class="nc">&nbsp;            si = new ShiftInteractor();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        ArrayList&lt;Shift&gt; shifts = si.readData();</b>
+<b class="nc">&nbsp;        if (ufr.getActive(IDNum)) {</b>
+&nbsp;            // Deactivate the user
+<b class="nc">&nbsp;            User user = this.idToUser(IDNum);</b>
+<b class="nc">&nbsp;            for (Shift shift : shifts) {</b>
+<b class="nc">&nbsp;                shift.removeCoworker(IDNum);</b>
+<b class="nc">&nbsp;                si.update(shift);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            user.setActive(false);</b>
+<b class="nc">&nbsp;            ui.update(user);</b>
+<b class="nc">&nbsp;        } else {</b>
+&nbsp;            // Activate the user
+<b class="nc">&nbsp;            User user = this.idToUser(IDNum);</b>
+<b class="nc">&nbsp;            user.setActive(true);</b>
+<b class="nc">&nbsp;            ui.update(user);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts a user ID to a User object.
+&nbsp;     *
+&nbsp;     * @param idNum The ID of the user to retrieve.
+&nbsp;     * @return The User object corresponding to the given ID, or null if not found.
+&nbsp;     */
+&nbsp;    public User idToUser(int idNum) {
+&nbsp;        UserInteractor ui;
+&nbsp;
+&nbsp;        // Initialize UserInteractor based on the test environment
+<b class="nc">&nbsp;        if (isTest) {</b>
+<b class="nc">&nbsp;            ui = new UserInteractor(&quot;l&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            ui = new UserInteractor();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        ArrayList&lt;User&gt; users = ui.readData();</b>
+<b class="nc">&nbsp;        for (User user : users) {</b>
+<b class="nc">&nbsp;            if (user.getUserNum() == idNum) {</b>
+<b class="nc">&nbsp;                return user;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ShiftMaker</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: ShiftMaker (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShiftMaker</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;
+&nbsp;import Entities.Shift;
+&nbsp;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;/**
+&nbsp; * The ShiftMaker class provides a method for creating shifts.
+&nbsp; */
+&nbsp;public class ShiftMaker {
+<b class="fc">&nbsp;    public ShiftInteractor interactor;</b>
+<b class="fc">&nbsp;    public ShiftFileReader reader;</b>
+&nbsp;    private LocalDateTime date;
+&nbsp;    private float duration;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a ShiftMaker instance with the specified date and duration.
+&nbsp;     *
+&nbsp;     * @param date     The start date and time of the shift.
+&nbsp;     * @param duration The duration of the shift in hours.
+&nbsp;     */
+<b class="fc">&nbsp;    public ShiftMaker(LocalDateTime date, float duration){</b>
+<b class="fc">&nbsp;        this.date = date;</b>
+<b class="fc">&nbsp;        this.duration = duration;</b>
+&nbsp;        interactor = new ShiftInteractor();
+&nbsp;        reader = ShiftFileReader.getInstance();
+&nbsp;    }
+&nbsp;
+&nbsp;    public ShiftMaker(LocalDateTime date, float duration, String test){
+&nbsp;        this.date = date;
+&nbsp;        this.duration = duration;
+<b class="fc">&nbsp;        interactor = new ShiftInteractor(&quot;p&quot;);</b>
+<b class="fc">&nbsp;        reader = new ShiftFileReader(&quot;p&quot;);</b>
+<b class="fc">&nbsp;    }</b>
+<b class="fc">&nbsp;</b>
+&nbsp;
+<b class="fc">&nbsp;    /**</b>
+<b class="fc">&nbsp;     * Creates a new shift based on the provided date and duration.</b>
+<b class="fc">&nbsp;     *</b>
+<b class="fc">&nbsp;     * @throws InvalidTimeException If the shift&#39;s end time is not on the same date as the start time.</b>
+&nbsp;     */
+&nbsp;    public void makeShift() throws InvalidTimeException {
+&nbsp;        int hours = (int) Math.floor(duration);
+&nbsp;        int mins = (int) ((duration - hours) * 60);
+&nbsp;        LocalDateTime time2 = date.plusHours(hours).plusMinutes(mins);
+&nbsp;        if (time2.toLocalDate().isEqual(date.toLocalDate())){
+&nbsp;            //default shift has no coworkers on it
+&nbsp;            Shift shift = new Shift(date,new ArrayList&lt;Integer&gt;(), duration, reader.getIds().size() + 1);
+&nbsp;            interactor.writeData(shift);
+&nbsp;        } else{
+&nbsp;            throw new InvalidTimeException();
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

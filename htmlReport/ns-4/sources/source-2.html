@@ -1,0 +1,241 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CalendarModel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">InterfaceAdapters</a>
+</div>
+
+<h1>Coverage Summary for Class: CalendarModel (InterfaceAdapters)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CalendarModel</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96.7%
+  </span>
+  <span class="absValue">
+    (29/30)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704</td>
+  </tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704$auxiliary$Ax0cbTFj</td>
+  </tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704$auxiliary$aYLnzDfI</td>
+  </tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704$auxiliary$BX1OEoEx</td>
+  </tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704$auxiliary$dnfn3KDm</td>
+  </tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704$auxiliary$jpSHlDwr</td>
+  </tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704$auxiliary$LEWn5h2U</td>
+  </tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704$auxiliary$pe1URZef</td>
+  </tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704$auxiliary$Vgpiqswc</td>
+  </tr>
+  <tr>
+    <td class="name">CalendarModel$MockitoMock$1345362704$auxiliary$X0NLgw6a</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96.7%
+  </span>
+  <span class="absValue">
+    (29/30)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package InterfaceAdapters;
+&nbsp;
+&nbsp;
+&nbsp;import UseCases.ShiftFileReader;
+&nbsp;import UseCases.UserFileReader;
+&nbsp;import UseCases.UserTypeConstants;
+&nbsp;
+&nbsp;import java.time.DayOfWeek;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.time.temporal.TemporalAdjusters;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * The CalendarModel class represents the model component for the CalendarGUI.
+&nbsp; * It provides methods to retrieve shifts, check payday, and manage year and month information.
+&nbsp; */
+&nbsp;public class CalendarModel {
+&nbsp;    private int year, month, user;
+&nbsp;    protected ShiftFileReader shiftDB;
+&nbsp;    protected UserFileReader userDB;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a CalendarModel object with the specified year, month, and user.
+&nbsp;     *
+&nbsp;     * @param year The year of the calendar.
+&nbsp;     * @param month The month of the calendar.
+&nbsp;     * @param user The user associated with the calendar.
+&nbsp;     */
+&nbsp;
+<b class="fc">&nbsp;    public CalendarModel(int year, int month, int user){</b>
+<b class="fc">&nbsp;        this.year = year;</b>
+<b class="fc">&nbsp;        this.month = month;</b>
+<b class="fc">&nbsp;        this.user = user;</b>
+<b class="fc">&nbsp;        userDB = UserFileReader.getInstance();</b>
+<b class="fc">&nbsp;        shiftDB= ShiftFileReader.getInstance();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of shifts for a specific day, for HR. Retrieves the intersection
+&nbsp;     * of all shifts on this day and all shifts of the user, for Employees.
+&nbsp;     *
+&nbsp;     * @param dayNum The day of the month.
+&nbsp;     * @return An ArrayList of shift Ids for the specified day.
+&nbsp;     */
+&nbsp;    public ArrayList&lt;Integer&gt; getShifts(int dayNum){
+<b class="fc">&nbsp;        LocalDate day = LocalDate.of(year, month, dayNum);</b>
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; shifts = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        if (userDB.getType(user).equals(UserTypeConstants.HR)){</b>
+<b class="fc">&nbsp;            shifts = shiftDB.getIds(day);</b>
+&nbsp;        } else{
+<b class="fc">&nbsp;            ArrayList&lt;Integer&gt; userShifts = shiftDB.getIds(user);</b>
+<b class="fc">&nbsp;            ArrayList&lt;Integer&gt; dayShifts = shiftDB.getIds(day);</b>
+<b class="fc">&nbsp;            if (userShifts.size() &gt; 0 &amp;&amp; dayShifts.size() &gt; 0){</b>
+<b class="fc">&nbsp;                for (int i:userShifts){</b>
+<b class="fc">&nbsp;                    for (int j:dayShifts){</b>
+<b class="fc">&nbsp;                        if (i == j){</b>
+<b class="fc">&nbsp;                            shifts.add(i);</b>
+&nbsp;                        }
+<b class="fc">&nbsp;                    }</b>
+<b class="fc">&nbsp;                }</b>
+&nbsp;            } else{
+<b class="nc">&nbsp;                shifts = new ArrayList&lt;Integer&gt;();</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return shifts;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if a specific day is a payday (last Friday of the month).
+&nbsp;     *
+&nbsp;     * @param dayNum The day of the month.
+&nbsp;     * @return True if the day is a payday, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean isPayDay(int dayNum){
+<b class="fc">&nbsp;        LocalDate day = LocalDate.of(year, month, dayNum);</b>
+<b class="fc">&nbsp;        LocalDate lastFri =  day.with(TemporalAdjusters.lastInMonth(DayOfWeek.FRIDAY));</b>
+<b class="fc">&nbsp;        boolean isPayDay = day.isEqual(lastFri);</b>
+<b class="fc">&nbsp;        return isPayDay;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setYear(int year){
+<b class="fc">&nbsp;        this.year = year;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMonth(int month){
+<b class="fc">&nbsp;        this.month = month;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getYear(){
+<b class="fc">&nbsp;        return year;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getMonth() {
+<b class="fc">&nbsp;        return month;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getUser() {
+<b class="fc">&nbsp;        return user;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

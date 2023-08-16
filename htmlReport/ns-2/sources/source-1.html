@@ -1,0 +1,190 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Payment</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Entities</a>
+</div>
+
+<h1>Coverage Summary for Class: Payment (Entities)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Payment</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    57.1%
+  </span>
+  <span class="absValue">
+    (4/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72.7%
+  </span>
+  <span class="absValue">
+    (8/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Entities;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;
+&nbsp;public class Payment implements Serializable {
+&nbsp;
+&nbsp;    //Below are the attributes of the payment class
+&nbsp;    private int employee;
+&nbsp;
+&nbsp;    private  float paymentAmount;
+&nbsp;
+&nbsp;    private LocalDateTime date;
+&nbsp;
+&nbsp;    private int paymentId;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * the contructor of the payment class
+&nbsp;     * @param employee is the employee id.
+&nbsp;     * @param paymentAmount is the amount of this payment.
+&nbsp;     * @param date is the date of this payment.
+&nbsp;     * @param id is the ID of this payment.
+&nbsp;     *           The payment class stores attributes related to payments and payment
+&nbsp;     *           objects could be used to be stored in the database.
+&nbsp;     */
+&nbsp;
+<b class="fc">&nbsp;    public Payment(int employee,float paymentAmount, LocalDateTime date, int id ) {</b>
+<b class="fc">&nbsp;        this.employee = employee;</b>
+<b class="fc">&nbsp;        this.date=date;</b>
+<b class="fc">&nbsp;        this.paymentAmount = paymentAmount;</b>
+&nbsp;        //this.payment_message=employee.getEmployeeName()+employee.getSurname()+&quot;Has been paid the amount of&quot;+payment_amount+&quot;At&quot;+date;
+<b class="fc">&nbsp;        this.paymentId = id;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *
+&nbsp;     * @return the id of this payment
+&nbsp;     */
+<b class="fc">&nbsp;    public int getPaymentId(){return this.paymentId;}</b>
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * getter for the ID of the employee that is being paid
+&nbsp;     * @return The ID of the employee that is being paid.
+&nbsp;     */
+&nbsp;    public int getEmployee(){
+<b class="fc">&nbsp;        return this.employee;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *
+&nbsp;     * sets the employee being paid to the passed on employee
+&nbsp;     * @param employee is the employee being paid if it needs to be changed
+&nbsp;     */
+&nbsp;    public  void setEmployee(int employee){
+&nbsp;
+<b class="nc">&nbsp;        this.employee=employee;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *
+&nbsp;     *  getter for payment amount
+&nbsp;     * @return The payment amount of this payment
+&nbsp;     */
+&nbsp;    public float getPaymentAmount(){
+<b class="fc">&nbsp;        return this.paymentAmount;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *
+&nbsp;     * sets the payment amount of this payment.
+&nbsp;     * @param amount is the amount of this payment if needed to be changed
+&nbsp;     */
+&nbsp;    public void setPaymentAmount(int amount){
+<b class="nc">&nbsp;        this.paymentAmount=amount;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *
+&nbsp;     * getter for payment date
+&nbsp;     * @return the date of payment
+&nbsp;     */
+&nbsp;    public LocalDateTime getDate(){
+<b class="nc">&nbsp;        return this.date;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

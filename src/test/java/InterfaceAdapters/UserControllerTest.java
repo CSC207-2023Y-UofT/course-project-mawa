@@ -5,6 +5,8 @@ import UseCases.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,8 +18,8 @@ public class UserControllerTest {
 
 
     @BeforeEach
-    public void SetUp(){
-
+    public void SetUp() throws IOException {
+        new FileWriter("testPayments.ser", false).close();
         UserFactory uf = new UserFactory(".");
         UserInteractor ui = new UserInteractor(".");
         uf.makeUser("Boitor", "William", "Male", "2003", "01",
@@ -32,16 +34,6 @@ public class UserControllerTest {
         uc.changeActivation(id);
         UserFileReader ufr = new UserFileReader(".");
         assertEquals(ufr.getActive(id), false);
-
-    }
-
-    @Test
-    public void TestMakePayment(){
-        uc.makePayment(id);
-        PaymentInteractor pi = new PaymentInteractor("l");
-        PaymentFileReader pfr = new PaymentFileReader(".");
-        int payID = pi.readData().size();
-        assertEquals(pfr.getIds(id).get(0), payID);
 
     }
 

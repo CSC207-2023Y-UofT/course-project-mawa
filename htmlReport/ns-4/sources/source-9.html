@@ -1,0 +1,150 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > HomePagePresenter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">InterfaceAdapters</a>
+</div>
+
+<h1>Coverage Summary for Class: HomePagePresenter (InterfaceAdapters)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HomePagePresenter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package InterfaceAdapters;
+&nbsp;
+&nbsp;import Entities.User;
+&nbsp;import UseCases.UserFileReader;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;/**
+&nbsp; * The HomePagePresenter class handles presenting home page buttons for display.
+&nbsp; * It creates a list of button labels based on the user&#39;s role for UI rendering.
+&nbsp; */
+&nbsp;public class HomePagePresenter {
+&nbsp;
+&nbsp;    private UserFileReader ufr;
+&nbsp;
+<b class="nc">&nbsp;    public HomePagePresenter(){</b>
+<b class="nc">&nbsp;        ufr = UserFileReader.getInstance();</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public HomePagePresenter(String test){</b>
+<b class="nc">&nbsp;        ufr = new UserFileReader(test);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a list of home page buttons&#39; labels for display.
+&nbsp;     *
+&nbsp;     * @param id The ID of the user for whom to create the home page buttons.
+&nbsp;     * @return An ArrayList of button labels based on the user&#39;s role.
+&nbsp;     */
+&nbsp;    public ArrayList&lt;String&gt; makeHomeButtons(int id) {
+&nbsp;
+<b class="nc">&nbsp;        ArrayList&lt;String&gt; labels = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        labels.add(&quot;Schedule&quot;); // Always display the &quot;Schedule&quot; button</b>
+<b class="nc">&nbsp;        labels.add(&quot;Notification Center&quot;); // Always display the &quot;Notification Center&quot; button</b>
+&nbsp;
+&nbsp;        // Determine the user&#39;s role and add corresponding buttons
+<b class="nc">&nbsp;        if (ufr.getType(id).equals(&quot;HR&quot;)) {</b>
+<b class="nc">&nbsp;            labels.add(&quot;Manage Employees&quot;); // For HR users</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            labels.add(&quot;View Payment History&quot;); // For non-HR users</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return labels;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public UserFileReader getFileReader(){return this.ufr;}</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

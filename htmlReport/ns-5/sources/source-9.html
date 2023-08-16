@@ -1,0 +1,228 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > NotificationStatusTrackerUpdater</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: NotificationStatusTrackerUpdater (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NotificationStatusTrackerUpdater</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/61)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;import Entities.Shift;
+&nbsp;import Entities.User;
+&nbsp;import Entities.UserNotification;
+&nbsp;import Entities.UserNotificationResponse;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;public class NotificationStatusTrackerUpdater {
+&nbsp;    int user;
+&nbsp;    UserNotification[][] notifications;
+&nbsp;    String[] resolved;
+&nbsp;    String[] unresolved;
+&nbsp;
+<b class="nc">&nbsp;    public NotificationStatusTrackerUpdater(int userID){</b>
+<b class="nc">&nbsp;        user = userID;</b>
+<b class="nc">&nbsp;        notifications = getSortedResolvedAndUnresolvedNotifications(userID);</b>
+<b class="nc">&nbsp;        resolved = NotificationsToString(notifications[0], userID);</b>
+<b class="nc">&nbsp;        unresolved = NotificationsToString(notifications[1], userID);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    public String[] getResolvedArray(){
+<b class="nc">&nbsp;        return this.resolved;</b>
+&nbsp;    }
+&nbsp;    public String[] getUnresolvedArray(){
+<b class="nc">&nbsp;        return this.unresolved;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public UserNotification[][] getSortedResolvedAndUnresolvedNotifications(int userID){
+&nbsp;        /*
+&nbsp;        Finds all Notifications that are either created by user, or are received by user.
+&nbsp;        These notifications are sorted, ie. UserNotification[0][0] is the latest UserNotification,
+&nbsp;        related to user.
+&nbsp;         */
+<b class="nc">&nbsp;        UserNotificationInteractor db = new UserNotificationInteractor();</b>
+<b class="nc">&nbsp;        ArrayList&lt;UserNotification&gt; list = db.getNotificationByUserID(userID);</b>
+<b class="nc">&nbsp;        ArrayList&lt;UserNotification&gt; resolved = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        ArrayList&lt;UserNotification&gt; unresolved = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(UserNotification n: list){</b>
+<b class="nc">&nbsp;            if (n.getResolvedStatus()){</b>
+<b class="nc">&nbsp;                resolved.add(n);</b>
+&nbsp;            }
+&nbsp;            else{
+<b class="nc">&nbsp;                unresolved.add(n);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        UserNotification[] sortedResolved = UserNotification.sortByResolvedDate(resolved);</b>
+<b class="nc">&nbsp;        UserNotification[] sortedUnresolved = UserNotification.sortByCreatedDate(unresolved);</b>
+<b class="nc">&nbsp;        return new UserNotification[][]{sortedResolved, sortedUnresolved};</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String[] NotificationsToString(UserNotification[] notifications, int userID){
+&nbsp;        /*
+&nbsp;        Takes a array of UserNotifications and returns string representations of them, in an array.
+&nbsp;         */
+<b class="nc">&nbsp;        UserFileReader userFilerReader = UserFileReader.getInstance();</b>
+<b class="nc">&nbsp;        ShiftInteractor shiftInteractor = new ShiftInteractor();</b>
+<b class="nc">&nbsp;        User user = userFilerReader.getUser(userID);</b>
+<b class="nc">&nbsp;        ArrayList&lt;String&gt; noti = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(UserNotification n: notifications){</b>
+<b class="nc">&nbsp;            User recipient = userFilerReader.getUser(n.getRecipientId());</b>
+<b class="nc">&nbsp;            String recipientUserName = recipient.getFirstname()+ &quot; &quot; + recipient.getSurname();</b>
+<b class="nc">&nbsp;            User sender = userFilerReader.getUser(n.getSenderId());</b>
+<b class="nc">&nbsp;            String senderUserName = sender.getFirstname() + &quot; &quot; + sender.getSurname();</b>
+<b class="nc">&nbsp;            Shift shift = shiftInteractor.getShiftByID(n.getShiftId());</b>
+<b class="nc">&nbsp;            String item = &quot;&quot;;</b>
+<b class="nc">&nbsp;            if (n.getResolvedStatus() &amp;&amp; n.getDenyStatus()) {</b>
+<b class="nc">&nbsp;                if (user.getType().equals(&quot;HR&quot;)){</b>
+<b class="nc">&nbsp;                    item = recipientUserName + &quot; has denied &quot;+ senderUserName +&quot;&#39;s request for time off on your &quot; +shift.getDuration()+ &quot; hour shift on &quot; +  shift.getTime().getYear()+ &quot;-&quot; + shift.getTime().getMonthValue()+ &quot;-&quot; +shift.getTime().getDayOfMonth();</b>
+&nbsp;                }else {
+<b class="nc">&nbsp;                    item = recipientUserName + &quot; has denied your request for time off on your &quot; + shift.getDuration() + &quot; hour shift on &quot; + shift.getTime().getYear() + &quot;-&quot; + shift.getTime().getMonthValue() + &quot;-&quot; + shift.getTime().getDayOfMonth();</b>
+&nbsp;                }
+<b class="nc">&nbsp;                noti.add(item);</b>
+<b class="nc">&nbsp;            }else if(n.getResolvedStatus() &amp;&amp; !n.getDenyStatus()){</b>
+<b class="nc">&nbsp;                if(user.getType().equals(&quot;HR&quot;)){</b>
+<b class="nc">&nbsp;                    item = recipientUserName + &quot; has accepted &quot;+ senderUserName +&quot;&#39;s request for time off on your &quot; + shift.getDuration() + &quot; hour shift on &quot; + shift.getTime().getYear() + &quot;-&quot; + shift.getTime().getMonthValue() + &quot;-&quot; + shift.getTime().getDayOfMonth();</b>
+&nbsp;                }
+&nbsp;                else {
+<b class="nc">&nbsp;                    item = recipientUserName + &quot; has accepted your request for time off on your &quot; + shift.getDuration() + &quot; hour shift on &quot; + shift.getTime().getYear() + &quot;-&quot; + shift.getTime().getMonthValue() + &quot;-&quot; + shift.getTime().getDayOfMonth();</b>
+&nbsp;                }
+<b class="nc">&nbsp;                noti.add(item);</b>
+<b class="nc">&nbsp;            }else if(!n.getResolvedStatus()){</b>
+<b class="nc">&nbsp;                item = senderUserName + &quot; has requested time of on their &quot; +shift.getDuration()+ &quot; hour shift on &quot; +  shift.getTime().getYear()+ &quot;-&quot; + shift.getTime().getMonthValue()+ &quot;-&quot; +shift.getTime().getDayOfMonth();</b>
+<b class="nc">&nbsp;                noti.add(item);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        String[] stringNotifications = new String[noti.size()];</b>
+<b class="nc">&nbsp;        stringNotifications = noti.toArray(stringNotifications);</b>
+<b class="nc">&nbsp;        return stringNotifications;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public UserNotification notificationUpdater(String notification, boolean deny){
+&nbsp;        /*
+&nbsp;        Whichever notification string refers to is either resolved or denied, depending on boolean inputted.
+&nbsp;         */
+<b class="nc">&nbsp;        UserNotificationInteractor db = new UserNotificationInteractor();</b>
+<b class="nc">&nbsp;        for(int i = 0; i &lt; this.unresolved.length; i++){</b>
+<b class="nc">&nbsp;            if (notification.equalsIgnoreCase(this.unresolved[i])){</b>
+<b class="nc">&nbsp;                UserNotification item = this.notifications[1][i];</b>
+<b class="nc">&nbsp;                if (deny){</b>
+<b class="nc">&nbsp;                    item.deny();</b>
+<b class="nc">&nbsp;                    db.update(item);</b>
+<b class="nc">&nbsp;                    return item;</b>
+&nbsp;                }else{
+<b class="nc">&nbsp;                    item.resolve();</b>
+<b class="nc">&nbsp;                    db.update(item);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public UserNotification userNotificationFromString(String notification){
+&nbsp;        /*
+&nbsp;        Returns of UserNotification that this string refers to.
+&nbsp;         */
+<b class="nc">&nbsp;        for(int i = 0; i &lt; this.unresolved.length; i++){</b>
+<b class="nc">&nbsp;            if (notification.equalsIgnoreCase(this.unresolved[i])){</b>
+<b class="nc">&nbsp;                return this.notifications[1][i];</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

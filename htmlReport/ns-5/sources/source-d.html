@@ -1,0 +1,246 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > PaymentMaker</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: PaymentMaker (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PaymentMaker</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/47)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;// This file belongs to the UseCases package/Folder
+&nbsp;import Entities.Payment;
+&nbsp;import Entities.Shift;
+&nbsp;import Entities.User;
+&nbsp;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;// Above are all the imports for this file
+&nbsp;//Formatter used for this file that formats the current date into teh desired fromat
+&nbsp;//and store the year, the month and the day in separate variables to be used later.
+&nbsp;/**
+&nbsp; * The payment maker is used to make payments and it should be automatically ran
+&nbsp; * because it runs on system&#39;s time and date.
+&nbsp; */
+&nbsp;public class PaymentMaker{
+&nbsp;
+&nbsp;    public PaymentInteractor pi;
+&nbsp;    private ArrayList&lt;Payment&gt; paylist;
+&nbsp;
+&nbsp;    private ArrayList&lt;User&gt; userlist;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    private int employeeID;
+<b class="nc">&nbsp;    protected UserFileReader reader=UserFileReader.getInstance();</b>
+&nbsp;    private String employeeName;
+&nbsp;    private float payAmount;
+&nbsp;    private String empType;
+&nbsp;
+<b class="nc">&nbsp;    private LocalDateTime date= LocalDateTime.now();</b>
+&nbsp;
+<b class="nc">&nbsp;    ShiftInteractor si = new ShiftInteractor();</b>
+&nbsp;    private ArrayList&lt;Shift&gt; shifts;
+&nbsp;    private int id;
+&nbsp;    private boolean isTest;
+&nbsp;
+&nbsp;    private UserInteractor ui;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    static int numberOfPayments;
+&nbsp;
+&nbsp;
+&nbsp;    //Formatter used for this file that formats the current date into teh desired fromat
+&nbsp;    //and store the year, the month and the day in separate variables to be used later.
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The payment maker creates and instance of the payment interactor and stores
+&nbsp;     * the size of the payment list in a variable called numberOfpayments
+&nbsp;     * this version of the constructor will be used for regular used
+&nbsp;     * @param employeeId is the id of the employee
+&nbsp;     *
+&nbsp;     */
+<b class="nc">&nbsp;    public PaymentMaker(int employeeId){</b>
+<b class="nc">&nbsp;        reader = UserFileReader.getInstance();</b>
+<b class="nc">&nbsp;        ui = new UserInteractor();</b>
+<b class="nc">&nbsp;        si = new ShiftInteractor();</b>
+<b class="nc">&nbsp;        pi = new PaymentInteractor();</b>
+&nbsp;
+<b class="nc">&nbsp;        this.employeeID = employeeId;</b>
+<b class="nc">&nbsp;        PaymentInteractor pi = new PaymentInteractor();</b>
+<b class="nc">&nbsp;        numberOfPayments = pi.readData().size();</b>
+<b class="nc">&nbsp;        this.employeeName = reader.getFirstName(employeeId)+reader.getSurname(employeeId);</b>
+<b class="nc">&nbsp;        this.empType =reader.getType(employeeId);</b>
+<b class="nc">&nbsp;        this.id= numberOfPayments + 1;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (this.empType.equals(&quot;Salary Worker&quot;)){</b>
+<b class="nc">&nbsp;            this.payAmount = reader.getPay(employeeId)/12;</b>
+<b class="nc">&nbsp;        } else if (this.empType.equals(&quot;Wage Worker&quot;) ){</b>
+<b class="nc">&nbsp;            shifts=si.readData();</b>
+<b class="nc">&nbsp;            this.payAmount = WageWorkerPayment(employeeId,shifts);</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        isTest = false;//this constructor is not used for testing</b>
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *  This is the constructor that is modified so that it could be used for testing environment
+&nbsp;     * @param employeeID is the id of the employee
+&nbsp;     * @param test
+&nbsp;     */
+<b class="nc">&nbsp;    public PaymentMaker(int employeeID, String test){</b>
+&nbsp;
+<b class="nc">&nbsp;        reader = new UserFileReader(&quot;.&quot;);</b>
+<b class="nc">&nbsp;        ui = new UserInteractor(&quot;.&quot;);</b>
+<b class="nc">&nbsp;        si = new ShiftInteractor(&quot;.&quot;);</b>
+<b class="nc">&nbsp;        pi = new PaymentInteractor(&quot;.&quot;);</b>
+<b class="nc">&nbsp;        this.employeeID= this.employeeID;</b>
+<b class="nc">&nbsp;        numberOfPayments = pi.readData().size();</b>
+<b class="nc">&nbsp;        this.employeeName= reader.getFirstName(employeeID)+reader.getSurname(employeeID);</b>
+<b class="nc">&nbsp;        this.empType=reader.getType(employeeID);</b>
+<b class="nc">&nbsp;        this.id= numberOfPayments + 1;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (this.empType.equals(&quot;Salary Worker&quot;)){</b>
+<b class="nc">&nbsp;            this.payAmount= reader.getPay(employeeID)/12;</b>
+<b class="nc">&nbsp;        } else if (this.empType.equals(&quot;Wage Worker&quot;) ){</b>
+<b class="nc">&nbsp;            shifts=si.readData();</b>
+<b class="nc">&nbsp;            this.payAmount=WageWorkerPayment(employeeID,shifts);</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        isTest = true;//This version of the constructor is used for testing.</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *
+&nbsp;     * @param employeeID is the ID of the employee
+&nbsp;     * @param shiftArray is the  array of the shifts
+&nbsp;     * @return the payment of the shift worker
+&nbsp;     */
+&nbsp;    public  float WageWorkerPayment(int employeeID, ArrayList&lt;Shift&gt; shiftArray){
+&nbsp;
+&nbsp;        UserFileReader reader;
+<b class="nc">&nbsp;        if (isTest){</b>
+<b class="nc">&nbsp;            reader = new UserFileReader(&quot;.&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            reader = UserFileReader.getInstance();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        float hours=0;</b>
+<b class="nc">&nbsp;        for(int i = 0; i &lt;shiftArray.size();i++){</b>
+<b class="nc">&nbsp;            if (shiftArray.get(i).getCoworkers().contains(employeeID) ){</b>
+<b class="nc">&nbsp;                if (shiftArray.get(i).getTime().getYear()==date.getYear()) {</b>
+<b class="nc">&nbsp;                    if (shiftArray.get(i).getTime().getMonth()==date.getMonth()) {</b>
+<b class="nc">&nbsp;                        hours += shiftArray.get(i).getDuration();</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return hours * reader.getPay(employeeID);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public void makePayment(){
+<b class="nc">&nbsp;        pi.writeData(new Payment(this.employeeID,this.payAmount,this.date,this.id));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

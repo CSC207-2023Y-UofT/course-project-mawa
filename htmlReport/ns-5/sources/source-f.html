@@ -1,0 +1,225 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ShiftFileReader</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: ShiftFileReader (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShiftFileReader</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91.7%
+  </span>
+  <span class="absValue">
+    (11/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.7%
+  </span>
+  <span class="absValue">
+    (36/43)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;
+&nbsp;import Entities.Shift;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;public class ShiftFileReader{
+&nbsp;    private static ShiftFileReader instance;
+&nbsp;    private Shift shift;
+&nbsp;    private ShiftInteractor interactor;
+&nbsp;    private ArrayList&lt;Shift&gt; list;
+&nbsp;    /**
+&nbsp;     * The ShiftFileReader class provides methods to read shift records from a data source.
+&nbsp;     */
+<b class="fc">&nbsp;    private ShiftFileReader() {</b>
+<b class="fc">&nbsp;        shift = new Shift(LocalDateTime.now(), new ArrayList&lt;Integer&gt;(), (float)0, -11);</b>
+<b class="fc">&nbsp;        interactor = new ShiftInteractor();</b>
+<b class="fc">&nbsp;        list = interactor.readData();</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    protected ShiftFileReader(String isTest){</b>
+<b class="fc">&nbsp;        shift = new Shift(LocalDateTime.now(), new ArrayList&lt;Integer&gt;(), (float)0, -11);</b>
+<b class="fc">&nbsp;        interactor = new ShiftInteractor(&quot;test&quot;);</b>
+<b class="fc">&nbsp;        list = interactor.readData();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Get the singleton instance of ShiftFileReader.
+&nbsp;     *
+&nbsp;     * @return The instance of ShiftFileReader.
+&nbsp;     */
+&nbsp;    public static ShiftFileReader getInstance(){
+<b class="fc">&nbsp;        if (instance == null) {</b>
+<b class="fc">&nbsp;            instance = new ShiftFileReader();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return instance;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Update the list of shift records from the data source.
+&nbsp;     */
+&nbsp;    public void update() {
+<b class="fc">&nbsp;        list = interactor.readData();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Check if the specified shift ID matches the currently loaded shift record, and update if necessary.
+&nbsp;     *
+&nbsp;     * @param id The ID of the shift.
+&nbsp;     */
+&nbsp;    public void checkShift(int id){
+<b class="fc">&nbsp;        if (shift.getShiftId() == id){</b>
+&nbsp;            return;
+&nbsp;        }
+<b class="fc">&nbsp;        for (Shift s:list){</b>
+<b class="fc">&nbsp;            if(s.getShiftId() == id){</b>
+<b class="fc">&nbsp;                this.shift = s;</b>
+&nbsp;                return;
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Invalid Shift ID&quot;);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Get a list of shift IDs for shifts on the specified date.
+&nbsp;     *
+&nbsp;     * @param date The date for which to retrieve shift IDs.
+&nbsp;     * @return A list of shift IDs.
+&nbsp;     */
+&nbsp;    public ArrayList&lt;Integer&gt; getIds(LocalDate date){
+<b class="nc">&nbsp;        ArrayList&lt;Integer&gt; ids = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Shift s:list){</b>
+<b class="nc">&nbsp;            if (s.getTime().toLocalDate().isEqual(date)){</b>
+<b class="nc">&nbsp;                ids.add(s.getShiftId());</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ids;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Integer&gt; getIds(int empId){
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; ids = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Shift s:list){</b>
+<b class="fc">&nbsp;            if (s.getCoworkers().contains(empId)){</b>
+<b class="fc">&nbsp;                ids.add(s.getShiftId());</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return ids;</b>
+&nbsp;    }
+&nbsp;    public LocalDateTime getDate(int id){
+<b class="fc">&nbsp;        checkShift(id);</b>
+<b class="fc">&nbsp;        return shift.getTime();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Integer&gt; getCoworkers(int id){
+<b class="fc">&nbsp;        checkShift(id);</b>
+<b class="fc">&nbsp;        return (ArrayList&lt;Integer&gt;) shift.getCoworkers();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getDuration(int id){
+<b class="fc">&nbsp;        checkShift(id);</b>
+<b class="fc">&nbsp;        return shift.getDuration();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Get the Shift object for the specified shift ID.
+&nbsp;     *
+&nbsp;     * @param id The ID of the shift.
+&nbsp;     * @return The Shift object.
+&nbsp;     */
+&nbsp;    public Shift getShift(int id){
+<b class="fc">&nbsp;        checkShift(id);</b>
+<b class="fc">&nbsp;        return shift;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Integer&gt; getIds(){
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; ids = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Shift u:list){</b>
+<b class="fc">&nbsp;            ids.add(u.getShiftId());</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return ids;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

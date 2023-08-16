@@ -1,0 +1,254 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserFileReader</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: UserFileReader (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserFileReader</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    45%
+  </span>
+  <span class="absValue">
+    (9/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    55%
+  </span>
+  <span class="absValue">
+    (33/60)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;
+&nbsp;import Entities.User;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.*;
+&nbsp;/**
+&nbsp; * The UserFileReader class provides methods to read user records from a data source.
+&nbsp; */
+&nbsp;public class UserFileReader{
+&nbsp;    private User user;
+&nbsp;    private static UserFileReader instance;
+&nbsp;    private UserInteractor interactor;
+&nbsp;    private ArrayList&lt;User&gt; list;
+&nbsp;
+<b class="fc">&nbsp;    private UserFileReader(){</b>
+<b class="fc">&nbsp;        user = new User(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, -10,</b>
+<b class="fc">&nbsp;                0, &quot;9999-12-31&quot;, new char[]{&quot;q&quot;.charAt(0)}, UserTypeConstants.SALARY_WORKER, -111);</b>
+<b class="fc">&nbsp;        interactor = new UserInteractor();</b>
+<b class="fc">&nbsp;        list = interactor.readData();</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public UserFileReader(String forTest){</b>
+<b class="fc">&nbsp;        user = new User(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, -10,</b>
+<b class="fc">&nbsp;                0, &quot;9999-12-31&quot;, new char[]{&quot;q&quot;.charAt(0)}, UserTypeConstants.SALARY_WORKER, -111);</b>
+<b class="fc">&nbsp;        interactor = new UserInteractor(&quot;test&quot;);</b>
+<b class="fc">&nbsp;        list = interactor.readData();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Get the singleton instance of UserFileReader.
+&nbsp;     *
+&nbsp;     * @return The instance of UserFileReader.
+&nbsp;     */
+&nbsp;    public static UserFileReader getInstance() {
+<b class="fc">&nbsp;        if (instance == null) {</b>
+<b class="fc">&nbsp;            instance = new UserFileReader();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return instance;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Check if the specified user ID matches the currently loaded user record, and update if necessary.
+&nbsp;     *
+&nbsp;     * @param id The ID of the user.
+&nbsp;     */
+&nbsp;    public void checkUser(int id){
+<b class="fc">&nbsp;        if (user.getUserNum() == id){</b>
+&nbsp;            return;
+&nbsp;        }
+<b class="fc">&nbsp;        for (User u:list){</b>
+<b class="fc">&nbsp;            if(u.getUserNum() == id){</b>
+<b class="fc">&nbsp;                this.user = u;</b>
+&nbsp;                return;
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Invalid User Number&quot;);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Update the list of user records from the data source.
+&nbsp;     */
+&nbsp;    public void update(){
+<b class="fc">&nbsp;        list = interactor.readData();</b>
+&nbsp;    }
+&nbsp;    public int getHRId(){
+<b class="nc">&nbsp;        for (User u:list){</b>
+<b class="nc">&nbsp;            if(u.getType().equals(UserTypeConstants.HR)){ //only one HR account</b>
+<b class="nc">&nbsp;                return u.getUserNum();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return -9;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Integer&gt; getIds(boolean active){
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; ids = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (User u:list){</b>
+<b class="fc">&nbsp;            if (u.isActive() == active){</b>
+<b class="fc">&nbsp;                ids.add(u.getUserNum());</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return ids;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getType(int id){
+<b class="fc">&nbsp;        checkUser(id);</b>
+<b class="fc">&nbsp;        return user.getType();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getActive(int id){
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.isActive();</b>
+&nbsp;    }
+&nbsp;    public float getPay(int id){
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.getPay();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getRole(int id){
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.getRole();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getSurname(int id){
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.getSurname();</b>
+&nbsp;    }
+&nbsp;    public String getFirstName(int id){
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.getFirstname();</b>
+&nbsp;    }
+&nbsp;    public LocalDate getDob(int id){
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.getDob();</b>
+&nbsp;    }
+&nbsp;    public String getGender(int id){
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.getGender();</b>
+&nbsp;    }
+&nbsp;    public long getPhoneNumber(int id){
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.getPhoneNum();</b>
+&nbsp;    }
+&nbsp;    public String getEmail(int id){
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.getEmail();</b>
+&nbsp;    }
+&nbsp;    public char[] getPassword(int id) {
+<b class="nc">&nbsp;        checkUser(id);</b>
+<b class="nc">&nbsp;        return user.getPassword();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Integer&gt; getIds(){
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; ids = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (User u:list){</b>
+<b class="fc">&nbsp;            ids.add(u.getUserNum());</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return ids;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Get the User object for the specified user ID.
+&nbsp;     *
+&nbsp;     * @param id The ID of the user.
+&nbsp;     * @return The User object.
+&nbsp;     */
+&nbsp;    public User getUser(int id){
+<b class="fc">&nbsp;        checkUser(id);</b>
+<b class="fc">&nbsp;        return user;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

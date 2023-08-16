@@ -1,0 +1,142 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LoginValidator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: LoginValidator (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginValidator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (12/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;/**
+&nbsp; * The LoginValidator class validates user credentials during the login process.
+&nbsp; */
+<b class="fc">&nbsp;public class LoginValidator {</b>
+<b class="fc">&nbsp;    public UserFileReader empDB = UserFileReader.getInstance();</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Validates the provided employee ID and password.
+&nbsp;     *
+&nbsp;     * @param empID The employee ID to validate.
+&nbsp;     * @param pwd   The password to validate as a character array (safer than a String).
+&nbsp;     * @return The employee ID if credentials are valid, or -1 if invalid.
+&nbsp;     */
+&nbsp;    public int validateCredentials(int empID, char[] pwd){
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; allActiveUsers = empDB.getIds(true);</b>
+<b class="fc">&nbsp;        for (int u : allActiveUsers){</b>
+<b class="fc">&nbsp;            if (u == empID){</b>
+<b class="fc">&nbsp;                if(empDB.getPassword(u).length == pwd.length){</b>
+<b class="fc">&nbsp;                    boolean equal_pwd = true;</b>
+<b class="fc">&nbsp;                    for (int i = 0; i &lt; pwd.length; i ++){</b>
+<b class="fc">&nbsp;                        if (empDB.getPassword(u)[i] != pwd[i]){</b>
+<b class="nc">&nbsp;                            equal_pwd = false;</b>
+&nbsp;                        }
+&nbsp;                    }
+<b class="fc">&nbsp;                    if (equal_pwd){</b>
+<b class="fc">&nbsp;                        return u;</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="fc">&nbsp;                return -1;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return -1;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

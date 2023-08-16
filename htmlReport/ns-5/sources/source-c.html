@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > PaymentInteractor</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: PaymentInteractor (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PaymentInteractor</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.1%
+  </span>
+  <span class="absValue">
+    (27/31)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;
+&nbsp;import Entities.*;
+&nbsp;import java.io.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;/**
+&nbsp; * The PaymentInteractor class handles reading, writing, and updating payment-related data.
+<b class="fc">&nbsp; * It implements the Interactor interface for payment objects.</b>
+<b class="fc">&nbsp; */</b>
+&nbsp;public class PaymentInteractor implements Interactor&lt;Payment&gt; {
+&nbsp;    private String fileName; // Stores the name of the payment data file.
+&nbsp;
+<b class="fc">&nbsp;</b>
+&nbsp;    /**
+&nbsp;     * Default constructor that initializes the PaymentInteractor with the default payment data file name.
+<b class="fc">&nbsp;     */</b>
+<b class="fc">&nbsp;    public PaymentInteractor() {</b>
+<b class="fc">&nbsp;        this.fileName = FileNameConstants.PAYMENT_FILE_NAME;</b>
+&nbsp;    }
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;    /**</b>
+<b class="fc">&nbsp;     * Constructor that specifies the file name to be that of testing data.</b>
+<b class="fc">&nbsp;     *</b>
+&nbsp;     * @param isTest A string identifier indicating the use of a test payment data file.
+&nbsp;     */
+&nbsp;    public PaymentInteractor(String isTest) {
+&nbsp;        this.fileName = &quot;testPayments.ser&quot;;
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;</b>
+&nbsp;
+<b class="fc">&nbsp;    /**</b>
+<b class="fc">&nbsp;     * Reads payment data from the payment data file.</b>
+<b class="fc">&nbsp;     *</b>
+<b class="fc">&nbsp;     * @return An ArrayList of Payment objects read from the file.</b>
+<b class="fc">&nbsp;     */</b>
+<b class="nc">&nbsp;    public ArrayList&lt;Payment&gt; readData() {</b>
+<b class="nc">&nbsp;        ArrayList&lt;Payment&gt; payList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;</b>
+&nbsp;        try {
+&nbsp;            FileInputStream file = new FileInputStream(fileName);
+&nbsp;            ObjectInputStream input = new ObjectInputStream(file);
+&nbsp;            payList.addAll((ArrayList&lt;Payment&gt;) input.readObject());
+&nbsp;
+<b class="fc">&nbsp;        } catch (IOException | ClassNotFoundException e) {</b>
+<b class="fc">&nbsp;            System.out.println(e);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;        return payList;
+<b class="fc">&nbsp;    }</b>
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;    /**</b>
+<b class="fc">&nbsp;     * Writes a new payment object to the payment data file.</b>
+<b class="fc">&nbsp;     *</b>
+<b class="nc">&nbsp;     * @param payment The Payment object to be written to the file.</b>
+<b class="nc">&nbsp;     */</b>
+<b class="fc">&nbsp;    public void writeData(Payment payment) {</b>
+&nbsp;        ArrayList&lt;Payment&gt; paymentList = this.readData();
+&nbsp;
+&nbsp;        paymentList.add(payment);
+&nbsp;
+&nbsp;        try{
+&nbsp;
+&nbsp;            FileOutputStream file = new FileOutputStream(fileName);
+&nbsp;            ObjectOutputStream output = new ObjectOutputStream(file);
+&nbsp;            output.writeObject(paymentList);
+&nbsp;            output.close();
+&nbsp;            PaymentFileReader.getInstance().update();
+&nbsp;        } catch (IOException e) {
+&nbsp;            System.out.println(e);
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Updates an existing payment object in the payment data file.
+&nbsp;     *
+&nbsp;     * @param p The updated Payment object.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void update(Payment p) {
+&nbsp;        ArrayList&lt;Payment&gt; paymentList = this.readData();
+&nbsp;
+&nbsp;        // Remove the existing payment with the same paymentId
+&nbsp;        paymentList.removeIf(payment -&gt; p.getPaymentId() == payment.getPaymentId());
+&nbsp;        paymentList.add(p);
+&nbsp;
+&nbsp;        try {
+&nbsp;            FileOutputStream file = new FileOutputStream(fileName);
+&nbsp;            ObjectOutputStream output = new ObjectOutputStream(file);
+&nbsp;            output.writeObject(paymentList);
+&nbsp;            output.close();
+&nbsp;            PaymentFileReader.getInstance().update();
+&nbsp;        } catch (IOException e) {
+&nbsp;            System.out.println(e);
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

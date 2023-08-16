@@ -49,7 +49,8 @@ As well, even though we have many GUI classes, they don't have much testable log
 so we focused our testing efforts in the lower three layers.\
 JavaDoc is sparse in our testing modules because we have designed the tests to be quite simple (as aided by CA) and adequately explained by
 their method names.
-Our testing coverage is ________________
+Our testing coverage is:
+![img.png](img.png)
 
 
 ## Software Design

@@ -1,0 +1,182 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserFactory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: UserFactory (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserFactory</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;
+&nbsp;import Entities.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * The UserFactory class facilitates the creation of new user accounts.
+&nbsp; * It manages the creation of user objects by interacting with UserInteractor.
+&nbsp; */
+&nbsp;public class UserFactory {
+&nbsp;
+&nbsp;    private int numUsers; // Keeps track of the total number of users.
+&nbsp;
+&nbsp;    private boolean isTest; // Indicates if the application is in a test environment.
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Default constructor that initializes the UserFactory for non-test usage.
+&nbsp;     * It sets the initial value of numUsers based on existing user data.
+&nbsp;     */
+<b class="nc">&nbsp;    public UserFactory() {</b>
+<b class="nc">&nbsp;        UserInteractor ui = new UserInteractor();</b>
+<b class="nc">&nbsp;        numUsers = ui.readData().size();</b>
+<b class="nc">&nbsp;        isTest = false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor that allows specifying a test environment.
+&nbsp;     * It sets the initial value of numUsers based on existing user data in the test environment.
+&nbsp;     *
+&nbsp;     * @param test A string identifier indicating the use of a test environment.
+&nbsp;     */
+<b class="nc">&nbsp;    public UserFactory(String test) {</b>
+<b class="nc">&nbsp;        UserInteractor ui = new UserInteractor(test);</b>
+<b class="nc">&nbsp;        numUsers = ui.readData().size();</b>
+<b class="nc">&nbsp;        isTest = true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a new user account.
+&nbsp;     *
+&nbsp;     * @param surname     The user&#39;s last name.
+&nbsp;     * @param firstname   The user&#39;s first name.
+&nbsp;     * @param gender      The user&#39;s gender.
+&nbsp;     * @param birthYear   The user&#39;s birth year.
+&nbsp;     * @param birthMonth  The user&#39;s birth month.
+&nbsp;     * @param birthDate   The user&#39;s birth date.
+&nbsp;     * @param phoneNumber The user&#39;s phone number.
+&nbsp;     * @param email       The user&#39;s email address.
+&nbsp;     * @param role        The user&#39;s role (e.g., employee, manager).
+&nbsp;     * @param type        The type of user (e.g., HR, regular user).
+&nbsp;     * @param password    The user&#39;s password.
+&nbsp;     * @param pay         The user&#39;s pay (applicable for certain roles).
+&nbsp;     */
+&nbsp;    public void makeUser(String surname, String firstname, String gender, String birthYear, String birthMonth,
+&nbsp;                         String birthDate, long phoneNumber, String email, String role, String type, String password,
+&nbsp;                         float pay) {
+<b class="nc">&nbsp;        String bday = birthYear + &quot;-&quot; + birthMonth + &quot;-&quot; + birthDate;</b>
+&nbsp;        UserInteractor uInt;
+&nbsp;
+&nbsp;        // Initialize UserInteractor based on the test environment
+<b class="nc">&nbsp;        if (isTest) {</b>
+<b class="nc">&nbsp;            uInt = new UserInteractor(&quot;w&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            uInt = new UserInteractor();</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Convert password to character array
+<b class="nc">&nbsp;        char[] p = new char[password.length()];</b>
+<b class="nc">&nbsp;        for (int i = 0; i &lt; password.length(); i++) {</b>
+<b class="nc">&nbsp;            p[i] = password.charAt(i);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Create and write the new user object
+<b class="nc">&nbsp;        uInt.writeData(new User(surname, firstname, gender, email, role, numUsers + 1, phoneNumber, bday, p, type, pay));</b>
+<b class="nc">&nbsp;        numUsers += 1; // Increment the total number of users</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public int getNumUsers(){return this.numUsers;}</b>
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

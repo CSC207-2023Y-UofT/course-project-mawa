@@ -1,0 +1,222 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > User</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Entities</a>
+</div>
+
+<h1>Coverage Summary for Class: User (Entities)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">User</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.8%
+  </span>
+  <span class="absValue">
+    (1/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    39.4%
+  </span>
+  <span class="absValue">
+    (13/33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Entities;
+&nbsp;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.time.LocalDate;
+&nbsp;/**
+&nbsp; * The User class represents a user (employee or HR) in the system.
+&nbsp; */
+&nbsp;public class User implements Serializable {
+&nbsp;    private int userNum;
+&nbsp;    private long phoneNum;
+&nbsp;    private String surname, firstname, gender, email;
+&nbsp;    private boolean active;
+&nbsp;    LocalDate dob;//format should be &quot;YYYY-MM-dd&quot; as a String
+&nbsp;    private char[] password;
+&nbsp;    private String type;
+&nbsp;
+&nbsp;    private String role;
+&nbsp;    private float pay;
+&nbsp;    /**
+&nbsp;     * Constructs a User instance with the specified parameters.
+&nbsp;     *
+&nbsp;     * @param surname    The surname of the user.
+&nbsp;     * @param firstname  The first name of the user.
+&nbsp;     * @param gender     The gender of the user.
+&nbsp;     * @param email      The email address of the user.
+&nbsp;     * @param roleName   The role name of the user.
+&nbsp;     * @param uNum       The unique user number.
+&nbsp;     * @param phoneNum   The phone number of the user.
+&nbsp;     * @param dob        The date of birth of the user in &quot;YYYY-MM-dd&quot; format.
+&nbsp;     * @param password   The password of the user.
+&nbsp;     * @param type       The type of user (e.g., HR, Salary Worker, etc.).
+&nbsp;     * @param pay        The pay rate of the user.
+&nbsp;     */
+&nbsp;    public User(String surname, String firstname, String gender, String email,
+&nbsp;
+&nbsp;                String roleName, int uNum, long phoneNum, String dob, char[] password,
+<b class="fc">&nbsp;                String type, float pay){</b>
+&nbsp;
+<b class="fc">&nbsp;        this.userNum = uNum;</b>
+<b class="fc">&nbsp;        this.phoneNum = phoneNum;</b>
+<b class="fc">&nbsp;        this.surname = surname;</b>
+<b class="fc">&nbsp;        this.firstname = firstname;</b>
+<b class="fc">&nbsp;        this.gender = gender;</b>
+<b class="fc">&nbsp;        this.email = email;</b>
+<b class="fc">&nbsp;        this.dob = LocalDate.parse(dob);</b>
+<b class="fc">&nbsp;        this.active = true;</b>
+<b class="fc">&nbsp;        this.password = password;</b>
+<b class="fc">&nbsp;        this.type = type;</b>
+<b class="fc">&nbsp;        this.pay = pay;</b>
+<b class="fc">&nbsp;        this.role = roleName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    public String getEmail(){return email;}</b>
+<b class="nc">&nbsp;    public String getSurname(){return surname;}</b>
+&nbsp;
+<b class="nc">&nbsp;    public String getFirstname(){return firstname;}</b>
+&nbsp;    public int getUserNum(){
+<b class="nc">&nbsp;        return userNum;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public long getPhoneNum(){
+<b class="nc">&nbsp;        return phoneNum;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPhoneNum(long pn){
+<b class="nc">&nbsp;        this.phoneNum = pn;</b>
+&nbsp;    }
+&nbsp;    public String[] getEmployeeName(){
+<b class="nc">&nbsp;        return new String[]{surname, firstname};</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getGender(){
+<b class="nc">&nbsp;        return gender;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setGender(String g){
+<b class="nc">&nbsp;        this.gender = g;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEmail(String email){
+<b class="nc">&nbsp;        this.email = email;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public String getRole() {return this.role;}</b>
+&nbsp;
+&nbsp;    public LocalDate getDob(){
+<b class="nc">&nbsp;        return dob;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPay(float pay){
+<b class="nc">&nbsp;        this.pay = pay;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getPay(){
+<b class="nc">&nbsp;        return this.pay;</b>
+&nbsp;    }
+&nbsp;    public boolean isActive(){
+<b class="nc">&nbsp;        return active;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setActive(boolean active){
+<b class="nc">&nbsp;        this.active = active;</b>
+&nbsp;    }
+&nbsp;    public char[] getPassword(){
+<b class="nc">&nbsp;        return password;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPassword(char[] pwd){
+<b class="nc">&nbsp;        password = pwd;</b>
+&nbsp;    }
+&nbsp;    public String getType(){
+<b class="nc">&nbsp;        return this.type;</b>
+&nbsp;    }
+&nbsp;    @Override
+&nbsp;    public String toString(){
+<b class="nc">&nbsp;        return firstname + &quot; &quot; + surname;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

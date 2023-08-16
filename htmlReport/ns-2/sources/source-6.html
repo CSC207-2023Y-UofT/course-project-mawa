@@ -1,0 +1,208 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserNotification</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Entities</a>
+</div>
+
+<h1>Coverage Summary for Class: UserNotification (Entities)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserNotification</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    35.7%
+  </span>
+  <span class="absValue">
+    (5/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    56.8%
+  </span>
+  <span class="absValue">
+    (25/44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Entities;
+&nbsp;
+&nbsp;import UseCases.UserNotificationInteractor;
+&nbsp;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;
+&nbsp;public class UserNotification implements Serializable {
+&nbsp;    private final int notifId;
+&nbsp;    private final String message;
+&nbsp;    private final int senderId;
+&nbsp;    private final int recipientId;
+&nbsp;    private final int shiftId;
+&nbsp;    private final LocalDateTime date;
+&nbsp;    private Boolean resolved;
+<b class="fc">&nbsp;    private Boolean denied = false;</b>
+&nbsp;    private LocalDateTime resolvedAt;
+&nbsp;
+<b class="fc">&nbsp;    public UserNotification(int senderId, int recipientId, int shiftId, String message, LocalDateTime date){</b>
+<b class="fc">&nbsp;        this.message = message;</b>
+<b class="fc">&nbsp;        this.senderId = senderId;</b>
+<b class="fc">&nbsp;        this.recipientId = recipientId;</b>
+<b class="fc">&nbsp;        this.shiftId = shiftId;</b>
+<b class="fc">&nbsp;        this.date = date;</b>
+<b class="fc">&nbsp;        this.resolved = false;</b>
+<b class="fc">&nbsp;        UserNotificationInteractor ndb = new UserNotificationInteractor();</b>
+<b class="fc">&nbsp;        ArrayList&lt;UserNotification&gt; l = ndb.readData();</b>
+<b class="fc">&nbsp;        this.notifId = l.size() + 1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void resolve(){
+<b class="fc">&nbsp;        this.resolved = true; this.resolvedAt = LocalDateTime.now();</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    public int getNotifId(){
+<b class="nc">&nbsp;        return this.notifId;</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    public String getMessage(){
+<b class="nc">&nbsp;        return this.message;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getSenderId(){
+<b class="nc">&nbsp;        return this.senderId;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getShiftId(){
+<b class="nc">&nbsp;        return this.shiftId;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getRecipientId(){
+<b class="nc">&nbsp;        return this.recipientId;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public LocalDateTime getDate(){
+<b class="fc">&nbsp;        return this.date;</b>
+&nbsp;    }
+<b class="nc">&nbsp;    public boolean getResolvedStatus() {return this.resolved;}</b>
+<b class="nc">&nbsp;    public boolean getDenyStatus(){return this.denied;}</b>
+<b class="fc">&nbsp;    public LocalDateTime getResolvedAt(){return this.resolvedAt;}</b>
+<b class="nc">&nbsp;    public void deny(){this.denied = true; this.resolve();}</b>
+&nbsp;
+&nbsp;
+&nbsp;    public static UserNotification[] sortByCreatedDate(ArrayList&lt;UserNotification&gt; notifications){
+&nbsp;        /*
+&nbsp;        Sorts ArrayList&lt;UserNotification&gt; in decreasing order of created dates. Returns sorted UserNotification[].
+&nbsp;        Latest created UserNotification Will always be on the zeroth index.
+&nbsp;         */
+<b class="fc">&nbsp;        UserNotification[] sorted = new UserNotification[notifications.size()];</b>
+<b class="fc">&nbsp;        sorted = notifications.toArray(sorted);</b>
+<b class="fc">&nbsp;        int n = sorted.length;</b>
+<b class="fc">&nbsp;        for (int i = 1; i &lt; n; i++){</b>
+<b class="fc">&nbsp;            UserNotification item = sorted[i];</b>
+<b class="fc">&nbsp;            int j = i-1;</b>
+<b class="fc">&nbsp;            while(j &gt;= 0 &amp;&amp; sorted[j].getDate().isBefore(item.getDate())){</b>
+<b class="fc">&nbsp;                sorted[j+1] = sorted[j];</b>
+<b class="fc">&nbsp;                j -= 1;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            sorted[j+1] = item;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return sorted;</b>
+&nbsp;    }
+&nbsp;    public static UserNotification[] sortByResolvedDate(ArrayList&lt;UserNotification&gt; notifications){
+&nbsp;        /*
+&nbsp;        Sorts ArrayList&lt;UserNotification&gt; in decreasing order of resolved dates. Returns sorted UserNotification[].
+&nbsp;        Latest resolved UserNotification Will always be on the zeroth index.
+&nbsp;         */
+<b class="nc">&nbsp;        UserNotification[] sorted = new UserNotification[notifications.size()];</b>
+<b class="nc">&nbsp;        sorted = notifications.toArray(sorted);</b>
+<b class="nc">&nbsp;        int n = sorted.length;</b>
+<b class="nc">&nbsp;        for (int i = 1; i &lt; n; i++){</b>
+<b class="nc">&nbsp;            UserNotification item = sorted[i];</b>
+<b class="nc">&nbsp;            int j = i-1;</b>
+<b class="nc">&nbsp;            while(j &gt;= 0 &amp;&amp; sorted[j].getResolvedAt().isBefore(item.getResolvedAt())){</b>
+<b class="nc">&nbsp;                sorted[j+1] = sorted[j];</b>
+<b class="nc">&nbsp;                j -= 1;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            sorted[j+1] = item;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return sorted;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

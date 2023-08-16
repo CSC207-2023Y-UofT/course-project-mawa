@@ -1,0 +1,135 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ShiftSorter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: ShiftSorter (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShiftSorter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collections;
+&nbsp;
+&nbsp;import Entities.*;
+&nbsp;/**
+&nbsp; * The ShiftSorter class provides methods for sorting shifts based on different criteria (theoretically).
+&nbsp; */
+<b class="fc">&nbsp;public class ShiftSorter implements Sorter&lt;Shift&gt; {</b>
+&nbsp;
+<b class="fc">&nbsp;    public ShiftFileReader reader = ShiftFileReader.getInstance();;</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sorts shifts by date in ascending order.
+&nbsp;     *
+&nbsp;     * @param shifts The list of shift IDs to be sorted.
+&nbsp;     * @return The sorted list of shift IDs.
+&nbsp;     */
+&nbsp;    public ArrayList&lt;Integer&gt; sortShiftsByDate(ArrayList&lt;Integer&gt; shifts){
+<b class="fc">&nbsp;        ArrayList&lt;Shift&gt; shiftObj = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (int i:shifts){</b>
+<b class="fc">&nbsp;            shiftObj.add(reader.getShift(i));</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        Collections.sort(shiftObj, new SortShiftByDate());</b>
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; sorted = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Shift s:shiftObj){</b>
+<b class="fc">&nbsp;            sorted.add(s.getShiftId());</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return sorted;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,216 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ShiftInteractor</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: ShiftInteractor (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShiftInteractor</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    73%
+  </span>
+  <span class="absValue">
+    (27/37)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;
+&nbsp;
+&nbsp;import Entities.*;
+&nbsp;import java.io.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;/**
+&nbsp; * The ShiftInteractor class manages reading, writing, updating, and retrieving shift data.
+&nbsp; * It implements the Interactor interface for shift objects.
+<b class="fc">&nbsp; */</b>
+<b class="fc">&nbsp;public class ShiftInteractor implements Interactor&lt;Shift&gt; {</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    private String fileName; // Stores the name of the shift data file.</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    /**</b>
+<b class="fc">&nbsp;     * Default constructor that initializes the ShiftInteractor with the default shift data file name.</b>
+<b class="fc">&nbsp;     */</b>
+&nbsp;    public ShiftInteractor() {
+<b class="fc">&nbsp;        this.fileName = FileNameConstants.SHIFT_FILE_NAME;</b>
+<b class="fc">&nbsp;    }</b>
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;</b>
+&nbsp;    /**
+&nbsp;     * Constructor that specifies the file name to be that of testing data.
+&nbsp;     *
+&nbsp;     * @param isTest A string identifier indicating the use of a test shift data file.
+<b class="nc">&nbsp;     */</b>
+<b class="nc">&nbsp;    public ShiftInteractor(String isTest) {</b>
+<b class="nc">&nbsp;        this.fileName = &quot;testShifts.ser&quot;;</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+<b class="nc">&nbsp;    /**</b>
+<b class="nc">&nbsp;     * Reads shift data from the shift data file.</b>
+&nbsp;     *
+&nbsp;     * @return An ArrayList of Shift objects read from the file.
+&nbsp;     */
+<b class="fc">&nbsp;    public ArrayList&lt;Shift&gt; readData() {</b>
+<b class="fc">&nbsp;        ArrayList&lt;Shift&gt; shiftList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;</b>
+&nbsp;        try {
+<b class="fc">&nbsp;            FileInputStream file = new FileInputStream(fileName);</b>
+<b class="fc">&nbsp;            ObjectInputStream input = new ObjectInputStream(file);</b>
+<b class="fc">&nbsp;            shiftList.addAll((ArrayList&lt;Shift&gt;) input.readObject());</b>
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;        } catch (IOException | ClassNotFoundException e) {</b>
+<b class="nc">&nbsp;            System.out.println(e);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return shiftList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a shift by its unique shift ID.
+&nbsp;     *
+<b class="fc">&nbsp;     * @param shiftID The ID of the shift to retrieve.</b>
+<b class="fc">&nbsp;     * @return The Shift object corresponding to the given shift ID, or null if not found.</b>
+&nbsp;     */
+<b class="fc">&nbsp;    public Shift getShiftByID(int shiftID) {</b>
+<b class="fc">&nbsp;        ArrayList&lt;Shift&gt; shifts = this.readData();</b>
+<b class="fc">&nbsp;        for (Shift shift : shifts) {</b>
+<b class="fc">&nbsp;            if (shift.getShiftId() == shiftID) {</b>
+<b class="fc">&nbsp;                return shift;</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Updates an existing shift in the shift data file.
+&nbsp;     *
+&nbsp;     * @param s The updated Shift object.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void update(Shift s) {
+&nbsp;        ArrayList&lt;Shift&gt; shifts = this.readData();
+&nbsp;        shifts.removeIf(shift -&gt; s.getShiftId() == shift.getShiftId());
+&nbsp;        shifts.add(s);
+&nbsp;
+&nbsp;        try{
+&nbsp;
+&nbsp;            FileOutputStream file = new FileOutputStream(fileName);
+&nbsp;            ObjectOutputStream output = new ObjectOutputStream(file);
+&nbsp;            output.writeObject(shifts);
+&nbsp;            output.close();
+&nbsp;            ShiftFileReader.getInstance().update();
+&nbsp;        } catch (IOException e) {
+&nbsp;            System.out.println(e);
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Writes a new shift object to the shift data file.
+&nbsp;     *
+&nbsp;     * @param shift The Shift object to be written to the file.
+&nbsp;     */
+&nbsp;    public void writeData(Shift shift) {
+&nbsp;        ArrayList&lt;Shift&gt; shiftList = this.readData();
+&nbsp;        shiftList.add(shift);
+&nbsp;
+&nbsp;       try{
+&nbsp;           FileOutputStream file = new FileOutputStream(fileName);
+&nbsp;           ObjectOutputStream output = new ObjectOutputStream(file);
+&nbsp;           output.writeObject(shiftList);
+&nbsp;           output.close();
+&nbsp;           ShiftFileReader.getInstance().update();
+&nbsp;       } catch (IOException e){
+&nbsp;           System.out.println(e);
+&nbsp;       }
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > PaymentMakerNew</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">UseCases</a>
+</div>
+
+<h1>Coverage Summary for Class: PaymentMakerNew (UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PaymentMakerNew</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package UseCases;// This file belongs to the UseCases package/Folder
+&nbsp;import Entities.Payment;
+&nbsp;import Entities.Shift;
+&nbsp;import Entities.User;
+&nbsp;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.time.format.DateTimeFormatter;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Date;
+&nbsp;
+&nbsp;// Above are all the imports for this file
+&nbsp;
+&nbsp;/**
+&nbsp; * The payment maker is used to make payments and it should be automatically ran
+&nbsp; * because it runs on system&#39;s time and date.
+&nbsp; */
+&nbsp;public class PaymentMakerNew{
+&nbsp;
+&nbsp;    private ArrayList&lt;Payment&gt; paylist;
+&nbsp;
+&nbsp;    private ArrayList&lt;User&gt; userlist;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    private int employee_id;
+<b class="nc">&nbsp;    private UserFileReader reader=UserFileReader.getInstance();</b>
+&nbsp;    private String employee_name;
+&nbsp;    private float pay_amount;
+&nbsp;    private String emp_type;
+&nbsp;
+<b class="nc">&nbsp;    private LocalDateTime date= LocalDateTime.now();</b>
+&nbsp;
+&nbsp;    private PaymentInteractor p;
+&nbsp;
+<b class="nc">&nbsp;    private ShiftInteractor si = new ShiftInteractor();</b>
+<b class="nc">&nbsp;    private PaymentInteractor pi = new PaymentInteractor();</b>
+&nbsp;    private ArrayList&lt;Shift&gt; shifts;
+&nbsp;    private int id;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    static int numberOfPayments;
+&nbsp;
+&nbsp;
+&nbsp;    //Formatter used for this file that formats the current date into teh desired fromat
+&nbsp;    //and store the year, the month and the day in separate variables to be used later.
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The payment maker creates and instance of the payment interactor and stores
+&nbsp;     * the size of the payment list in a variable called numberOfpayments
+&nbsp;     */
+<b class="nc">&nbsp;    public PaymentMakerNew(int employee_id,int id){</b>
+&nbsp;
+<b class="nc">&nbsp;        this.employee_id=employee_id;</b>
+<b class="nc">&nbsp;        numberOfPayments = p.readData().size();</b>
+<b class="nc">&nbsp;        this.employee_name= reader.getFirstName(employee_id)+reader.getSurname(employee_id);</b>
+<b class="nc">&nbsp;        this.emp_type=reader.getType(employee_id);</b>
+<b class="nc">&nbsp;        this.id= id;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (this.emp_type.equals(&quot;Salary Worker&quot;)){</b>
+<b class="nc">&nbsp;            this.pay_amount= reader.getPay(employee_id)/12;</b>
+<b class="nc">&nbsp;        } else if (this.emp_type.equals(&quot;Wage Worker&quot;) ){</b>
+<b class="nc">&nbsp;            shifts=si.readData();</b>
+<b class="nc">&nbsp;            this.pay_amount=WageWorker_Payment(employee_id,shifts);</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        pi.writeData(new Payment(this.employee_id,this.pay_amount,this.date,this.id));</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;    public  float WageWorker_Payment(int employee_id, ArrayList&lt;Shift&gt; shiftArray){
+<b class="nc">&nbsp;        float hours=0;</b>
+<b class="nc">&nbsp;        for(int i = 0; i &lt;shiftArray.size();i++){</b>
+<b class="nc">&nbsp;            if (shiftArray.get(i).getCoworkers().contains(employee_id) ){</b>
+<b class="nc">&nbsp;                if (shiftArray.get(i).getTime().getYear()==date.getYear()) {</b>
+<b class="nc">&nbsp;                    if (shiftArray.get(i).getTime().getMonth()==date.getMonth()) {</b>
+<b class="nc">&nbsp;                        hours += shiftArray.get(i).getDuration();</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return hours;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

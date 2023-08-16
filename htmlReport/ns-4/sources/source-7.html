@@ -1,0 +1,190 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > EmployeeSummaryPresenter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">InterfaceAdapters</a>
+</div>
+
+<h1>Coverage Summary for Class: EmployeeSummaryPresenter (InterfaceAdapters)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EmployeeSummaryPresenter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package InterfaceAdapters;
+&nbsp;
+&nbsp;import UseCases.PaymentMaker;
+&nbsp;import UseCases.UserFileReader;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;/**
+&nbsp; * The EmployeeSummaryPresenter class handles presenting employee summary data for display.
+&nbsp; * It creates arrays of employee information and lists of arrays for UI rendering.
+&nbsp; * This class is part of the MVP design pattern.
+&nbsp; */
+&nbsp;public class EmployeeSummaryPresenter {
+&nbsp;
+&nbsp;    private UserFileReader fr;
+&nbsp;
+<b class="nc">&nbsp;    public EmployeeSummaryPresenter(){</b>
+<b class="nc">&nbsp;        fr = UserFileReader.getInstance();</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public EmployeeSummaryPresenter(String test){</b>
+<b class="nc">&nbsp;        fr = new UserFileReader(test);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates an array of employee information for display.
+&nbsp;     *
+&nbsp;     * @param id The ID of the employee for whom to create the array.
+&nbsp;     * @return An array of objects representing employee information for display.
+&nbsp;     */
+&nbsp;    public Object[] makeEmployeePanel(int id) {
+<b class="nc">&nbsp;        Object[] employeePanelList = new Object[11];</b>
+<b class="nc">&nbsp;        employeePanelList[0] = fr.getFirstName(id);</b>
+<b class="nc">&nbsp;        employeePanelList[1] = fr.getSurname(id);</b>
+<b class="nc">&nbsp;        employeePanelList[2] = fr.getGender(id);</b>
+<b class="nc">&nbsp;        employeePanelList[3] = fr.getEmail(id);</b>
+<b class="nc">&nbsp;        employeePanelList[4] = Long.toString(fr.getPhoneNumber(id));</b>
+<b class="nc">&nbsp;        employeePanelList[5] = fr.getRole(id);</b>
+<b class="nc">&nbsp;        employeePanelList[6] = Integer.toString(id);</b>
+<b class="nc">&nbsp;        employeePanelList[7] = fr.getDob(id).toString();</b>
+<b class="nc">&nbsp;        employeePanelList[8] = fr.getType(id);</b>
+<b class="nc">&nbsp;        employeePanelList[9] = Float.toString(fr.getPay(id));</b>
+&nbsp;
+<b class="nc">&nbsp;        if (fr.getType(id).equals(&quot;Volunteer&quot;)) {</b>
+<b class="nc">&nbsp;            employeePanelList[10] = 0;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            employeePanelList[10] = id;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return employeePanelList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates arrays of employee information for active employees (excluding HR) for display.
+&nbsp;     *
+&nbsp;     * @return An ArrayList of arrays of objects, each representing employee information for display.
+&nbsp;     */
+&nbsp;    public ArrayList&lt;Object[]&gt; makeEmployeePanels() {
+<b class="nc">&nbsp;        ArrayList&lt;Object[]&gt; lists = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        ArrayList&lt;Integer&gt; users = fr.getIds();</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Integer user : users) {</b>
+<b class="nc">&nbsp;            if (!fr.getType(user).equals(&quot;HR&quot;) &amp;&amp; fr.getActive(user)) {</b>
+<b class="nc">&nbsp;                lists.add(this.makeEmployeePanel(user));</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return lists;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the name of an employee based on their ID.
+&nbsp;     *
+&nbsp;     * @param id The ID of the employee.
+&nbsp;     * @return The full name of the employee.
+&nbsp;     */
+&nbsp;    public String getName(int id) {
+<b class="nc">&nbsp;        UserFileReader ufr = UserFileReader.getInstance();</b>
+<b class="nc">&nbsp;        return ufr.getFirstName(id) + &quot; &quot; + ufr.getSurname(id);</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public UserFileReader getFr(){return this.fr;}</b>
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-15 23:53</div>
+</div>
+</body>
+</html>

@@ -13,7 +13,7 @@ public class PaymentFileReader{
     private PaymentInteractor interactor;
     private ArrayList<Payment> list;
 
-    private PaymentFileReader() {
+    protected PaymentFileReader() {
         payment = new Payment(-21, 15.56F, LocalDateTime.now(), -71);
         interactor = new PaymentInteractor();
         list = interactor.readData();
@@ -25,7 +25,7 @@ public class PaymentFileReader{
      */
 
     public PaymentFileReader(String isTest) {
-        payment = new Payment(-21, 15.56F, LocalDateTime.now(), -71);
+        payment = new Payment(-21, 15.56F   , LocalDateTime.now(), -22);
         interactor = new PaymentInteractor("test");
         list = interactor.readData();
     }
@@ -85,6 +85,7 @@ public class PaymentFileReader{
         }
         return ids;
     }
+
     public LocalDateTime getDate(int id){
         checkPayment(id);
         return payment.getDate();

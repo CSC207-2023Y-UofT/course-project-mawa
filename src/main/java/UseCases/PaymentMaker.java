@@ -71,6 +71,7 @@ public class PaymentMaker{
             this.pay_amount=wageWorker_Payment(employee_id,shifts);
 
         }
+        isTest = false;
 
     }
 
@@ -93,6 +94,7 @@ public class PaymentMaker{
             this.pay_amount=wageWorker_Payment(employee_id,shifts);
 
         }
+        isTest = true;
 
     }
 

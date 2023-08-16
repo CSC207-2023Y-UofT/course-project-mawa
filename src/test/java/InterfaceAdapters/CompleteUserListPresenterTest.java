@@ -36,6 +36,7 @@ public class CompleteUserListPresenterTest {
 
         @Test
         public void TestArrayCreationEmployee(){
+                //Verify that the resulting array has the correct attributes.
                 Object[] attributes = p.makeUserPanel(id1);
                 assertEquals("Alan", attributes[0]);
                 assertEquals("Smith", attributes[1]);
@@ -54,6 +55,7 @@ public class CompleteUserListPresenterTest {
 
         @Test
         public void TestArrayCreationHR(){
+                //Verify that the resulting array has the correct attributes.
                 Object[] attributes = p.makeUserPanel(id2);
                 assertEquals("John", attributes[0]);
                 assertEquals("Smith", attributes[1]);

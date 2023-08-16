@@ -34,6 +34,7 @@ public class EmployeeSummaryPresenterTest {
 
     @Test
     public void TestArrayCreationNonVolunteer(){
+        //Verify that the resulting array has the correct attributes.
         Object[] attributes = p.makeEmployeePanel(id1);
         assertEquals("Samantha", attributes[0]);
         assertEquals("Smith", attributes[1]);
@@ -51,6 +52,7 @@ public class EmployeeSummaryPresenterTest {
 
     @Test
     public void TestArrayCreationVolunteer(){
+        //Verify that the resulting array has the correct attributes.
         Object[] attributes = p.makeEmployeePanel(id2);
         assertEquals("David", attributes[0]);
         assertEquals("Smith", attributes[1]);

@@ -16,6 +16,7 @@ public class UserInteractorTest {
 
     @Test
     public void TestReadWriting(){
+        //Create a user and tests that it is written/read.
 
         User user = new User("Heffley", "Greg", "Male", "diaryofawimpykid@gmail.com", "Middle Schooler",
                 ui.readData().size() + 1, 6475508953L, "2003-02-08", new char[]{'g', 'r', 'e', 'g', '1', '2', '3'}, "Salary Worker",
@@ -41,6 +42,7 @@ public class UserInteractorTest {
 
     @Test
     public void TestUpdate(){
+        //Modify an attribute of the user, and verify that it is modified in the file.
 
         User user = new User("Heffley", "Frank", "Male", "diaryofawimpydad@gmail.com", "Greg's Dad",
                 ui.readData().size() + 1, 6475598953L, "1977-02-08", new char[]{'f', 'r', 'a', 'n', 'k', '1', '2', '3'}, "Salary Worker",

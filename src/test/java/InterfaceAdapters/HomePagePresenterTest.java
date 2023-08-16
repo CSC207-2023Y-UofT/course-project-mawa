@@ -36,6 +36,7 @@ public class HomePagePresenterTest {
 
     @Test
     public void TestCorrectPanelEmployee(){
+        //Verify that the resulting list has the correct attributes.
         assertEquals(hp.makeHomeButtons(id1).get(0), "Schedule");
         assertEquals(hp.makeHomeButtons(id1).get(1), "Notification Center");
         assertEquals(hp.makeHomeButtons(id1).get(2), "View Payment History");
@@ -43,6 +44,7 @@ public class HomePagePresenterTest {
 
     @Test
     public void TestCorrectPanelHR(){
+        //Verify that the resulting list has the correct attributes.
         assertEquals(hp.makeHomeButtons(id2).get(0), "Schedule");
         assertEquals(hp.makeHomeButtons(id2).get(1), "Notification Center");
         assertEquals(hp.makeHomeButtons(id2).get(2), "Manage Employees");

@@ -37,11 +37,12 @@ class PaymentMakerTest {
     @Test
     void wageWorker_Payment() throws IOException {
         new FileWriter("testPayments.ser", false).close();
-        UserInteractor userInteractor = new UserInteractor();
-        ShiftInteractor shiftInteractor =new ShiftInteractor();
+        UserInteractor userInteractor = new UserInteractor("test");
+        ShiftInteractor shiftInteractor =new ShiftInteractor("test");
         users = new ArrayList<>();dateTimes = new ArrayList<>();payments = new ArrayList<>(); shifts=new ArrayList<>();
         User user1=new User("sur","first","Male","email",
                 "testrole",45890,11,"2022-12-12", "ali22".toCharArray(),"Wage Worker",20);
+        userInteractor.writeData(user1);
         users.add(user1);
         ArrayList a=new ArrayList<>();
         a.add(user1.getUserNum());
@@ -53,6 +54,7 @@ class PaymentMakerTest {
 
         PaymentMaker paymentMaker=new PaymentMaker(45890,"test");
         paymentMaker.reader.update();
+        //paymentMaker.reader=new UserFileReader("test");
 
         assertEquals(60,paymentMaker.WageWorkerPayment(45890,shifts));
 

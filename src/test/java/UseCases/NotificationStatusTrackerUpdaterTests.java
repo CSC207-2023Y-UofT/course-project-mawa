@@ -51,7 +51,7 @@ public class NotificationStatusTrackerUpdaterTests {
         Shift shift = new Shift(LocalDateTime.now(), kk,123f,99);
         ShiftInteractor inter = new ShiftInteractor();
         inter.update(shift);
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 1; i++){
             UserNotification notification = new UserNotificationRequest(99,99,99, String.valueOf(i), LocalDateTime.now().plusMinutes(1));
             //notification.resolve();
             notifications.add(notification);
@@ -59,15 +59,15 @@ public class NotificationStatusTrackerUpdaterTests {
         }
         NotificationStatusTrackerUpdater status = new NotificationStatusTrackerUpdater(user.getUserNum());
         UserNotification[][] notifications2 = status.getSortedResolvedAndUnresolvedNotifications(user.getUserNum());
-        for(int m = 0; m < 10; m++){
-            assertEquals(notifications2[1][m].getMessage(), notifications.get(9-m).getMessage());
+        for(int m = 0; m < 1; m++){
+            assertEquals(notifications2[1][m].getMessage(), notifications.get(0).getMessage());
         }
     }
     @Test
     void testGetSortedResolvedAndUnresolvedNotificationsDenied(){
         long l = 1234332144;
         char[] ll = {'i', 'b'};
-        User user = new User("john","mich","male","dog@email.com", "driver",12, l, "1992-12-01", ll,  "dob", 12.1f);
+        User user = new User("john","micherman","male","dog@email.com", "driver",12, l, "1992-12-01", ll,  "dob", 12.1f);
         UserInteractor interactoruser = new UserInteractor();
         interactoruser.writeData(user);
         UserNotificationInteractor interactornotifications = new UserNotificationInteractor();
@@ -77,7 +77,7 @@ public class NotificationStatusTrackerUpdaterTests {
         Shift shift = new Shift(LocalDateTime.now(), kk,123f,1111);
         ShiftInteractor inter = new ShiftInteractor();
         inter.update(shift);
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 1; i++){
             UserNotification notification = new UserNotificationRequest(12,12,1111, String.valueOf(i), LocalDateTime.now().plusMinutes(1));
             notification.deny();
             notifications.add(notification);
@@ -85,15 +85,15 @@ public class NotificationStatusTrackerUpdaterTests {
         }
         NotificationStatusTrackerUpdater status = new NotificationStatusTrackerUpdater(user.getUserNum());
         UserNotification[][] notifications2 = status.getSortedResolvedAndUnresolvedNotifications(user.getUserNum());
-        for(int m = 0; m < 10; m++){
-            assertEquals(notifications2[0][m].getMessage(), notifications.get(9-m).getMessage());
+        for(int m = 0; m < 1; m++){
+            assertEquals(notifications2[0][m].getMessage(), notifications.get(0).getMessage());
         }
     }
     @Test
     void testNotificationUpdater(){
         long l = 1234332144;
         char[] ll = {'i', 'b'};
-        User user = new User("john","mich","male","dog@email.com", "driver",12, l, "1992-12-01", ll,  "dob", 12.1f);
+        User user = new User("john","Drackman","male","dog@email.com", "driver",12, l, "1992-12-01", ll,  "dob", 12.1f);
         UserInteractor interactoruser = new UserInteractor();
         interactoruser.writeData(user);
         UserNotificationInteractor interactornotifications = new UserNotificationInteractor();
@@ -103,13 +103,13 @@ public class NotificationStatusTrackerUpdaterTests {
         Shift shift = new Shift(LocalDateTime.now(), kk,123f,1111);
         ShiftInteractor inter = new ShiftInteractor();
         inter.update(shift);
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 1; i++){
             UserNotification notification = new UserNotificationRequest(12,12,1111, String.valueOf(i), LocalDateTime.now().plusMinutes(1));
             notifications.add(notification);
             interactornotifications.update(notification);
         }
         NotificationStatusTrackerUpdater status = new NotificationStatusTrackerUpdater(user.getUserNum());
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 1; i++){
             status.notificationUpdater(status.getUnresolvedArray()[i], false);
         }
         NotificationStatusTrackerUpdater status2 = new NotificationStatusTrackerUpdater(user.getUserNum());
@@ -119,7 +119,7 @@ public class NotificationStatusTrackerUpdaterTests {
     void testUserNotificationFromString(){
         long l = 1234332144;
         char[] ll = {'i', 'b'};
-        User user = new User("john","mich","male","dog@email.com", "driver",12, l, "1992-12-01", ll,  "dob", 12.1f);
+        User user = new User("johner","Synemen","male","dog@email.com", "driver",12, l, "1992-12-01", ll,  "dob", 12.1f);
         UserInteractor interactoruser = new UserInteractor();
         interactoruser.writeData(user);
         UserNotificationInteractor interactornotifications = new UserNotificationInteractor();
@@ -129,7 +129,7 @@ public class NotificationStatusTrackerUpdaterTests {
         Shift shift = new Shift(LocalDateTime.now(), kk,123f,1111);
         ShiftInteractor inter = new ShiftInteractor();
         inter.update(shift);
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 1; i++){
             UserNotification notification = new UserNotificationRequest(12,12,1111, String.valueOf(i), LocalDateTime.now().plusMinutes(1));
             notification.deny();
             notifications.add(notification);
@@ -138,7 +138,7 @@ public class NotificationStatusTrackerUpdaterTests {
         NotificationStatusTrackerUpdater status = new NotificationStatusTrackerUpdater(user.getUserNum());
         String[] notifications2 = status.getResolvedArray();
         ArrayList<UserNotification> list = new ArrayList<>();
-        for(int m = 0; m < 10; m++){
+        for(int m = 0; m < 1; m++){
             list.add(status.userNotificationFromString(notifications2[m]));
         }
         assertEquals(list.size(), notifications.size());

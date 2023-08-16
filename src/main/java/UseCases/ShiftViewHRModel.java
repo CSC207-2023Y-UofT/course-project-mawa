@@ -15,7 +15,7 @@ public class ShiftViewHRModel{
     int notificationID;
     DefaultListModel<String> employeesOnShift = new DefaultListModel<>();
     DefaultListModel<String> employeesNotOnShift = new DefaultListModel<>();
-    Shift shift;
+    public Shift shift;
     ArrayList<User> usersOnShift = new ArrayList<User>();
     ArrayList<User> usersNotOnShift = new ArrayList<User>();
     String[] usersOnShiftString;

@@ -37,17 +37,17 @@ public class ShiftViewHRModelTests {
     void testGetUsers(){
         long l = 1234332144;
         char[] ll = {'i', 'b'};
-        User user = new User("john","mich","male","dog@email.com", "driver",103, l, "1992-12-01", ll,  "dob", 12.1f);
+        User user = new User("john","mich","male","dog@email.com", "driver",1039, l, "1992-12-01", ll,  "dob", 12.1f);
         UserInteractor interactoruser = new UserInteractor();
         interactoruser.update(user);
         UserNotificationInteractor interactornotifications = new UserNotificationInteractor();
         ArrayList<UserNotification> notifications = new ArrayList<>();
         ArrayList<Integer> kk = new ArrayList<>();
-        kk.add(103);
-        Shift shift = new Shift(LocalDateTime.now(), kk,123f,103);
+        kk.add(1039);
+        Shift shift = new Shift(LocalDateTime.now(), kk,123f,1039);
         ShiftInteractor inter = new ShiftInteractor();
         inter.update(shift);
-        UserNotification notification = new UserNotificationRequest(103,103,103, String.valueOf(1), LocalDateTime.now().plusMinutes(1));
+        UserNotification notification = new UserNotificationRequest(1039,1039,1039, String.valueOf(1), LocalDateTime.now().plusMinutes(1));
         interactornotifications.update(notification);
         ShiftViewHRModel model = new ShiftViewHRModel(notification.getNotifId(),user.getUserNum());
         assertEquals(shift.getShiftId(), model.shift.getShiftId());

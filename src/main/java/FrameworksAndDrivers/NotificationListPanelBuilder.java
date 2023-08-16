@@ -1,4 +1,4 @@
-package UseCases;
+package FrameworksAndDrivers;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,15 +7,15 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class NotificationListPanelBuilder extends JPanel {
-    public JPanel panel = new JPanel();
-    public NotificationListPanelBuilder(JFrame frame, JLabel label, JList<String> list, JScrollPane scroller, Boolean hr){
+    public NotificationListPanelBuilder(JLabel label, JList<String> list, JScrollPane scroller, Boolean hr){
         /*
         Creates a List Panel, with a centered label above the list, which occupies the entirety of the panel.
          */
-        panel.setLayout(new BorderLayout());
+        super();
+        this.setLayout(new BorderLayout());
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-        panel.add(label, BorderLayout.PAGE_START);
+        this.add(label, BorderLayout.PAGE_START);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
@@ -30,17 +30,18 @@ public class NotificationListPanelBuilder extends JPanel {
         } else if (hr){
             listPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 45, 10));
         }
-        panel.add(listPanel, BorderLayout.CENTER);
+        this.add(listPanel, BorderLayout.CENTER);
     }
-    public NotificationListPanelBuilder(JFrame frame, JLabel label, JList<String> list, JScrollPane scroller, JButton rescheduleShiftButton, JButton denyRequestButton){
+    public NotificationListPanelBuilder(JLabel label, JList<String> list, JScrollPane scroller, JButton rescheduleShiftButton, JButton denyRequestButton){
         /*
         Creates a List Panel, with a centered label above a list, which occupies the majority of the panel,
         and two buttons centered underneath the list. Double-clicking on list entry clicks Reschedule Button.
          */
-        panel.setLayout(new BorderLayout());
+        super();
+        this.setLayout(new BorderLayout());
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-        panel.add(label, BorderLayout.PAGE_START);
+        this.add(label, BorderLayout.PAGE_START);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
@@ -62,13 +63,12 @@ public class NotificationListPanelBuilder extends JPanel {
         } else {
             listPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 45, 10));
         }
-        panel.add(listPanel, BorderLayout.CENTER);
-        frame.add(panel);
+        this.add(listPanel, BorderLayout.CENTER);
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(rescheduleShiftButton);
         buttonPanel.add(denyRequestButton);
         denyRequestButton.setHorizontalAlignment(JLabel.CENTER);
         rescheduleShiftButton.setHorizontalAlignment(JLabel.CENTER);
-        panel.add(buttonPanel, BorderLayout.PAGE_END);
+        this.add(buttonPanel, BorderLayout.PAGE_END);
     }
 }

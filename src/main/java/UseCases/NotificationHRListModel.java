@@ -35,6 +35,9 @@ public class NotificationHRListModel extends DefaultListModel<String> {
         }
     }
     public int getNotificationID(String notification){
+        /*
+        Returns notification that string refers to.
+         */
         return status.userNotificationFromString(notification).getNotifId();
     }
     public void updateList(String notification, boolean deny, DefaultListModel<String> notifications){

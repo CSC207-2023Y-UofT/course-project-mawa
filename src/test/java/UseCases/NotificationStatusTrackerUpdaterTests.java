@@ -15,18 +15,18 @@ public class NotificationStatusTrackerUpdaterTests {
     void testGetSortedResolvedAndUnresolvedNotificationsResolved(){
         long l = 1234332144;
         char[] ll = {'i', 'b'};
-        User user = new User("john","mich","male","dog@email.com", "driver",12, l, "1992-12-01", ll,  "dob", 12.1f);
+        User user = new User("john","mich","male","dog@email.com", "driver",89, l, "1992-12-01", ll,  "dob", 12.1f);
         UserInteractor interactoruser = new UserInteractor();
         interactoruser.writeData(user);
         UserNotificationInteractor interactornotifications = new UserNotificationInteractor();
         ArrayList<UserNotification> notifications = new ArrayList<>();
         ArrayList<Integer> kk = new ArrayList<>();
-        kk.add(12);
-        Shift shift = new Shift(LocalDateTime.now(), kk,123f,1111);
+        kk.add(89);
+        Shift shift = new Shift(LocalDateTime.now(), kk,123f,89);
         ShiftInteractor inter = new ShiftInteractor();
         inter.update(shift);
         for (int i = 0; i < 10; i++){
-            UserNotification notification = new UserNotificationRequest(12,12,1111, String.valueOf(i), LocalDateTime.now().plusMinutes(1));
+            UserNotification notification = new UserNotificationRequest(89,89,89, String.valueOf(i), LocalDateTime.now().plusMinutes(1));
             notification.resolve();
             notifications.add(notification);
             interactornotifications.update(notification);
@@ -41,18 +41,18 @@ public class NotificationStatusTrackerUpdaterTests {
     void testGetSortedResolvedAndUnresolvedNotificationsUnresolved(){
         long l = 1234332144;
         char[] ll = {'i', 'b'};
-        User user = new User("john","mich","male","dog@email.com", "driver",12, l, "1992-12-01", ll,  "dob", 12.1f);
+        User user = new User("john","mich","male","dog@email.com", "driver",99, l, "1992-12-01", ll,  "dob", 12.1f);
         UserInteractor interactoruser = new UserInteractor();
         interactoruser.writeData(user);
         UserNotificationInteractor interactornotifications = new UserNotificationInteractor();
         ArrayList<UserNotification> notifications = new ArrayList<>();
         ArrayList<Integer> kk = new ArrayList<>();
-        kk.add(12);
-        Shift shift = new Shift(LocalDateTime.now(), kk,123f,1111);
+        kk.add(99);
+        Shift shift = new Shift(LocalDateTime.now(), kk,123f,99);
         ShiftInteractor inter = new ShiftInteractor();
         inter.update(shift);
         for (int i = 0; i < 10; i++){
-            UserNotification notification = new UserNotificationRequest(12,12,1111, String.valueOf(i), LocalDateTime.now().plusMinutes(1));
+            UserNotification notification = new UserNotificationRequest(99,99,99, String.valueOf(i), LocalDateTime.now().plusMinutes(1));
             //notification.resolve();
             notifications.add(notification);
             interactornotifications.update(notification);

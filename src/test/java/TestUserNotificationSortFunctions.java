@@ -29,7 +29,7 @@ public class TestUserNotificationSortFunctions {
         }
         UserNotification[] notifications2 = UserNotification.sortByCreatedDate(notifications);
         for(int i = 0; i < 50; i++){
-            assertEquals(notifications2[i].getResolvedAt(),notifications.get(49-i).getResolvedAt());
+            assertEquals(notifications2[i].getResolvedAt().toString(),notifications.get(49-i).getResolvedAt().toString());
         }
     }
 }

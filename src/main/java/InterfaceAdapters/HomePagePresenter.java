@@ -1,5 +1,6 @@
 package InterfaceAdapters;
 
+import Entities.User;
 import UseCases.UserFileReader;
 
 import java.util.ArrayList;
@@ -10,7 +11,15 @@ import java.util.ArrayList;
  */
 public class HomePagePresenter {
 
-    private UserFileReader ufr = UserFileReader.getInstance();
+    private UserFileReader ufr;
+
+    public HomePagePresenter(){
+        ufr = UserFileReader.getInstance();
+    }
+
+    public HomePagePresenter(String test){
+        ufr = new UserFileReader(test);
+    }
 
     /**
      * Creates a list of home page buttons' labels for display.
@@ -33,4 +42,6 @@ public class HomePagePresenter {
 
         return labels;
     }
+
+    public UserFileReader getFileReader(){return this.ufr;}
 }

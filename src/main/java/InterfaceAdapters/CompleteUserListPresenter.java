@@ -10,7 +10,16 @@ import java.util.ArrayList;
  */
 public class CompleteUserListPresenter {
 
-    private UserFileReader fr = UserFileReader.getInstance();
+    private UserFileReader fr;
+
+
+    public CompleteUserListPresenter(){
+        fr = UserFileReader.getInstance();
+    }
+
+    public CompleteUserListPresenter(String test){
+        fr = new UserFileReader("p");
+    }
 
     /**
      * Creates an array of user information for display.
@@ -61,4 +70,7 @@ public class CompleteUserListPresenter {
 
         return panels;
     }
+
+    //For testing purposes.
+    public UserFileReader getFileReader(){return fr;}
 }

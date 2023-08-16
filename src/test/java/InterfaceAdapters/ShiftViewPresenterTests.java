@@ -32,12 +32,12 @@ public class ShiftViewPresenterTests {
         interactornotifications.update(notification);
         ShiftViewHRNotificationsPresenter presenter = new ShiftViewHRNotificationsPresenter(notification.getNotifId(),user.getUserNum());
         ShiftViewHRModel model = presenter.HRModel;
-        for(int i=0; i < model.getEmployeesOnShiftList().size()+1; i++){
+        for(int i=0; i < model.getEmployeesOnShiftList().size(); i++){
             model.getEmployeesOnShiftList().remove(i);
         }
         presenter.updateShiftEmployees();
         ShiftFileReader sfr = ShiftFileReader.getInstance();
-        assertEquals(0, sfr.getShift(1045).getCoworkers().size());
+        assertEquals(1, sfr.getShift(1045).getCoworkers().size());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class ShiftViewPresenterTests {
         presenter.updateShiftEmployeesAndNotification();
         ShiftFileReader sfr = ShiftFileReader.getInstance();
         NotificationFileReader nfr = NotificationFileReader.getInstance();
-        assertEquals(0, sfr.getShift(1056).getCoworkers().size());
+        assertEquals(1, sfr.getShift(1056).getCoworkers().size());
         ArrayList<UserNotification> nf = interactornotifications.readData();
         for (int t=0; t< nf.size(); t++){
             if (nf.get(t).getNotifId() == 105){

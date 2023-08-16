@@ -68,11 +68,12 @@ public class ShiftViewPresenterTests {
         NotificationFileReader nfr = NotificationFileReader.getInstance();
         assertEquals(1, sfr.getShift(1056).getCoworkers().size());
         ArrayList<UserNotification> nf = interactornotifications.readData();
-        for (int t=0; t< nf.size(); t++){
+        for(int t=0; t< nf.size(); t++){
             if (nf.get(t).getNotifId() == 105){
                 assertEquals(nf.get(t).getResolvedStatus(), true);
             }
         }
+
     }
 
 }

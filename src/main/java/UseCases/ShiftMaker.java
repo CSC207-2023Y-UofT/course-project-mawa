@@ -9,8 +9,8 @@ import java.util.ArrayList;
  * The ShiftMaker class provides a method for creating shifts.
  */
 public class ShiftMaker {
-    public ShiftInteractor interactor  = new ShiftInteractor();
-    public ShiftFileReader reader = ShiftFileReader.getInstance();
+    public ShiftInteractor interactor;
+    public ShiftFileReader reader;
     private LocalDateTime date;
     private float duration;
 
@@ -23,7 +23,18 @@ public class ShiftMaker {
     public ShiftMaker(LocalDateTime date, float duration){
         this.date = date;
         this.duration = duration;
+        interactor = new ShiftInteractor();
+        reader = ShiftFileReader.getInstance();
     }
+
+    public ShiftMaker(LocalDateTime date, float duration, String test){
+        this.date = date;
+        this.duration = duration;
+        interactor = new ShiftInteractor("p");
+        reader = new ShiftFileReader("p");
+    }
+
+
     /**
      * Creates a new shift based on the provided date and duration.
      *

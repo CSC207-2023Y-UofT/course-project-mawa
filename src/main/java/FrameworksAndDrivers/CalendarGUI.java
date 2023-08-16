@@ -186,7 +186,5 @@ public class CalendarGUI extends JFrame implements Page {
         this.month = month;
     }
 
-    public static void main(String[] args){
-        new CalendarGUI(8, 2023, 1);
-    }
+
 }

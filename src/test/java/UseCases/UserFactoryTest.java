@@ -1,14 +1,15 @@
 package UseCases;
 
-import UseCases.*;
+
 import Entities.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserFactoryTest {
 
@@ -20,7 +21,7 @@ public class UserFactoryTest {
     User userFac;
 
     
-    @Before
+    @BeforeEach
     public void setUp(){
         ui = new UserInteractor("k");
         uf = new UserFactory("j");
@@ -36,7 +37,7 @@ public class UserFactoryTest {
 
     }
 
-    @Test(timeout = 50)
+    @Test
     public void testEqual(){
         assertEquals(user.getSurname(), userFac.getSurname());
         assertEquals(user.getFirstname(), userFac.getFirstname());
@@ -46,7 +47,9 @@ public class UserFactoryTest {
         assertEquals(user.getRole(), userFac.getRole());
         assertEquals(user.getPay(), userFac.getPay());
         assertEquals(user.getUserNum(), userFac.getUserNum());
-        assertEquals(user.getPassword(), userFac.getPassword());
+        for (int i = 0; i < user.getPassword().length; i++){
+            assertEquals(user.getPassword()[i], userFac.getPassword()[i]);
+        }
     }
 
 

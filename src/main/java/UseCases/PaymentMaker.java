@@ -23,16 +23,22 @@ public class PaymentMaker{
 
 
     private int employee_id;
-    private UserFileReader reader=UserFileReader.getInstance();
+    private UserFileReader reader;
     private String employee_name;
     private float pay_amount;
     private String emp_type;
 
     private LocalDateTime date= LocalDateTime.now();
 
-    private ShiftInteractor si = new ShiftInteractor();
+    private ShiftInteractor si;
+
+    private PaymentInteractor pi;
+
+    private UserInteractor ui;
     private ArrayList<Shift> shifts;
     private int id;
+
+    private boolean isTest;
 
 
 
@@ -48,8 +54,11 @@ public class PaymentMaker{
      */
     public PaymentMaker(int employee_id){
 
+        reader = UserFileReader.getInstance();
+        ui = new UserInteractor();
+        si = new ShiftInteractor();
+        pi = new PaymentInteractor();
         this.employee_id=employee_id;
-        PaymentInteractor pi = new PaymentInteractor();
         numberOfPayments = pi.readData().size();
         this.employee_name= reader.getFirstName(employee_id)+reader.getSurname(employee_id);
         this.emp_type=reader.getType(employee_id);
@@ -63,10 +72,39 @@ public class PaymentMaker{
 
         }
 
+    }
+
+    public PaymentMaker(int employee_id, String test){
+
+        reader = new UserFileReader(".");
+        ui = new UserInteractor(".");
+        si = new ShiftInteractor(".");
+        pi = new PaymentInteractor(".");
+        this.employee_id=employee_id;
+        numberOfPayments = pi.readData().size();
+        this.employee_name= reader.getFirstName(employee_id)+reader.getSurname(employee_id);
+        this.emp_type=reader.getType(employee_id);
+        this.id= numberOfPayments + 1;
+
+        if (this.emp_type.equals("Salary Worker")){
+            this.pay_amount= reader.getPay(employee_id)/12;
+        } else if (this.emp_type.equals("Wage Worker") ){
+            shifts=si.readData();
+            this.pay_amount=wageWorker_Payment(employee_id,shifts);
+
+        }
 
     }
+
+
+
     public  float wageWorker_Payment(int employee_id, ArrayList<Shift> shiftArray){
-        UserFileReader reader = UserFileReader.getInstance();
+        UserFileReader reader;
+        if (isTest){
+            reader = new UserFileReader(".");
+        } else {
+            reader = UserFileReader.getInstance();
+        }
         float hours=0;
         for(int i = 0; i <shiftArray.size();i++){
             if (shiftArray.get(i).getCoworkers().contains(employee_id) ){
@@ -82,7 +120,6 @@ public class PaymentMaker{
     }
 
     public void makePayment(){
-        PaymentInteractor pi = new PaymentInteractor();
         pi.writeData(new Payment(this.employee_id,this.pay_amount,this.date,this.id));
     }
 

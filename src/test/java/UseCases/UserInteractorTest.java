@@ -1,22 +1,20 @@
 package UseCases;
 
-import UseCases.*;
+
 import Entities.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 public class UserInteractorTest {
 
 
     UserInteractor ui = new UserInteractor("p");
 
-    UserActivator ua = new UserActivator("a");
 
-    @Test(timeout = 50)
+    @Test
     public void TestReadWriting(){
 
         User user = new User("Heffley", "Greg", "Male", "diaryofawimpykid@gmail.com", "Middle Schooler",
@@ -34,11 +32,14 @@ public class UserInteractorTest {
         assertEquals(user.getRole(), read.getRole());
         assertEquals(user.getPay(), read.getPay());
         assertEquals(user.getUserNum(), read.getUserNum());
-        assertEquals(user.getPassword(), read.getPassword());
+        for (int i = 0; i < user.getPassword().length; i++){
+            assertEquals(user.getPassword()[i], read.getPassword()[i]);
+        }
+
 
     }
 
-    @Test(timeout = 50)
+    @Test
     public void TestUpdate(){
 
         User user = new User("Heffley", "Frank", "Male", "diaryofawimpydad@gmail.com", "Greg's Dad",

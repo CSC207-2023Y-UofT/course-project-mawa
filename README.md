@@ -51,7 +51,7 @@ JavaDoc is sparse in our testing modules because we have designed the tests to b
 their method names.
 Our testing coverage is:
 ![img.png](img.png)
-(current bug, you may have to clear users.ser,payments.ser, notifications.ser, and shifts.ser after sunning tests because someone in our group didn't have enough time to implement their tests to write to the test files)
+(current bug, you may have to clear users.ser,payments.ser, notifications.ser, and shifts.ser after running tests because someone in our group didn't have enough time to implement their tests to write to the test files)
 
 ## Software Design
 The classes are packaged into their CA layers to help with

@@ -6,6 +6,8 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * The DayViewLogic class provides logic for the DayView component.
@@ -17,6 +19,8 @@ public class DayViewLogic {
     private float width, height;
     private int user;
     private LocalDate date;
+    protected ShiftFileReader reader;
+    protected ShiftSorter sorter;
 
     /**
      * Constructs a DayViewLogic object.
@@ -29,12 +33,13 @@ public class DayViewLogic {
      */
     public DayViewLogic(ArrayList<Integer> shifts, float width, float height, int user,
                         LocalDate date){
-        this.shifts = new ShiftSorter().sortShiftsByDate(shifts);
-        System.out.println(shifts.size());
+        this.sorter = new ShiftSorter();
+        this.shifts = shifts;
         this.width = width;
         this.height = height;
         this.user = user;
         this.date = date;
+        this.reader = ShiftFileReader.getInstance();
     }
 
     /**
@@ -54,9 +59,9 @@ public class DayViewLogic {
      * @return An array containing the start and end hours of the time range.
      */
     public int[] getTimeRange(){
+        shifts = sorter.sortShiftsByDate(shifts);
         if (shifts.size() > 0){
-            ShiftFileReader reader = ShiftFileReader.getInstance();
-            return (new int[] {Math.min(Math.max(0, reader.getDate(shifts.get(0)).getHour() - 2), 8),
+            return (new int[] {Math.min(Math.max(0, -2 + reader.getDate(shifts.get(0)).getHour()), 8),
                     (int) Math.max(Math.min(24, reader.getDate(shifts.get(shifts.size() - 1)).getHour()
                                     + reader.getDuration(shifts.get(0))+ 2), 18)});
         } else{
@@ -69,9 +74,8 @@ public class DayViewLogic {
      * Updates the shifts to be associated with the view.
      */
     public void update(){
-        ShiftFileReader sReader = ShiftFileReader.getInstance();
-        shifts = sReader.getIds(date);
-        shifts = new ShiftSorter().sortShiftsByDate(shifts);
+        shifts = reader.getIds(date);
+        shifts = sorter.sortShiftsByDate(shifts);
     }
 
     /**
@@ -105,29 +109,62 @@ public class DayViewLogic {
     public ArrayList<Rectangle> getShiftCellPosition(){
         ArrayList<Rectangle> areas = new ArrayList<Rectangle>();
         int[] timeRange = getTimeRange();
-        ArrayList<ArrayList<Integer>> shifts2D = DayViewModel.make2DList(shifts);
+        ArrayList<ArrayList<Integer>> shifts2D = new DayViewModel().make2DList(shifts);
         ArrayList<Integer> newShifts = new ArrayList<>();
         for(ArrayList<Integer> a : shifts2D){
             newShifts.addAll(a);
         }
-        this.shifts = newShifts;
-        for (ArrayList<Integer> s0 : shifts2D){
-            for(int i = 0; i < s0.size(); i++){
+        this.shifts = removeDuplicates(newShifts);
+            for(int j = 0;j<shifts2D.size();j++) {
                 ShiftFileReader reader = ShiftFileReader.getInstance();
-                int s = s0.get(i);
-                int hours = (int) Math.floor(reader.getDuration(s));
-                int mins = (int) ((reader.getDuration(s) - hours) * 60);
-                LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
-                Rectangle area = new Rectangle((int) (width /10 + i * 8 * width / 10 / s0.size()),
-                        (int) (DayViewModel.yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float)(reader.getDate(s).getMinute())/60,
-                                                        timeRange[1] - timeRange[0], height)),
-                        (int) ((float) 8 * width / 10 / s0.size()),
-                        (int) DayViewModel.yCoord(reader.getDuration(s) + 1 + (float)time2.getMinute()/60,
-                                timeRange[1] - timeRange[0], height));
-                areas.add(area);
-            }
+                ArrayList<Integer> s0 = shifts2D.get(j);
+                int offset = 0;
+                for (int i = 0;i<s0.size();i++) {
+                    int s = s0.get(i);
+                    if (j>0){
+                        offset = findSmallestIndexNotOverlapping(s,shifts2D.get(j-1));
+                    }
+                        int hours = (int) Math.floor(reader.getDuration(s));
+                        int mins = (int) ((reader.getDuration(s) - hours) * 60);
+                        LocalDateTime time2 = reader.getDate(s).plusHours(hours).plusMinutes(mins);
+                        Rectangle area;
+                        if (offset < 0 || j < 1){
+                            area = new Rectangle((int) (width / 10 + i * 8 * width / 10 / s0.size()),
+                                    (int) (DayViewModel.yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float) (reader.getDate(s).getMinute()) / 60,
+                                            timeRange[1] - timeRange[0], height)),
+                                    (int) (((float) 8 * width / 10 / s0.size())),
+                                    (int) DayViewModel.yCoord(reader.getDuration(s) + (float) time2.getMinute() / 60,
+                                            timeRange[1] - timeRange[0], height));
+                        } else{
+                            area = new Rectangle((int) (width / 10 + i * 8 * width / 10 / s0.size()),
+                                    (int) (DayViewModel.yCoord(reader.getDate(s).getHour() - timeRange[0] + 1 + (float) (reader.getDate(s).getMinute()) / 60,
+                                            timeRange[1] - timeRange[0], height)),
+                                    (int) (((float) 8 * width / 10 / s0.size()) - ((width - areas.get(offset).x)/s0.size())),
+                                    (int) DayViewModel.yCoord(reader.getDuration(s) + (float) time2.getMinute() / 60,
+                                            timeRange[1] - timeRange[0], height));
+                        }
+                        areas.add(area);
+                }
         }
         return areas;
+    }
+
+    private ArrayList<Integer> removeDuplicates(ArrayList<Integer> list)
+    {
+        Set<Integer> set = new LinkedHashSet<>();
+        set.addAll(list);
+        list.clear();
+        list.addAll(set);
+        return list;
+    }
+
+    private int findSmallestIndexNotOverlapping(int s1, ArrayList<Integer> prevShifts){
+        for (int i = 0; i<prevShifts.size();i++){
+            if (new DayViewModel().isOverlapping(s1, prevShifts.get(i))){
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

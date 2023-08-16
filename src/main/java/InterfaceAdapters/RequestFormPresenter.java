@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 public class RequestFormPresenter implements ActionListener {
     private GUIElement submitButton, cancelButton, reasonField;
     private int employee, shift;
+    protected UserFileReader reader;
+    protected NotificationBuilder nb;
 
     /**
      * Constructs a RequestFormPresenter object.
@@ -31,6 +33,8 @@ public class RequestFormPresenter implements ActionListener {
         this.shift= shift;
         this.reasonField = reasonField;
         this.employee = employee;
+        this.reader = UserFileReader.getInstance();
+        this.nb = new NotificationBuilder();
     }
     /**
      * Handles the action events triggered by the submit and cancel buttons.
@@ -39,11 +43,8 @@ public class RequestFormPresenter implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource() == submitButton){
-            NotificationBuilder nb = new NotificationBuilder();
-            UserFileReader ufr = UserFileReader.getInstance();
-            nb.createRequest(shift, reasonField.getContent(), employee, ufr.getHRId());
+            nb.createRequest(shift, reasonField.getContent(), employee, reader.getHRId());
             submitButton.nextPage();
         }else if (e.getSource() == cancelButton) {
             cancelButton.nextPage();

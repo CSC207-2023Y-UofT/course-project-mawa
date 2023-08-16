@@ -1,11 +1,8 @@
 package UseCases;
 
 import Entities.Shift;
-import UseCases.ShiftFileReader;
-import UseCases.ShiftInteractor;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.FileWriter;
@@ -15,23 +12,26 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-public class TestShiftFileReader {
+/**
+ * Unit test for ShiftFileReader class.
+ */
+public class ShiftFileReaderTest {
     private ShiftFileReader reader;
     private ShiftInteractor interactor;
     private List<Shift> list;
     private List<Integer> idList;
     @BeforeEach
     public void setUp() throws IOException {
-        new FileWriter("shifts.ser", false).close();
-        reader = ShiftFileReader.getInstance();
-        interactor = new ShiftInteractor();
+        new FileWriter("testShifts.ser", false).close();
+        reader = new ShiftFileReader("test");
+        interactor = new ShiftInteractor("test");
         list = Instancio.ofList(Shift.class).size(10).create();
         idList = new ArrayList<>();
         for (Shift s:list){
             interactor.writeData(s);
             idList.add(s.getShiftId());
         }
+        reader.update();
     }
     @Test
     public void testUpdate(){
@@ -67,6 +67,7 @@ public class TestShiftFileReader {
         for (Shift s:list){
             interactor.update(s);
         }
+        reader.update();
         ArrayList<Integer> expected = new ArrayList<Integer>();
         expected.add(list.get(1).getShiftId());
         expected.add(list.get(3).getShiftId());

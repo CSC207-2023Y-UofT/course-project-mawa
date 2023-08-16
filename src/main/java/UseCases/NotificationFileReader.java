@@ -19,6 +19,12 @@ public class NotificationFileReader{
         interactor = new UserNotificationInteractor();
         list = interactor.readData();
     }
+
+    public NotificationFileReader(String isTest) {
+        userNotification = new UserNotificationRequest(-77,-78,45,"",LocalDateTime.now());
+        interactor = new UserNotificationInteractor("test");
+        list = interactor.readData();
+    }
     /**
      * Get the singleton instance of NotificationFileReader.
      *

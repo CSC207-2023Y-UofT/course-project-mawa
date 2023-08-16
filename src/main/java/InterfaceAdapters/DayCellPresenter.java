@@ -15,9 +15,10 @@ import java.util.ArrayList;
 
 public class DayCellPresenter implements ActionListener {
     private Page gui;
-    private float width, height;
+    public float width, height;
     private ArrayList<Integer> shifts;
     private GUIElement button;
+    public ShiftFileReader reader = ShiftFileReader.getInstance();
 
     /**
      * Constructs a new DayCellPresenter.
@@ -46,7 +47,6 @@ public class DayCellPresenter implements ActionListener {
         ArrayList<Integer> ycoords = new ArrayList<>();
         ycoords.add(0);
         for (int i = 1; i< shifts.size()+1; i++) {
-            ShiftFileReader reader = ShiftFileReader.getInstance();
             LocalDateTime time = reader.getDate(i);
             int y = DayCellModel.getYcoord(time.getHour(), time.getMinute(), height, ycoords.get(i -1));
             ycoords.add(y);

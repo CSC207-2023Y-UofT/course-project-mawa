@@ -1,11 +1,8 @@
 package UseCases;
 
 import Entities.Payment;
-import UseCases.PaymentFileReader;
-import UseCases.PaymentInteractor;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.FileWriter;
@@ -14,25 +11,28 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class TestPaymentFileReader {
+/**
+ * Unit test for PaymentFileReader class.
+ */
+public class PaymentFileReaderTest {
     private PaymentFileReader reader;
     private PaymentInteractor interactor;
     private List<Payment> list;
     private List<Integer> idList;
     @BeforeEach
     public void setUp() throws IOException {
-        new FileWriter("payments.ser", false).close();
-        reader = PaymentFileReader.getInstance();
-        interactor = new PaymentInteractor();
+        new FileWriter("testPayments.ser", false).close();//clear test payment file
+        reader = new PaymentFileReader("test");
+        interactor = new PaymentInteractor("test");
         list = Instancio.ofList(Payment.class).size(10).create();
         idList = new ArrayList<>();
         for (Payment s:list){
             interactor.writeData(s);
             idList.add(s.getPaymentId());
         }
+        reader.update();
     }
     @Test
     public void testUpdate(){
@@ -48,7 +48,7 @@ public class TestPaymentFileReader {
     }
     @Test
     public void testGetAmount(){
-        assertEquals(list.get(0).getPayment_amount(), reader.getAmount(idList.get(0)),
+        assertEquals(list.get(0).getPaymentAmount(), reader.getAmount(idList.get(0)),
                 "The payment amount fetched from PaymentFileReader should be the same" +
                         "as the object's payment amount attribute.");
     }
@@ -68,6 +68,7 @@ public class TestPaymentFileReader {
         for (Payment s:list){
             interactor.update(s);
         }
+        reader.update();
         ArrayList<Integer> expected = new ArrayList<Integer>();
         expected.add(list.get(1).getPaymentId());
         expected.add(list.get(3).getPaymentId());

@@ -18,17 +18,14 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
 
     private JFrame history_frame= new JFrame();
     private JPanel history_panel = new JPanel();
-    private PaymentInteractor interactor = new PaymentInteractor();
 
     private JPanel info_panel = new JPanel();
     private JPanel button_panel= new JPanel();
     private Label employeeLabel = new Label();
 
+
     private int employee_id;
     private int employer_id;
-
-    private ArrayList<Payment> allpayments;
-
 
     private ArrayList<String> adding_list= new ArrayList<>();
     private PaymentHistoryPresenter presenter= new PaymentHistoryPresenter();
@@ -45,14 +42,14 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
         this.employee_id=employee;
         this.employer_id=employer;
         this.addTitle();
-        this.addContent();
         JButton homebutton= new JButton("Home");
         homebutton.setActionCommand("home");
         homebutton.addActionListener(this);
         this.addHomeButton();
         button_panel.add(homebutton);
-        history_frame.setSize(500, 500);
+        history_frame.setSize(800, 600);
         history_panel.setLayout(new BorderLayout());
+        this.addContent();
         history_frame.add(history_panel,BorderLayout.CENTER);
         history_frame.add(info_panel,BorderLayout.PAGE_START);
         history_frame.add(button_panel,BorderLayout.PAGE_END);
@@ -76,38 +73,29 @@ public class PaymentHistory extends JFrame implements InterfaceAdapters.Page, Ac
     }
 
     /**
-     * Add te content page such as the list of payments, the scrollbar...etc
+     * Add the content page such as the list of payments, the scrollbar...etc
      */
     @Override
     public void addContent() {
         employeeLabel.setText(presenter.getLabel(employee_id));
         info_panel.add(employeeLabel);
+        // below are codes related to then scroll bar and the list
         DefaultListModel<String> mylist = new DefaultListModel<>();
-        JList<String> paymentlist = new JList<>(mylist);// creating a list to be shown
-        history_panel.add(paymentlist);
-        paymentlist.setBounds(0,0,500,500);
-        paymentlist.setBackground(Color.gray);// having the ist to be gray so that it is more visible
-        // below are codes related to then scoll bar and the list
-        paymentlist.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        paymentlist.setLayoutOrientation(JList.VERTICAL);
-        paymentlist.setVisibleRowCount(-1);
-        //JScrollPane scroller = new JScrollPane(paymentlist);
-        //scroller.setPreferredSize(new Dimension(225, 100));
-        //scroller.setAlignmentX(LEFT_ALIGNMENT);
-
-        // history_panel.add(scroller, BorderLayout.CENTER);
-
-
         adding_list= presenter.PaymentHistoryPresenter(employee_id);
-
         for(int i=0; i<adding_list.size();i++){
             mylist.addElement(adding_list.get(i));
         }
-
-
-
-
-
+        JList<String> paymentlist = new JList<>(mylist);// creating a list to be shown
+        paymentlist.setBackground(Color.gray);// having the ist to be gray so that it is more visible
+        paymentlist.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        paymentlist.setLayoutOrientation(JList.VERTICAL);
+        paymentlist.setVisibleRowCount(-1);
+        paymentlist.setBounds(0,0,500,500);
+        JScrollPane scroller = new JScrollPane(paymentlist);
+        scroller.setPreferredSize(new Dimension(225, 100));
+        scroller.setAlignmentX(LEFT_ALIGNMENT);
+        history_panel.add(scroller, BorderLayout.CENTER);
+        //history_panel.add(paymentlist);
 
 
     }

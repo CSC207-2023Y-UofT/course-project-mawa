@@ -1,12 +1,16 @@
 package FrameworksAndDrivers;
 
+import InterfaceAdapters.Page;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import InterfaceAdapters.*;
-import FrameworksAndDrivers.*;
 
+/**
+ * The ManageEmployeesGUI class provides a user interface for managing employees.
+ * Users can navigate to different employee-related pages from this interface.
+ */
 public class ManageEmployeesGUI implements ActionListener, Page {
 
   private int viewerID;
@@ -20,37 +24,38 @@ public class ManageEmployeesGUI implements ActionListener, Page {
   private JPanel buttonsPanel = new JPanel();
 
 
-public ManageEmployeesGUI(int id){
-  //Create the UI by combining the title and button components
-  this.viewerID = id;
-  frame.setSize(600, 600);
-  frame.setVisible(true);
-  this.addTitle();
-  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  this.addContent();
-  
-}
+  /**
+   * Creates an instance of the ManageEmployeesGUI class.
+   *
+   * @param id The ID of the user viewing the page.
+   */
+  public ManageEmployeesGUI(int id) {
+    frame.setSize(600, 600);
+    frame.setVisible(true);
+    this.addTitle();
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.addContent();
+    this.viewerID = id;
+  }
 
-
-@Override
-public void actionPerformed(ActionEvent e){
-  //Based on which button is clicked, we wish to redirect to a particular page.
-  Object source = e.getSource();
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    //Open the appropriate new page based on the button clicked.
+    Object source = e.getSource();
     if (source.equals(addEmployee)) {
       new AddEmployeeGUI(viewerID);
       frame.dispose();
-    } else if (source.equals(completeEmployeeList)){
+    } else if (source.equals(completeEmployeeList)) {
       new CompleteUserListGUI(viewerID);
       frame.dispose();
     } else if (source.equals(employeeSummary)) {
       new EmployeeSummaryGUI(viewerID);
       frame.dispose();
-    } else if (source.equals(back)){
+    } else if (source.equals(back)) {
       new HomePage(viewerID);
       frame.dispose();
     }
-
-}
+  }
 
   @Override
   public void addTitle() {
@@ -59,7 +64,7 @@ public void actionPerformed(ActionEvent e){
 
   @Override
   public void addContent() {
-    //Make the buttons respond to a click, and add them to the button panel.
+    //Add the buttons to the frame.
     this.buttonsPanel.setLayout(new GridLayout(4, 1));
     addEmployee.addActionListener(this);
     completeEmployeeList.addActionListener(this);
@@ -69,13 +74,12 @@ public void actionPerformed(ActionEvent e){
     this.buttonsPanel.add(addEmployee);
     this.buttonsPanel.add(completeEmployeeList);
     this.buttonsPanel.add(employeeSummary);
-    this.buttonsPanel.setSize(100,300);
+    this.buttonsPanel.setSize(100, 300);
     frame.add(buttonsPanel);
   }
 
   @Override
   public void setUser(int user) {
-  /*We need this to keep track of who is viewing the page.*/
     this.viewerID = user;
   }
 
@@ -94,5 +98,3 @@ public void actionPerformed(ActionEvent e){
 
   }
 }
-
-

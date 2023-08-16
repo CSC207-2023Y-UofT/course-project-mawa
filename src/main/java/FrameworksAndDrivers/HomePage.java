@@ -40,9 +40,10 @@ public class HomePage implements ActionListener, Page {
     public void addContent() {
         //Add the buttons created by the presenter to the panel.
         buttonsPanel.setLayout(new GridLayout(3, 1));
-        for (JButton button: presenter.makeHomeButtons(userID)){
-            buttonsPanel.add(button);
-            button.addActionListener(this);
+        for (String label: presenter.makeHomeButtons(userID)){
+            JButton b = new JButton(label);
+            buttonsPanel.add(b);
+            b.addActionListener(this);
         }
         frame.add(buttonsPanel);
     }

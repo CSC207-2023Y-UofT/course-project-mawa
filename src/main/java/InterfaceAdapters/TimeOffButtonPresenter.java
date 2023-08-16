@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class TimeOffButtonPresenter implements ActionListener {
     private GUIElement button;
     private int shift;
+    protected ShiftFileReader shiftReader;
+    protected NotificationFileReader notifReader;
 
     /**
      * Constructs a TimeOffButtonPresenter object.
@@ -25,15 +27,15 @@ public class TimeOffButtonPresenter implements ActionListener {
 
         this.button = button;
         this.shift = shift;
+        this.shiftReader = ShiftFileReader.getInstance();
+        this.notifReader = NotificationFileReader.getInstance();
     }
 
     public LocalDateTime getDate(){
-        ShiftFileReader reader = ShiftFileReader.getInstance();
-        return reader.getDate(shift);
+        return shiftReader.getDate(shift);
     }
     public float getDuration(){
-        ShiftFileReader reader = ShiftFileReader.getInstance();
-        return reader.getDuration(shift);
+        return shiftReader.getDuration(shift);
     }
     /**
      * Handles the action performed by the TimeOffButton.
@@ -43,13 +45,11 @@ public class TimeOffButtonPresenter implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        NotificationFileReader nreader = NotificationFileReader.getInstance();
-        ArrayList<Integer> existingNotif = nreader.getIds(shift);
+        ArrayList<Integer> existingNotif = notifReader.getIds(shift);
         if (e.getSource() == button && existingNotif.size() == 0){
             button.nextPage();
         } else if (existingNotif.size() > 0){
             button.getContent();
-            System.out.println(existingNotif);
         }
     }
 }

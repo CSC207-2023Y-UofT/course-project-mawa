@@ -3,23 +3,21 @@ package UseCases;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import UseCases.LoginValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import UseCases.UserFileReader;
 
 import java.util.ArrayList;
-
-public class TestLoginValidator {
-
+/**
+ * Unit test for LoginValidator class.
+ */
+public class LoginValidatorTest {
     private UserFileReader mockUserFileReader;
 
     private class MockUserFileReader extends UserFileReader {
+
         public MockUserFileReader() {
             super("test");
-            getInstance();
-
         }
 
         @Override
@@ -45,8 +43,8 @@ public class TestLoginValidator {
         LoginValidator loginValidator = new LoginValidator();
         loginValidator.empDB = mockUserFileReader;
 
-        int empID = 123; // Replace with valid employee ID
-        char[] pwd = "password".toCharArray(); // Replace with valid password
+        int empID = 123;
+        char[] pwd = "password".toCharArray();
 
         int result = loginValidator.validateCredentials(empID, pwd);
 
@@ -58,8 +56,8 @@ public class TestLoginValidator {
         LoginValidator loginValidator = new LoginValidator();
         loginValidator.empDB = mockUserFileReader;
 
-        int empID = 123; // Replace with valid employee ID
-        char[] pwd = "wrong_password".toCharArray(); // Replace with invalid password
+        int empID = 123;
+        char[] pwd = "wrong_password".toCharArray();
 
         int result = loginValidator.validateCredentials(empID, pwd);
 

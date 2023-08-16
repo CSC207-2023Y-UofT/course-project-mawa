@@ -42,6 +42,7 @@ public class PaymentTest {
     @Test
     public void getDate(){
 
+    assertEquals(dateTimes.get(0),payments.get(0).getDate());
     }
 
 }

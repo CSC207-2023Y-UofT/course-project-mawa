@@ -2,40 +2,39 @@ package UseCases;
 
 import Entities.Payment;
 
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
 public class PaymentHistoryModel {
 
-     private ArrayList<Payment> emp_payments = new ArrayList<>();
+     private ArrayList<Payment> empPayments = new ArrayList<>();
      private PaymentInteractor interactor = new PaymentInteractor();
     private UserFileReader reader=UserFileReader.getInstance();
      private ArrayList<Payment> allpayments;
-    private ArrayList<String> string_list = new ArrayList<>();
+    private ArrayList<String> stringList = new ArrayList<>();
     private int emp;
-    private ArrayList<Payment> first_list;/*This list is used to store the list of payments that
+    private ArrayList<Payment> firstList;/*This list is used to store the list of payments that
     includes the given employee
     */
-    private ArrayList<String> second_list;/*  This list is used to store
+    private ArrayList<String> secondList;/*  This list is used to store
     a sting of payments that includes the given employee after transferring list 1 to strings*/
-    private DateTimeFormatter get_month= DateTimeFormatter.ofPattern("MM");
-    private DateTimeFormatter get_year= DateTimeFormatter.ofPattern("yyy");
-    private DateTimeFormatter get_day= DateTimeFormatter.ofPattern("dd");
+    private DateTimeFormatter getMonth = DateTimeFormatter.ofPattern("MM");
+    private DateTimeFormatter getYear = DateTimeFormatter.ofPattern("yyy");
+    private DateTimeFormatter getDay = DateTimeFormatter.ofPattern("dd");
 
 
 
 
-    public ArrayList<String> PaymentHistoryModel(int employee_id){
-        this.emp=employee_id;
+    public ArrayList<String> PaymentHistoryModel(int employeeID){
+        this.emp= employeeID;
 
-        first_list=user_paymentlist(this.emp);
-        second_list= paylistTolist(first_list);
-        return second_list;
+        firstList =user_paymentlist(this.emp);
+        secondList = paylistTolist(firstList);
+        return secondList;
     }
-    public String label(int employee_id){
-        return reader.getFirstName(employee_id)+" "+ reader.getSurname(employee_id);
+    public String label(int employeeID){
+        return reader.getFirstName(employeeID)+" "+ reader.getSurname(employeeID);
 
     }
 
@@ -52,12 +51,12 @@ public class PaymentHistoryModel {
         for (Payment allpayment : allpayments) {
             if (allpayment.getEmployee() == employee_id) {
 
-                emp_payments.add(allpayment);
+                empPayments.add(allpayment);
             }
 
         }
 
-        return emp_payments;
+        return empPayments;
     }
 
     /**
@@ -68,15 +67,15 @@ public class PaymentHistoryModel {
     public ArrayList<String> paylistTolist( ArrayList<Payment> payments){
 
         for (Payment payment : payments) {
-            String this_month=payment.getDate().format(get_month);//stores  month as a string
-            String this_day=payment.getDate().format(get_day);//stores  day as a string
-            String this_year=payment.getDate().format(get_year);//stores  year as a string
+            String this_month=payment.getDate().format(getMonth);//stores  month as a string
+            String this_day=payment.getDate().format(getDay);//stores  day as a string
+            String this_year=payment.getDate().format(getYear);//stores  year as a string
             String temp = " This Employee has been paid " +
                     payment.getPaymentAmount() + " on " +this_year+" / "+this_month+" / "+this_day ;
-            string_list.add(temp);
+            stringList.add(temp);
             temp = "";
         }
-        return string_list;
+        return stringList;
     }
 
 }

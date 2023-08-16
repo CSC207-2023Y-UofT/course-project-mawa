@@ -28,7 +28,7 @@ public class UserNotificationInteractorTest {
 
     @BeforeEach
     public void Setup() throws InvalidTimeException {
-
+        //Create a notification to read/write.
         UserFactory uf = new UserFactory("p");
         uf.makeUser("Smith", "Alan", "Male", "2003", "01",
                 "06", 6475784453L, "alan.smith@gmail.com", "Janitor",
@@ -45,14 +45,15 @@ public class UserNotificationInteractorTest {
         shiftID = si.readData().size();
         notif = new UserNotificationRequest(id1, id2, shiftID, "123",
                 LocalDateTime.of(2023, 9, 8, 05, 55));
-        ui.writeData(notif);
-        read = ui.readData().get((ui.readData().size() - 1));
 
 
     }
 
     @Test
     public void TestReadWrite(){
+        //Create a notification, write/read it, and verify that the information matches.
+        ui.writeData(notif);
+        read = ui.readData().get((ui.readData().size() - 1));
         assertEquals(notif.getSenderId(), read.getSenderId());
         assertEquals(notif.getNotifId(), read.getNotifId());
         assertEquals(notif.getRecipientId(), read.getRecipientId());
@@ -63,7 +64,7 @@ public class UserNotificationInteractorTest {
 
     @Test
     public void TestUpdate(){
-
+        //Resolve a notification, and verify that it is changed in the file.
         notif.resolve();
         ui.update(notif);
         ArrayList<UserNotification> notifs = ui.readData();

@@ -16,6 +16,7 @@ import java.util.Date;
  */
 public class PaymentMaker{
 
+    public PaymentInteractor pi;
     private ArrayList<Payment> paylist;
 
     private ArrayList<User> userlist;
@@ -23,14 +24,14 @@ public class PaymentMaker{
 
 
     private int employee_id;
-    private UserFileReader reader=UserFileReader.getInstance();
+    UserFileReader reader=UserFileReader.getInstance();
     private String employee_name;
     private float pay_amount;
     private String emp_type;
 
     private LocalDateTime date= LocalDateTime.now();
 
-    private ShiftInteractor si = new ShiftInteractor();
+    ShiftInteractor si = new ShiftInteractor();
     private ArrayList<Shift> shifts;
     private int id;
 
@@ -66,7 +67,7 @@ public class PaymentMaker{
 
     }
     public  float wageWorker_Payment(int employee_id, ArrayList<Shift> shiftArray){
-        UserFileReader reader = UserFileReader.getInstance();
+
         float hours=0;
         for(int i = 0; i <shiftArray.size();i++){
             if (shiftArray.get(i).getCoworkers().contains(employee_id) ){
@@ -82,7 +83,6 @@ public class PaymentMaker{
     }
 
     public void makePayment(){
-        PaymentInteractor pi = new PaymentInteractor();
         pi.writeData(new Payment(this.employee_id,this.pay_amount,this.date,this.id));
     }
 

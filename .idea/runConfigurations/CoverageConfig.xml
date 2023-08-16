@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CoverageConfig" type="JUnit" factoryName="JUnit">
+    <module name="course-project-mawa.test" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="FrameworksAndDrivers.*" />
+        <option name="ENABLED" value="true" />
+        <option name="INCLUDE" value="false" />
+      </pattern>
+    </extension>
+    <option name="ALTERNATIVE_JRE_PATH" value="corretto-11" />
+    <option name="PACKAGE_NAME" value="" />
+    <option name="MAIN_CLASS_NAME" value="" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="package" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
